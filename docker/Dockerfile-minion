@@ -1,0 +1,9 @@
+from python:3.7-stretch
+# Upgrade System and Install dependencies
+RUN apt-get update && \
+  apt-get upgrade -y -o DPkg::Options::=--force-confold && \
+  apt-get install -y -o DPkg::Options::=--force-confold curl netcat
+
+# Install Latest Salt from the stable Branch
+RUN curl -L https://bootstrap.saltstack.com | sh -s -- stable 2019.2.0
+RUN echo "master: master">/etc/salt/minion

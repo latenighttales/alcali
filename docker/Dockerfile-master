@@ -1,0 +1,22 @@
+FROM python:3.7-stretch
+# Upgrade System and Install dependencies
+RUN apt-get update && \
+  apt-get upgrade -y -o DPkg::Options::=--force-confold && \
+  apt-get install -y -o DPkg::Options::=--force-confold curl python-mysqldb netcat
+
+# Install Latest Salt from the stable Branch
+RUN curl -L https://bootstrap.saltstack.com | sh -s -- -M stable 2019.2.0
+# Set master and id
+RUN echo "master: master\nid: master">/etc/salt/minion
+# Install python dependencies
+RUN pip install CherryPy==3.2.3
+RUN pip install honcho
+RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api
+# Copy needed files
+COPY saltconfig/etc/master /etc/salt/master
+COPY saltconfig/salt /srv/salt
+COPY saltconfig/pillar /srv/pillar
+COPY utils/wait-for .
+COPY utils/Procfile .
+# Sync auth and returners
+RUN salt-run saltutil.sync_all

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}KEYS{% endblock %}
+{% block content %}
+  <div class="block-header">
+    <h2>KEYS</h2>
+  </div>
+
+  <!-- Basic Examples -->
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="body">
+          <div class="table-responsive">
+            <table class="table table-hover js-basic-example dataTable">
+              <thead>
+              <tr>
+                <th>Minion id</th>
+                <th>Key status</th>
+                <th>Public key</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- #END# Basic Examples -->
+
+
+{% endblock %}
+{% block fab %}
+  <div class="fab round bg-blue" id="fab2" data-tooltip="Refresh keys" onclick="refreshKeys()">
+    <i class="material-icons">compare_arrows</i>
+  </div>
+  <div class="fab round bg-green" id="fab3" data-tooltip="Accept all" onclick="manageKey('accept', '*')">
+    <i class="material-icons">done</i>
+  </div>
+  <div class="fab round bg-red" id="fab4" data-tooltip="Deny all" onclick="manageKey('reject', '*')">
+    <i class="material-icons">close</i>
+  </div>
+{% endblock %}
+{% block js %}
+  <script>
+    let token = '{{ csrf_token }}';
+  </script>
+  <script src="{% static "js/notifications.js" %}"></script>
+  <script src="{% static "js/src/keys.js" %}"></script>
+{% endblock %}

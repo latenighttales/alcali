@@ -1,0 +1,48 @@
+{% load is_dict %}
+<div class="body">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover dataTable js-exportable" style="width:100%">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Target</th>
+        <th>Function</th>
+        <th>Arguments</th>
+        <th>User</th>
+        <th>Status</th>
+        <th>Start Time</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for job in job_list %}
+        <tr>
+          <td><a href="{% url 'job_detail' jid=job.jid minion_id=job.id %}">{{ job.jid }}</a></td>
+          <td><a href="{% url 'minion_detail' minion_id=job.id %}">{{ job.id }}</a></td>
+          <td>{{ job.fun }}</td>
+          <td>{% for i in job.loaded_ret.fun_args %}{% if i|is_dict %}{% for k, v in i.items %}{{ k }}=
+            {{ v }} {% endfor %}{% else %}{{ i }} {% endif %}{% endfor %}</td>
+          <td>{{ job.user }}</td>
+          {% if job.success_bool %}
+            <td><span class="label bg-green">Succeeded</span></td>
+          {% else %}
+            <td><span class="label label-danger">Failed</span></td>
+          {% endif %}
+          <td>{{ job.alter_time }}</td>
+          <td style="text-align: center">
+            <a href="{% url 'job_detail' jid=job.jid minion_id=job.id %}" class="btn btn-primary btn-sm waves-effect"
+               role="button">Detail</a>
+            {% if 'local_master' in job.id and 'runner' in job.fun %}
+              <a href="{% url 'runner' %}?fun={{ job.fun }}{% for i in job.loaded_ret.fun_args %}{% if i|is_dict %}{% for k, v in i.items %}&{{ k }}={{ v }}{% endfor %}{% else %}&args={{ i }}{% endif %}{% endfor %}"
+                 class="btn btn-sm bg-blue-grey waves-effect" role="button">Rerun</a>
+            {% else %}
+              <a href="{% url 'run' %}?tgt={{ job.id }}&fun={{ job.fun }}{% for i in job.loaded_ret.fun_args %}{% if i|is_dict %}{% for k, v in i.items %}&{{ k }}={{ v }}{% endfor %}{% else %}&args={{ i }}{% endif %}{% endfor %}"
+                 class="btn btn-sm bg-blue-grey waves-effect" role="button">Rerun</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

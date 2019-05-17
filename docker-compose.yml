@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: salt
+      MYSQL_ROOT_PASSWORD: superdupersecretpassword
+      MYSQL_USER: alcali
+      MYSQL_PASSWORD: alcali
+    volumes:
+      - ./docker/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+  web:
+    build: .
+    command: bash -c './docker/utils/wait-for db:3306 -- make run'
+    volumes:
+      - .:/opt/alcali/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+  master:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-master
+    command: bash -c './wait-for -t 30 web:8000 -- honcho start'
+    depends_on:
+      - web
+    environment:
+      - PYTHONUNBUFFERED=true
+    ports:
+      - "8080:8080"
+  minion:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-minion
+    command: bash -c 'echo `hostname`>/etc/salt/minion_id && salt-minion -l info'
+    depends_on:
+      - master

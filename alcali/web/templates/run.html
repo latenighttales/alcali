@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.2.0/css/jquery.terminal.min.css"
+        rel="stylesheet"/>
+  <!-- JQuery DataTable Css -->
+  <style>
+    .terminal {
+      --color: green;
+      --background: white;
+      --animation: terminal-underline;
+      --size: 1.5;
+      /* better then return false in onBlur */
+      height: 100vh;
+      margin: 0; /* body margin */
+    }
+  </style>
+{% endblock %}
+{% block title %}RUN{% endblock %}
+{% block content %}
+  <div class="block-header">
+    <h2>RUN</h2>
+  </div>
+
+  <!-- Advanced Select -->
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="header">
+          <h2>
+            RUN
+          </h2>
+        </div>
+        <div class="body">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs tab-nav-right tab-col-black" role="tablist">
+            <li role="presentation" class="active"><a href="#formatted" data-toggle="tab">FORMATTED</a></li>
+            <li role="presentation"><a href="#raw" data-toggle="tab">CLI</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="formatted" style="margin-top: 20px">
+
+
+              <form method="post" id="salt-run">
+                {% csrf_token %}
+                <div class="row clearfix" id="mainRow">
+                  <div class="col-lg-1">
+                    <p>
+                      <b>Target Type</b>
+                      <button type="button" class="btn bg-black btn-xs waves-effect pull-right" data-trigger="focus"
+                              data-container="body" data-toggle="popover"
+                              data-placement="top" title="Popover Title"
+                              data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">?
+                      </button>
+                    </p>
+                    <div class="form-group">
+                      <div class="form-line">
+                        <select id="target-type" title="target-type" name="target-type" class="form-control show-tick">
+                          <option value="single" selected>Single</option>
+                          <option value="group">Group</option>
+                          <option value="custom">Custom</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-2">
+                    <p>
+                      <b>Target</b>
+                    </p>
+                    <div class="form-group">
+                      <div class="form-line">
+                        <input spellcheck="false" class="form-control" id="minion_list" name="minion_list" type="text"
+                               list="minions"
+                               placeholder="Target"/>
+                        <datalist id="minions">
+                          {% for minion in minion_list %}
+                            <option value="{{ minion }}">{{ minion }}
+                          {% endfor %}
+                        </datalist>
+                      </div>
+                    </div>
+                  </div>
+                  {% include 'template_run.html' %}
+
+              </form>
+
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="raw">
+              <div id="terminal"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Advanced Select -->
+  <div class="row clearfix" id="results" style="display: none">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="header">
+          <h2>
+            RESULT
+          </h2>
+          <ul class="header-dropdown m-r--5">
+            <li class="dropdown">
+              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                 aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a href="javascript:void(0);">Action</a></li>
+                <li><a href="javascript:void(0);">Another action</a></li>
+                <li><a href="javascript:void(0);">Something else here</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="body">
+          <style>
+            .ansi2html-content {
+              background-color: transparent !important;
+              border: none !important;
+              font-size: medium !important;
+              color: white;
+            }
+
+            .ansi32 {
+              color: white !important;
+            }
+
+            .ansi40 {
+              background-color: transparent !important;
+            }
+          </style>
+          <div id="ansiResults" class="ansiStyle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      let nodeGroups = {{ nodegroups|safe }};
+      let getParams = {{ get_params|safe }};
+      let token = '{{ csrf_token }}';
+      let minions = [{% for i in minion_list %}'{{ i }}', {% endfor %}];
+      let func = [{% for i in funct_list %}'{{ i }}', {% endfor %}];
+  </script>
+  <!-- #END# Advanced Select -->
+{% endblock %}
+{% block js %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.2.0/js/jquery.terminal.min.js"></script>
+  <script src="{% static "js/notifications.js" %}"></script>
+  <script src="{% static "js/src/run.js" %}"></script>
+{% endblock %}

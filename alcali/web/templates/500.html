@@ -1,0 +1,48 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>Alcali</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/png" href="{% static "img/favicon-32x32.png" %}" sizes="32x32"/>
+  <link rel="icon" type="image/png" href="{% static "img/favicon-16x16.png" %}" sizes="16x16"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
+        type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+  <!-- Bootstrap Core Css -->
+  <link href="{% static "bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+
+  <!-- Waves Effect Css -->
+  <link href="{% static "node-waves/dist/waves.min.css" %}" rel="stylesheet"/>
+
+  <!-- Custom Css -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet">
+</head>
+
+<body class="five-zero-zero">
+<div class="five-zero-zero-container">
+  <div class="error-code">500</div>
+  <div class="error-message">Internal Server Error</div>
+  <div class="button-place">
+    <a href="/" class="btn btn-default btn-lg waves-effect">GO TO HOMEPAGE</a>
+  </div>
+</div>
+
+<!-- Jquery Core Js -->
+<script src="{% static "jquery/dist/jquery.min.js" %}"></script>
+
+<!-- Bootstrap Core Js -->
+<script src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>
+
+<!-- Waves Effect Plugin Js -->
+<script src="{% static "node-waves/dist/waves.min.js" %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>Blank Page | Bootstrap Based Admin Template - Material Design</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/png" href="{% static "img/favicon-32x32.png" %}" sizes="32x32"/>
+  <link rel="icon" type="image/png" href="{% static "img/favicon-16x16.png" %}" sizes="16x16"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
+        type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+  <!-- Bootstrap Core Css -->
+  <link href="{% static "css/plugins/bootstrap.css" %}" rel="stylesheet">
+
+  <!-- Waves Effect Css -->
+  <link href="{% static "node-waves/dist/waves.min.css" %}" rel="stylesheet"/>
+
+  <!-- Animation Css -->
+  <link href="{% static "css/plugins/animate.css" %}" rel="stylesheet"/>
+
+  <!-- Custom Css -->
+  <link href="{% static "css/style.css" %}" rel="stylesheet">
+</head>
+
+<body class="login-page">
+    <div class="login-box">
+        <div class="logo">
+            <a href="javascript:void(0);">
+              <h1>ALCALI</h1></a>
+        </div>
+        <div class="card">
+            <div class="body">
+                <form method="POST" action="{% url 'login' %}">
+                  {% csrf_token %}
+                    <div class="msg">Sign in to start your session</div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-8 p-t-5">
+                            <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
+                            <label for="rememberme">Remember Me</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <button class="btn btn-block bg-pink waves-effect" type="submit" value="login">SIGN IN</button>
+                        </div>
+                    </div>
+                    <div class="row m-t-15 m-b--20">
+                        <div class="col-xs-6">
+                        </div>
+                        <div class="col-xs-6 align-right">
+                            <a href="forgot-password.html">Forgot Password?</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Jquery Core Js -->
+<script src="{% static "jquery/dist/jquery.min.js" %}"></script>
+
+<!-- Bootstrap Core Js -->
+<script src="{% static "bootstrap/dist/js/bootstrap.min.js" %}"></script>
+
+<!-- Waves Effect Plugin Js -->
+<script src="{% static "node-waves/dist/waves.min.js" %}"></script>
+
+<!-- Custom Js -->
+<script src="{% static "js/admin.js" %}"></script>
+
+</body>
+
+</html>

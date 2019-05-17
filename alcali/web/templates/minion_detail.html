@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getattribute %}
+{% load yaml_dump %}
+{% load is_dict %}
+{% block title %}DETAILS{% endblock %}
+{% block content %}
+  <div class="block-header">
+    <h2>{{ minion_id }}</h2>
+  </div>
+
+  <div class="row clearfix">
+    <!-- Minion Infos -->
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+      <div class="card">
+        <div class="header">
+          <h2>
+            INFOS
+          </h2>
+        </div>
+        <div class="body table-responsive">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#common" data-toggle="tab">COMMON</a></li>
+            <li role="presentation"><a href="#saltstack" data-toggle="tab">SALTSTACK</a></li>
+            <li role="presentation"><a href="#hardware" data-toggle="tab">HARDWARE</a></li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="common">
+              <table class="table">
+                {% with 'fqdn os oscodename kernelrelease' as list %}
+                  <tbody>
+                  {% for item in list.split %}
+                    <tr>
+                      <th>{{ item|upper }}</th>
+                      <td class="text-right">{{ grain|getattribute:item }}</td>
+                    </tr>
+                  {% endfor %}
+                {% endwith %}
+                    <tr>
+                      <th>LAST JOB RUNNED</th>
+                      <td class="text-right">{{ last_job.fun }} ({{ last_job.alter_time }})</td>
+                    </tr>
+                    <tr>
+                      <th>LAST HIGHSTATE</th>
+                      <td class="text-right">{{ last_highstate.alter_time }}</td>
+                    </tr>
+                    <tr>
+                      <th>CONFORMITY</th>
+                      {% if conformity %}
+                        <td class="text-right"><span class="label bg-green">{{ conformity }}</span></td>
+                      {% else %}
+                        <td class="text-right"><span class="label bg-red">{{ conformity }}</span></td>
+                      {% endif %}
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="saltstack">
+              <table class="table">
+                <tbody>
+                {% with 'id master saltversion saltpath pythonversion' as list %}
+                  {% for item in list.split %}
+                    <tr>
+                      <th>{{ item|upper }}</th>
+                      <td class="text-right">{% for val in grain|getattribute:item %}{{ val }}{% endfor %}</td>
+                    </tr>
+                  {% endfor %}
+                {% endwith %}
+                </tbody>
+              </table>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="hardware">
+              <table class="table">
+                {% with 'cpu_model num_cpus mem_total swap_total virtual' as list %}
+                  <tbody>
+                  {% for item in list.split %}
+                    <tr>
+                      <th>{{ item|upper }}</th>
+                      <td class="text-right">{{ grain|getattribute:item }}</td>
+                    </tr>
+                  {% endfor %}
+                {% endwith %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Minion Infos -->
+      <div class="card">
+        <div class="header">
+          <h2>
+            NETWORK
+          </h2>
+        </div>
+        <div class="body table-responsive">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#interface" data-toggle="tab">INTERFACES</a></li>
+            <li role="presentation"><a href="#nhardware" data-toggle="tab">MAC</a></li>
+            <li role="presentation"><a href="#dns" data-toggle="tab">DNS</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="interface">
+              <table class="table">
+                <tbody>
+                {% for k, v in grain.ip_interfaces.items %}
+                  <tr>
+                    <th>{{ k|upper }}</th>
+                    <td class="text-right">{% for ip in v %}{{ ip }}<br> {% endfor %}</td>
+                  </tr>
+                {% endfor %}
+                <tr>
+                  <th>IPv4 GATEWAY</th>
+                  <td class="text-right">{{ grain.ip4_gw }}</td>
+                </tr>
+                <tr>
+                  <th>IPv6 GATEWAY</th>
+                  <td class="text-right">{{ grain.ip6_gw }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="nhardware">
+              <table class="table">
+                <tbody>
+                {% for k, v in grain.hwaddr_interfaces.items %}
+                  <tr>
+                    <th>{{ k|upper }}</th>
+                    <td class="text-right">{{ v }}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="dns">
+              <table class="table">
+                <tbody>
+                {% for k, v in grain.dns.items %}
+                  {% if 'nameserver' in k %}
+                    <tr>
+                      <th>{{ k|upper }}</th>
+                      <td class="text-right">{% for server in v %}{{ server }}<br> {% endfor %}</td>
+                    </tr>
+                  {% else %}
+                    <tr>
+                      <th>{{ k|upper }}</th>
+                      <td class="text-right">{% for val in v %}{{ val }}<br> {% endfor %}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Minion Infos -->
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="body table-responsive">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#grain" data-toggle="tab">GRAIN</a></li>
+            <li role="presentation"><a href="#pillar" data-toggle="tab">PILLAR</a></li>
+            <li role="presentation"><a href="#history" data-toggle="tab">HISTORY</a></li>
+            <li role="presentation"><a href="#graph" data-toggle="tab">GRAPH</a></li>
+            {% for field in custom_fields %}
+              <li role="presentation"><a href="#{{ field.name|cut:" " }}" data-toggle="tab">{{ field.name|upper }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="grain">
+              <textarea id="grain-yaml">{{ grain_yaml }}</textarea>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="pillar">
+              <textarea id="pillar-yaml">{{ pillar }}</textarea>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="history">
+              <div class="table-responsive">
+                <table class="table table-striped table-hover dataTable js-exportable" style="width:100%">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Target</th>
+                    <th>Function</th>
+                    <th>Arguments</th>
+                    <th>User</th>
+                    <th>Status</th>
+                    <th>Start Time</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="graph">
+              {% include 'template_chart.html' %}
+            </div>
+            {% for field in custom_fields %}
+              <div role="tabpanel" class="tab-pane fade" id="{{ field.name|cut:" " }}">
+                <textarea id="{{ field.name|cut:" " }}-yaml">{{ field.value|yaml_dump }}</textarea>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+{% block fab %}
+  <div class="fab round bg-blue" id="fab4" data-tooltip="Refresh {{ minion_id }}"
+       onclick="manageMinion('refresh', '{{ minion_id }}')">
+    <i class="material-icons">refresh</i>
+  </div>
+  <div class="fab round bg-purple" id="fab3" data-tooltip="Run job on {{ minion_id }}"
+       onclick="location.href='/run?tgt={{ minion_id }}'">
+    <i class="material-icons">play_arrow</i>
+  </div>
+  <div class="fab round bg-orange" id="fab2" data-tooltip="Highstate {{ minion_id }}"
+       onclick="location.href='/run?tgt={{ minion_id }}&fun=state.apply'">
+    <i class="material-icons">all_inclusive</i>
+  </div>
+{% endblock %}
+{% block js %}
+  <script>
+    let customFields = {{ custom_fields_list|safe }};
+    let token = '{{ csrf_token }}';
+    let minionId = '{{ minion_id }}';
+  </script>
+  <!-- Jquery DataTable Plugin Js -->
+  {% include 'datatable_sources.html' %}
+  <script src="{% static "js/job-chart.js" %}"></script>
+  <script src="{% static "js/src/minion_detail.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include alcali/web/static *
+recursive-include alcali/web/templates *

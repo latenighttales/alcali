@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load getattribute %}
+{% block css %}
+  <link href="{% static "css/plugins/multi-select.css" %}" rel="stylesheet">
+{% endblock %}
+{% block title %}USERS{% endblock %}
+{% block content %}
+  <div class="block-header">
+    <h2>USERS</h2>
+  </div>
+  <!-- Basic Examples -->
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="header">
+          <i class="material-icons" style="vertical-align: bottom">person_add</i>
+          <span> ADD USER</span>
+        </div>
+        <div class="body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="row clearfix">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.first_name }}
+                    <label class="form-label">{{ form.first_name.label }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.last_name }}
+                    <label class="form-label">{{ form.last_name.label }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.username }}
+                    <label class="form-label">{{ form.username.label }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.email }}
+                    <label class="form-label">{{ form.email.label }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.password1 }}
+                    <label class="form-label">{{ form.password1.label }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.password2 }}
+                    <label class="form-label">{{ form.password2.label }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">SUBMIT</button>
+              </div>
+              {% if form.errors %}
+                <!-- Error messaging -->
+                <div id="errors">
+                  <div class="inner">
+                    <p>There were some errors in the information you entered. Please correct the following:</p>
+                    {{ form.non_field_errors }}
+                    <ul>
+                      {% for field in form %}
+                        {% if field.errors %}
+                          <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+                <!-- /Error messaging -->
+              {% endif %}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="header">
+          <i class="material-icons" style="vertical-align: bottom">mode_edit</i>
+          <span>USERS</span>
+        </div>
+        <div class="body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover dataTable js-exportable" style="width:100%">
+              <thead>
+              <tr>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Token</th>
+                <th>Salt Permissions</th>
+                <th>Last Login</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Large Size -->
+  <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="largeModalLabel">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            <div class="row clearfix">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.first_name }}
+                    <label class="form-label">{{ form.first_name.label }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.last_name }}
+                    <label class="form-label">{{ form.last_name.label }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.username }}
+                    <label class="form-label">{{ form.username.label }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.email }}
+                    <label class="form-label">{{ form.email.label }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.password1 }}
+                    <label class="form-label">{{ form.password1.label }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group form-float">
+                  <div class="form-line">
+                    {{ form.password2 }}
+                    <label class="form-label">{{ form.password2.label }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">SUBMIT</button>
+              </div>
+              {% if form.errors %}
+                <!-- Error messaging -->
+                <div id="errors">
+                  <div class="inner">
+                    <p>There were some errors in the information you entered. Please correct the following:</p>
+                    {{ form.non_field_errors }}
+                    <ul>
+                      {% for field in form %}
+                        {% if field.errors %}
+                          <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+                <!-- /Error messaging -->
+              {% endif %}
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
+          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block js %}
+  <script>
+    let token = '{{ csrf_token }}';
+  </script>
+  <script src="{% static "js/src/users.js" %}"></script>
+{% endblock %}

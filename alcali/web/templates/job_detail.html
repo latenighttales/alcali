@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load is_dict %}
+{% block title %}JOB DETAIL{% endblock %}
+{% block content %}
+  <div class="block-header">
+    <h2>JOB DETAIL</h2>
+  </div>
+
+  <!-- Basic Examples -->
+  <div class="row clearfix">
+  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="header">
+        <h2>
+          <b>{{ job.fun }}</b>
+          <br>runned on {{ job.alter_time }}
+          <small>Job ID: {{ job.jid }}</small>
+        </h2>
+      </div>
+      <div class="body">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>DETAILS</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>FUNCTION:</td>
+            <td class="text-right">{{ job.fun }}</td>
+          </tr>
+          <tr>
+            <td>JID:</td>
+            <td class="text-right">{{ job.jid }}</td>
+          </tr>
+          <tr>
+            <td>MINION ID:</td>
+            <td class="text-right">{{ job.id }}</td>
+          </tr>
+          <tr>
+            <td>STATUS:</td>
+            {% if job.success_bool %}
+              <td class="text-right"><span class="label bg-green">Succeeded</span></td>
+            {% else %}
+              <td class="text-right"><span class="label label-danger">Failed</span></td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td>START TIME:</td>
+            <td class="text-right">{{ job.alter_time }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% if html_detail %}
+    <!-- Raw result -->
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="header">
+        <h2>
+          RESULTS
+        </h2>
+      </div>
+      <div class="body">
+        <div id="htmlDetail" class="ansiStyle"></div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+{% block fab %}
+  <div class="fab round bg-blue-grey" id="fab3" data-tooltip="Rerun job on {{ job.id }}"
+       onclick="location.href='/run?tgt={{ job.id }}&fun={{ job.fun }}{% for i in job.fun_args %}{% if i|is_dict %}{% for k, v in i.items %}&{{ k }}={{ v }}{% endfor %}{% else %}&args={{ i }}{% endif %}{% endfor %}'">
+    <i class="material-icons">playlist_play</i>
+  </div>
+{% endblock %}
+{% block js %}
+  <script>
+    let detail = `{{ html_detail|safe }}`
+  </script>
+  <script src="{% static "js/src/job_detail.js" %}"></script>
+{% endblock %}
