@@ -1,3 +1,4 @@
+language: python
 env:
   - DOCKER_COMPOSE_VERSION=1.23.2
 
@@ -22,4 +23,4 @@ install:
   - docker-compose up --build -d
 
 script:
-  - docker-compose logs
+  - bash docker/utils/ci_script.sh
