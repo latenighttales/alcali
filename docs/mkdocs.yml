@@ -1,0 +1,55 @@
+# Project Infos.
+site_name: 'ALCALI'
+nav:
+    - Home: index.md
+    - Try it!: try.md
+    - Installation: installation.md
+    - Configuration: configuration.md
+    - Running Alcali: running.md
+    - Walkthrough: walkthrough.md
+    - Pages:
+        - 'Overview': pages/overview.md
+        - 'Minions': pages/minions.md
+        - 'Minion Details': pages/minion_details.md
+        - 'Jobs': pages/jobs.md
+        - 'Job Details': pages/job_details.md
+        - 'Run, Runner and Wheel': pages/run.md
+        - 'Schedule': pages/schedule.md
+        - 'Conformity': pages/conformity.md
+        - 'Keys': pages/keys.md
+        - 'Events': pages/events.md
+        - 'Users': pages/users.md
+        - 'Settings': pages/settings.md
+site_description: 'A web based tool for monitoring and administrating Saltstack'
+site_author: 'Matt Melquiond'
+
+# Repository
+repo_name: 'latenighttales/alcali'
+repo_url: 'https://github.com/latenighttales/alcali'
+edit_uri: ''
+
+# Copyright
+copyright: 'Copyright &copy; 2019 All rights reserved'
+
+theme:
+  name: 'material'
+  custom_dir: 'theme'
+  logo: 'images/logo-144.png'
+  favicon: 'images/favicon.ico'
+  language: 'en'
+  palette:
+    primary: 'white'
+    accent: 'indigo'
+extra_css:
+  - stylesheets/extra.css
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/latenighttales/alcali'
+markdown_extensions:
+  - pymdownx.inlinehilite
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
