@@ -14,7 +14,10 @@ services:
     ports:
       - "3306:3306"
   web:
-    build: .
+    build:
+      context: .
+      args:
+        USER_ID: ${USER_ID:-1000}
     command: bash -c './docker/utils/wait-for db:3306 -- make run'
     volumes:
       - .:/opt/alcali/code

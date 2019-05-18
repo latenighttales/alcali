@@ -1,0 +1,7 @@
+.*
+*.md
+!README*.md
+**/node_modules
+docs/*
+docker-compose.yml
+**/tests
