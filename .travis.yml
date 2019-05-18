@@ -26,6 +26,8 @@ install:
 
 script:
   - bash docker/utils/ci_script.sh
+
+after_failure:
   - docker-compose logs
 
 #after_success:
