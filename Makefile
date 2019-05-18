@@ -17,5 +17,4 @@ docs-serve:
 	&& mkdocs serve -f docs/mkdocs.yml -a 127.0.0.1:8060
 
 tests:
-	@docker-compose exec -u alcali web ls -la \
-	&& docker-compose exec -u alcali web pytest
+	@docker-compose exec -u alcali web pytest

@@ -6,4 +6,5 @@ do
     sleep 20
 done
 docker-compose exec -u alcali web pip install --user -r requirements/test
+sleep 30
 make tests

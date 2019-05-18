@@ -6,6 +6,7 @@ env:
 services: docker
 
 before_install:
+  - usermod -u 1000 travis
   - docker -v
   # Use the env config
   - cp env.sample .env
