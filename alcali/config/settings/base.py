@@ -4,28 +4,14 @@ Django settings for Alcali project.
 import os
 import errno
 from os.path import join, dirname
-from pathlib import Path
 
 from django.conf.global_settings import DATETIME_INPUT_FORMATS
-from dotenv import load_dotenv
-
-# If there's our env var, it means that env file was loaded somehow(docker).
-DB_BACKEND = os.environ.get('DB_BACKEND')
-if not DB_BACKEND:
-    # Load env file
-    ENV_PATH = os.environ.get('ENV_PATH')
-    if not ENV_PATH:
-        raise FileNotFoundError('ENV_PATH is not set')
-    dotenv_path = join(ENV_PATH, '.env')
-    env_file = Path(dotenv_path)
-    if not env_file.exists():
-        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), env_file)
-    load_dotenv(dotenv_path)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ALCALI_BACKEND = os.environ.get('ALCALI_BACKEND')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 DATETIME_INPUT_FORMATS += ['%Y, %b %d %H:%M:%S.%f']
