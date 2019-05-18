@@ -6,8 +6,6 @@ RUN apt-get update && \
 RUN useradd -ms /bin/bash -d /opt/alcali alcali
 USER alcali
 ENV PYTHONUNBUFFERED=1 PATH="/opt/alcali/.local/bin:${PATH}"
-RUN mkdir /opt/alcali/code
-VOLUME ["/opt/alcali/code"]
 WORKDIR /opt/alcali/code
 COPY . /opt/alcali/code
 
