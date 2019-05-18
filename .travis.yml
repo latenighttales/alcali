@@ -1,12 +1,12 @@
 language: python
 env:
   - DOCKER_COMPOSE_VERSION=1.23.2
-  - USER_ID=$(id -u ${USER})
 
 
 services: docker
 
 before_install:
+  - export USER_ID=$(id -u ${USER})
   - docker -v
   # Use the env config
   - cp env.sample .env
