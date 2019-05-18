@@ -1,12 +1,12 @@
 language: python
 env:
   - DOCKER_COMPOSE_VERSION=1.23.2
+  - USER_ID=$(id -u ${USER})
 
 
 services: docker
 
 before_install:
-  - usermod -u 1000 travis
   - docker -v
   # Use the env config
   - cp env.sample .env
@@ -26,6 +26,7 @@ install:
 
 script:
   - bash docker/utils/ci_script.sh
+  - docker-compose logs
 
 #after_success:
   # Deploy image
