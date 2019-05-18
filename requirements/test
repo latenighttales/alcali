@@ -1,4 +1,3 @@
--r dev
 pytest==4.4.1
 pytest-django==3.4.8
 pytest-pythonpath==0.7.3
