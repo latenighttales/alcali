@@ -10,4 +10,4 @@ WORKDIR /opt/alcali/code
 COPY . /opt/alcali/code
 
 RUN pip install --user -U setuptools
-RUN pip install --user .
+RUN pip install --user ".[testing]"

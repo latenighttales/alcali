@@ -4,6 +4,9 @@ from setuptools import setup, find_packages
 with open('requirements/prod', 'r') as fh:
     requirements = fh.read().splitlines()
 
+with open('requirements/test', 'r') as fh:
+    test_requirements = fh.read().splitlines()
+
 with open('VERSION', 'r') as fh:
     version = fh.read()
 
@@ -34,6 +37,11 @@ setup(name='alcali',
           'Topic :: System :: Systems Administration',
       ],
       install_requires=requirements,
+      extras_require={
+          'testing': [
+              test_requirements
+          ]
+      },
       entry_points={'console_scripts': [
           'alcali = alcali:manage',
       ]},
