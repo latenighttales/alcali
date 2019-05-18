@@ -7,6 +7,7 @@ RUN useradd -ms /bin/bash -d /opt/alcali alcali
 USER alcali
 ENV PYTHONUNBUFFERED=1 PATH="/opt/alcali/.local/bin:${PATH}"
 WORKDIR /opt/alcali/code
+RUN chown -R alcali:alcali /opt/alcali
 COPY . /opt/alcali/code
 
 RUN pip install --user -U setuptools
