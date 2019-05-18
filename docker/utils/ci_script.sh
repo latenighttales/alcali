@@ -5,5 +5,5 @@ do
     echo "Waiting Salt Master..."
     sleep 20
 done
-docker-compose exec web pip install --user -r requirements/test
+docker-compose exec -u alcali web pip install --user -r requirements/test
 make tests

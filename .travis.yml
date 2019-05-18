@@ -18,9 +18,14 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
+  # - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 
 install:
   - docker-compose up --build -d
 
 script:
   - bash docker/utils/ci_script.sh
+
+#after_success:
+  # Deploy image
+  # - if [[ $TRAVIS_BRANCH == '2019.2.0' ]]; then docker tag "latenighttales/alcali:$TRAVIS_BRANCH" "latenighttales/alcali:$TRAVIS_BRANCH-latest" && docker push "latenighttales/alcali:$TRAVIS_BRANCH-latest" ; fi
