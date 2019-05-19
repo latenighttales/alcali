@@ -6,7 +6,7 @@ from django.http import JsonResponse, StreamingHttpResponse
 
 from ..forms import AlcaliUserForm, AlcaliUserChangeForm
 from ..models.alcali import Schedule, UserSettings, Minions, MinionsCustomFields, \
-    Conformity, Keys
+    Conformity, Keys, Functions
 
 # if settings.ALCALI_BACKEND == 'netapi':
 from ..backend.netapi import get_events, refresh_schedules, manage_schedules, init_db, \
@@ -69,7 +69,10 @@ def conformity(request):
         # TODO: return
 
     conformity_fields = Conformity.objects.values('name', 'function')
-    return render(request, "conformity.html", {'conformity_fields': conformity_fields})
+    funct_list = Functions.objects.filter(type='modules').values_list(
+        'name', flat=True).order_by('name')
+    return render(request, "conformity.html", {'conformity_fields': conformity_fields,
+                                               'function_list': funct_list})
 
 
 @login_required
@@ -166,6 +169,10 @@ def settings(request):
     # Minion list.
     minion_list = Keys.objects.all().values_list('minion_id', flat=True)
     minion_fields = MinionsCustomFields.objects.values('name', 'function').distinct()
+    # Function list.
+    funct_list = Functions.objects.filter(type='modules').values_list(
+        'name', flat=True).order_by('name')
     return render(request, "settings.html", {'notifs': current_notifs,
                                              'minion_fields': minion_fields,
+                                             'function_list': funct_list,
                                              'minion_list': minion_list})
