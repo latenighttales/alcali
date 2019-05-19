@@ -85,7 +85,14 @@
                 <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
                   <div class="form-group">
                     <div class="form-line">
-                      <input type="text" class="form-control" placeholder="Function" name="function">
+                      <input spellcheck="false" class="form-control" name="function" type="text"
+                             list="functions"
+                             placeholder="Function"/>
+                      <datalist id="functions">
+                        {% for function in function_list %}
+                          <option value="{{ function }}">{{ function }}
+                        {% endfor %}
+                      </datalist>
                     </div>
                   </div>
                 </div>
