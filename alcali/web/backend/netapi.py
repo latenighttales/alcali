@@ -167,6 +167,15 @@ def manage_key(action, target, kwargs):
     return response
 
 
+def set_perms():
+    user = get_current_user()
+    api = Pepper(url)
+    login_ret = api.login(str(user.username), user.user_settings.token,
+                          os.environ.get('SALT_AUTH'))
+    user.user_settings.salt_permissions = json.dumps(login_ret['perms'])
+    user.save()
+
+
 def refresh_schedules(minion=None):
     minion = minion or '*'
     with api_connect() as api:
