@@ -115,8 +115,11 @@ def check_permission(function):
     """
 
     def _function(request, *args, **kwargs):
-        perms = json.loads(request.user.user_settings.salt_permissions)
-        if not any(function.__name__ in perm for perm in perms):
+        if hasattr(request.user.user_settings, function.__name__):
+            perm = getattr(request.user.user_settings, function.__name__)()
+            if not perm:
+                raise PermissionDenied
+        else:
             raise PermissionDenied
         return function(request, *args, **kwargs)
 

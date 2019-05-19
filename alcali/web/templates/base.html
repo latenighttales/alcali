@@ -145,7 +145,7 @@
             <span>Run</span>
           </a>
         </li>
-        {% if request.session.runner %}
+        {% if request.user.user_settings.runner %}
           <li  {% if request.path == '/runner' %} class="active"{% endif %}>
             <a href="{% url 'runner' %}">
               <i class="material-icons">arrow_downward</i>
@@ -153,7 +153,7 @@
             </a>
           </li>
         {% endif %}
-        {% if request.session.wheel %}
+        {% if request.user.user_settings.wheel %}
           <li  {% if request.path == '/wheel' %} class="active"{% endif %}>
             <a href="{% url 'wheel' %}">
               <i class="material-icons">brightness_low</i>

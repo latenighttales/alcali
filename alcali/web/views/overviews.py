@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseNotFound
 from django.shortcuts import render
 
-from ..backend.netapi import set_perms, refresh_minion, get_keys
+from ..backend.netapi import refresh_minion, get_keys, set_perms
 from ..models.salt import SaltReturns, SaltEvents, Jids
 from ..models.alcali import Schedule, Keys, Minions, MinionsCustomFields
 from ..utils import graph_data, render_conformity
@@ -21,8 +21,7 @@ def index(request):
     :param request:
     :return:
     """
-    set_perms(request)
-
+    set_perms()
     # Update graph data.
     if request.POST.get('period'):
         period_req = request.POST['period']
