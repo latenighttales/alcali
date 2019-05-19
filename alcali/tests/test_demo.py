@@ -26,8 +26,7 @@ def test_default_perms(client, admin_user):
     client.login(username=username, password=password)
     client.get(reverse('index'), follow=True)
     assert hasattr(admin_user.user_settings, 'salt_permissions')
-    admin_perms = json.loads(admin_user.user_settings.salt_permissions)
-    assert any('wheel' in perm for perm in admin_perms)
+    assert admin_user.user_settings.wheel()
 
 
 @pytest.mark.django_db()

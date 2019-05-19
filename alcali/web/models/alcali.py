@@ -142,6 +142,24 @@ class UserSettings(models.Model):
     notifs_event = models.BooleanField(default=False)
     salt_permissions = models.TextField()
 
+    def wheel(self):
+        try:
+            for perm in json.loads(self.salt_permissions):
+                if ('@wheel' in perm) or ('wheel' in perm):
+                    return True
+        except json.decoder.JSONDecodeError:
+            return False
+        return False
+
+    def runner(self):
+        try:
+            for perm in json.loads(self.salt_permissions):
+                if ('@runner' in perm) or ('runner' in perm):
+                    return True
+        except json.decoder.JSONDecodeError:
+            return False
+        return False
+
     class Meta:
         db_table = 'user_settings'
         app_label = 'web'

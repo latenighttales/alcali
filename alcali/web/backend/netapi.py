@@ -1,6 +1,7 @@
 import os
 import json
 from contextlib import contextmanager
+from urllib.error import URLError
 
 from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
@@ -14,13 +15,18 @@ url = 'http://{host}:{port}'.format(host=os.environ.get('SALT_HOST'),
 
 @contextmanager
 def api_connect():
+    user = get_current_user()
+    api = Pepper(url)
     try:
-        user = get_current_user()
-        api = Pepper(url)
-        api.login(user.username, user.user_settings.token, os.environ.get('SALT_AUTH'))
-    except PepperException:
-        return {'error': "Can't connect to {url}".format(url=url)}
-    yield api
+        login_ret = api.login(str(user.username), user.user_settings.token,
+                              os.environ.get('SALT_AUTH'))
+        user.user_settings.salt_permissions = json.dumps(login_ret['perms'])
+        user.save()
+        yield api
+
+    except (PepperException, ConnectionRefusedError, URLError) as e:
+        print("Can't connect to {url}: {e}".format(url=url, e=e))
+        yield
 
 
 def get_keys(refresh=False):
@@ -159,30 +165,6 @@ def manage_key(action, target, kwargs):
     with api_connect() as api:
         response = api.wheel('key.{}'.format(action), match=target, **kwargs)
     return response
-
-
-def set_perms(request):
-    with api_connect() as api:
-        user = get_current_user()
-        api = Pepper(url)
-        login_ret = api.login(str(user.username), user.user_settings.token,
-                              os.environ.get('SALT_AUTH'))
-        user.user_settings.salt_permissions = json.dumps(login_ret['perms'])
-        user.save()
-    perms = login_ret['perms']
-    request.session['perms'] = perms
-    for perm in perms:
-        if isinstance(perm, str):
-            if perm == '@wheel':
-                request.session['wheel'] = True
-            if perm == '@runner':
-                request.session['runner'] = True
-        if isinstance(perm, dict):
-            if '@wheel' in perm:
-                request.session['wheel'] = perm['@wheel']
-            if '@runner' in perm:
-                request.session['runner'] = perm['@runner']
-    return perms
 
 
 def refresh_schedules(minion=None):
