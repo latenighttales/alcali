@@ -15,7 +15,7 @@ def test_schedule_list(admin_client, schedule):
     assert response.json()['data'][0]
 
 
-def test_schedule_refresh(admin_client, minion_master):
+def test_schedule_refresh(admin_client):
     response = admin_client.post(reverse('schedule'),
                                  {'action': 'refresh', 'minion': 'master'})
     assert response.status_code == 200
@@ -44,7 +44,14 @@ def test_events(admin_client):
 def test_users(admin_client):
     response = admin_client.get(reverse('users'))
     assert response.status_code == 200
-    assert b"form-control" in response.content
+
+
+def test_users_list(admin_client):
+    response = admin_client.post(reverse('users'),
+                                 {'action': 'list'})
+    assert response.status_code == 200
+    print(response.json()['data'][0])
+    assert response.json()['data'][0]
 
 
 def test_users_form_create(admin_client):

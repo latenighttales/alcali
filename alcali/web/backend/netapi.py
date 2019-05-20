@@ -182,11 +182,10 @@ def refresh_schedules(minion=None):
         api_ret = api.local(minion, 'schedule.list', kwarg={'return_yaml': False})
     for minion_id in api_ret['return'][0]:
         # TODO: error mgmt
-        minion_instance = Minions.objects.get(minion_id=minion_id)
         minion_jobs = api_ret['return'][0][minion_id]
-        Schedule.objects.filter(minion=minion_instance).delete()
+        Schedule.objects.filter(minion=minion_id).delete()
         for job_name in minion_jobs:
-            Schedule.objects.create(minion=minion_instance,
+            Schedule.objects.create(minion=minion_id,
                                     name=job_name,
                                     job=json.dumps(minion_jobs[job_name]))
     return api_ret['return'][0]
@@ -199,15 +198,15 @@ def manage_schedules(action, name, minion):
         # If action was successful.
         if api_ret['return'][0][target]['result']:
             if 'delete' in action:
-                Schedule.objects.filter(minion__minion_id=minion, name=name).delete()
+                Schedule.objects.filter(minion=minion, name=name).delete()
             else:
                 try:
-                    sched = Schedule.objects.filter(minion__minion_id=minion,
+                    sched = Schedule.objects.filter(minion=minion,
                                                     name=name).get()
                 except Schedule.DoesNotExist:
                     refresh_schedules(minion)
                     try:
-                        sched = Schedule.objects.filter(minion__minion_id=minion,
+                        sched = Schedule.objects.filter(minion=minion,
                                                         name=name).get()
                     except Schedule.DoesNotExist:
                         return False
