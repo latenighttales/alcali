@@ -1,5 +1,3 @@
-import json
-
 import pytest
 from django.urls import reverse
 
@@ -86,7 +84,6 @@ def test_runner(admin_client):
     admin_client.get(reverse('index'), follow=True)
     response = admin_client.post(reverse('runner'), {'function_list': 'jobs.active'})
     assert response.status_code == 200
-    # assert SaltReturns.objects.filter(fun='jobs.active')
 
 
 @pytest.mark.django_db()
@@ -172,16 +169,31 @@ def test_init_db(admin_client):
     assert response.json()['desc'] == \
            Functions.objects.filter(name='key.list_all').values_list('description',
                                                                      flat=True)[0]
+    response = admin_client.get(reverse('runner'))
+    assert 'state.event' in response.context['funct_list']
+    response = admin_client.get(reverse('wheel'))
+    assert 'key.list_all' in response.context['funct_list']
+
+
+@pytest.mark.django_db()
+def test_add_minion_field(admin_client):
+    username = "admin"
+    password = "password"
+    admin_client.login(username=username, password=password)
+    response = admin_client.post(reverse('settings'),
+                                 {'name': 'highstate',
+                                  'function': 'state.show_highstate'})
+    assert response.status_code == 200
+    assert response.json()['result'] == 'updated'
+    response = admin_client.post(reverse('minions'), {'minion': 'master'})
+    assert response.status_code == 200
+    assert 'refreshed' in response.json()
 
 
 @pytest.mark.django_db()
 def test_change_notifs(admin_client, admin_user):
     """
     Default permissions are added to salt, and stored in user_settings.
-    :param client:
-    :param django_user_model:
-    :param admin_user:
-    :return:
     """
     notifs_defaults = {'notifs_created': False,
                        'notifs_published': False,
@@ -193,7 +205,8 @@ def test_change_notifs(admin_client, admin_user):
     password = "password"
     admin_client.login(username=username, password=password)
     admin_client.get(reverse('index'), follow=True)
-    response = admin_client.post(reverse('settings'), {'notifs_created': 'on'})
+    response = admin_client.post(reverse('settings'), {'notifs_created': 'on',
+                                                       'action': 'notifications'})
     assert response.status_code == 200
     assert response.json()['result'] == 'updated'
 

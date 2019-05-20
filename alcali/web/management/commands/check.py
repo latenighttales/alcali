@@ -40,4 +40,4 @@ class Command(BaseCommand):
         else:
             error = None
 
-        self.stdout.write("db:\t{}\nenv:\t{}".format(unset or "ok", error or "ok"))
+        self.stdout.write("db:\t{}\nenv:\t{}".format(error or "ok", unset or "ok"))

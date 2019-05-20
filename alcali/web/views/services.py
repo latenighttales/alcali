@@ -140,8 +140,9 @@ def settings(request):
                                                function=function,
                                                minion=minion,
                                                value="{}")
+        return JsonResponse({'result': 'updated'})
 
-    if request.method == 'POST':
+    if request.POST.get('action') == 'notifications':
         user_notifs = {}
         for status in notifs_status:
             if status.split('_')[1] in request.POST:

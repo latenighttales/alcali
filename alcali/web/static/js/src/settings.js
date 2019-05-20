@@ -4,6 +4,7 @@ userBtn.addEventListener('click', ev => {
     obj[item.name] = item.value;
     return obj;
   }, {});
+  formData.action = 'notifications';
 
   ev.preventDefault();
   $.ajax({

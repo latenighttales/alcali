@@ -1,5 +1,6 @@
 from django.urls import reverse
 
+from alcali.web.models.alcali import MinionsCustomFields
 from ..web.forms import AlcaliUserForm
 
 
@@ -30,9 +31,50 @@ def test_schedule_manage(admin_client, minion_master):
     assert response.status_code == 200
 
 
+def test_conformity_add(admin_client, minion_master):
+    response = admin_client.post(reverse('run'), {'minion_list': '*',
+                                                  'function_list': 'grains.item',
+                                                  'args': 'os'})
+    response = admin_client.post(reverse('conformity'),
+                                 {'name': 'os',
+                                  'function': 'grains.item os'})
+    assert response.status_code == 200
+    assert minion_master.custom_conformity('grains.item', 'os')
+    response = admin_client.get(reverse('index'))
+    assert 'OS' in response.context['conformity_name']
+    assert response.context['conformity'][1]['Debian'] == 1
+
+
 def test_settings(admin_client):
     response = admin_client.get(reverse('settings'))
     assert response.status_code == 200
+
+
+def test_settings_notifs(admin_client):
+    response = admin_client.post(reverse('settings'),
+                                 {'action': 'notifications',
+                                  'created': 'on'})
+    assert response.status_code == 200
+    assert response.json()['result'] == 'updated'
+
+
+def test_settings_minion_field(admin_client, minion_master):
+    response = admin_client.post(reverse('settings'),
+                                 {'name': 'highstate',
+                                  'function': 'state.show_highstate'})
+    assert response.status_code == 200
+    assert response.json()['result'] == 'updated'
+    response = admin_client.post(reverse('minions'), {'minion': 'master'})
+    assert response.status_code == 200
+    assert 'refreshed' in response.json()
+    assert MinionsCustomFields.objects.count() > 0
+    response = admin_client.post(reverse('settings'),
+                                 {'name': 'foo',
+                                  'function': 'bar'})
+    response = admin_client.post(reverse('settings'),
+                                 {'action': 'delete_field',
+                                  'target': 'foo'})
+    assert 'result' in response.json()
 
 
 def test_events(admin_client):
@@ -50,8 +92,7 @@ def test_users_list(admin_client):
     response = admin_client.post(reverse('users'),
                                  {'action': 'list'})
     assert response.status_code == 200
-    print(response.json()['data'][0])
-    assert response.json()['data'][0]
+    assert 'admin' in response.json()['data'][0]
 
 
 def test_users_form_create(admin_client):
