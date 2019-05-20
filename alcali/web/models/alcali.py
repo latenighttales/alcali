@@ -111,7 +111,7 @@ class MinionsCustomFields(models.Model):
 
 
 class Schedule(models.Model):
-    minion = models.ForeignKey(Minions, on_delete=models.CASCADE)
+    minion = models.CharField(max_length=128, null=False, blank=False)
     name = models.CharField(max_length=255, blank=False, null=False)
     job = models.TextField()
 

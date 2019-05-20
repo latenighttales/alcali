@@ -3,7 +3,7 @@ import json
 import pytest
 from django.urls import reverse
 
-from alcali.web.models.alcali import Keys, Minions, Functions, UserSettings, Schedule
+from alcali.web.models.alcali import Keys, Minions, Functions, Schedule
 from alcali.web.models.salt import SaltReturns
 
 
@@ -149,28 +149,29 @@ def test_init_db(admin_client):
     password = "password"
     admin_client.login(username=username, password=password)
     admin_client.get(reverse('index'), follow=True)
-    response = admin_client.post(reverse('settings'), {'action': 'init_db'})
+    response = admin_client.post(reverse('settings'), {'action': 'init_db',
+                                                       'target': 'master'})
     assert response.status_code == 200
-    # for funct_type in ['modules', 'runner', 'wheel']:
-    #     assert Functions.objects.filter(type=funct_type).count() > 0
+    for funct_type in ['modules', 'runner', 'wheel']:
+        assert Functions.objects.filter(type=funct_type).count() > 0
     # Assert tooltips are working.
     response = admin_client.post(reverse('run'), {'tooltip': 'grains.item'})
     assert response.status_code == 200
-    # assert response.json()['desc'] == \
-    #        Functions.objects.filter(name='grains.item').values_list('description',
-    #                                                                 flat=True)[0]
-    #
-    # response = admin_client.post(reverse('runner'), {'tooltip': 'state.event'})
-    # assert response.status_code == 200
-    # assert response.json()['desc'] == \
-    #        Functions.objects.filter(name='state.event').values_list('description',
-    #                                                                 flat=True)[0]
-    #
-    # response = admin_client.post(reverse('wheel'), {'tooltip': 'key.list_all'})
-    # assert response.status_code == 200
-    # assert response.json()['desc'] == \
-    #        Functions.objects.filter(name='key.list_all').values_list('description',
-    #                                                                  flat=True)[0]
+    assert response.json()['desc'] == \
+           Functions.objects.filter(name='grains.item').values_list('description',
+                                                                    flat=True)[0]
+
+    response = admin_client.post(reverse('runner'), {'tooltip': 'state.event'})
+    assert response.status_code == 200
+    assert response.json()['desc'] == \
+           Functions.objects.filter(name='state.event').values_list('description',
+                                                                    flat=True)[0]
+
+    response = admin_client.post(reverse('wheel'), {'tooltip': 'key.list_all'})
+    assert response.status_code == 200
+    assert response.json()['desc'] == \
+           Functions.objects.filter(name='key.list_all').values_list('description',
+                                                                     flat=True)[0]
 
 
 @pytest.mark.django_db()
@@ -195,7 +196,6 @@ def test_change_notifs(admin_client, admin_user):
     response = admin_client.post(reverse('settings'), {'notifs_created': 'on'})
     assert response.status_code == 200
     assert response.json()['result'] == 'updated'
-    # print(UserSettings.objects.filter(user=admin_user).values())
 
 
 @pytest.mark.django_db()
@@ -210,7 +210,8 @@ def test_schedules(admin_client, run_sql):
         {'command': "salt master schedule.add job1 function='test.ping' seconds=3600"}
     )
     assert response.status_code == 200
-    # response = admin_client.post('/schedule', {'action': 'refresh'})
-    # assert response.status_code == 200
-    # assert Schedule.objects.count() > 0
+    response = admin_client.post('/schedule', {'action': 'refresh',
+                                               'minion': 'master'})
+    assert response.status_code == 200
+    assert len(Schedule.objects.all()) > 0
     run_sql("TRUNCATE TABLE `salt_returns`")

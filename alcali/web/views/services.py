@@ -35,7 +35,7 @@ def schedule(request):
         ret = {"data": [], "columns": ['target']}
         schedule_list = Schedule.objects.all()
         for sched in schedule_list:
-            data = [str(sched.minion)]
+            data = [sched.minion]
             for key, value in sched.loaded_job().items():
                 if key not in ret["columns"]:
                     ret["columns"].append(key)
