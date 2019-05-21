@@ -68,12 +68,14 @@ def test_run_highstate(admin_client):
 
 @pytest.mark.django_db()
 def test_runner(admin_client):
+    response = admin_client.get(reverse("index"), follow=True)
     response = admin_client.post(reverse("runner"), {"function_list": "jobs.active"})
     assert response.status_code == 200
 
 
 @pytest.mark.django_db()
 def test_wheel(admin_client):
+    response = admin_client.get(reverse("index"), follow=True)
     response = admin_client.post(
         reverse("wheel"), {"function_list": "key.name_match", "args": "master"}
     )

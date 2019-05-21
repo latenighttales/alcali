@@ -21,7 +21,7 @@ def test_check_env_fail():
     call_command("check", stdout=out)
     assert "db:\tok" in out.getvalue()
     assert "SALT_USER" in out.getvalue()
-    os.environ["SALT_USER"] = salt_user
+    os.environ["SALT_USER"] = str(salt_user)
 
 
 @pytest.mark.django_db

@@ -1,7 +1,7 @@
 language: python
+python: 3.6
 env:
   - DOCKER_COMPOSE_VERSION=1.23.2
-
 
 services: docker
 
@@ -19,9 +19,9 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-  # - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 
 install:
+  - pip install black
   - docker-compose up --build -d
 
 script:
@@ -30,6 +30,3 @@ script:
 after_failure:
   - docker-compose logs
 
-#after_success:
-  # Deploy image
-  # - if [[ $TRAVIS_BRANCH == '2019.2.0' ]]; then docker tag "latenighttales/alcali:$TRAVIS_BRANCH" "latenighttales/alcali:$TRAVIS_BRANCH-latest" && docker push "latenighttales/alcali:$TRAVIS_BRANCH-latest" ; fi
