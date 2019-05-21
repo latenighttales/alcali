@@ -2,7 +2,7 @@
 import os
 import sys
 
-DJANGO_SETTINGS = os.environ.get("DJANGO_SETTINGS", "alcali.config.settings.dev")
+DJANGO_SETTINGS = os.environ.get("DJANGO_SETTINGS", "alcali.config.settings.prod")
 
 
 def manage():
