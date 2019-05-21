@@ -10,7 +10,7 @@ from ..models.alcali import Schedule, UserSettings, Minions, MinionsCustomFields
 
 # if settings.ALCALI_BACKEND == 'netapi':
 from ..backend.netapi import get_events, refresh_schedules, manage_schedules, init_db, \
-    highstate_schedules
+    create_schedules
 
 
 # elif settings.ALCALI_BACKEND == 'pyapi':
@@ -54,7 +54,7 @@ def conformity(request):
         target = request.POST.get('target')
         if not target:
             target = '*'
-        highstate_schedules(target, cron)
+        create_schedules(target, cron)
 
     if request.POST.get('action') == 'delete_field' and request.POST.get('target'):
         target = request.POST.get('target')

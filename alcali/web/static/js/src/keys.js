@@ -1,5 +1,5 @@
 function manageKey(action, target) {
-  console.log(action, target);
+  showNotification('bg-black', '<b>action: </b>' + action + ' on ' + target + ' submitted', 'bottom', 'center');
   $.ajax({
     url: '/wheel',
     type: 'POST',
@@ -11,11 +11,11 @@ function manageKey(action, target) {
 
     // handle a successful response
     success: function(ret) {
-      console.log(ret);
       if (ret.hasOwnProperty('error')) {
-        showNotification('bg-red', 'error:' + ret.error, 'bottom', 'center');
+        showNotification('bg-red', '<b>error: </b>' + ret.error, 'bottom', 'center');
       } else {
-        window.location.reload();
+        showNotification('bg-black', '<b>action: </b>' + action + ' on ' + target + ' done', 'bottom', 'center');
+        tableKeys.ajax.reload();
       }
     },
 
@@ -27,8 +27,9 @@ function manageKey(action, target) {
   });
 }
 
+let tableKeys;
 function createKeysTable() {
-  $('.js-basic-example').DataTable({
+  tableKeys = $('.js-basic-example').DataTable({
     responsive: true,
     "ajax": {
       "url": "/keys",

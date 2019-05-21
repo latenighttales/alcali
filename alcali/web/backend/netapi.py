@@ -168,12 +168,15 @@ def manage_key(action, target, kwargs):
 
 
 def set_perms():
-    user = get_current_user()
-    api = Pepper(url)
-    login_ret = api.login(str(user.username), user.user_settings.token,
-                          os.environ.get('SALT_AUTH'))
-    user.user_settings.salt_permissions = json.dumps(login_ret['perms'])
-    user.save()
+    try:
+        user = get_current_user()
+        api = Pepper(url)
+        login_ret = api.login(str(user.username), user.user_settings.token,
+                              os.environ.get('SALT_AUTH'))
+        user.user_settings.salt_permissions = json.dumps(login_ret['perms'])
+        user.save()
+    except URLError:
+        pass
 
 
 def refresh_schedules(minion=None):
@@ -219,12 +222,12 @@ def manage_schedules(action, name, minion):
                 sched.save()
 
 
-def highstate_schedules(target, cron):
+def create_schedules(target, cron, function='state.apply'):
     comm_inst = RawCommand(
-        "salt {} schedule.add highstate_conformity function='state.apply'".format(
-            target))
+        "salt {} schedule.add highstate_conformity function='{}'".format(
+            target, function))
     parsed = comm_inst.parse()
-    parsed[0]['arg'].append("job_args='test=True'")
+    parsed[0]['arg'].append("job_kwargs={'test': true}")
     parsed[0]['arg'].append("cron={}".format(cron))
     print(parsed)
     custom_field_return = run_raw(parsed)
