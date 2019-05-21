@@ -9,9 +9,15 @@ def test_user_settings_attr(django_user_model):
     username = "user1"
     password = "verystrongpasswordindeed"
     user1 = django_user_model.objects.create_user(username=username, password=password)
-    assert hasattr(user1, 'user_settings')
-    attr_list = ['token', 'created', 'notifs_created', 'notifs_published',
-                 'notifs_returned', 'notifs_event']
+    assert hasattr(user1, "user_settings")
+    attr_list = [
+        "token",
+        "created",
+        "notifs_created",
+        "notifs_published",
+        "notifs_returned",
+        "notifs_event",
+    ]
     for attr in attr_list:
         assert hasattr(user1.user_settings, attr)
 

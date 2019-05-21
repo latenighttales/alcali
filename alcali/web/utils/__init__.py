@@ -12,7 +12,7 @@ from ..models.alcali import Minions, Conformity
 
 
 def auto_group(minion_list):
-    return SequenceMatcher(None, [i for i in minion_list]).find_longest_match([0, ])
+    return SequenceMatcher(None, [i for i in minion_list]).find_longest_match([0])
 
 
 # Find all occurrences of a key in nested python dictionaries and lists.
@@ -37,39 +37,51 @@ def graph_data(period=7, **kwargs):
     """
     period_frame = timezone.now().date() - timedelta(days=period)
 
-    if kwargs.get('fun') == 'highstate':
-        kwargs.pop('fun')
-        data = SaltReturns.objects.filter(
-            Q(fun='state.apply') | Q(fun='state.highstate'),
-            alter_time__gt=period_frame, **kwargs).extra(
-            {"day": "date(alter_time)"}).values('day').annotate(
-            count=Count('jid')).annotate(
-            error=Count('success', filter=Q(success='0'))).order_by('day')
+    if kwargs.get("fun") == "highstate":
+        kwargs.pop("fun")
+        data = (
+            SaltReturns.objects.filter(
+                Q(fun="state.apply") | Q(fun="state.highstate"),
+                alter_time__gt=period_frame,
+                **kwargs
+            )
+            .extra({"day": "date(alter_time)"})
+            .values("day")
+            .annotate(count=Count("jid"))
+            .annotate(error=Count("success", filter=Q(success="0")))
+            .order_by("day")
+        )
 
-    elif kwargs.get('fun') == 'other':
-        kwargs.pop('fun')
-        data = SaltReturns.objects.filter(
-            alter_time__gt=period_frame, **kwargs).exclude(
-            Q(fun='state.apply') | Q(fun='state.highstate')).extra(
-            {"day": "date(alter_time)"}).values('day').annotate(
-            count=Count('jid')).annotate(
-            error=Count('success', filter=Q(success='0'))).order_by('day')
+    elif kwargs.get("fun") == "other":
+        kwargs.pop("fun")
+        data = (
+            SaltReturns.objects.filter(alter_time__gt=period_frame, **kwargs)
+            .exclude(Q(fun="state.apply") | Q(fun="state.highstate"))
+            .extra({"day": "date(alter_time)"})
+            .values("day")
+            .annotate(count=Count("jid"))
+            .annotate(error=Count("success", filter=Q(success="0")))
+            .order_by("day")
+        )
 
     else:
-        kwargs.pop('fun')
-        data = SaltReturns.objects.filter(
-            alter_time__gt=period_frame, **kwargs).extra(
-            {"day": "date(alter_time)"}).values('day').annotate(
-            count=Count('jid')).annotate(
-            error=Count('success', filter=Q(success='0'))).order_by('day')
+        kwargs.pop("fun")
+        data = (
+            SaltReturns.objects.filter(alter_time__gt=period_frame, **kwargs)
+            .extra({"day": "date(alter_time)"})
+            .values("day")
+            .annotate(count=Count("jid"))
+            .annotate(error=Count("success", filter=Q(success="0")))
+            .order_by("day")
+        )
 
     days = []
     count = []
     error_count = []
     for res in data:
-        days.append(str(res['day']))
-        count.append(res['count'])
-        error_count.append(res['error'])
+        days.append(str(res["day"]))
+        count.append(res["count"])
+        error_count.append(res["error"])
     for idx, date in enumerate(period_frame + timedelta(n) for n in range(period)):
         if str(date) not in days:
             days.insert(idx, str(date))
@@ -81,18 +93,18 @@ def graph_data(period=7, **kwargs):
 
 def render_conformity():
     minions_all = Minions.objects.all()
-    conformity_fields = Conformity.objects.values('name', 'function')
+    conformity_fields = Conformity.objects.values("name", "function")
     if not conformity_fields:
         return [], []
-    conformity_names = [i['name'].upper() for i in conformity_fields]
+    conformity_names = [i["name"].upper() for i in conformity_fields]
     ret = []
     for field in conformity_fields:
         field_ret = []
-        args = field['function'].split(' ')
+        args = field["function"].split(" ")
         kwargs = {}
         for arg in args:
-            if '=' in arg:
-                kwargs[arg.split('=')[0]] = arg.split('=')[1]
+            if "=" in arg:
+                kwargs[arg.split("=")[0]] = arg.split("=")[1]
                 args.remove(arg)
 
         for minion in minions_all:

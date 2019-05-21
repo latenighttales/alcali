@@ -2,10 +2,10 @@
 import os
 import sys
 
-DJANGO_SETTINGS = os.environ.get('DJANGO_SETTINGS', 'config.settings.dev')
+DJANGO_SETTINGS = os.environ.get("DJANGO_SETTINGS", "config.settings.dev")
 
-if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', DJANGO_SETTINGS)
+if __name__ == "__main__":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", DJANGO_SETTINGS)
 
     try:
         from django.core.management import execute_from_command_line

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-'''
+"""
 Provide authentication using MySQL.
 
 When using MySQL as an authentication backend, you will need to create or
@@ -47,7 +47,7 @@ Enable MySQL authentication.
           - test.*
 
 :depends:   - MySQL-python Python module
-'''
+"""
 
 from __future__ import absolute_import
 import logging
@@ -66,7 +66,7 @@ try:
 except ImportError:
     HAS_MYSQL = False
 
-__virtualname__ = 'alcali'
+__virtualname__ = "alcali"
 
 
 def __virtual__():
@@ -76,32 +76,34 @@ def __virtual__():
 
 
 def _get_options():
-    '''
+    """
     Returns options used for the MySQL connection.
-    '''
+    """
 
     _options = {}
-    defaults = {'host': 'salt',
-                'user': 'salt',
-                'pass': 'salt',
-                'db': 'salt',
-                'port': 3306,
-                'ssl_ca': None,
-                'ssl_cert': None,
-                'ssl_key': None}
+    defaults = {
+        "host": "salt",
+        "user": "salt",
+        "pass": "salt",
+        "db": "salt",
+        "port": 3306,
+        "ssl_ca": None,
+        "ssl_cert": None,
+        "ssl_key": None,
+    }
 
     for k, v in six.iteritems(defaults):
         try:
-            _options[k] = __opts__['{}.{}'.format('mysql', k)]
+            _options[k] = __opts__["{}.{}".format("mysql", k)]
         except KeyError:
             _options[k] = v
 
     # post processing
     for k, v in six.iteritems(_options):
-        if isinstance(v, six.string_types) and v.lower() == 'none':
+        if isinstance(v, six.string_types) and v.lower() == "none":
             # Ensure 'None' is rendered as None
             _options[k] = None
-        if k == 'port':
+        if k == "port":
             # Ensure port is an int
             _options[k] = int(v)
 
@@ -110,32 +112,35 @@ def _get_options():
 
 @contextmanager
 def _get_serv():
-    '''
+    """
     Return a mysql cursor
-    '''
+    """
     _options = _get_options()
 
-    log.debug('Generating new MySQL connection pool')
+    log.debug("Generating new MySQL connection pool")
     try:
         # An empty ssl_options dictionary passed to MySQLdb.connect will
         # effectively connect w/o SSL.
         ssl_options = {}
-        if _options.get('ssl_ca'):
-            ssl_options['ca'] = _options.get('ssl_ca')
-        if _options.get('ssl_cert'):
-            ssl_options['cert'] = _options.get('ssl_cert')
-        if _options.get('ssl_key'):
-            ssl_options['key'] = _options.get('ssl_key')
-        conn = MySQLdb.connect(host=_options.get('host'),
-                               user=_options.get('user'),
-                               passwd=_options.get('pass'),
-                               db=_options.get('db'),
-                               port=_options.get('port'),
-                               ssl=ssl_options)
+        if _options.get("ssl_ca"):
+            ssl_options["ca"] = _options.get("ssl_ca")
+        if _options.get("ssl_cert"):
+            ssl_options["cert"] = _options.get("ssl_cert")
+        if _options.get("ssl_key"):
+            ssl_options["key"] = _options.get("ssl_key")
+        conn = MySQLdb.connect(
+            host=_options.get("host"),
+            user=_options.get("user"),
+            passwd=_options.get("pass"),
+            db=_options.get("db"),
+            port=_options.get("port"),
+            ssl=ssl_options,
+        )
 
     except MySQLdb.connections.OperationalError as exc:
         raise salt.exceptions.SaltMasterError(
-            'MySQL returner could not connect to database: {exc}'.format(exc=exc))
+            "MySQL returner could not connect to database: {exc}".format(exc=exc)
+        )
 
     cursor = conn.cursor()
 
@@ -148,12 +153,14 @@ def _get_serv():
 
 
 def auth(username, password):
-    '''
+    """
     Authenticate using a MySQL user table
-    '''
+    """
 
     with _get_serv() as cur:
-        sql = "SELECT c.token FROM user_settings c INNER JOIN auth_user a ON c.user_id = a.id AND a.username = '{}'".format(username)
+        sql = "SELECT c.token FROM user_settings c INNER JOIN auth_user a ON c.user_id = a.id AND a.username = '{}'".format(
+            username
+        )
         cur.execute(sql)
 
         if cur.rowcount == 1:
@@ -161,7 +168,7 @@ def auth(username, password):
             user_token = [i for i in user_token]
             user_token = str(user_token[0])
             if str(user_token) == str(password):
-                log.debug('Alcali authentication successful')
+                log.debug("Alcali authentication successful")
                 return True
 
     return False

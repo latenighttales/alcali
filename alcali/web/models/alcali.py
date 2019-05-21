@@ -16,11 +16,11 @@ class Functions(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return '{}'.format(self.name)
+        return "{}".format(self.name)
 
     class Meta:
-        db_table = 'salt_functions'
-        app_label = 'web'
+        db_table = "salt_functions"
+        app_label = "web"
 
 
 class Minions(models.Model):
@@ -35,65 +35,73 @@ class Minions(models.Model):
         return json.loads(self.pillar)
 
     def last_job(self):
-        return SaltReturns.objects.filter(
-            id=self.minion_id
-        ).order_by('-alter_time').first()
+        return (
+            SaltReturns.objects.filter(id=self.minion_id)
+            .order_by("-alter_time")
+            .first()
+        )
 
     def last_highstate(self):
-        return SaltReturns.objects.filter(
-            Q(fun='state.apply') | Q(fun='state.highstate'), id=self.minion_id
-        ).order_by('-alter_time').first()
+        return (
+            SaltReturns.objects.filter(
+                Q(fun="state.apply") | Q(fun="state.highstate"), id=self.minion_id
+            )
+            .order_by("-alter_time")
+            .first()
+        )
 
     def conformity(self):
         last_highstate = self.last_highstate()
         if not last_highstate:
             return False
         highstate_ret = last_highstate.loaded_ret()
-        for state in highstate_ret['return']:
-            if not highstate_ret['return'][state]['result']:
+        for state in highstate_ret["return"]:
+            if not highstate_ret["return"][state]["result"]:
                 return False
         return True
 
     def custom_conformity(self, fun, *args, **kwargs):
-        jobs = SaltReturns.objects.filter(fun=fun,
-                                          id=self.minion_id).order_by('-alter_time')
+        jobs = SaltReturns.objects.filter(fun=fun, id=self.minion_id).order_by(
+            "-alter_time"
+        )
         # TODO: kwargs...
         if args or kwargs:
             for job in jobs:
                 ret = job.loaded_ret()
                 # if provided args are the same.
-                if not list(set(args) ^ set(
-                        [i for i in ret['fun_args'] if isinstance(i, str)])):
-                    return ret['return']
+                if not list(
+                    set(args) ^ set([i for i in ret["fun_args"] if isinstance(i, str)])
+                ):
+                    return ret["return"]
         else:
-            return [job.loaded_ret()['return'] for job in jobs.first()]
+            return [job.loaded_ret()["return"] for job in jobs.first()]
 
     def __str__(self):
-        return '{}'.format(self.minion_id)
+        return "{}".format(self.minion_id)
 
     class Meta:
-        db_table = 'salt_minions'
-        app_label = 'web'
+        db_table = "salt_minions"
+        app_label = "web"
 
 
 class Keys(models.Model):
     KEY_STATUS = (
-        ('accepted', 'accepted'),
-        ('rejected', 'rejected'),
-        ('denied', 'denied'),
-        ('unaccepted', 'unaccepted'),
+        ("accepted", "accepted"),
+        ("rejected", "rejected"),
+        ("denied", "denied"),
+        ("unaccepted", "unaccepted"),
     )
     minion_id = models.CharField(max_length=255)
     pub = models.TextField(blank=True)
     status = models.CharField(max_length=64, choices=KEY_STATUS)
 
     def __str__(self):
-        return '{}'.format(self.minion_id)
+        return "{}".format(self.minion_id)
 
     class Meta:
         # TODO add constraints (only one accepted per minion_id)
-        db_table = 'salt_keys'
-        app_label = 'web'
+        db_table = "salt_keys"
+        app_label = "web"
 
 
 class MinionsCustomFields(models.Model):
@@ -103,11 +111,11 @@ class MinionsCustomFields(models.Model):
     function = models.CharField(max_length=255)
 
     def __str__(self):
-        return '{}: {}'.format(self.name, self.function)
+        return "{}: {}".format(self.name, self.function)
 
     class Meta:
-        db_table = 'minions_custom_fields'
-        app_label = 'web'
+        db_table = "minions_custom_fields"
+        app_label = "web"
 
 
 class Schedule(models.Model):
@@ -119,7 +127,7 @@ class Schedule(models.Model):
         return json.loads(self.job)
 
     class Meta:
-        app_label = 'web'
+        app_label = "web"
 
 
 def generate_key():
@@ -130,10 +138,10 @@ class UserSettings(models.Model):
     """
     The default authorization token model.
     """
-    user = models.OneToOneField(User,
-                                primary_key=True,
-                                related_name='user_settings',
-                                on_delete=models.CASCADE)
+
+    user = models.OneToOneField(
+        User, primary_key=True, related_name="user_settings", on_delete=models.CASCADE
+    )
     token = models.CharField(max_length=40)
     created = models.DateTimeField(auto_now_add=True)
     notifs_created = models.BooleanField(default=False)
@@ -145,7 +153,7 @@ class UserSettings(models.Model):
     def wheel(self):
         try:
             for perm in json.loads(self.salt_permissions):
-                if ('@wheel' in perm) or ('wheel' in perm):
+                if ("@wheel" in perm) or ("wheel" in perm):
                     return True
         except json.decoder.JSONDecodeError:
             return False
@@ -154,15 +162,19 @@ class UserSettings(models.Model):
     def runner(self):
         try:
             for perm in json.loads(self.salt_permissions):
-                if ('@runner' in perm) or ('runner' in perm):
+                if ("@runner" in perm) or ("runner" in perm):
                     return True
         except json.decoder.JSONDecodeError:
             return False
         return False
 
+    def generate_token(self):
+        self.token = generate_key()
+        self.save()
+
     class Meta:
-        db_table = 'user_settings'
-        app_label = 'web'
+        db_table = "user_settings"
+        app_label = "web"
 
     def save(self, *args, **kwargs):
         if not self.token:
@@ -178,5 +190,5 @@ class Conformity(models.Model):
     function = models.CharField(max_length=255)
 
     class Meta:
-        db_table = 'conformity'
-        app_label = 'web'
+        db_table = "conformity"
+        app_label = "web"

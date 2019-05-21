@@ -9,4 +9,4 @@ def is_dict(var):
     return isinstance(var, dict)
 
 
-register.filter('is_dict', is_dict)
+register.filter("is_dict", is_dict)

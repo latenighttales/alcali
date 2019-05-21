@@ -2,11 +2,11 @@
 import os
 import sys
 
-DJANGO_SETTINGS = os.environ.get('DJANGO_SETTINGS', 'alcali.config.settings.dev')
+DJANGO_SETTINGS = os.environ.get("DJANGO_SETTINGS", "alcali.config.settings.dev")
 
 
 def manage():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', DJANGO_SETTINGS)
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", DJANGO_SETTINGS)
 
     try:
         from django.core.management import execute_from_command_line

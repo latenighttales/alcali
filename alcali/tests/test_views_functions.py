@@ -7,14 +7,13 @@ def test_dummy_clean(run_sql):
 
 
 def test_run(admin_client):
-    response = admin_client.get(reverse('run'))
+    response = admin_client.get(reverse("run"))
     assert response.status_code == 200
 
 
 def test_run_raw(admin_client):
     response = admin_client.post(
-        reverse('run'),
-        {'command': "salt '*' cmd.run 'echo foo'"}
+        reverse("run"), {"command": "salt '*' cmd.run 'echo foo'"}
     )
     assert response.status_code == 200
 
@@ -32,8 +31,7 @@ def test_run_raw(admin_client):
 
 def test_runner_raw(admin_client):
     response = admin_client.post(
-        reverse('run'),
-        {'command': "salt --client=runner pillar.show_top"}
+        reverse("run"), {"command": "salt --client=runner pillar.show_top"}
     )
     assert response.status_code == 200
     assert b"base" in response.content
@@ -53,10 +51,10 @@ def test_runner_raw(admin_client):
 #     assert b"master" in response.content
 #
 
+
 def test_wheel_raw(admin_client):
     response = admin_client.post(
-        reverse('run'),
-        {'command': "salt --client=wheel key.list_all"}
+        reverse("run"), {"command": "salt --client=wheel key.list_all"}
     )
     assert response.status_code == 200
     assert b"master" in response.content
@@ -65,4 +63,3 @@ def test_wheel_raw(admin_client):
 def test_dummy_clean_out(run_sql):
     run_sql("TRUNCATE TABLE `salt_returns`")
     assert True is True
-

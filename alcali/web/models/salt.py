@@ -11,22 +11,22 @@ class Jids(models.Model):
         return json.loads(self.load)
 
     def user(self):
-        if 'user' in self.loaded_load():
-            return self.loaded_load()['user']
+        if "user" in self.loaded_load():
+            return self.loaded_load()["user"]
         else:
-            return ''
+            return ""
 
     class Meta:
-        app_label = 'web'
+        app_label = "web"
         managed = False
-        db_table = 'jids'
+        db_table = "jids"
 
 
 class SaltReturns(models.Model):
     fun = models.CharField(max_length=50, db_index=True)
     jid = models.CharField(max_length=255, db_index=True)
     # Field renamed because it was a Python reserved word.
-    return_field = models.TextField(db_column='return')
+    return_field = models.TextField(db_column="return")
     id = models.CharField(max_length=255, primary_key=True)
     success = models.CharField(max_length=10)
     full_ret = models.TextField()
@@ -41,20 +41,20 @@ class SaltReturns(models.Model):
 
     def success_bool(self):
         ret = self.loaded_ret()
-        if 'success' in ret:
-            return ret['success']
-        elif 'return' in ret:
-            if 'success' in ret['return']:
-                return ret['return']['success']
-            elif 'result' in ret['return']:
-                return ret['return']['result']
+        if "success" in ret:
+            return ret["success"]
+        elif "return" in ret:
+            if "success" in ret["return"]:
+                return ret["return"]["success"]
+            elif "result" in ret["return"]:
+                return ret["return"]["result"]
         else:
             return self.jid
 
     class Meta:
-        app_label = 'web'
+        app_label = "web"
         managed = False
-        db_table = 'salt_returns'
+        db_table = "salt_returns"
 
 
 class SaltEvents(models.Model):
@@ -68,6 +68,6 @@ class SaltEvents(models.Model):
         return json.loads(self.data)
 
     class Meta:
-        app_label = 'web'
+        app_label = "web"
         managed = False
-        db_table = 'salt_events'
+        db_table = "salt_events"

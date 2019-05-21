@@ -13,26 +13,29 @@ from .fixtures import *
 @pytest.fixture()
 def run_sql():
     def _run_sql(sql):
-        conn = MySQLdb.connect(host=os.environ['DB_HOST'],
-                               user=os.environ['DB_USER'],
-                               passwd=os.environ['DB_PASS'],
-                               db=os.environ['DB_NAME'],
-                               port=int(os.environ['DB_PORT']),
-                               ssl={})
+        conn = MySQLdb.connect(
+            host=os.environ["DB_HOST"],
+            user=os.environ["DB_USER"],
+            passwd=os.environ["DB_PASS"],
+            db=os.environ["DB_NAME"],
+            port=int(os.environ["DB_PORT"]),
+            ssl={},
+        )
         cursor = conn.cursor()
         cursor.execute(sql)
         conn.commit()
+
     return _run_sql
 
 
 # noinspection SqlNoDataSourceInspection
-@pytest.yield_fixture(scope='session', autouse=True)
+@pytest.yield_fixture(scope="session", autouse=True)
 def django_db_setup(django_db_blocker):
-    settings.DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': os.environ['DB_HOST'],
-        'NAME': os.environ['DB_NAME'],
-        'PORT': int(os.environ['DB_PORT']),
+    settings.DATABASES["default"] = {
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": os.environ["DB_HOST"],
+        "NAME": os.environ["DB_NAME"],
+        "PORT": int(os.environ["DB_PORT"]),
     }
     settings.USE_TZ = False
 
@@ -41,23 +44,28 @@ def django_db_setup(django_db_blocker):
     for connection in connections.all():
         connection.close()
 
-    conn = MySQLdb.connect(host=os.environ['DB_HOST'],
-                           user=os.environ['DB_USER'],
-                           passwd=os.environ['DB_PASS'],
-                           db=os.environ['DB_NAME'],
-                           port=int(os.environ['DB_PORT']),
-                           ssl={})
+    conn = MySQLdb.connect(
+        host=os.environ["DB_HOST"],
+        user=os.environ["DB_USER"],
+        passwd=os.environ["DB_PASS"],
+        db=os.environ["DB_NAME"],
+        port=int(os.environ["DB_PORT"]),
+        ssl={},
+    )
     cursor = conn.cursor()
     cursor.execute("DROP DATABASE IF EXISTS  `salt`")
     cursor.execute("CREATE DATABASE `salt`")
     cursor.execute("USE `salt`")
-    cursor.execute('''CREATE TABLE `jids` (
+    cursor.execute(
+        """CREATE TABLE `jids` (
                         `jid` varchar(255) NOT NULL,
                         `load` mediumtext NOT NULL,
                         UNIQUE KEY `jid` (`jid`)
-                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8''')
+                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8"""
+    )
 
-    cursor.execute('''CREATE TABLE `salt_returns` (
+    cursor.execute(
+        """CREATE TABLE `salt_returns` (
                         `fun` varchar(50) NOT NULL,
                         `jid` varchar(255) NOT NULL,
                         `return` mediumtext NOT NULL,
@@ -68,9 +76,11 @@ def django_db_setup(django_db_blocker):
                         KEY `id` (`id`),
                         KEY `jid` (`jid`),
                         KEY `fun` (`fun`)
-                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8''')
+                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8"""
+    )
 
-    cursor.execute('''CREATE TABLE `salt_events` (
+    cursor.execute(
+        """CREATE TABLE `salt_events` (
                         `id` BIGINT NOT NULL AUTO_INCREMENT,
                         `tag` varchar(255) NOT NULL,
                         `data` mediumtext NOT NULL,
@@ -78,16 +88,18 @@ def django_db_setup(django_db_blocker):
                         `master_id` varchar(255) NOT NULL,
                         PRIMARY KEY (`id`),
                         KEY `tag` (`tag`)
-                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8''')
+                      ) ENGINE=InnoDB DEFAULT CHARSET=utf8"""
+    )
     conn.commit()
 
     with django_db_blocker.unblock():
-        call_command('migrate', verbosity=0, interactive=False)
-        User.objects.filter(username='admin').count() or User.objects.create_superuser(
-            'admin', 'admin@example.com', 'password')
+        call_command("migrate", verbosity=0, interactive=False)
+        User.objects.filter(username="admin").count() or User.objects.create_superuser(
+            "admin", "admin@example.com", "password"
+        )
         client = Client()
         username = "admin"
         password = "password"
         client.login(username=username, password=password)
-        client.get('/', follow=True)
-        client.post('/wheel', {'action': 'reject', 'target': '*'})
+        client.get("/", follow=True)
+        client.post("/wheel", {"action": "reject", "target": "*"})

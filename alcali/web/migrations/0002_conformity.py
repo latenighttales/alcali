@@ -5,20 +5,24 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('web', '0001_squashed_0009_auto_20190428_0907'),
-    ]
+    dependencies = [("web", "0001_squashed_0009_auto_20190428_0907")]
 
     operations = [
         migrations.CreateModel(
-            name='Conformity',
+            name="Conformity",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('function', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("function", models.CharField(max_length=255)),
             ],
-            options={
-                'db_table': 'conformity',
-            },
-        ),
+            options={"db_table": "conformity"},
+        )
     ]
