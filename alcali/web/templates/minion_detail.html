@@ -237,7 +237,6 @@
 {% block js %}
   <script>
     let customFields = {{ custom_fields_list|safe }};
-    let token = '{{ csrf_token }}';
     let minionId = '{{ minion_id }}';
   </script>
   <!-- Jquery DataTable Plugin Js -->

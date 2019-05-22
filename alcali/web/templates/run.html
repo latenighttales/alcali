@@ -142,7 +142,6 @@
   <script>
       let nodeGroups = {{ nodegroups|safe }};
       let getParams = {{ get_params|safe }};
-      let token = '{{ csrf_token }}';
       let minions = [{% for i in minion_list %}'{{ i }}', {% endfor %}];
       let func = [{% for i in funct_list %}'{{ i }}', {% endfor %}];
   </script>

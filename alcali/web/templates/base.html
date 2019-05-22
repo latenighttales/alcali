@@ -15,6 +15,11 @@
         type="text/css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+  <style>
+    .dropdown-menu ul.menu {
+      list-style-type: none;
+    }
+  </style>
 
   {% block css %}{% endblock %}
 </head>
@@ -287,6 +292,7 @@
 
 <!-- Main Js -->
 <script>
+  let token = '{{ csrf_token }}';
   let notifCreated = '{{ request.user.user_settings.notifs_created }}';
   let notifPublished = '{{ request.user.user_settings.notifs_published }}';
   let notifReturned = '{{ request.user.user_settings.notifs_returned }}';

@@ -66,9 +66,6 @@
   </div>
 {% endblock %}
 {% block js %}
-  <script>
-    let token = '{{ csrf_token }}';
-  </script>
   <!-- Jquery DataTable Plugin Js -->
   {% include 'datatable_sources.html' %}
   <script src="{% static "js/notifications.js" %}"></script>

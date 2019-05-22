@@ -47,7 +47,6 @@
 {% block js %}
   <script>
     var nodeGroups = {{ nodegroups|safe }};
-    var token = '{{ csrf_token }}';
   </script>
   <script src="{% static "js/notifications.js" %}"></script>
   <script>

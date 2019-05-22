@@ -45,9 +45,6 @@
   </div>
 {% endblock %}
 {% block js %}
-  <script>
-    let token = '{{ csrf_token }}';
-  </script>
   <script src="{% static "js/notifications.js" %}"></script>
   <script src="{% static "js/src/keys.js" %}"></script>
 {% endblock %}
