@@ -2,6 +2,7 @@ import binascii
 import json
 import os
 
+import pendulum
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
@@ -144,6 +145,7 @@ class UserSettings(models.Model):
     )
     token = models.CharField(max_length=40)
     created = models.DateTimeField(auto_now_add=True)
+    max_notifs = models.IntegerField(default=10)
     notifs_created = models.BooleanField(default=False)
     notifs_published = models.BooleanField(default=False)
     notifs_returned = models.BooleanField(default=True)
@@ -191,4 +193,66 @@ class Conformity(models.Model):
 
     class Meta:
         db_table = "conformity"
+        app_label = "web"
+
+
+class Notifications(models.Model):
+    user = models.ForeignKey(
+        User, related_name="notifications", on_delete=models.CASCADE
+    )
+    notif_type = models.CharField(max_length=32)
+    tag = models.CharField(max_length=255)
+    data = models.TextField()
+
+    def loaded_data(self):
+        return json.loads(self.data)
+
+    def jid(self):
+        return self.loaded_data().get("jid")
+
+    def fun(self):
+        return self.loaded_data().get("fun")
+
+    def minions(self):
+        return self.loaded_data().get("minions")
+
+    def minion_id(self):
+        return self.loaded_data().get("id")
+
+    def datetime(self):
+        return pendulum.parse(self.loaded_data().get("_stamp"))
+
+    def notif_attr(self):
+        notif_attr = {
+            "created": {
+                "color": "bg-green",
+                "link": "#",
+                "icon": "add",
+                "text": "New Job Created",
+            },
+            "event": {
+                "color": "bg-amber",
+                "link": "#",
+                "icon": "more_horiz",
+                "text": "Job Event",
+            },
+            "published": {
+                "color": "bg-blue",
+                "link": "#",
+                "icon": "publish",
+                "text": "{} published for {} minion(s)".format(
+                    self.fun(), len(self.minions()) if self.minions() else 0
+                ),
+            },
+            "return": {
+                "color": "bg-blue-grey",
+                "link": "/jobs/{}/{}".format(self.jid(), self.minion_id()),
+                "icon": "subdirectory_arrow_left",
+                "text": "{} returned for {}".format(self.fun(), self.minion_id()),
+            },
+        }
+        return notif_attr[str(self.notif_type)]
+
+    class Meta:
+        db_table = "notifications"
         app_label = "web"

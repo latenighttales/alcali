@@ -56,7 +56,7 @@
           </h2>
           <div class="row clearfix">
             {% for field in minion_fields %}
-              <div class="col-md-12">
+              <div class="col-md-12" id="{{ field.name|cut:" " }}">
                 <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 form-control-label">
                   <label>{{ field.name }}</label>
                 </div>
@@ -70,6 +70,17 @@
                 </div>
               </div>
             {% endfor %}
+            <div class="col-md-12" id="fieldTemplate" style="display: none;">
+              <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 form-control-label">
+                <label></label>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 form-control-label">
+                <label><code></code></label>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <button type="button" class="btn btn-danger btn-lg waves-effect">DELETE</button>
+              </div>
+            </div>
           </div>
           <form id="field_form">
             {% csrf_token %}
@@ -135,6 +146,20 @@
                       </div>
                     </div>
                   {% endfor %}
+                </div>
+                <div class="row clearfix">
+                  <div class="col-sm-12">
+                    <div class="col-lg-6 col-md-3 col-sm-4 col-xs-5 form-control-label">
+                      <label for="minion_list">Notifications limit:</label>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <input spellcheck="false" class="form-control" name="max_notifs" type="text" value="{{ max_notifs }}"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="row clearfix">
                   <div class="col-sm-3 col-sm-offset-9">

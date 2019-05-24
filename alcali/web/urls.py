@@ -17,6 +17,7 @@ from alcali.web.views.services import (
     conformity,
     users,
     settings,
+    notifications,
 )
 
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
     url(r"^wheel$", wheel, name="wheel"),
     url(r"^events$", events, name="events"),
     url(r"^minions$", minions, name="minions"),
+    path("notifications", notifications, name="notifications"),
     path("minions/<str:minion_id>/", minion_detail, name="minion_detail"),
     url(r"^jobs$", jobs, name="job_list"),
     path("jobs/<str:jid>/<str:minion_id>/", job_detail, name="job_detail"),

@@ -15,6 +15,8 @@
         type="text/css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/themes/theme-black.css' %}" rel="stylesheet">
   <style>
     .dropdown-menu ul.menu {
       list-style-type: none;
@@ -81,10 +83,28 @@
             <li class="header">NOTIFICATIONS</li>
             <li class="body">
               <ul class="menu" id="notif-list">
+                {% if notifs_list %}
+                  {% for notif in notifs_list %}
+                    <li style="display: -webkit-box;" id="{{ notif.id }}">
+                      <a href="{{ notif.notif_attr.link }}" class=" waves-effect waves-block">
+                        <div class="icon-circle {{ notif.notif_attr.color }}">
+                          <i class="material-icons">{{ notif.notif_attr.icon }}</i>
+                        </div>
+                        <div class="menu-info">
+                          <h4>{{ notif.notif_attr.text }}</h4>
+                          <p>
+                            <i class="material-icons">access_time</i>{{ notif.datetime }}
+                          </p>
+                        </div>
+                      </a>
+                        <span class="btn badge" onclick="notifDelete({{ notif.id }})">x</span>
+                    </li>
+                  {% endfor %}
+                {% endif %}
               </ul>
             </li>
             <li class="footer">
-              <a href="{% url 'job_list' %}">View All Jobs</a>
+              <a href="#" onclick="notifDelete('*');return false;" title="Clear all notifications">Clear all</a>
             </li>
           </ul>
         </li>

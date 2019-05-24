@@ -1,0 +1,14 @@
+<li style="display: -webkit-box;" id="{{ notif_id }}">
+  <a href="{{ notif_link }}" class=" waves-effect waves-block">
+    <div class="icon-circle {{ notif_color }}">
+      <i class="material-icons">{{ notif_icon }}</i>
+    </div>
+    <div class="menu-info">
+      <h4>{{ notif_text }}</h4>
+      <p>
+        <i class="material-icons">access_time</i>{{ notif_ts }}
+      </p>
+    </div>
+  </a>
+    <span class="btn badge" onclick="notifDelete({{ notif.id }})">x</span>
+</li>

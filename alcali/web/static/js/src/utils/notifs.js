@@ -20,74 +20,24 @@ evtSource.onerror = function (err) {
 };
 evtSource.onmessage = function (message) {
 
-  let notifList = document.getElementById('notif-list');
-
   let data = JSON.parse(message.data);
 
-  // Defaults.
-  let jid = data.data.jid;
-  let notifColor = 'bg-default';
-  let notifIcon = 'add';
-  let notifText = 'unknown';
-  let notifLink = '#';
-
   if (isJobNew(data.tag) && notifPublished === 'True') {
-    notifColor = 'bg-blue';
-    notifIcon = 'publish';
-    notifText = '<b>' + data.data.fun + '</b> Published for ' + data.data.minions.length + ' Minion(s).';
-
+    postNotification('published', data);
   } else if (isJobReturn(data.tag) && notifReturned === 'True') {
-    notifColor = 'bg-pink';
-    notifIcon = 'subdirectory_arrow_left';
-    notifText = '<b>' + data.data.fun + '</b> Returned for ' + data.data.id;
-    notifLink = jid === undefined ? '' : '/jobs/' + jid + '/' + data.data.id;
-
-    // On job return, if key event, refresh db.
-    if (data.data.fun.match('wheel.key.(accept|reject|delete)')) {
-
-    }
-
+    postNotification('return', data);
   } else if (isJobEvent(data.tag) && notifEvent === 'True') {
-    notifColor = 'bg-amber';
-    notifIcon = 'more_horiz';
-    notifText = 'Job Event';
-
+    postNotification('event', data);
   } else if (/^\w{20}$/.test(data.tag) && notifCreated === 'True') {
-    jid = data.tag;
-    notifColor = 'bg-green';
-    notifText = 'New Job Created';
-
+    postNotification('created', data);
   } else {
-/*    notifColor = 'bg-blue-grey';
-    notifText = data.tag;*/
+    /*    notifColor = 'bg-blue-grey';
+        notifText = data.tag;*/
     return false;
-
   }
   // Notif Number
   notifCount += 1;
   notifNb.innerText = notifCount;
-
-
-  let date = new Date(data['data']['_stamp']).toLocaleString('en-EN').split(', ');
-  let notifHtml = '<li>\n' +
-    '                  <a href="' + notifLink + '" class=" waves-effect waves-block">\n' +
-    '                    <div class="icon-circle ' + notifColor + '">\n' +
-    '                      <i class="material-icons">' + notifIcon + '</i>\n' +
-    '                    </div>\n' +
-    '                    <div class="menu-info">\n' +
-    '                      <h4>' + notifText + '</h4>\n' +
-    '                      <p>\n' +
-    '                        <i class="material-icons">access_time</i>' + date + '\n' +
-    '                      </p>\n' +
-    '                    </div>\n' +
-    '                  </a>\n' +
-    '                </li>';
-
-  notifList.insertAdjacentHTML('afterbegin', notifHtml);
-  // TODO:Keep only 6 last events DOES NOT WORK
-  while (notifList.length > 6) {
-    notifList.deleteRow(-1);
-  }
 };
 
 // Purge notifications on icon click.
@@ -95,3 +45,55 @@ let notifBtn = document.getElementById('notif-button');
 notifBtn.addEventListener('click', (e) => {
   notifNb.innerText = '';
 });
+
+function postNotification(notifType, data) {
+  // Get values from form.
+  let postData = {'csrfmiddlewaretoken': token};
+  postData['type'] = notifType;
+  postData['tag'] = data.tag;
+  postData['data'] = JSON.stringify(data.data);
+  $.ajax({
+    url: '/notifications',
+    type: 'POST',
+    data: postData,
+
+    // handle a successful response
+    success: function(ret) {
+      let notifList = document.getElementById('notif-list');
+      notifList.insertAdjacentHTML('afterbegin', ret);
+    },
+
+    // handle a non-successful response
+    error: function(xhr, errmsg, err) {
+      console.log(errmsg);
+      console.log(xhr.status + ': ' + xhr.responseText); // provide a bit more info about the error to the console
+    }
+  });
+}
+
+function notifDelete(notifId) {
+
+  $.ajax({
+    url: '/notifications',
+    type: 'POST',
+    data: {
+      'action': 'delete',
+      'id': notifId,
+      'csrfmiddlewaretoken': token,
+    },
+
+    // handle a successful response
+    success: function (ret) {
+      if (ret.result) {
+        notifId = notifId === "*" ? "notif-list" : notifId;
+        document.getElementById(notifId).outerHTML = "";
+      }
+    },
+
+    // handle a non-successful response
+    error: function (xhr, errmsg, err) {
+      console.log(errmsg);
+      console.log(xhr.status + ': ' + xhr.responseText); // provide a bit more info about the error to the console
+    }
+  });
+}

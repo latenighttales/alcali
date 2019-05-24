@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
@@ -13,6 +15,7 @@ from ..models.alcali import (
     Conformity,
     Keys,
     Functions,
+    Notifications,
 )
 
 # if settings.ALCALI_BACKEND == 'netapi':
@@ -177,10 +180,15 @@ def settings(request):
         user = UserSettings.objects.get(user=user)
         for k, v in user_notifs.items():
             setattr(user, k, v)
+        if request.POST.get("max_notifs"):
+            setattr(user, "max_notifs", request.POST.get("max_notifs"))
         user.save()
         return JsonResponse({"result": "updated"})
 
     current_notifs = UserSettings.objects.filter(user=user).values(*notifs_status)
+    max_notifs = UserSettings.objects.filter(user=user).values_list(
+        "max_notifs", flat=True
+    )[0]
     if not current_notifs:
         # Defaults.
         current_notifs = {
@@ -207,8 +215,43 @@ def settings(request):
         "settings.html",
         {
             "notifs": current_notifs,
+            "max_notifs": int(max_notifs),
             "minion_fields": minion_fields,
             "function_list": funct_list,
             "minion_list": minion_list,
         },
     )
+
+
+def notifications(request):
+    if request.POST.get("action") == "delete":
+        notif_id = request.POST.get("id")
+        try:
+            if notif_id == "*":
+                Notifications.objects.all().delete()
+            else:
+                Notifications.objects.get(id=notif_id).delete()
+        # Might be deleted by signal.
+        except Notifications.DoesNotExist:
+            pass
+        return JsonResponse({"result": "success"})
+    if request.POST.get("data") and request.POST.get("tag"):
+        tag = request.POST.get("tag")
+        data = request.POST.get("data")
+        notif_type = request.POST.get("type")
+        user = User.objects.get(username=request.user)
+        notif = Notifications.objects.create(
+            data=data, tag=tag, notif_type=notif_type, user=user
+        )
+        return render(
+            request,
+            "template_notifs.html",
+            {
+                "notif_id": notif.id,
+                "notif_link": notif.notif_attr()["link"],
+                "notif_color": notif.notif_attr()["color"],
+                "notif_icon": notif.notif_attr()["icon"],
+                "notif_text": notif.notif_attr()["text"],
+                "notif_ts": notif.datetime(),
+            },
+        )
