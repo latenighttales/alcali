@@ -7,5 +7,3 @@ do
     sleep 10
 done
 make tests
-echo "Black:"
-black --check .
