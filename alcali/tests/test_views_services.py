@@ -118,6 +118,36 @@ def test_notifications(admin_client, admin_user, minion_master):
     assert admin_user.notifications
 
 
+def test_notifications_create(admin_client):
+    notif = {
+        "type": "returned",
+        "tag": "salt/job/20190525145731820194/ret/master",
+        "data": '{"fun_args":[],"jid":"20190525145731820194","return":true,'
+        '"retcode":0,"success":true,"cmd":"_return",'
+        '"_stamp":"2019-05-25T14:57:31.890646","fun":"test.ping",'
+        '"id":"master"}',
+    }
+    ret = {
+        "color": "bg-blue-grey",
+        "link": "/jobs/20190525145731820194/master",
+        "icon": "subdirectory_arrow_left",
+        "text": "test.ping returned for master",
+    }
+    response = admin_client.post(reverse("notifications"), notif)
+    assert response.status_code == 200
+    for key, val in ret.items():
+        assert val in response.context["notif_{}".format(key)]
+
+
+def test_notifications_delete_all(admin_client, notification):
+    response = admin_client.post(
+        reverse("notifications"), {"action": "delete", "id": "*"}
+    )
+    assert response.status_code == 200
+    assert response.json()["result"] == "success"
+    assert Notifications.objects.count() == 0
+
+
 @pytest.mark.django_db
 def test_users_form_create():
     form_data = {

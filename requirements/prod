@@ -8,4 +8,3 @@ PyYAML==3.13
 pendulum==2.0.4
 requests==2.21.0
 salt-pepper==0.7.5
-tqdm==4.29.1

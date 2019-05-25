@@ -1,5 +1,9 @@
 # Alcali
 
+[![Build Status](https://travis-ci.org/latenighttales/alcali.svg?branch=2019.2.0)](https://travis-ci.org/latenighttales/alcali)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+
 <img align="right" height="300" src="alcali/web/static/img/logo-1089.png">
 
 
