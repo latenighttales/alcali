@@ -237,6 +237,5 @@ def create_schedules(target, cron, function="state.apply"):
     parsed = comm_inst.parse()
     parsed[0]["arg"].append("job_kwargs={'test': true}")
     parsed[0]["arg"].append("cron={}".format(cron))
-    print(parsed)
-    custom_field_return = run_raw(parsed)
-    print(custom_field_return)
+    ret = run_raw(parsed)
+    return ret

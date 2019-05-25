@@ -1,6 +1,6 @@
-import json
 from collections import Counter
-from difflib import SequenceMatcher
+
+# from difflib import SequenceMatcher
 from datetime import timedelta
 
 from django.core.exceptions import PermissionDenied
@@ -11,22 +11,23 @@ from ..models.salt import SaltReturns
 from ..models.alcali import Minions, Conformity
 
 
-def auto_group(minion_list):
-    return SequenceMatcher(None, [i for i in minion_list]).find_longest_match([0])
-
+# def auto_group(minion_list):
+#     return SequenceMatcher(None, [i for i in minion_list]).find_longest_match([0])
+#
 
 # Find all occurrences of a key in nested python dictionaries and lists.
-def find_key(key, dictionary):
-    for k, v in dictionary.items():
-        if k == key:
-            yield v
-        elif isinstance(v, dict):
-            for result in find_key(key, v):
-                yield result
-        elif isinstance(v, list):
-            for d in v:
-                for result in find_key(key, d):
-                    yield result
+# def find_key(key, dictionary):
+#     for k, v in dictionary.items():
+#         if k == key:
+#             yield v
+#         elif isinstance(v, dict):
+#             for result in find_key(key, v):
+#                 yield result
+#         elif isinstance(v, list):
+#             for d in v:
+#                 for result in find_key(key, d):
+#                     yield result
+#
 
 
 def graph_data(period=7, **kwargs):
@@ -83,6 +84,7 @@ def graph_data(period=7, **kwargs):
         count.append(res["count"])
         error_count.append(res["error"])
     for idx, date in enumerate(period_frame + timedelta(n) for n in range(period)):
+        # Complete all lists with default data.
         if str(date) not in days:
             days.insert(idx, str(date))
             count.insert(idx, 0)

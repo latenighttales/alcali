@@ -45,6 +45,14 @@ def test_schedule_add(admin_client, minion_master):
     assert response.status_code == 200
 
 
+def test_conformity_highstate_add(admin_client, minion_master):
+    response = admin_client.post(
+        reverse("conformity"), {"cron": "0 0 * * *", "target": "master"}
+    )
+    assert response.status_code == 200
+    assert "master" in response.json()["result"]
+
+
 def test_conformity_add(admin_client, minion_master):
     response = admin_client.post(
         reverse("run"),
@@ -137,6 +145,16 @@ def test_notifications_create(admin_client):
     assert response.status_code == 200
     for key, val in ret.items():
         assert val in response.context["notif_{}".format(key)]
+
+
+def test_notifications_delete_one(admin_client, notification):
+    notif_id = Notifications.objects.first().id
+    response = admin_client.post(
+        reverse("notifications"), {"action": "delete", "id": notif_id}
+    )
+    assert response.status_code == 200
+    assert response.json()["result"] == "success"
+    assert Notifications.objects.count() == 0
 
 
 def test_notifications_delete_all(admin_client, notification):

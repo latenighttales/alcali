@@ -31,6 +31,7 @@ after_script:
   - black --check .
 
 after_success:
+  - docker-compose exec -u alcali web safety check
   - docker-compose exec -u alcali -e CODECOV_TOKEN web codecov
 
 after_failure:

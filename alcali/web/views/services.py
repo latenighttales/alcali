@@ -71,7 +71,8 @@ def conformity(request):
         target = request.POST.get("target")
         if not target:
             target = "*"
-        create_schedules(target, cron)
+        ret = create_schedules(target, cron)
+        return JsonResponse({"result": ret})
 
     if request.POST.get("action") == "delete_field" and request.POST.get("target"):
         target = request.POST.get("target")
