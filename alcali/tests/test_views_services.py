@@ -1,7 +1,13 @@
 from django.urls import reverse
+import pytest
 
-from alcali.web.models.alcali import MinionsCustomFields
+from alcali.web.models.alcali import MinionsCustomFields, Notifications
 from ..web.forms import AlcaliUserForm
+
+
+def test_event_stream(admin_client):
+    response = admin_client.get(reverse("event_stream"))
+    assert response.status_code == 200
 
 
 def test_schedule(admin_client):
@@ -32,6 +38,13 @@ def test_schedule_manage(admin_client, minion_master):
     assert response.status_code == 200
 
 
+def test_schedule_add(admin_client, minion_master):
+    response = admin_client.post(
+        reverse("schedule"), {"cron": "0 0 * * *", "target": "master"}
+    )
+    assert response.status_code == 200
+
+
 def test_conformity_add(admin_client, minion_master):
     response = admin_client.post(
         reverse("run"),
@@ -54,7 +67,8 @@ def test_settings(admin_client):
 
 def test_settings_notifs(admin_client):
     response = admin_client.post(
-        reverse("settings"), {"action": "notifications", "created": "on"}
+        reverse("settings"),
+        {"action": "notifications", "created": "on", "returned": "on"},
     )
     assert response.status_code == 200
     assert response.json()["result"] == "updated"
@@ -96,7 +110,16 @@ def test_users_list(admin_client):
     assert "admin" in response.json()["data"][0]
 
 
-def test_users_form_create(admin_client):
+def test_notifications(admin_client, admin_user, minion_master):
+    response = admin_client.post(
+        reverse("run"), {"minion_list": "*", "function_list": "test.ping"}
+    )
+    assert response.status_code == 200
+    assert admin_user.notifications
+
+
+@pytest.mark.django_db
+def test_users_form_create():
     form_data = {
         "username": "foo",
         "first_name": "bar",

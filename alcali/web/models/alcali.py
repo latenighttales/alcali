@@ -145,7 +145,7 @@ class UserSettings(models.Model):
     )
     token = models.CharField(max_length=40)
     created = models.DateTimeField(auto_now_add=True)
-    max_notifs = models.IntegerField(default=10)
+    max_notifs = models.PositiveIntegerField(default=10)
     notifs_created = models.BooleanField(default=False)
     notifs_published = models.BooleanField(default=False)
     notifs_returned = models.BooleanField(default=True)
@@ -244,7 +244,7 @@ class Notifications(models.Model):
                     self.fun(), len(self.minions()) if self.minions() else 0
                 ),
             },
-            "return": {
+            "returned": {
                 "color": "bg-blue-grey",
                 "link": "/jobs/{}/{}".format(self.jid(), self.minion_id()),
                 "icon": "subdirectory_arrow_left",

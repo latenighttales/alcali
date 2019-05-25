@@ -7,3 +7,4 @@ omit =
     alcali/web/backend/pyapi.py
     alcali/config/wsgi.py
     alcali/manage.py
+    alcali/web/utils/output/*

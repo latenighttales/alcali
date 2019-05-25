@@ -25,7 +25,7 @@ evtSource.onmessage = function (message) {
   if (isJobNew(data.tag) && notifPublished === 'True') {
     postNotification('published', data);
   } else if (isJobReturn(data.tag) && notifReturned === 'True') {
-    postNotification('return', data);
+    postNotification('returned', data);
   } else if (isJobEvent(data.tag) && notifEvent === 'True') {
     postNotification('event', data);
   } else if (/^\w{20}$/.test(data.tag) && notifCreated === 'True') {
