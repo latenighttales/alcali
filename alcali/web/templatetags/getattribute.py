@@ -6,7 +6,10 @@ register = template.Library()
 
 
 def getattribute(value, arg):
-    """Gets an attribute of an object dynamically from a string name"""
+    """Gets an attribute of an object dynamically from a string name
+    it first does a standard attribute look-up, then tries to do a dictionary look-up,
+    then tries a getitem lookup (for lists to work),
+    then follows standard Django template behavior when an object is not found."""
 
     if hasattr(value, str(arg)):
         return getattr(value, arg)

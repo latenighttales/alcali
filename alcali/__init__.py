@@ -5,7 +5,7 @@ import sys
 DJANGO_SETTINGS = os.environ.get("DJANGO_SETTINGS", "alcali.config.settings.prod")
 
 
-def manage():
+def manage():  # pragma: no cover
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", DJANGO_SETTINGS)
 
     try:

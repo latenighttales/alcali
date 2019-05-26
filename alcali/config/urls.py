@@ -19,7 +19,7 @@ urlpatterns = [
     ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-if settings.DEBUG and "debug_toolbar" in settings.INSTALLED_APPS:
+if settings.DEBUG and "debug_toolbar" in settings.INSTALLED_APPS:  # pragma: no cover
     import debug_toolbar
 
     urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
