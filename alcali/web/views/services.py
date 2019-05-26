@@ -74,28 +74,7 @@ def conformity(request):
         ret = create_schedules(target, cron)
         return JsonResponse({"result": ret})
 
-    if request.POST.get("action") == "delete_field" and request.POST.get("target"):
-        target = request.POST.get("target")
-        ret = Conformity.objects.filter(name=target).delete()
-        return JsonResponse({"result": ret})
-
-    if request.POST.get("name") and request.POST.get("function"):
-        name = request.POST.get("name")
-        function = request.POST.get("function")
-        Conformity.objects.create(name=name, function=function)
-        # TODO: return
-
-    conformity_fields = Conformity.objects.values("name", "function")
-    funct_list = (
-        Functions.objects.filter(type="modules")
-        .values_list("name", flat=True)
-        .order_by("name")
-    )
-    return render(
-        request,
-        "conformity.html",
-        {"conformity_fields": conformity_fields, "function_list": funct_list},
-    )
+    return render(request, "conformity.html", {})
 
 
 @login_required
@@ -152,22 +131,32 @@ def settings(request):
         "notifs_event",
     ]
 
-    if request.POST.get("action") == "init_db" and request.POST.get("target"):
-        init_db(request.POST.get("target"))
-        return JsonResponse({"result": "updated"})
-
-    if request.POST.get("action") == "delete_field" and request.POST.get("target"):
+    if request.POST.get("target"):
         target = request.POST.get("target")
-        ret = MinionsCustomFields.objects.filter(name=target).delete()
+        if request.POST.get("action") == "delete_conformity":
+            ret = Conformity.objects.filter(name=target).delete()
+        if request.POST.get("action") == "delete_field":
+            ret = MinionsCustomFields.objects.filter(name=target).delete()
+        if request.POST.get("action") == "init_db":
+            init_db(target)
+            return JsonResponse({"result": "updated"})
+
         return JsonResponse({"result": ret})
 
     if request.POST.get("name") and request.POST.get("function"):
         name = request.POST.get("name")
         function = request.POST.get("function")
-        for minion in Minions.objects.all():
-            MinionsCustomFields.objects.create(
-                name=name, function=function, minion=minion, value="{}"
-            )
+        if request.POST.get("action") == "create_field":
+            for minion in Minions.objects.all():
+                MinionsCustomFields.objects.create(
+                    name=name, function=function, minion=minion, value="{}"
+                )
+
+        if request.POST.get("action") == "create_conformity":
+            name = request.POST.get("name")
+            function = request.POST.get("function")
+            Conformity.objects.create(name=name, function=function)
+
         return JsonResponse({"result": "updated"})
 
     if request.POST.get("action") == "notifications":
@@ -211,6 +200,7 @@ def settings(request):
         .values_list("name", flat=True)
         .order_by("name")
     )
+    conformity_fields = Conformity.objects.values("name", "function")
     return render(
         request,
         "settings.html",
@@ -220,6 +210,7 @@ def settings(request):
             "minion_fields": minion_fields,
             "function_list": funct_list,
             "minion_list": minion_list,
+            "conformity_fields": conformity_fields,
         },
     )
 

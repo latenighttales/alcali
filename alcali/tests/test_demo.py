@@ -152,7 +152,12 @@ def test_init_db(admin_client):
 @pytest.mark.django_db()
 def test_add_minion_field(admin_client):
     response = admin_client.post(
-        reverse("settings"), {"name": "highstate", "function": "state.show_highstate"}
+        reverse("settings"),
+        {
+            "name": "highstate",
+            "function": "state.show_highstate",
+            "action": "create_field",
+        },
     )
     assert response.status_code == 200
     assert response.json()["result"] == "updated"

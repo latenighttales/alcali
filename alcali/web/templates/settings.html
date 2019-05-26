@@ -14,106 +14,187 @@
           </h2>
         </div>
         <div class="body">
-          <h2 class="card-inside-title">
-            Parse modules
-            <small>This will run <code>sys.list_functions</code>, <code>sys.doc</code>,
-              <code>sys.list_runner_functions</code> and <code>sys.runner_doc</code> on selected target. It will also
-              run <code>doc.wheel</code> on the connected salt master.
-            </small>
-          </h2>
-          <form id="general_form">
-            <div class="row clearfix">
-              <div class="col-md-12">
-                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5 form-control-label">
-                  <label for="minion_list">Parse modules from:</label>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-2 col-xs-6">
-                  <div class="form-group">
-                    <div class="form-line">
-                      <input spellcheck="false" class="form-control" name="minions" type="text"
-                             list="minions"
-                             placeholder="Target"/>
-                      <datalist id="minions">
-                        {% for minion in minion_list %}
-                          <option value="{{ minion }}">{{ minion }}
-                        {% endfor %}
-                      </datalist>
+          <div class="row clearfix">
+            <div class="col-md-12">
+              <h2 class="card-inside-title">
+                Parse modules
+                <small>This will run <code>sys.list_functions</code>, <code>sys.doc</code>,
+                  <code>sys.list_runner_functions</code> and <code>sys.runner_doc</code> on selected target. It will
+                  also
+                  run <code>doc.wheel</code> on the connected salt master.
+                </small>
+              </h2>
+              <div class="row clearfix">
+                <div class="col-md-12">
+                  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5 form-control-label">
+                    <label for="minion_list">Parse modules from:</label>
+                  </div>
+                  <div class="col-lg-2 col-md-3 col-sm-2 col-xs-6">
+                    <div class="form-group">
+                      <div class="form-line">
+                        <input spellcheck="false" class="form-control" name="minions" type="text"
+                               list="minions"
+                               placeholder="Target"/>
+                        <datalist id="minions">
+                          {% for minion in minion_list %}
+                            <option value="{{ minion }}">{{ minion }}
+                          {% endfor %}
+                        </datalist>
+                      </div>
                     </div>
                   </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <button type="button" class="btn btn-warning btn-lg waves-effect" id="init_db" disabled>
+                      SUBMIT
+                    </button>
+                  </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <button type="button" class="btn btn-warning btn-lg waves-effect" id="init_db" disabled>
-                    SUBMIT
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-          <h2 class="card-inside-title">
-            Minions Fields
-            <small>Fields added to Minions details.
-            </small>
-          </h2>
-          <div class="row clearfix">
-            {% for field in minion_fields %}
-              <div class="col-md-12" id="{{ field.name|cut:" " }}">
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 form-control-label">
-                  <label>{{ field.name }}</label>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 form-control-label">
-                  <label><code>{{ field.function }}</code></label>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <button type="button" class="btn btn-danger btn-lg waves-effect" value="{{ field.name }}"
-                          name="fieldDelete">DELETE
-                  </button>
-                </div>
-              </div>
-            {% endfor %}
-            <div class="col-md-12" id="fieldTemplate" style="display: none;">
-              <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 form-control-label">
-                <label></label>
-              </div>
-              <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 form-control-label">
-                <label><code></code></label>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <button type="button" class="btn btn-danger btn-lg waves-effect">DELETE</button>
               </div>
             </div>
           </div>
-          <form id="field_form">
-            {% csrf_token %}
-            <div class="row clearfix">
-              <div class="col-md-12">
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
-                  <div class="form-group">
-                    <div class="form-line">
-                      <input type="text" class="form-control" placeholder="Name" name="name">
+          <div class="row clearfix">
+            <div class="col-md-6">
+              <h2 class="card-inside-title">
+                Minions Fields
+                <small>Fields added to Minions details.
+                </small>
+              </h2>
+            </div>
+            <div class="col-md-6">
+              <h2 class="card-inside-title">
+                Custom Conformity
+                <small>Parsed functions from minions job history.
+                </small>
+              </h2>
+            </div>
+          </div>
+          <div class="row clearfix">
+            <div class="col-lg-6">
+              <div class="row clearfix">
+                {% for field in minion_fields %}
+                  <div class="col-md-12" id="{{ field.name|cut:" " }}">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 form-control-label">
+                      <label>{{ field.name }}</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 form-control-label">
+                      <label><code>{{ field.function }}</code></label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <button type="button" class="btn btn-danger btn-lg waves-effect" value="{{ field.name }}"
+                              name="delete_field">DELETE
+                      </button>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
-                  <div class="form-group">
-                    <div class="form-line">
-                      <input spellcheck="false" class="form-control" name="function" type="text"
-                             list="functions"
-                             placeholder="Function"/>
-                      <datalist id="functions">
-                        {% for function in function_list %}
-                          <option value="{{ function }}">{{ function }}
-                        {% endfor %}
-                      </datalist>
-                    </div>
+                {% endfor %}
+                <div class="col-md-12" id="fieldTemplate" style="display: none;">
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 form-control-label">
+                    <label></label>
                   </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <button type="button" class="btn btn-primary btn-lg waves-effect" id="fieldCreate">SUBMIT
-                  </button>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 form-control-label">
+                    <label><code></code></label>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <button type="button" class="btn btn-danger btn-lg waves-effect">DELETE</button>
+                  </div>
                 </div>
               </div>
+              <form id="form_field">
+                {% csrf_token %}
+                <div class="row clearfix">
+                  <div class="col-md-12">
+                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-5">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <input type="text" class="form-control" placeholder="Name" name="name">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-5">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <input spellcheck="false" class="form-control" name="function" type="text"
+                                 list="functions"
+                                 placeholder="Function"/>
+                          <datalist id="functions">
+                            {% for function in function_list %}
+                              <option value="{{ function }}">{{ function }}
+                            {% endfor %}
+                          </datalist>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <button type="button" class="btn btn-primary btn-lg waves-effect" id="create_field">SUBMIT
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
-          </form>
+            <div class="col-lg-6">
+              <div class="row clearfix">
+                {% for field in conformity_fields %}
+                  <div class="col-md-12" id="{{ field.name|cut:" " }}">
+                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-5 form-control-label">
+                      <label>{{ field.name }}</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-5 form-control-label">
+                      <label><code>{{ field.function }}</code></label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <button type="button" class="btn btn-danger btn-lg waves-effect" value="{{ field.name }}"
+                              name="delete_conformity">DELETE
+                      </button>
+                    </div>
+                  </div>
+                {% endfor %}
+                <div class="col-md-12" id="conformityTemplate" style="display: none;">
+                  <div class="col-lg-4 col-md-4 col-sm-3 col-xs-5 form-control-label">
+                    <label></label>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-3 col-xs-5 form-control-label">
+                    <label><code></code></label>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <button type="button" class="btn btn-danger btn-lg waves-effect">DELETE</button>
+                  </div>
+                </div>
+              </div>
+              <form id="form_conformity">
+                {% csrf_token %}
+                <div class="row clearfix">
+                  <div class="col-md-12">
+                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-5">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <input type="text" class="form-control" placeholder="Name" name="name">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-5">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <input spellcheck="false" class="form-control" name="function" type="text"
+                                 list="functions"
+                                 placeholder="Function"/>
+                          <datalist id="functions">
+                            {% for function in function_list %}
+                              <option value="{{ function }}">{{ function }}
+                            {% endfor %}
+                          </datalist>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <button type="button" class="btn btn-primary btn-lg waves-effect" id="create_conformity">SUBMIT
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>

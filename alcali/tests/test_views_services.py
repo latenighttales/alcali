@@ -59,7 +59,8 @@ def test_conformity_add(admin_client, minion_master):
         {"minion_list": "*", "function_list": "grains.item", "args": "os"},
     )
     response = admin_client.post(
-        reverse("conformity"), {"name": "os", "function": "grains.item os"}
+        reverse("settings"),
+        {"name": "os", "function": "grains.item os", "action": "create_conformity"},
     )
     assert response.status_code == 200
     assert minion_master.custom_conformity("grains.item", "os")
@@ -84,7 +85,12 @@ def test_settings_notifs(admin_client):
 
 def test_settings_minion_field(admin_client, minion_master):
     response = admin_client.post(
-        reverse("settings"), {"name": "highstate", "function": "state.show_highstate"}
+        reverse("settings"),
+        {
+            "name": "highstate",
+            "function": "state.show_highstate",
+            "action": "create_field",
+        },
     )
     assert response.status_code == 200
     assert response.json()["result"] == "updated"
@@ -93,7 +99,8 @@ def test_settings_minion_field(admin_client, minion_master):
     assert "refreshed" in response.json()
     assert MinionsCustomFields.objects.count() > 0
     response = admin_client.post(
-        reverse("settings"), {"name": "foo", "function": "bar"}
+        reverse("settings"),
+        {"name": "foo", "function": "bar", "action": "create_field"},
     )
     response = admin_client.post(
         reverse("settings"), {"action": "delete_field", "target": "foo"}
