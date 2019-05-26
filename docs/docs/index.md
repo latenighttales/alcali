@@ -19,6 +19,11 @@ Alcali is a web based tool for monitoring and administrating **Saltstack®** Sal
 
 - Use custom auth module to login into both Alcali and the Salt-api using JWT.
 
-... and many more.
+[![Build Status](https://travis-ci.org/latenighttales/alcali.svg?branch=2019.2.0)](https://travis-ci.org/latenighttales/alcali)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Requirements Status](https://requires.io/github/latenighttales/alcali/requirements.svg?branch=2019.2.0)](https://requires.io/github/latenighttales/alcali/requirements/?branch=2019.2.0)
+[![codecov](https://codecov.io/gh/latenighttales/alcali/branch/2019.2.0/graph/badge.svg)](https://codecov.io/gh/latenighttales/alcali)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+
 
 <sub><sub>Image: Jean-Philippe WMFr, œuvre dérivée : User:Benoit Rochon [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)</sub></sub>

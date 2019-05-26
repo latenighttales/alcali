@@ -20,6 +20,8 @@ nav:
         - 'Events': pages/events.md
         - 'Users': pages/users.md
         - 'Settings': pages/settings.md
+    - Contribute: contribute.md
+    - Licence: licence.md
 site_description: 'A web based tool for monitoring and administrating Saltstack'
 site_author: 'Matt Melquiond'
 

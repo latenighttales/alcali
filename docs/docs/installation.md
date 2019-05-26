@@ -10,9 +10,9 @@ The minimal requirement is a database (**MariaDB/Mysql** or **Postgres**) access
 
  
 
-### Preparing the salt master
+## Preparing the salt master
 
-#### Database access and configuration
+### Database access and master job store configuration
 
 Please refer to Salt [MySQL](https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.mysql.html#module-salt.returners.mysql) or [Postgres](https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.pgjsonb.html) returner documentation. It provide both the database schema and the needed master configuration.
 
@@ -37,7 +37,7 @@ Returners provide a way to archive old jobs.
      - `python-mysqldb` for MySQL/MariaDB
      - `python-psycopg2` for Postgres
      
-#### Formula
+### Formula
 
 You can find a Salt formula to manage salt master configuration [here]()
 
