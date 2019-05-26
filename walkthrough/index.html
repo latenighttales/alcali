@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.750b69bd.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.982221ab.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.224b79ff.css">
       
@@ -55,7 +55,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.1f0bcf2b.js"></script>
     
     
       
@@ -311,9 +311,59 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Walkthrough
+      </label>
+    
     <a href="./" title="Walkthrough" class="md-nav__link md-nav__link--active">
       Walkthrough
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accept-keys" title="Accept keys" class="md-nav__link">
+    Accept keys
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-minions" title="Add minions" class="md-nav__link">
+    Add minions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minion-detail" title="Minion detail" class="md-nav__link">
+    Minion detail
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings" title="Settings" class="md-nav__link">
+    Settings
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -486,6 +536,30 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../contribute/" title="Contribute" class="md-nav__link">
+      Contribute
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../licence/" title="Licence" class="md-nav__link">
+      Licence
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -503,6 +577,43 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#accept-keys" title="Accept keys" class="md-nav__link">
+    Accept keys
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-minions" title="Add minions" class="md-nav__link">
+    Add minions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minion-detail" title="Minion detail" class="md-nav__link">
+    Minion detail
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings" title="Settings" class="md-nav__link">
+    Settings
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -515,6 +626,43 @@
                 
                 
                 <h1 id="walkthrough">Walkthrough<a class="headerlink" href="#walkthrough" title="Permanent link">&para;</a></h1>
+<p>After you logged in at <a href="http://localhost:8000">http://localhost:8000</a> with:</p>
+<div class="codehilite"><pre><span></span>username: admin
+password: password
+</pre></div>
+
+
+<p>You should land on the Dashboard view.
+<img align="right" height="200" src="../../images/keys-dashboard.png"></p>
+<p>For now it's empty, but you can already see that some <strong>keys</strong> are <code>UNACCEPTED</code>.</p>
+<p>So let's go to the Keys view: <a href="http://localhost:8000/keys">http://localhost:8000/keys</a></p>
+<h2 id="accept-keys">Accept keys<a class="headerlink" href="#accept-keys" title="Permanent link">&para;</a></h2>
+<p><img alt="keys" src="../images/keys.png" /></p>
+<p>You can either accept keys one by one using the <code>ACCEPT</code> button, or use the <em>Fab</em> button <img height="30" src="../../images/fab.png"> to accept all keys.</p>
+<h2 id="add-minions">Add minions<a class="headerlink" href="#add-minions" title="Permanent link">&para;</a></h2>
+<p>Go to <a href="http://localhost:8000/minions">http://localhost:8000/minions</a> and use the <em>Fab</em> button <img height="30" src="../../images/fab.png"> to refresh minions.</p>
+<p><img alt="minions" src="../images/minions.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p><strong>By default</strong>, refreshing minions will run:</p>
+<ul>
+<li><code>grains.items</code></li>
+<li><code>pillar.items</code></li>
+</ul>
+<p>on each connected minions.</p>
+</div>
+<h2 id="minion-detail">Minion detail<a class="headerlink" href="#minion-detail" title="Permanent link">&para;</a></h2>
+<p>From the minions view, click on a <code>minion id</code> to see the minion detail, for example: <a href="http://localhost:8000/minions/master/">http://localhost:8000/minions/master/</a>.</p>
+<p><img alt="minion_detail" src="../images/minion_detail.png" /></p>
+<p>Details are parsed from the <code>grains.items</code> state. On the right, 4 tabs are present for now:</p>
+<ul>
+<li><code>grains.items</code></li>
+<li><code>pillar.items</code></li>
+<li>The last 100 jobs run on this minion</li>
+<li>A graph of jobs run on this minion</li>
+</ul>
+<p>We are going to add more useful infos using <strong>minions fields</strong>.</p>
+<h2 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">&para;</a></h2>
                 
                   
                 
@@ -635,7 +783,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.39abc4af.js"></script>
+      <script src="../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

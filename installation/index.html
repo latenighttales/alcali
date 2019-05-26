@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.750b69bd.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.982221ab.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.224b79ff.css">
       
@@ -55,7 +55,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.1f0bcf2b.js"></script>
     
     
       
@@ -298,10 +298,9 @@
     Prerequisite
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#preparing-the-salt-master" title="Preparing the salt master" class="md-nav__link">
     Preparing the salt master
   </a>
@@ -310,8 +309,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#database-access-and-configuration" title="Database access and configuration" class="md-nav__link">
-    Database access and configuration
+  <a href="#database-access-and-master-job-store-configuration" title="Database access and master job store configuration" class="md-nav__link">
+    Database access and master job store configuration
   </a>
   
 </li>
@@ -320,11 +319,6 @@
   <a href="#formula" title="Formula" class="md-nav__link">
     Formula
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -596,6 +590,30 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../contribute/" title="Contribute" class="md-nav__link">
+      Contribute
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../licence/" title="Licence" class="md-nav__link">
+      Licence
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -621,10 +639,9 @@
     Prerequisite
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#preparing-the-salt-master" title="Preparing the salt master" class="md-nav__link">
     Preparing the salt master
   </a>
@@ -633,8 +650,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#database-access-and-configuration" title="Database access and configuration" class="md-nav__link">
-    Database access and configuration
+  <a href="#database-access-and-master-job-store-configuration" title="Database access and master job store configuration" class="md-nav__link">
+    Database access and master job store configuration
   </a>
   
 </li>
@@ -643,11 +660,6 @@
   <a href="#formula" title="Formula" class="md-nav__link">
     Formula
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -726,8 +738,8 @@
 <p>Alcali try to be <strong>very</strong> modular.</p>
 <p>The minimal requirement is a database (<strong>MariaDB/Mysql</strong> or <strong>Postgres</strong>) accessible to both your Salt master and Alcali and the <a href="https://docs.saltstack.com/en/latest/ref/cli/salt-api.html#salt-api">Salt-Api</a> accessible.</p>
 <p><img alt="structure" src="../images/structure.png" /></p>
-<h3 id="preparing-the-salt-master">Preparing the salt master<a class="headerlink" href="#preparing-the-salt-master" title="Permanent link">&para;</a></h3>
-<h4 id="database-access-and-configuration">Database access and configuration<a class="headerlink" href="#database-access-and-configuration" title="Permanent link">&para;</a></h4>
+<h2 id="preparing-the-salt-master">Preparing the salt master<a class="headerlink" href="#preparing-the-salt-master" title="Permanent link">&para;</a></h2>
+<h3 id="database-access-and-master-job-store-configuration">Database access and master job store configuration<a class="headerlink" href="#database-access-and-master-job-store-configuration" title="Permanent link">&para;</a></h3>
 <p>Please refer to Salt <a href="https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.mysql.html#module-salt.returners.mysql">MySQL</a> or <a href="https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.pgjsonb.html">Postgres</a> returner documentation. It provide both the database schema and the needed master configuration.</p>
 <p>Here is a Salt master configuration example:</p>
 <div class="codehilite"><pre><span></span><span class="nt">event_return</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">mysql</span><span class="p p-Indicator">]</span>
@@ -749,7 +761,7 @@
 <li><code>python-psycopg2</code> for Postgres</li>
 </ul>
 </div>
-<h4 id="formula">Formula<a class="headerlink" href="#formula" title="Permanent link">&para;</a></h4>
+<h3 id="formula">Formula<a class="headerlink" href="#formula" title="Permanent link">&para;</a></h3>
 <p>You can find a Salt formula to manage salt master configuration <a href="">here</a></p>
 <h3 id="salt-api">Salt Api<a class="headerlink" href="#salt-api" title="Permanent link">&para;</a></h3>
 <p>Please refer to Salt <a href="https://docs.saltstack.com/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html#a-rest-api-for-salt">rest_cherrypy</a> documentation on how to setup the salt-api.</p>
@@ -909,7 +921,7 @@ pip install .
       
     </div>
     
-      <script src="../assets/javascripts/application.39abc4af.js"></script>
+      <script src="../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.750b69bd.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.982221ab.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.224b79ff.css">
       
@@ -55,7 +55,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.1f0bcf2b.js"></script>
     
     
       
@@ -486,6 +486,30 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../contribute/" title="Contribute" class="md-nav__link">
+      Contribute
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../licence/" title="Licence" class="md-nav__link">
+      Licence
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -518,11 +542,16 @@
 <p>If you just want to have a look, just clone the <a href="https://github.com/latenighttales/alcali.git">repository</a> and use <a href="https://docs.docker.com/compose/">docker-compose</a>:</p>
 <div class="codehilite"><pre><span></span>git clone https://github.com/latenighttales/alcali.git
 cd alcali
-docker-compose -c docker-compose.demo.yml --scale minion=2
+docker-compose up --scale minion=2
 </pre></div>
 
 
-<p>Once you see minions getting rejected by the master, you're good to go.</p>
+<p>Once you see minions getting rejected by the master, you're good to go:</p>
+<div class="codehilite"><pre><span></span>minion_1  | [ERROR   ] The Salt Master has cached the public key for this node, this salt minion will wait for 10 seconds before attempting to re-authenticate
+minion_1  | [INFO    ] Waiting 10 seconds before retry.
+</pre></div>
+
+
 <p>Just connect on <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>, login with:</p>
 <div class="codehilite"><pre><span></span>username: admin
 password: password
@@ -530,6 +559,7 @@ password: password
 
 
 <p>and follow the <a href="../walkthrough/">walkthrough</a>.</p>
+<p>Once you're done, you can <a href="../installation/">install</a> it.</p>
                 
                   
                 
@@ -650,7 +680,7 @@ password: password
       
     </div>
     
-      <script src="../assets/javascripts/application.39abc4af.js"></script>
+      <script src="../assets/javascripts/application.d9aa80ab.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
