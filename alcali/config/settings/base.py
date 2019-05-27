@@ -26,8 +26,6 @@ if not DB_BACKEND:
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ALCALI_BACKEND = os.environ.get("ALCALI_BACKEND")
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 DATETIME_INPUT_FORMATS += ["%Y, %b %d %H:%M:%S.%f"]
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -40,7 +38,6 @@ DEBUG = os.environ.get("DJANGO_DEBUG", False)
 
 INSTALLED_APPS = [
     "alcali.web.apps.WebConfig",
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -50,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -83,8 +81,10 @@ WSGI_APPLICATION = "alcali.config.wsgi.application"
 # Database
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.{}".format(os.environ.get("DB_BACKEND")),
-        "NAME": os.environ.get("DB_NAME"),
+        "ENGINE": "django.db.backends.{}".format(
+            os.environ.get("DB_BACKEND", "sqlite3")
+        ),
+        "NAME": os.environ.get("DB_NAME", os.path.join(BASE_DIR, "db.sqlite3")),
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASS"),
         "HOST": os.environ.get("DB_HOST"),
@@ -123,9 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = "/static/"
-# STATIC_ROOT = './public/static'
-
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "../web/node_modules"),)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"

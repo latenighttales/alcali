@@ -1,7 +1,6 @@
 import json
 
-from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import JsonResponse, StreamingHttpResponse
@@ -92,7 +91,7 @@ def search(request):
         query = request.GET.get("q")
 
 
-@staff_member_required
+@user_passes_test(lambda u: u.is_superuser)
 def users(request):
     form = AlcaliUserForm()
     change_form = AlcaliUserChangeForm()
@@ -121,7 +120,7 @@ def users(request):
     return render(request, "users.html", {"form": form, "change_form": change_form})
 
 
-@staff_member_required
+@user_passes_test(lambda u: u.is_superuser)
 def settings(request):
     user = User.objects.get(username=request.user)
     notifs_status = [

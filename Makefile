@@ -1,4 +1,4 @@
-.PHONY: clean-pyc run docs-serve tests
+.PHONY: ci clean-pyc docs-serve tests
 
 clean-pyc:
 	find . -name '*.pyc' -type f -exec rm -f {} +
@@ -6,11 +6,10 @@ clean-pyc:
 	find . -name '__pycache__' -type d -exec rm -rf {} +
 	find . -name '.pytest_cache' -type d -exec rm -rf {} +
 
-run:
-	alcali makemigrations \
-	&& alcali migrate \
-	&& alcali shell -c "from django.contrib.auth.models import User; User.objects.filter(username='admin').count() or User.objects.create_superuser('admin', 'admin@example.com', 'password')" \
-	&& alcali runserver 0.0.0.0:8000
+ci:
+	docker-compose exec -u alcali web alcali migrate \
+	&& docker-compose exec -u alcali web alcali collectstatic --no-input --clear -v0 \
+	&& docker-compose exec -u alcali web alcali shell -c "from django.contrib.auth.models import User; User.objects.filter(username='admin').count() or User.objects.create_superuser('admin', 'admin@example.com', 'password')" \
 
 docs-serve:
 	echo http://127.0.0.1:8060 \

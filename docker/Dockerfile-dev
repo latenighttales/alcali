@@ -29,8 +29,6 @@ WORKDIR /opt/alcali/code
 RUN pip install --user -U setuptools
 
 # Install project
-RUN pip install --user .
+RUN pip install --user -e .[dev]
 
-EXPOSE 8000
-
-ENTRYPOINT ["/opt/alcali/code/docker/utils/entrypoint.sh"]
+ENTRYPOINT ["/opt/alcali/code/docker/utils/entrypoint-dev.sh"]
