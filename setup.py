@@ -38,9 +38,7 @@ setup(
         "Topic :: System :: Systems Administration",
     ],
     install_requires=requirements,
-    extras_require={
-        "dev": [req for req in dev_requirements if not req.startswith("-")]
-    },
+    extras_require={"dev": dev_requirements},
     entry_points={"console_scripts": ["alcali = alcali:manage"]},
     scripts=["alcali/__init__.py"],
 )
