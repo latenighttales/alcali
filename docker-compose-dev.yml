@@ -43,6 +43,6 @@ services:
     build:
       context: ./docker
       dockerfile: Dockerfile-minion
-    command: bash -c 'echo `hostname`>/etc/salt/minion_id && salt-minion -l info'
+    command: salt-minion -l info
     depends_on:
       - master

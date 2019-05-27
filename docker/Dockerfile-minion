@@ -10,3 +10,7 @@ RUN curl -L https://bootstrap.saltstack.com | sh -s -- stable 2019.2.0
 
 # Set master
 RUN echo "master: master">/etc/salt/minion
+
+COPY utils/entrypoint-minion.sh .
+
+ENTRYPOINT ["./entrypoint-minion.sh"]
