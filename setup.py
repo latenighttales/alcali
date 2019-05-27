@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 
-with open("requirements/prod", "r") as fh:
+with open("requirements/prod.txt", "r") as fh:
     requirements = fh.read().splitlines()
 
-with open("requirements/dev", "r") as fh:
+with open("requirements/dev.txt", "r") as fh:
     dev_requirements = fh.read().splitlines()
 
 with open("VERSION", "r") as fh:
