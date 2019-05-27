@@ -22,6 +22,9 @@ COPY saltconfig/salt /srv/salt
 COPY saltconfig/pillar /srv/pillar
 COPY utils/wait-for .
 COPY utils/Procfile .
+COPY utils/entrypoint-master.sh .
 
 # Sync auth and returners
 RUN salt-run saltutil.sync_all
+
+ENTRYPOINT ["./entrypoint-master.sh"]

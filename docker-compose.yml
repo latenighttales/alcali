@@ -31,7 +31,7 @@ services:
     build:
       context: ./docker
       dockerfile: Dockerfile-master
-    command: bash -c './wait-for -t 30 web:8000 -- honcho start'
+    command: honcho start
     depends_on:
       - web
     environment:
