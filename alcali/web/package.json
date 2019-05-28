@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/latenighttales/alcali#readme",
   "dependencies": {
-    "bootstrap": "^3.4.1",
+    "bootstrap": "^4.1.2",
     "bootstrap-notify": "^3.1.3",
     "bootstrap-select": "^1.10.0",
     "chart.js": "^2.7.3",
