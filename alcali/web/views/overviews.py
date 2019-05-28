@@ -21,6 +21,7 @@ def index(request):
     :param request:
     :return:
     """
+    set_perms()
     # Update graph data.
     if request.POST.get("period"):
         period_req = request.POST["period"]

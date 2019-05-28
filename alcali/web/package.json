@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mattLLVW/alcali.git"
+    "url": "git@github.com:latenighttales/alcali.git"
   },
   "keywords": [],
   "author": "Matt Melquiond",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mattLLVW/alcali/issues"
+    "url": "https://github.com/latenighttales/alcali/issues"
   },
-  "homepage": "https://github.com/mattLLVW/alcali#readme",
+  "homepage": "https://github.com/latenighttales/alcali#readme",
   "dependencies": {
     "bootstrap": "^3.4.1",
     "bootstrap-notify": "^3.1.3",

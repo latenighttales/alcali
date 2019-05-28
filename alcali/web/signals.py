@@ -1,9 +1,10 @@
 from django.db.models.signals import pre_save, post_save
-from django.contrib.auth.signals import user_logged_in
+
+# from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 
-from alcali.web.backend.netapi import set_perms
+# from alcali.web.backend.netapi import set_perms
 from .models.alcali import UserSettings, Notifications
 
 
@@ -29,6 +30,6 @@ def clean_notifs(sender, instance, **kwargs):
         Notifications.objects.exclude(pk__in=list(ids)).delete()
 
 
-@receiver(user_logged_in)
-def set_perms_on_login(sender, user, request, **kwargs):
-    set_perms()
+# @receiver(user_logged_in)
+# def set_perms_on_login(sender, user, request, **kwargs):
+#     set_perms()
