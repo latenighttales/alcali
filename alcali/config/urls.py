@@ -19,6 +19,9 @@ urlpatterns = [
     ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+handler404 = "alcali.web.views.services.handler404"
+handler500 = "alcali.web.views.services.handler500"
+
 if settings.DEBUG and "debug_toolbar" in settings.INSTALLED_APPS:  # pragma: no cover
     import debug_toolbar
 

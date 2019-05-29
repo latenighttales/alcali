@@ -161,7 +161,8 @@ def test_notifications_delete_one(admin_client, notification):
     )
     assert response.status_code == 200
     assert response.json()["result"] == "success"
-    assert Notifications.objects.count() == 0
+    with pytest.raises(Notifications.DoesNotExist):
+        Notifications.objects.get(id=notif_id)
 
 
 def test_notifications_delete_all(admin_client, notification):

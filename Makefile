@@ -8,8 +8,7 @@ clean-pyc:
 
 ci:
 	docker-compose exec -u alcali web alcali migrate \
-	&& docker-compose exec -u alcali web alcali collectstatic --no-input --clear -v0 \
-	&& docker-compose exec -u alcali web alcali shell -c "from django.contrib.auth.models import User; User.objects.filter(username='admin').count() or User.objects.create_superuser('admin', 'admin@example.com', 'password')" \
+	&& docker-compose exec -u alcali web alcali shell -c "from django.contrib.auth.models import User; User.objects.filter(username='admin').count() or User.objects.create_superuser('admin', 'admin@example.com', 'password')"
 
 docs-serve:
 	echo http://127.0.0.1:8060 \

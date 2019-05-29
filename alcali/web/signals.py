@@ -10,17 +10,23 @@ from .models.alcali import UserSettings, Notifications
 
 @receiver(post_save, sender=User)
 def create_user_settings(sender, instance, created, **kwargs):
+
+    # Create related UserSettings when a new User is created.
     if created:
         UserSettings.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
 def save_user_settings(sender, instance, **kwargs):
+
+    # Save UserSettings when user is saved.
     instance.user_settings.save()
 
 
 @receiver(pre_save, sender=Notifications)
 def clean_notifs(sender, instance, **kwargs):
+
+    # Only keep max notifs nb in database.
     max_notifs = instance.user.user_settings.max_notifs
     notif_nb = Notifications.objects.filter(user=instance.user).count()
     if notif_nb > max_notifs:

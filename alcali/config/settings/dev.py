@@ -19,3 +19,5 @@ MIDDLEWARE = [
 ]
 
 INTERNAL_IPS = [os.environ.get("DJANGO_INTERNAL_IPS", "127.0.0.1")]
+
+ALLOWED_HOSTS = ["*"]

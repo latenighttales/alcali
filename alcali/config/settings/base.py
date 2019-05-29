@@ -3,7 +3,8 @@ Django settings for Alcali project.
 """
 import os
 import errno
-from os.path import join, dirname
+from distutils.util import strtobool
+from os.path import join
 from pathlib import Path
 
 from django.conf.global_settings import DATETIME_INPUT_FORMATS
@@ -31,9 +32,20 @@ DATETIME_INPUT_FORMATS += ["%Y, %b %d %H:%M:%S.%f"]
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("DJANGO_SECRET")
 
+DJANGO_DEBUG = os.environ.get("DJANGO_DEBUG")
+if DJANGO_DEBUG:
+    try:
+        # lower('y', 'yes', 't', 'true', 'on', '1')
+        DJANGO_DEBUG = strtobool(DJANGO_DEBUG)
+    # None, empty, bool...
+    except (AttributeError, TypeError, ValueError):
+        DJANGO_DEBUG = False
+else:
+    DJANGO_DEBUG = False
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DJANGO_DEBUG", False)
+DEBUG = DJANGO_DEBUG
 
+ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS", "127.0.0.1")]
 # Application definition
 
 INSTALLED_APPS = [
@@ -124,6 +136,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+WHITENOISE_USE_FINDERS = True
 
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
