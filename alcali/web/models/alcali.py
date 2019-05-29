@@ -43,13 +43,14 @@ class Minions(models.Model):
         )
 
     def last_highstate(self):
-        return (
-            SaltReturns.objects.filter(
-                Q(fun="state.apply") | Q(fun="state.highstate"), id=self.minion_id
-            )
-            .order_by("-alter_time")
-            .first()
-        )
+        # Get all potential jobs.
+        states = SaltReturns.objects.filter(
+            Q(fun="state.apply") | Q(fun="state.highstate"), id=self.minion_id
+        ).order_by("-alter_time")
+
+        # Remove jobs with arguments.
+        last = [state for state in states if not state.loaded_ret()["fun_args"]]
+        return last[0] if last else None
 
     def conformity(self):
         last_highstate = self.last_highstate()

@@ -4,8 +4,8 @@ from collections import Counter
 import yaml
 from ansi2html import Ansi2HTMLConverter
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 
 from ..backend.netapi import refresh_minion, get_keys, set_perms
 from ..models.salt import SaltReturns, SaltEvents, Jids
@@ -21,22 +21,28 @@ def index(request):
     :param request:
     :return:
     """
+
+    # On login, get salt permission for user from salt-api.
     set_perms()
-    # Update graph data.
+
+    # Update graph data with filters.
     if request.POST.get("period"):
         period_req = request.POST["period"]
         filter_req = request.POST.get("filter")
         days, count, error_count = graph_data(int(period_req), fun=filter_req)
         return JsonResponse({"labels": days, "series": [count, error_count]})
 
-    # Keys widget.
+    # Status widget.
     jobs_nb = SaltReturns.objects.count()
     events_nb = SaltEvents.objects.count()
     schedules_nb = Schedule.objects.count()
 
+    # Key widget.
     keys_status = list(Keys.objects.values_list("status", flat=True))
     keys_length = len(keys_status)
     keys_status = dict(Counter(keys_status))
+
+    # Conformity widget.
     minions_all = Minions.objects.all()
     total_minions = len(minions_all)
     conform_minions = [i.minion_id for i in minions_all if i.conformity()]
@@ -72,6 +78,8 @@ def jobs(request):
     :param request:
     :return:
     """
+
+    # Filter jobs.
     if request.POST:
         minion = request.POST.get("minion")
         user = request.POST.get("user")
@@ -123,8 +131,10 @@ def jobs(request):
             )
         return JsonResponse(ret, safe=False)
 
+    # Filter options.
     user_list = list(set([i.user() for i in Jids.objects.all()]))
     minion_list = SaltReturns.objects.values_list("id", flat=True).distinct()
+
     return render(
         request, "job_list.html", {"user_list": user_list, "minion_list": minion_list}
     )
@@ -132,6 +142,8 @@ def jobs(request):
 
 @login_required
 def job_detail(request, jid, minion_id):
+
+    # Retrieve job from database.
     job = SaltReturns.objects.get(jid=jid, id=minion_id)
 
     # Use different output.
@@ -140,6 +152,7 @@ def job_detail(request, jid, minion_id):
     else:
         formatted = nested_output.output({minion_id: job.loaded_ret()["return"]})
 
+    # Convert it to html.
     conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
     html_detail = conv.convert(formatted, ensure_trailing_newline=True)
 
@@ -148,12 +161,17 @@ def job_detail(request, jid, minion_id):
 
 @login_required
 def minions(request):
+
     # Refresh data.
     if request.POST.get("minion"):
         target = request.POST.get("minion")
+
+        # Delete minion from database.
         if request.POST.get("action") == "delete":
             Minions.objects.filter(minion_id=target).delete()
             return JsonResponse({target: "deleted"})
+
+        # Refresh all minions if key is accepted.
         if target == "*":
             accepted_minions = Keys.objects.filter(status="accepted").values_list(
                 "minion_id", flat=True
@@ -162,6 +180,7 @@ def minions(request):
                 refresh_minion(minion)
             return JsonResponse({"refreshed": [i for i in accepted_minions]})
 
+        # Refresh minion.
         refresh_minion(target)
         return JsonResponse({"refreshed": target})
 
@@ -195,6 +214,7 @@ def minions(request):
 
 @login_required
 def minion_detail(request, minion_id):
+
     # Update graph data.
     if request.POST.get("period"):
         period_req = request.POST["period"]
@@ -204,11 +224,7 @@ def minion_detail(request, minion_id):
         )
         return JsonResponse({"labels": days, "series": [count, error_count]})
 
-    try:
-        # TODO: LAME
-        minion = Minions.objects.get(minion_id=minion_id)
-    except Minions.DoesNotExist:
-        return HttpResponseNotFound("Page not found")
+    minion = get_object_or_404(Minions, minion_id=minion_id)
     custom_fields = MinionsCustomFields.objects.filter(minion=minion)
     # Remove whitespace from custom fields for JS ids.
     js_custom_fields = [i.name.replace(" ", "") for i in custom_fields]
@@ -239,9 +255,13 @@ def minion_detail(request, minion_id):
 
 @login_required
 def keys(request):
+
+    # Refresh button.
     if request.POST.get("action") == "refresh":
         get_keys(refresh=True)
         return JsonResponse({"refreshed": True})
+
+    # Datatable.
     elif request.POST:
         ret = {"data": []}
         keys_data = Keys.objects.all()

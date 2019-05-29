@@ -35,10 +35,16 @@ from ..backend.netapi import (
 
 @login_required
 def schedule(request):
+
     if request.POST:
+
+        # Refresh schedules.
         if request.POST.get("action") == "refresh":
             ret = refresh_schedules(minion=request.POST.get("minion"))
+
             return JsonResponse({"refreshed": ret})
+
+        # Manage schedules. Action could be: delete, disable_job, enable_job.
         if request.POST.get("action") and request.POST.get("name"):
             ret = manage_schedules(
                 request.POST.get("action"),
@@ -48,6 +54,7 @@ def schedule(request):
 
             return JsonResponse({request.POST.get("action"): ret})
 
+        # Datatable.
         ret = {"data": [], "columns": ["target"]}
         schedule_list = Schedule.objects.all()
         for sched in schedule_list:
@@ -65,6 +72,8 @@ def schedule(request):
 
 @login_required
 def conformity(request):
+
+    # Highstate conformity.
     if request.POST.get("cron"):
         cron = request.POST.get("cron")
         target = request.POST.get("target")
@@ -78,6 +87,8 @@ def conformity(request):
 
 @login_required
 def event_stream(request):
+
+    # Web socket.
     response = StreamingHttpResponse(
         get_events(), status=200, content_type="text/event-stream"
     )
@@ -87,12 +98,16 @@ def event_stream(request):
 
 @login_required
 def search(request):
+
+    # TODO: search.
     if request.GET.get("q"):
         query = request.GET.get("q")
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def users(request):
+
+    # TODO: CRUD
     form = AlcaliUserForm()
     change_form = AlcaliUserChangeForm()
     if request.method == "POST":
@@ -122,7 +137,9 @@ def users(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def settings(request):
+
     user = User.objects.get(username=request.user)
+
     notifs_status = [
         "notifs_created",
         "notifs_published",
@@ -130,6 +147,7 @@ def settings(request):
         "notifs_event",
     ]
 
+    # Delete minion custom field, delete conformity, or init_db.
     if request.POST.get("target"):
         target = request.POST.get("target")
         if request.POST.get("action") == "delete_conformity":
@@ -138,13 +156,16 @@ def settings(request):
             ret = MinionsCustomFields.objects.filter(name=target).delete()
         if request.POST.get("action") == "init_db":
             init_db(target)
+
             return JsonResponse({"result": "updated"})
 
         return JsonResponse({"result": ret})
 
+    # Create minion custom field, create conformity.
     if request.POST.get("name") and request.POST.get("function"):
         name = request.POST.get("name")
         function = request.POST.get("function")
+
         if request.POST.get("action") == "create_field":
             for minion in Minions.objects.all():
                 MinionsCustomFields.objects.create(
@@ -158,6 +179,7 @@ def settings(request):
 
         return JsonResponse({"result": "updated"})
 
+    # User settings.
     if request.POST.get("action") == "notifications":
         user_notifs = {}
         for status in notifs_status:
@@ -215,6 +237,8 @@ def settings(request):
 
 
 def notifications(request):
+
+    # Delete notifications.
     if request.POST.get("action") == "delete":
         notif_id = request.POST.get("id")
         try:
@@ -226,6 +250,8 @@ def notifications(request):
         except Notifications.DoesNotExist:
             pass
         return JsonResponse({"result": "success"})
+
+    # Create notifications.
     if request.POST.get("data") and request.POST.get("tag"):
         tag = request.POST.get("tag")
         data = request.POST.get("data")
@@ -246,3 +272,11 @@ def notifications(request):
                 "notif_ts": notif.datetime(),
             },
         )
+
+
+def handler404(request, exception):
+    return render(request, "404.html", status=404)
+
+
+def handler500(request):
+    return render(request, "500.html", status=500)
