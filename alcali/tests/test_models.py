@@ -31,9 +31,10 @@ def test_conform_highstate(minion, highstate):
 
 @pytest.mark.django_db
 def test_not_present_highstate(minion):
-    assert minion.conformity() is False
+    assert minion.conformity() is None
 
 
 @pytest.mark.django_db
 def test_not_conform_highstate(minion, highstate_diff):
+    ret = highstate_diff
     assert minion.conformity() is False

@@ -38,22 +38,24 @@
                     </tr>
                   {% endfor %}
                 {% endwith %}
-                    <tr>
-                      <th>LAST JOB RUNNED</th>
-                      <td class="text-right">{{ last_job.fun }} ({{ last_job.alter_time }})</td>
-                    </tr>
-                    <tr>
-                      <th>LAST HIGHSTATE</th>
-                      <td class="text-right">{{ last_highstate.alter_time }}</td>
-                    </tr>
-                    <tr>
-                      <th>CONFORMITY</th>
-                      {% if conformity %}
-                        <td class="text-right"><span class="label bg-green">{{ conformity }}</span></td>
-                      {% else %}
-                        <td class="text-right"><span class="label bg-red">{{ conformity }}</span></td>
-                      {% endif %}
-                    </tr>
+                <tr>
+                  <th>LAST JOB RUNNED</th>
+                  <td class="text-right">{{ last_job.fun }} ({{ last_job.alter_time }})</td>
+                </tr>
+                <tr>
+                  <th>LAST HIGHSTATE</th>
+                  <td class="text-right">{{ last_highstate.alter_time }}</td>
+                </tr>
+                <tr>
+                  <th>CONFORMITY</th>
+                  {% if conformity %}
+                    <td class="text-right"><span class="label bg-green">CONFORM</span></td>
+                  {% elif conformity is None %}
+                    <td class="text-right"><span class="label bg-blue-grey">UNKNOWN</span></td>
+                  {% else %}
+                    <td class="text-right"><span class="label bg-red">CONFLICT</span></td>
+                  {% endif %}
+                </tr>
                 </tbody>
               </table>
             </div>

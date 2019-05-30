@@ -93,13 +93,17 @@ def graph_data(period=7, **kwargs):
     return days, count, error_count
 
 
-def render_conformity():
-    minions_all = Minions.objects.all()
+def render_conformity(target=None):
+    if target:
+        minions_all = [Minions.objects.get(minion_id=target)]
+    else:
+        minions_all = Minions.objects.all()
     conformity_fields = Conformity.objects.values("name", "function")
     if not conformity_fields:
-        return [], []
+        return [], [], []
     conformity_names = [i["name"].upper() for i in conformity_fields]
     ret = []
+    details = {minion.minion_id: [] for minion in minions_all}
     for field in conformity_fields:
         field_ret = []
         args = field["function"].split(" ")
@@ -112,12 +116,15 @@ def render_conformity():
         for minion in minions_all:
             conformity_field = minion.custom_conformity(*args, **kwargs)
             if isinstance(conformity_field, dict):
-                field_ret.append(list(conformity_field.values())[0])
+                conformity_ret = list(conformity_field.values())[0]
+                field_ret.append(conformity_ret)
+                details[minion.minion_id].append({field["name"]: conformity_ret})
             else:
                 field_ret.append(conformity_field)
+                details[minion.minion_id].append({field["name"]: conformity_field})
         ret.append(dict(Counter(field_ret)))
 
-    return conformity_names, ret
+    return conformity_names, ret, details
 
 
 def check_permission(function):

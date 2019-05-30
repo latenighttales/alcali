@@ -53,6 +53,37 @@ def test_conformity_highstate_add(admin_client, minion_master):
     assert "master" in response.json()["result"]
 
 
+def test_conformity_get(admin_client, minion_master):
+    response = admin_client.get(reverse("conformity"))
+    assert response.status_code == 200
+
+
+def test_conformity_list(
+    admin_client, minion, highstate, minion_master, highstate_diff
+):
+    response = admin_client.post(reverse("conformity"), {"action": "list"})
+    assert response.status_code == 200
+    assert "data" in response.json()
+    assert "Minion id" in response.json()["columns"]
+    assert response.json()["data"][0][1] is False
+
+
+def test_conformity_detail_get(
+    admin_client, minion, highstate, minion_master, highstate_diff
+):
+    response = admin_client.post(
+        reverse("settings"),
+        {"name": "os", "function": "grains.item os", "action": "create_conformity"},
+    )
+    response = admin_client.get(
+        reverse("conformity_detail", kwargs={"minion_id": minion.minion_id})
+    )
+    assert response.status_code == 200
+    assert response.context["minion_id"] == minion.minion_id
+    assert "os" in response.context["custom_conformity"][0]
+    assert "install_alcali" in response.context["succeeded"]
+
+
 def test_conformity_add(admin_client, minion_master):
     response = admin_client.post(
         reverse("run"),

@@ -11,6 +11,18 @@ def test_run(admin_client):
     assert response.status_code == 200
 
 
+def test_run_get_param(admin_client):
+    response = admin_client.get(reverse("run") + "?tgt=master&fun=state.apply")
+    assert response.status_code == 200
+    assert response.context["get_params"]["fun"][0] == "state.apply"
+
+
+def test_run_failed_tooltip(admin_client):
+    response = admin_client.post(reverse("run"), {"tooltip": "foobar"})
+    assert response.status_code == 200
+    assert response.json() == {}
+
+
 def test_run_raw(admin_client):
     response = admin_client.post(
         reverse("run"), {"command": "salt '*' cmd.run 'echo foo'"}

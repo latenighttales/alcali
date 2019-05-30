@@ -6,7 +6,6 @@ echo "Waiting for $DB_HOST"
 
 # Migrate database and create default user
 python alcali/manage.py migrate
-python alcali/manage.py collectstatic --no-input --clear -v0
 python alcali/manage.py shell -c "from django.contrib.auth.models import User; User.objects.filter(username='admin').count() or User.objects.create_superuser('admin', 'admin@example.com', 'password')"
 
 exec "$@"

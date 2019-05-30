@@ -49,13 +49,20 @@ class Minions(models.Model):
         ).order_by("-alter_time")
 
         # Remove jobs with arguments.
-        last = [state for state in states if not state.loaded_ret()["fun_args"]]
-        return last[0] if last else None
+        for state in states:
+            if (
+                not state.loaded_ret()["fun_args"]
+                or state.loaded_ret()["fun_args"][0] == {"test": True}
+                or state.loaded_ret()["fun_args"][0] == "test=True"
+            ):
+                return state
+            else:
+                return None
 
     def conformity(self):
         last_highstate = self.last_highstate()
         if not last_highstate:
-            return False
+            return None
         highstate_ret = last_highstate.loaded_ret()
         for state in highstate_ret["return"]:
             if not highstate_ret["return"][state]["result"]:

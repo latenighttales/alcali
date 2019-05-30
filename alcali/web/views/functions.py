@@ -73,23 +73,19 @@ def run(request):
         if request.POST.get("keyword") and request.POST.get("argument"):
             kwargs.update({request.POST["keyword"]: request.POST["argument"]})
 
-        try:
-            ret = run_job(tgt, fun, args, kwargs=kwargs)
-            formatted = "\n"
-            if fun in ["state.apply", "state.highstate"]:
-                for k, v in ret.items():
-                    minion_ret = highstate_output.output({k: v})
-                    formatted += minion_ret + "\n\n"
-            else:
-                for k, v in ret.items():
-                    minion_ret = nested_output.output({k: v})
-                    formatted += minion_ret + "\n\n"
-            conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
-            html = conv.convert(formatted, ensure_trailing_newline=True)
-            return HttpResponse(html)
-        # except SaltReqTimeoutError:
-        except ZeroDivisionError:
-            return JsonResponse({"Error": "SaltReqTimeoutError"})
+        ret = run_job(tgt, fun, args, kwargs=kwargs)
+        formatted = "\n"
+        if fun in ["state.apply", "state.highstate"]:
+            for k, v in ret.items():
+                minion_ret = highstate_output.output({k: v})
+                formatted += minion_ret + "\n\n"
+        else:
+            for k, v in ret.items():
+                minion_ret = nested_output.output({k: v})
+                formatted += minion_ret + "\n\n"
+        conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
+        html = conv.convert(formatted, ensure_trailing_newline=True)
+        return HttpResponse(html)
 
     # Function list.
     funct_list = (
@@ -145,19 +141,15 @@ def runner(request):
         if request.POST.get("keyword") and request.POST.get("argument"):
             kwargs.update({request.POST["keyword"]: request.POST["argument"]})
 
-        try:
-            ret = run_runner(fun, args, kwargs=kwargs)
+        ret = run_runner(fun, args, kwargs=kwargs)
 
-            formatted = "\n"
-            for k, v in ret.items():
-                minion_ret = nested_output.output({k: v})
-                formatted += minion_ret + "\n\n"
-            conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
-            html = conv.convert(formatted, ensure_trailing_newline=True)
-            return HttpResponse(html)
-        # except SaltReqTimeoutError:
-        except:
-            return JsonResponse({"Error": "SaltReqTimeoutError"})
+        formatted = "\n"
+        for k, v in ret.items():
+            minion_ret = nested_output.output({k: v})
+            formatted += minion_ret + "\n\n"
+        conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
+        html = conv.convert(formatted, ensure_trailing_newline=True)
+        return HttpResponse(html)
 
     # Function list.
     funct_list = (
@@ -225,19 +217,15 @@ def wheel(request):
         if request.POST.get("keyword") and request.POST.get("argument"):
             kwargs.update({request.POST["keyword"]: request.POST["argument"]})
 
-        try:
-            ret = run_wheel(fun, args, kwarg=kwargs)
+        ret = run_wheel(fun, args, kwarg=kwargs)
 
-            formatted = "\n"
-            for k, v in ret.items():
-                minion_ret = nested_output.output({k: v})
-                formatted += minion_ret + "\n\n"
-            conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
-            html = conv.convert(formatted, ensure_trailing_newline=True)
-            return HttpResponse(html)
-        # except SaltReqTimeoutError:
-        except:
-            return JsonResponse({"Error": "SaltReqTimeoutError"})
+        formatted = "\n"
+        for k, v in ret.items():
+            minion_ret = nested_output.output({k: v})
+            formatted += minion_ret + "\n\n"
+        conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
+        html = conv.convert(formatted, ensure_trailing_newline=True)
+        return HttpResponse(html)
 
     # Function list.
     funct_list = (

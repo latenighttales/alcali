@@ -1,3 +1,59 @@
+
+let minionColDef = [
+  { name: "Minion Id",
+    render: function(data, type, row, meta) {
+      if (type === "display") {
+        data = '<a href="/minions/' + data + '/">' + data + '</a>';
+      }
+      return data;
+    }
+  },
+  { name: "Highstate Conformity",
+    render: function(data, type, row, meta) {
+      if (type === "display") {
+        if (data === true) {
+          data = '<span class="label bg-green">CONFORM</span>';
+        } else if (data === null) {
+          data = '<span class="label bg-blue-grey">UNKNOWN</span>';
+        } else {
+          data = '<span class="label label-danger">CONFLICT</span>';
+        }
+      }
+      return data;
+    },
+    className: "text-center"
+  },
+  { name: "Fqdn" },
+  { name: "OS" },
+  { name: "OS Version" },
+  { name: "Kernel" },
+  { name: "Last Job" },
+  { name: "Last Highstate",
+    render: function(data, type, row, meta) {
+      if (type === "display") {
+        // TODO: use Locale locale..
+        if (data !== null) {
+          data = new Date(data).toLocaleString('en-GB');
+        }
+      }
+      return data;
+    }
+  },
+  { name: "Action",
+    render: function(data, type, row, meta) {
+      if (type === "display") {
+        data = '<button class="btn btn-primary btn-sm waves-effect" onclick="manageMinion(\'refresh\',\''+row[0]+'\')">REFRESH</button>\n';
+        data += '<a href="/run?tgt='+row[0]+'" class="btn btn-sm bg-blue-grey waves-effect" role="button">RUN JOB</a>\n';
+        data += '<button class="btn btn-danger btn-sm waves-effect" id="'+ row[0] +'" data-toggle="modal" data-target="#defaultModal">DELETE</button>\n';
+      }
+      return data;
+    },
+    className: "text-center"
+  }
+];
+
+
+
 let minionTable;
 function createMinionTable() {
   minionTable = $('.js-exportable').DataTable({

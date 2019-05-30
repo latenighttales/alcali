@@ -112,8 +112,11 @@ function createProgress(id, data) {
     let percent = Math.round(value / totalValue * 100);
     let conformityKeys = Object.keys(data);
     let conformityColor = colorArr[index * 2 + 5];
-    if (['None', 'conflict'].indexOf(conformityKeys[index]) >= 0) {
+    if (['conflict'].indexOf(conformityKeys[index]) >= 0) {
       conformityColor = colorArr[0]
+    }
+    if (['None', 'unknown'].indexOf(conformityKeys[index]) >= 0) {
+      return;
     }
     progressBar.innerHTML += '<div class="progress-bar bg-'+conformityColor+'" style="width: '+percent+'%" data-toggle="tooltip" title="'+conformityKeys[index]+': '+percent+'% ('+value+')" data-placement="bottom">\n' +
       '                          <span class="sr-only">'+percent+'</span>\n' +

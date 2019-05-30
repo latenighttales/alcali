@@ -149,6 +149,7 @@ $(function () {
   $('[data-toggle="popover"]').popover();
 });
 
+// Job column definition.
 let jobColDef = [
   { name: "ID",
     render: function(data, type, row, meta) {
@@ -173,9 +174,9 @@ let jobColDef = [
     render: function(data, type, row, meta) {
       if (type === "display") {
         if (data === true) {
-          data = '<span class="label bg-green">Succeeded</span>';
+          data = '<span class="label bg-green">SUCCEEDED</span>';
         } else {
-          data = '<span class="label label-danger">Failed</span>';
+          data = '<span class="label label-danger">FAILED</span>';
         }
       }
       return data;
@@ -203,100 +204,4 @@ let jobColDef = [
   }
 ];
 
-let minionColDef = [
-  { name: "Minion Id",
-    render: function(data, type, row, meta) {
-      if (type === "display") {
-        data = '<a href="/minions/' + data + '/">' + data + '</a>';
-      }
-      return data;
-    }
-  },
-  { name: "Highstate Conformity",
-    render: function(data, type, row, meta) {
-      if (type === "display") {
-        if (data === true) {
-          data = '<span class="label bg-green">Conform</span>';
-        } else {
-          data = '<span class="label label-danger">Conflict</span>';
-        }
-      }
-      return data;
-    },
-    className: "text-center"
-  },
-  { name: "Fqdn" },
-  { name: "OS" },
-  { name: "OS Version" },
-  { name: "Kernel" },
-  { name: "Last Job" },
-  { name: "Last Highstate",
-    render: function(data, type, row, meta) {
-      if (type === "display") {
-        // TODO: use Locale locale..
-        if (data !== null) {
-          data = new Date(data).toLocaleString('en-GB');
-        }
-      }
-      return data;
-    }
-  },
-  { name: "Action",
-    render: function(data, type, row, meta) {
-      if (type === "display") {
-        data = '<button class="btn btn-primary btn-sm waves-effect" onclick="manageMinion(\'refresh\',\''+row[0]+'\')">REFRESH</button>\n';
-        data += '<a href="/run?tgt='+row[0]+'" class="btn btn-sm bg-blue-grey waves-effect" role="button">RUN JOB</a>\n';
-        data += '<button class="btn btn-danger btn-sm waves-effect" id="'+ row[0] +'" data-toggle="modal" data-target="#defaultModal">DELETE</button>\n';
-      }
-      return data;
-    },
-    className: "text-center"
-  }
-];
 
-let keysColDef = [
-  { name: "Minion id",
-    render: function(data, type, row, meta) {
-      if (type === "display") {
-        if (row[1] === "accepted") {
-          data = '<a href="/minions/' + data + '/">' + data + '</a>';
-        }
-      }
-      return data;
-    }
-  },
-  { name: "Key status",
-    render: function(data, type, row, meta) {
-      if (type === "display") {
-        if (data === "accepted") {
-          data = '<span class="label bg-green">'+data+'</span>';
-        } else if (data === "rejected") {
-          data = '<span class="label bg-red">'+data+'</span>';
-        } else  if (data === "unaccepted") {
-          data = '<span class="label bg-primary">'+data+'</span>';
-        }
-      }
-      return data;
-    },
-    className: "text-center"
-  },
-  { name: "Public key" },
-  { name: "Action",
-    render: function(data, type, row, meta) {
-      if (type === "display") {
-        console.log(row[1]);
-        if (row[1] === "accepted") {
-          data = '<button class="btn btn-warning btn-sm waves-effect" onclick="manageKey(\'delete\', \''+row[0]+'\')">DELETE</button>\n';
-          data += '<button class="btn btn-danger btn-sm waves-effect" onclick="manageKey(\'reject\', \''+row[0]+'\')">REJECT</button>\n';
-        } else if (row[1] === "rejected") {
-          data = '<button class="btn btn-success btn-sm waves-effect" onclick="manageKey(\'accept\', \''+row[0]+'\')">ACCEPT</button>\n';
-          data += '<button class="btn btn-danger btn-sm waves-effect" onclick="manageKey(\'reject\', \''+row[0]+'\')">REJECT</button>\n';
-        } else  if (row[1] === "unaccepted") {
-          data = '<button class="btn btn-success btn-sm waves-effect" onclick="manageKey(\'accept\', \''+row[0]+'\')">ACCEPT</button>\n';
-        }
-      }
-      return data;
-    },
-    className: "text-center"
-  }
-];

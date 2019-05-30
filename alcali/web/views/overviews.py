@@ -46,13 +46,15 @@ def index(request):
     minions_all = Minions.objects.all()
     total_minions = len(minions_all)
     conform_minions = [i.minion_id for i in minions_all if i.conformity()]
+    conflict_minions = [i.minion_id for i in minions_all if i.conformity() is False]
     # TODO Make a func and accept str, list, dict
     highstate_conformity = {
         "conform": len(conform_minions),
-        "conflict": total_minions - len(conform_minions),
+        "conflict": len(conflict_minions),
+        "unknown": total_minions - (len(conform_minions) + len(conflict_minions)),
     }
 
-    conformity_name, conformity_data = render_conformity()
+    conformity_name, conformity_data, _ = render_conformity()
     conformity_name.insert(0, "HIGHSTATE")
     conformity_data.insert(0, highstate_conformity)
 

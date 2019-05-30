@@ -97,12 +97,9 @@ def refresh_minion(minion_id):
 
 def run_job(tgt, fun, args, kwargs=None):
     with api_connect() as api:
-        try:
-            api_ret = api.local(tgt, fun, arg=args, kwarg=kwargs)
-        except PepperException as e:
-            return {"error": str(e)}
-        api_ret = api_ret["return"][0]
-        return api_ret
+        api_ret = api.local(tgt, fun, arg=args, kwarg=kwargs)
+    api_ret = api_ret["return"][0]
+    return api_ret
 
 
 def run_raw(load):

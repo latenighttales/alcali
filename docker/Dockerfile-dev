@@ -10,6 +10,9 @@ RUN apt-get update && \
   apt-get upgrade -y -o DPkg::Options::=--force-confold && \
   apt-get install -y -o DPkg::Options::=--force-confold netcat
 
+# Upgrade pip
+RUN pip install --upgrade pip
+
 # Create unprivileged user
 RUN useradd -u ${USER_ID} -ms /bin/bash -d /opt/alcali alcali
 

@@ -70,13 +70,13 @@ import textwrap
 from . import nested_output
 
 
-def output(data):
+def output(data, summary=True):
     """
     The HighState Outputter is only meant to be used with the state.highstate
     function, or a function that returns highstate return data.
     """
     for host, hostdata in data.items():
-        return _format_host(host, hostdata)[0]
+        return _format_host(host, hostdata, summary)[0]
 
 
 colors = {
@@ -89,7 +89,7 @@ colors = {
 }
 
 
-def _format_host(host, data):
+def _format_host(host, data, summary):
     tabular = False
     rcounts = {}
     rdurations = []
@@ -215,83 +215,84 @@ def _format_host(host, data):
         count_max_len = max([len(str(x)) for x in rcounts.items()] or [0])
         label_max_len = max([len(x) for x in rlabel.items()] or [0])
         line_max_len = label_max_len + count_max_len + 2  # +2 for ': '
-        hstrs.append(
-            colorfmt.format(
-                colors["CYAN"], u"\nSummary\n{0}".format("-" * line_max_len), colors
-            )
-        )
-
-        def _counts(label, count):
-            return u"{0}: {1:>{2}}".format(
-                label, count, line_max_len - (len(label) + 2)
-            )
-
-        # Successful states
-        changestats = []
-        if None in rcounts and rcounts.get(None, 0) > 0:
-            # test=True states
-            changestats.append(
-                colorfmt.format(
-                    colors["YELLOW"],
-                    u"unchanged={0}".format(rcounts.get(None, 0)),
-                    colors,
-                )
-            )
-        if nchanges > 0:
-            changestats.append(
-                colorfmt.format(
-                    colors["GREEN"], u"changed={0}".format(nchanges), colors
-                )
-            )
-        if changestats:
-            changestats = u" ({0})".format(", ".join(changestats))
-        else:
-            changestats = u""
-        hstrs.append(
-            colorfmt.format(
-                colors["GREEN"],
-                _counts(rlabel[True], rcounts.get(True, 0) + rcounts.get(None, 0)),
-                colors,
-            )
-            + changestats
-        )
-
-        # Failed states
-        num_failed = rcounts.get(False, 0)
-        hstrs.append(
-            colorfmt.format(
-                colors["RED"] if num_failed else colors["CYAN"],
-                _counts(rlabel[False], num_failed),
-                colors,
-            )
-        )
-
-        num_warnings = rcounts.get("warnings", 0)
-        if num_warnings:
+        if summary:
             hstrs.append(
                 colorfmt.format(
-                    colors["LIGHT_RED"],
-                    _counts(rlabel["warnings"], num_warnings),
+                    colors["CYAN"], u"\nSummary\n{0}".format("-" * line_max_len), colors
+                )
+            )
+
+            def _counts(label, count):
+                return u"{0}: {1:>{2}}".format(
+                    label, count, line_max_len - (len(label) + 2)
+                )
+
+            # Successful states
+            changestats = []
+            if None in rcounts and rcounts.get(None, 0) > 0:
+                # test=True states
+                changestats.append(
+                    colorfmt.format(
+                        colors["YELLOW"],
+                        u"unchanged={0}".format(rcounts.get(None, 0)),
+                        colors,
+                    )
+                )
+            if nchanges > 0:
+                changestats.append(
+                    colorfmt.format(
+                        colors["GREEN"], u"changed={0}".format(nchanges), colors
+                    )
+                )
+            if changestats:
+                changestats = u" ({0})".format(", ".join(changestats))
+            else:
+                changestats = u""
+            hstrs.append(
+                colorfmt.format(
+                    colors["GREEN"],
+                    _counts(rlabel[True], rcounts.get(True, 0) + rcounts.get(None, 0)),
+                    colors,
+                )
+                + changestats
+            )
+
+            # Failed states
+            num_failed = rcounts.get(False, 0)
+            hstrs.append(
+                colorfmt.format(
+                    colors["RED"] if num_failed else colors["CYAN"],
+                    _counts(rlabel[False], num_failed),
                     colors,
                 )
             )
 
-        totals = u"{0}\nTotal states run: {1:>{2}}".format(
-            "-" * line_max_len,
-            sum(rcounts.values()) - rcounts.get("warnings", 0),
-            line_max_len - 7,
-        )
-        hstrs.append(colorfmt.format(colors["CYAN"], totals, colors))
-        sum_duration = sum(rdurations)
-        duration_unit = "ms"
-        # convert to seconds if duration is 1000ms or more
-        if sum_duration > 999:
-            sum_duration /= 1000
-            duration_unit = "s"
-        total_duration = "Total run time: {0} {1}".format(
-            "{0:.3f}".format(sum_duration).rjust(line_max_len - 5), duration_unit
-        )
-        hstrs.append(colorfmt.format(colors["CYAN"], total_duration, colors))
+            num_warnings = rcounts.get("warnings", 0)
+            if num_warnings:
+                hstrs.append(
+                    colorfmt.format(
+                        colors["LIGHT_RED"],
+                        _counts(rlabel["warnings"], num_warnings),
+                        colors,
+                    )
+                )
+
+            totals = u"{0}\nTotal states run: {1:>{2}}".format(
+                "-" * line_max_len,
+                sum(rcounts.values()) - rcounts.get("warnings", 0),
+                line_max_len - 7,
+            )
+            hstrs.append(colorfmt.format(colors["CYAN"], totals, colors))
+            sum_duration = sum(rdurations)
+            duration_unit = "ms"
+            # convert to seconds if duration is 1000ms or more
+            if sum_duration > 999:
+                sum_duration /= 1000
+                duration_unit = "s"
+            total_duration = "Total run time: {0} {1}".format(
+                "{0:.3f}".format(sum_duration).rjust(line_max_len - 5), duration_unit
+            )
+            hstrs.append(colorfmt.format(colors["CYAN"], total_duration, colors))
 
     hstrs.insert(0, (u"{0}{1}:{2[ENDC]}".format(hcolor, host, colors)))
     return u"\n".join(hstrs), nchanges > 0

@@ -1,10 +1,13 @@
 import json
 
+from ansi2html import Ansi2HTMLConverter
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import JsonResponse, StreamingHttpResponse
 
+from alcali.web.utils import render_conformity
+from alcali.web.utils.output import nested_output, highstate_output
 from ..forms import AlcaliUserForm, AlcaliUserChangeForm
 from ..models.alcali import (
     Schedule,
@@ -82,7 +85,100 @@ def conformity(request):
         ret = create_schedules(target, cron)
         return JsonResponse({"result": ret})
 
+    if request.POST.get("action") == "list":
+        ret = {
+            "data": [],
+            "columns": [
+                "Minion id",
+                "Highstate Conformity",
+                "succeeded",
+                "Unchanged",
+                "Failed",
+            ],
+        }
+        conformity_all = Conformity.objects.all()
+        if conformity_all:
+            ret["columns"] = ret["columns"] + [i.name for i in conformity_all]
+        _, _, rendered_conformity = render_conformity()
+        minions = Minions.objects.all()
+        for minion in minions:
+            succeeded, unchanged, failed = 0, 0, 0
+            last_highstate = minion.last_highstate()
+            if last_highstate:
+                last_highstate = last_highstate.loaded_ret()["return"]
+                for state in last_highstate:
+                    if last_highstate[state]["result"] is True:
+                        succeeded += 1
+                    elif last_highstate[state]["result"] is None:
+                        unchanged += 1
+                    else:
+                        failed += 1
+            else:
+                succeeded, unchanged, failed = None, None, None
+
+            if rendered_conformity:
+                custom_conformity = rendered_conformity[minion.minion_id]
+                custom_conformity = [list(i.values())[0] for i in custom_conformity]
+            else:
+                custom_conformity = []
+            ret["data"].append(
+                [minion.minion_id, minion.conformity(), succeeded, unchanged, failed]
+                + custom_conformity
+                + [""]
+            )
+
+        return JsonResponse(ret, safe=False)
+
     return render(request, "conformity.html", {})
+
+
+@login_required
+def conformity_detail(request, minion_id):
+    minion = Minions.objects.get(minion_id=minion_id)
+    _, _, custom_conformity = render_conformity(minion_id)
+    custom_conformity = custom_conformity[minion_id] if custom_conformity else None
+    minion_conformity = minion.conformity()
+    conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
+    last_highstate = minion.last_highstate()
+    succeeded, unchanged, failed = {}, {}, {}
+
+    if last_highstate:
+        last_highstate = last_highstate.loaded_ret()["return"]
+        for state in last_highstate:
+            state_name = state.split("_|-")[1]
+            if last_highstate[state]["result"] is True:
+                formatted = highstate_output.output(
+                    {minion_id: {state: last_highstate[state]}}, summary=False
+                )
+                succeeded[state_name] = conv.convert(
+                    formatted, ensure_trailing_newline=True
+                )
+            elif last_highstate[state]["result"] is None:
+                formatted = highstate_output.output(
+                    {minion_id: {state: last_highstate[state]}}, summary=False
+                )
+                unchanged[state_name] = conv.convert(
+                    formatted, ensure_trailing_newline=True
+                )
+            else:
+                formatted = highstate_output.output(
+                    {minion_id: {state: last_highstate[state]}}, summary=False
+                )
+                failed[state_name] = conv.convert(
+                    formatted, ensure_trailing_newline=True
+                )
+    return render(
+        request,
+        "conformity_detail.html",
+        {
+            "minion_id": minion_id,
+            "custom_conformity": custom_conformity,
+            "conformity": minion_conformity,
+            "succeeded": succeeded,
+            "unchanged": unchanged,
+            "failed": failed,
+        },
+    )
 
 
 @login_required
