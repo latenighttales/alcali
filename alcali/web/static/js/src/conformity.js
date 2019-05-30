@@ -92,6 +92,17 @@ let conformityColDef = [
       return data;
     }
   },
+  { name: "Last Highstate",
+    render: function(data, type, row, meta) {
+      if (type === "display") {
+        // TODO: use Locale locale..
+        if (data !== null) {
+          data = new Date(data).toLocaleString('en-GB');
+        }
+      }
+      return data;
+    }
+  },
   { name: "Highstate Conformity",
     render: function(data, type, row, meta) {
       if (type === "display") {

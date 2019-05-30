@@ -86,8 +86,12 @@ function manageSchedule(action, name, minion = null) {
 
     // handle a successful response
     success: function() {
-      console.log('coucou');
-      //window.location.reload();
+      showNotification(
+        'bg-black',
+        '<b>action: </b>' + action + ' on ' + minion + ': ' + name + ' done',
+        'bottom',
+        'center'
+      )
     },
 
     // handle a non-successful response

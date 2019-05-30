@@ -47,7 +47,12 @@ let keysColDef = [
 ];
 
 function manageKey(action, target) {
-  showNotification('bg-black', '<b>action: </b>' + action + ' on ' + target + ' submitted', 'bottom', 'center');
+  showNotification(
+    "bg-black",
+    "<b>action: </b>" + action + " on " + target + " submitted",
+    "bottom",
+    "center"
+  );
   $.ajax({
     url: '/wheel',
     type: 'POST',
@@ -60,9 +65,19 @@ function manageKey(action, target) {
     // handle a successful response
     success: function(ret) {
       if (ret.hasOwnProperty('error')) {
-        showNotification('bg-red', '<b>error: </b>' + ret.error, 'bottom', 'center');
+        showNotification(
+          "bg-red",
+          "<b>error: </b>" + ret.error,
+          "bottom",
+          "center"
+        );
       } else {
-        showNotification('bg-black', '<b>action: </b>' + action + ' on ' + target + ' done', 'bottom', 'center');
+        showNotification(
+          "bg-black",
+          "<b>action: </b>" + action + " on " + target + " done",
+          "bottom",
+          "center"
+        );
         tableKeys.ajax.reload();
       }
     },
@@ -77,16 +92,16 @@ function manageKey(action, target) {
 
 let tableKeys;
 function createKeysTable() {
-  tableKeys = $('.js-basic-example').DataTable({
+  tableKeys = $(".js-basic-example").DataTable({
     responsive: true,
-    "ajax": {
-      "url": "/keys",
-      "type": "POST",
-      "data": {
+    ajax: {
+      url: "/keys",
+      type: "POST",
+      data: {
         csrfmiddlewaretoken: token
-      },
+      }
     },
-    "columns": keysColDef
+    columns: keysColDef
   });
 }
 

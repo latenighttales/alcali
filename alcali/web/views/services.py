@@ -85,11 +85,13 @@ def conformity(request):
         ret = create_schedules(target, cron)
         return JsonResponse({"result": ret})
 
+    # Datatable.
     if request.POST.get("action") == "list":
         ret = {
             "data": [],
             "columns": [
                 "Minion id",
+                "Last Highstate",
                 "Highstate Conformity",
                 "succeeded",
                 "Unchanged",
@@ -97,14 +99,20 @@ def conformity(request):
             ],
         }
         conformity_all = Conformity.objects.all()
+        # Add custom conformity fields to datatable columns.
         if conformity_all:
             ret["columns"] = ret["columns"] + [i.name for i in conformity_all]
+
+        # Get conformity data.
         _, _, rendered_conformity = render_conformity()
+
+        # Compute number of succeeded, unchanged and failed states.
         minions = Minions.objects.all()
         for minion in minions:
             succeeded, unchanged, failed = 0, 0, 0
             last_highstate = minion.last_highstate()
             if last_highstate:
+                last_highstate_date = last_highstate.alter_time
                 last_highstate = last_highstate.loaded_ret()["return"]
                 for state in last_highstate:
                     if last_highstate[state]["result"] is True:
@@ -114,15 +122,28 @@ def conformity(request):
                     else:
                         failed += 1
             else:
-                succeeded, unchanged, failed = None, None, None
+                last_highstate_date, succeeded, unchanged, failed = (
+                    None,
+                    None,
+                    None,
+                    None,
+                )
 
+            # Add custom conformity values to datatable data.
             if rendered_conformity:
                 custom_conformity = rendered_conformity[minion.minion_id]
                 custom_conformity = [list(i.values())[0] for i in custom_conformity]
             else:
                 custom_conformity = []
             ret["data"].append(
-                [minion.minion_id, minion.conformity(), succeeded, unchanged, failed]
+                [
+                    minion.minion_id,
+                    last_highstate_date,
+                    minion.conformity(),
+                    succeeded,
+                    unchanged,
+                    failed,
+                ]
                 + custom_conformity
                 + [""]
             )
@@ -134,10 +155,15 @@ def conformity(request):
 
 @login_required
 def conformity_detail(request, minion_id):
+
     minion = Minions.objects.get(minion_id=minion_id)
+
+    # Get conformity data.
     _, _, custom_conformity = render_conformity(minion_id)
     custom_conformity = custom_conformity[minion_id] if custom_conformity else None
     minion_conformity = minion.conformity()
+
+    # Convert states to html.
     conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
     last_highstate = minion.last_highstate()
     succeeded, unchanged, failed = {}, {}, {}
@@ -203,7 +229,6 @@ def search(request):
 @user_passes_test(lambda u: u.is_superuser)
 def users(request):
 
-    # TODO: CRUD
     form = AlcaliUserForm()
     change_form = AlcaliUserChangeForm()
     if request.method == "POST":

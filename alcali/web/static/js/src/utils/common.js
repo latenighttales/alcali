@@ -12,8 +12,6 @@ function fnmatch(pattern) {
   if (pattern.indexOf('*') === -1) {
     return filename => pattern === filename;
   } else {
-    // Taken from Lodash (MIT).
-    // Use _.escapeRegExp directly if available.
     let reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
     let escaped = pattern.replace(reRegExpChar, '\\$&');
     let matcher = new RegExp('^' + escaped.replace(/\\\*/g, '.*') + '$');
@@ -65,8 +63,12 @@ function manageMinion(action, minion) {
 
     // handle a successful response
     success: function (ret) {
-      console.log(ret);
-      location.reload();
+      showNotification(
+        "bg-black",
+        "<b>action: </b>" + action + " on " + minion + " done",
+        "bottom",
+        "center"
+      );
     },
 
     // handle a non-successful response
@@ -93,7 +95,12 @@ function refreshKeys() {
 
     // handle a successful response
     success: function () {
-      location.reload();
+      showNotification(
+        "bg-black",
+        "<b>action: </b>refresh key done",
+        "bottom",
+        "center"
+      );
     },
 
     // handle a non-successful response
