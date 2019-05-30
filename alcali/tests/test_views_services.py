@@ -65,7 +65,7 @@ def test_conformity_list(
     assert response.status_code == 200
     assert "data" in response.json()
     assert "Minion id" in response.json()["columns"]
-    assert response.json()["data"][0][1] is False
+    assert response.json()["data"][0][2] is False
 
 
 def test_conformity_detail_get(
