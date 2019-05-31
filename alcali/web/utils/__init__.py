@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils import timezone
 from django.db.models import Count, Q
 
+from alcali.web.utils.input import RawCommand
 from ..models.salt import SaltReturns
 from ..models.alcali import Minions, Conformity
 
@@ -94,31 +95,47 @@ def graph_data(period=7, **kwargs):
 
 
 def render_conformity(target=None):
+
+    # First, a list of targets.
     if target:
         minions_all = [Minions.objects.get(minion_id=target)]
     else:
         minions_all = Minions.objects.all()
+
+    # Get conformity fields.
     conformity_fields = Conformity.objects.values("name", "function")
+
+    # Default.
     if not conformity_fields:
         return [], [], []
+
+    # Create list of conformity names in UPPERCASE.
     conformity_names = [i["name"].upper() for i in conformity_fields]
+
+    # Aggregated results structure.
     ret = []
+
+    # Detailed structure.
     details = {minion.minion_id: [] for minion in minions_all}
+
     for field in conformity_fields:
         field_ret = []
-        args = field["function"].split(" ")
-        kwargs = {}
-        for arg in args:
-            if "=" in arg:
-                kwargs[arg.split("=")[0]] = arg.split("=")[1]
-                args.remove(arg)
+
+        # Parse command.
+        funct = field["function"]
+        # Use fake client because we don't provide a target
+        parser = RawCommand(funct, client="runner", inline=True)
+        parsed = parser.parse()[0]
 
         for minion in minions_all:
-            conformity_field = minion.custom_conformity(*args, **kwargs)
+            conformity_field = minion.custom_conformity(parsed["fun"], *parsed["arg"])
+
+            # If the job return is a dict, get the value.
             if isinstance(conformity_field, dict):
                 conformity_ret = list(conformity_field.values())[0]
                 field_ret.append(conformity_ret)
                 details[minion.minion_id].append({field["name"]: conformity_ret})
+            # It should be a string.
             else:
                 field_ret.append(conformity_field)
                 details[minion.minion_id].append({field["name"]: conformity_field})

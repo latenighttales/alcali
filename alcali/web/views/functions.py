@@ -9,7 +9,8 @@ from django.shortcuts import render
 from ..backend.netapi import run_raw, run_job, run_runner, run_wheel, manage_key
 from ..models.alcali import Functions, Minions
 from ..utils import check_permission
-from ..utils.output import RawCommand, highstate_output, nested_output
+from ..utils.output import highstate_output, nested_output
+from ..utils.input import RawCommand
 
 
 @login_required

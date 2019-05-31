@@ -6,7 +6,7 @@ from urllib.error import URLError
 from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
 
-from ..utils.output import RawCommand
+from ..utils.input import RawCommand
 from ..models.alcali import Minions, Functions, MinionsCustomFields, Keys, Schedule
 
 url = "http://{host}:{port}".format(

@@ -1,26 +1,23 @@
 /*
  POST on submit
- TODO: remove event listeners.
   */
-let run = document.getElementById("run");
-run.addEventListener("click", e => {
-  e.preventDefault();
-  salt_run("run");
-});
-
-let testRun = document.getElementById("test");
-testRun.addEventListener("click", e => {
-  e.preventDefault();
-  salt_run("test");
+["run", "test"].forEach((runType) => {
+  // Get btn.
+  let btn = document.getElementById(runType);
+  btn.addEventListener("click", ev => {
+    ev.preventDefault();
+    salt_run(runType)
+  })
 });
 
 function salt_run(type) {
+  let formData;
   // Hide previous results.
   document.getElementById("results").style.display = "none";
 
-  // Dryrun.
+  // Dry run.
   if (type === "test") {
-    var formData = $("form").serializeArray();
+    formData = $("form").serializeArray();
     formData.push({ name: "test", value: "true" });
   } else {
     formData = $("form").serialize();
@@ -44,7 +41,7 @@ function salt_run(type) {
     // handle a successful response
     success: function(yaml) {
       // remove the value from the input
-      $("form").val("");
+      document.getElementById('salt-run').reset();
       let resDiv = document.getElementById("ansiResults");
       resDiv.innerHTML = yaml;
       toggleVisibility("results");
@@ -189,6 +186,8 @@ function addArgs() {
 
 let term = $("#terminal").terminal(function(command) {
   if (command !== "") {
+    // Hide previous results.
+    document.getElementById("results").style.display = "none";
     showNotification(
       'bg-black',
       command + ' ' + 'submitted',
@@ -223,15 +222,20 @@ let term = $("#terminal").terminal(function(command) {
 }, {
   greetings: null,
   name: "js_demo",
-  height: 200,
+  height: 300,
   prompt: "$ > ",
   completion: function(string, callback) {
-    if (this.get_command().match(/^salt /)) {
-      callback(minions);
-    } else if (this.get_command().match(minions)) {
+    if (
+      this.get_command().match(/^salt /)
+      && minions.includes(this.get_command().split(" ").slice(-2)[0])
+      && string.length >= 2
+    ) {
       callback(func);
+    }
+    else if (this.get_command().match(/^salt /)) {
+      callback(minions);
     } else {
-      callback(["salt", "git"]);
+      callback(["salt"]);
     }
   }
 });
