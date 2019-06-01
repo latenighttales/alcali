@@ -24,7 +24,6 @@ def test_default_perms(client, admin_user):
     client.login(username=username, password=password)
     client.get(reverse("index"), follow=True)
     assert hasattr(admin_user.user_settings, "salt_permissions")
-    assert admin_user.user_settings.wheel()
 
 
 @pytest.mark.django_db()
@@ -34,7 +33,7 @@ def test_add_keys(admin_client):
     """
     assert Keys.objects.get(minion_id="master").status != "accepted"
     admin_client.get(reverse("index"), follow=True)
-    response = admin_client.post(reverse("wheel"), {"action": "accept", "target": "*"})
+    response = admin_client.post(reverse("run"), {"action": "accept", "target": "*"})
     assert response.status_code == 200
     assert hasattr(response, "json")
     resp = response.json()
@@ -58,7 +57,8 @@ def test_run_highstate(admin_client):
     for minion in Minions.objects.all():
         assert minion.conformity() is False
     response = admin_client.post(
-        reverse("run"), {"minion_list": "*", "function_list": "state.apply"}
+        reverse("run"),
+        {"minion_list": "*", "function_list": "state.apply", "client": "local"},
     )
     assert response.status_code == 200
     assert SaltReturns.objects.filter(fun="state.apply")
@@ -69,7 +69,9 @@ def test_run_highstate(admin_client):
 @pytest.mark.django_db()
 def test_runner(admin_client):
     response = admin_client.get(reverse("index"), follow=True)
-    response = admin_client.post(reverse("runner"), {"function_list": "jobs.active"})
+    response = admin_client.post(
+        reverse("run"), {"function_list": "jobs.active", "client": "runner"}
+    )
     assert response.status_code == 200
 
 
@@ -77,7 +79,8 @@ def test_runner(admin_client):
 def test_wheel(admin_client):
     response = admin_client.get(reverse("index"), follow=True)
     response = admin_client.post(
-        reverse("wheel"), {"function_list": "key.name_match", "args": "master"}
+        reverse("run"),
+        {"function_list": "key.name_match", "args": "master", "client": "wheel"},
     )
     assert response.status_code == 200
     # assert SaltReturns.objects.filter(fun='key.name_match')
@@ -87,7 +90,12 @@ def test_wheel(admin_client):
 def test_run_conformity_state(admin_client):
     response = admin_client.post(
         reverse("run"),
-        {"minion_list": "*", "function_list": "grains.item", "args": "os"},
+        {
+            "minion_list": "*",
+            "function_list": "grains.item",
+            "args": "os",
+            "client": "local",
+        },
     )
     response = admin_client.post(
         reverse("run"), {"command": "salt * grains.item saltversion"}
@@ -114,10 +122,12 @@ def test_init_db(admin_client):
         reverse("settings"), {"action": "init_db", "target": "master"}
     )
     assert response.status_code == 200
-    for funct_type in ["modules", "runner", "wheel"]:
+    for funct_type in ["local", "runner", "wheel"]:
         assert Functions.objects.filter(type=funct_type).count() > 0
     # Assert tooltips are working.
-    response = admin_client.post(reverse("run"), {"tooltip": "grains.item"})
+    response = admin_client.post(
+        reverse("run"), {"tooltip": "grains.item", "client": "local"}
+    )
     assert response.status_code == 200
     assert (
         response.json()["desc"]
@@ -126,16 +136,20 @@ def test_init_db(admin_client):
         )[0]
     )
 
-    response = admin_client.post(reverse("runner"), {"tooltip": "state.event"})
+    response = admin_client.post(
+        reverse("run"), {"tooltip": "state.event", "client": "runner"}
+    )
     assert response.status_code == 200
     assert (
         response.json()["desc"]
-        == Functions.objects.filter(name="state.event").values_list(
+        == Functions.objects.filter(name="state.event", type="runner").values_list(
             "description", flat=True
         )[0]
     )
 
-    response = admin_client.post(reverse("wheel"), {"tooltip": "key.list_all"})
+    response = admin_client.post(
+        reverse("run"), {"tooltip": "key.list_all", "client": "wheel"}
+    )
     assert response.status_code == 200
     assert (
         response.json()["desc"]
@@ -143,10 +157,6 @@ def test_init_db(admin_client):
             "description", flat=True
         )[0]
     )
-    response = admin_client.get(reverse("runner"))
-    assert "state.event" in response.context["funct_list"]
-    response = admin_client.get(reverse("wheel"))
-    assert "key.list_all" in response.context["funct_list"]
 
 
 @pytest.mark.django_db()

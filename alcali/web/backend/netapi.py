@@ -141,7 +141,7 @@ def init_db(target):
             desc = modules_doc["return"][0][target][func]
 
             Functions.objects.update_or_create(
-                name=func, type="modules", description=desc or ""
+                name=func, type="local", description=desc or ""
             )
         # Runner.
         # TODO: Factorize.

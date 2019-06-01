@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls import url
 
-from alcali.web.views.functions import run, runner, wheel
+from alcali.web.views.functions import run
 from alcali.web.views.overviews import (
     index,
     keys,
@@ -24,7 +24,6 @@ from alcali.web.views.services import (
 urlpatterns = [
     url(r"^$", index, name="index"),
     path("run", run, name="run"),
-    url(r"^runner$", runner, name="runner"),
     url(r"^event_stream$", event_stream, name="event_stream"),
     url(r"^schedule$", schedule, name="schedule"),
     url(r"^conformity$", conformity, name="conformity"),
@@ -32,7 +31,6 @@ urlpatterns = [
     url(r"^keys$", keys, name="keys"),
     url(r"^users$", users, name="users"),
     url(r"^settings$", settings, name="settings"),
-    url(r"^wheel$", wheel, name="wheel"),
     url(r"^events$", events, name="events"),
     url(r"^minions$", minions, name="minions"),
     path("notifications", notifications, name="notifications"),

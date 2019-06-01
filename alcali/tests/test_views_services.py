@@ -87,7 +87,12 @@ def test_conformity_detail_get(
 def test_conformity_add(admin_client, minion_master):
     response = admin_client.post(
         reverse("run"),
-        {"minion_list": "*", "function_list": "grains.item", "args": "os"},
+        {
+            "minion_list": "*",
+            "function_list": "grains.item",
+            "args": "os",
+            "client": "local",
+        },
     )
     response = admin_client.post(
         reverse("settings"),
@@ -158,7 +163,8 @@ def test_users_list(admin_client):
 
 def test_notifications(admin_client, admin_user, minion_master):
     response = admin_client.post(
-        reverse("run"), {"minion_list": "*", "function_list": "test.ping"}
+        reverse("run"),
+        {"minion_list": "*", "function_list": "test.ping", "client": "local"},
     )
     assert response.status_code == 200
     assert admin_user.notifications

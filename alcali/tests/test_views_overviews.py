@@ -1,3 +1,5 @@
+import time
+
 from django.test import SimpleTestCase
 from django.urls import reverse
 
@@ -44,7 +46,6 @@ def test_jobs_default(admin_client, jid, highstate, dummy_jid, dummy_state):
     response = admin_client.post(reverse("job_list"), {"limit": 100})
     assert response.status_code == 200
     assert len(response.json()["data"]) == 2
-    # assert 'state.apply' in response.json()['data'][0]
 
 
 def test_jobs_filter_user(admin_client, jid, highstate, dummy_jid, dummy_state):
@@ -59,6 +60,18 @@ def test_jobs_filter_minion(admin_client, jid, highstate, dummy_jid, dummy_state
     highstate()
     response = admin_client.post(
         reverse("job_list"), {"limit": 100, "minion": "master"}
+    )
+    assert response.status_code == 200
+    assert len(response.json()["data"]) == 1
+    assert "alcali.pass_salt" in response.json()["data"][0]
+
+
+def test_jobs_filter_date(admin_client, jid, highstate, dummy_jid, dummy_state):
+    highstate()
+    today = date = time.strftime("%Y-%m-%d")
+    response = admin_client.post(
+        reverse("job_list"),
+        {"limit": 100, "minion": "master", "date": ["{}".format(today)]},
     )
     assert response.status_code == 200
     assert len(response.json()["data"]) == 1

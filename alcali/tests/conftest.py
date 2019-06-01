@@ -102,4 +102,4 @@ def django_db_setup(django_db_blocker):
         password = "password"
         client.login(username=username, password=password)
         client.get("/", follow=True)
-        client.post("/wheel", {"action": "reject", "target": "*"})
+        client.post("/run", {"action": "reject", "target": "*"})

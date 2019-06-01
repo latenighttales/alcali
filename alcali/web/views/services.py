@@ -338,7 +338,7 @@ def settings(request):
     minion_fields = MinionsCustomFields.objects.values("name", "function").distinct()
     # Function list.
     funct_list = (
-        Functions.objects.filter(type="modules")
+        Functions.objects.filter(type="local")
         .values_list("name", flat=True)
         .order_by("name")
     )

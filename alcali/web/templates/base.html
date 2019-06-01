@@ -170,22 +170,6 @@
             <span>Run</span>
           </a>
         </li>
-        {% if request.user.user_settings.runner %}
-          <li  {% if request.path == '/runner' %} class="active"{% endif %}>
-            <a href="{% url 'runner' %}">
-              <i class="material-icons">arrow_downward</i>
-              <span>Runner</span>
-            </a>
-          </li>
-        {% endif %}
-        {% if request.user.user_settings.wheel %}
-          <li  {% if request.path == '/wheel' %} class="active"{% endif %}>
-            <a href="{% url 'wheel' %}">
-              <i class="material-icons">brightness_low</i>
-              <span>Wheel</span>
-            </a>
-          </li>
-        {% endif %}
         <li  {% if request.path == '/schedule' %} class="active"{% endif %}>
           <a href="{% url 'schedule' %}">
             <i class="material-icons">schedule</i>

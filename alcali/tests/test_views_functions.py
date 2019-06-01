@@ -18,7 +18,9 @@ def test_run_get_param(admin_client):
 
 
 def test_run_failed_tooltip(admin_client):
-    response = admin_client.post(reverse("run"), {"tooltip": "foobar"})
+    response = admin_client.post(
+        reverse("run"), {"tooltip": "foobar", "client": "local"}
+    )
     assert response.status_code == 200
     assert response.json() == {}
 

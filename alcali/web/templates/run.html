@@ -42,50 +42,175 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="formatted" style="margin-top: 20px">
 
-
-              <form method="post" id="salt-run">
+              <form id="salt-run">
                 {% csrf_token %}
+                <div class="col-md-12">
+                  <div class="row clearfix">
+                    <div class="col-lg-1 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                      <p>
+                        <b>Client Type</b>
+                        <button type="button" class="btn bg-black btn-xs waves-effect pull-right" data-trigger="focus"
+                                data-container="body" data-toggle="popover"
+                                data-placement="top" title="Client Type" data-html="true"
+                                data-content="<pre>Choose between a local, runner, or wheel client<br><br><b>Local:</b> Default client<br><b>Runner:</b> Master-side execution sequences<br><b>Wheel:</b> Master side management routines</pre>">
+                          ?
+                        </button>
+                      </p>
+                    </div>
+                    <div class="col-lg-1 col-md-10 col-sm-8 col-xs-7">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <select id="client" title="client" name="client"
+                                  class="form-control show-tick">
+                            <option value="local" selected>Local</option>
+                            <option value="runner">Runner</option>
+                            <option value="wheel">Wheel</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="row clearfix" id="mainRow">
-                  <div class="col-lg-1">
-                    <p>
-                      <b>Target Type</b>
-                      <button type="button" class="btn bg-black btn-xs waves-effect pull-right" data-trigger="focus"
-                              data-container="body" data-toggle="popover"
-                              data-placement="top" title="Popover Title"
-                              data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">?
+                  <div class="col-md-12">
+                    <div id="salt-target">
+                      <div class="col-lg-1">
+                        <p>
+                          <b>Target Type</b>
+                          <button type="button" class="btn bg-black btn-xs waves-effect pull-right" data-trigger="focus"
+                                  data-container="body" data-toggle="popover"
+                                  data-placement="top" title="Popover Title"
+                                  data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">?
+                          </button>
+                        </p>
+                        <div class="form-group">
+                          <div class="form-line">
+                            <select id="target-type" title="target-type" name="target-type"
+                                    class="form-control show-tick">
+                              <option value="single" selected>Single</option>
+                              <option value="group">Group</option>
+                              <option value="custom">Custom</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-2">
+                        <p>
+                          <b>Target</b>
+                        </p>
+                        <div class="form-group">
+                          <div class="form-line">
+                            <input spellcheck="false" class="form-control" id="minion_list" name="minion_list"
+                                   type="text"
+                                   list="minions"
+                                   placeholder="Target"/>
+                            <datalist id="minions">
+                              {% for minion in minion_list %}
+                                <option value="{{ minion }}">{{ minion }}
+                              {% endfor %}
+                            </datalist>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <p>
+                        <b>Function</b>
+                        <button type="button" class="btn bg-black btn-xs waves-effect pull-right" data-trigger="focus"
+                                data-container="body" data-toggle="popover" id="funct_tooltip"
+                                data-placement="bottom" data-original-title="Popover Title" data-html="true"
+                                data-content="<pre></pre>" style="display: none">?
+                        </button>
+                      </p>
+                      <div class="form-group">
+                        <div class="form-line">
+                          <input spellcheck="false" class="form-control" id="function_list" name="function_list"
+                                 type="text"
+                                 list="client_function"
+                                 placeholder="Function"/>
+                          <datalist id="client_function">
+                            {% for function in local_list %}
+                              <option value="{{ function }}">{{ function }}
+                            {% endfor %}
+                          </datalist>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      <p>
+                        <b>Args</b>
+                      </p>
+                      <div class="form-group">
+                        <div class="form-line" style="display: flex; flex-direction: row">
+                          <input title="args" id="args" name="args" type="text" class="form-control"
+                                 placeholder="Args"/>
+                          <button type="button" class="btn btn-xs bg-blue-grey" onclick="addArgs()">
+                            <i class="material-icons">add</i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 p-r-0">
+                      <p>
+                        <b>Keyword</b>
+                      </p>
+                      <div class="form-group">
+                        <div class="form-line">
+                          <input title="keyword" id="keyword" name="keyword" type="text" class="form-control p-r-0"
+                                 placeholder="Keyword"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 p-l-0">
+                      <p>
+                        <b>Argument</b>
+                      </p>
+                      <div class="form-group">
+                        <div class="form-line" style="display: flex; flex-direction: row">
+                          <input title="argument" id="argument" name="argument" type="text" class="form-control p-l-0"
+                                 placeholder="Argument"/>
+                          <button type="button" class="btn btn-xs bg-blue-grey" onclick="addArgs()">
+                            <i class="material-icons">add</i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row clearfix">
+                  <div class="col-md-12">
+                    <button class="btn bg-blue-grey waves-effect m-b-15" type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false"
+                            aria-controls="collapseExample">
+                      <i class="material-icons">schedule</i><span>SCHEDULE</span>
+                    </button>
+                    <div class="collapse" id="collapseExample">
+
+                      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="input-group">
+                          <div class="form-group" style="margin-bottom: 0">
+                            <div class="form-line" style="margin-bottom: 0">
+                              <input title="schedule" name="schedule" class="flatpickr flatpickr-input form-control"
+                                     type="text" placeholder="Select DateTime.">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row clearfix">
+                  <div class="col-md-12">
+                    <div class="button-demo pull-right">
+                      <button id="test" type="button" value="test" class="btn btn-lg btn-warning waves-effect">TEST
                       </button>
-                    </p>
-                    <div class="form-group">
-                      <div class="form-line">
-                        <select id="target-type" title="target-type" name="target-type" class="form-control show-tick">
-                          <option value="single" selected>Single</option>
-                          <option value="group">Group</option>
-                          <option value="custom">Custom</option>
-                        </select>
-                      </div>
+                      <button id="run" type="button" value="run" class="btn btn-lg btn-primary waves-effect">RUN
+                      </button>
                     </div>
                   </div>
-                  <div class="col-lg-2">
-                    <p>
-                      <b>Target</b>
-                    </p>
-                    <div class="form-group">
-                      <div class="form-line">
-                        <input spellcheck="false" class="form-control" id="minion_list" name="minion_list" type="text"
-                               list="minions"
-                               placeholder="Target"/>
-                        <datalist id="minions">
-                          {% for minion in minion_list %}
-                            <option value="{{ minion }}">{{ minion }}
-                          {% endfor %}
-                        </datalist>
-                      </div>
-                    </div>
-                  </div>
-                  {% include 'template_run.html' %}
+                </div>
 
               </form>
-
             </div>
             <div role="tabpanel" class="tab-pane fade" id="raw">
               <div id="terminal"></div>
@@ -140,10 +265,12 @@
     </div>
   </div>
   <script>
-      let nodeGroups = {{ nodegroups|safe }};
-      let getParams = {{ get_params|safe }};
-      let minions = [{% for i in minion_list %}'{{ i }}', {% endfor %}];
-      let func = [{% for i in funct_list %}'{{ i }}', {% endfor %}];
+    let nodeGroups = {{ nodegroups|safe }};
+    let getParams = {{ get_params|safe }};
+    let minions = [{% for i in minion_list %}'{{ i }}', {% endfor %}];
+    let localFunc = {{ local_list|safe }};
+    let wheelFunc = {{ wheel_list|safe }};
+    let runnerFunc = {{ runner_list|safe }};
   </script>
   <!-- #END# Advanced Select -->
 {% endblock %}

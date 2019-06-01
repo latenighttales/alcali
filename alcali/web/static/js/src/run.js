@@ -6,10 +6,39 @@
   let btn = document.getElementById(runType);
   btn.addEventListener("click", ev => {
     ev.preventDefault();
-    salt_run(runType)
+    salt_run(runType);
   })
 });
 
+/*
+  Populate options depending on the client type, and hide non relevant fields.
+ */
+let clientType = document.getElementById('client');
+clientType.addEventListener('change', function (ev) {
+  let clientFunc = document.getElementById('client_function');
+  clientFunc.innerHTML = "";
+
+  if (this.value === "local") {
+    localFunc.forEach(val => {
+      clientFunc.innerHTML += '<option value="' + val + '">' + val;
+    });
+    document.getElementById('salt-target').style.display = "block";
+  } else if (this.value === "wheel") {
+    wheelFunc.forEach(val => {
+      clientFunc.innerHTML += '<option value="' + val + '">' + val;
+    });
+    document.getElementById('salt-target').style.display = "none";
+  } else if (this.value === "runner") {
+    runnerFunc.forEach(val => {
+      clientFunc.innerHTML += '<option value="' + val + '">' + val;
+    });
+    document.getElementById('salt-target').style.display = "none";
+  }
+});
+
+/*
+  Run job.
+ */
 function salt_run(type) {
   let formData;
   // Hide previous results.
@@ -27,7 +56,7 @@ function salt_run(type) {
   let funcName = document.getElementById("function_list").value;
   showNotification(
     "bg-black",
-    funcName + " " + "submitted",
+    funcName + " submitted",
     "bottom",
     "center"
   );
@@ -42,6 +71,7 @@ function salt_run(type) {
     success: function(yaml) {
       // remove the value from the input
       document.getElementById('salt-run').reset();
+      // Insert result html.
       let resDiv = document.getElementById("ansiResults");
       resDiv.innerHTML = yaml;
       toggleVisibility("results");
@@ -59,6 +89,7 @@ function salt_run(type) {
   });
 }
 
+// Change target input depending on target type.
 let minionListInit = document.getElementById("minion_list");
 let inputBackup = minionListInit.cloneNode(true);
 
@@ -89,15 +120,17 @@ inputType.addEventListener("change", () => {
   }
 });
 
-// Functions tooltip
+/*
+  Retrieve functions tooltip
+ */
 let functList = document.getElementById("function_list");
-
 functList.addEventListener("change", () => {
   let selectedFunct = document.getElementById("function_list").value;
   $.ajax({
     type: "POST",
     data: {
       tooltip: selectedFunct,
+      client: clientType.value,
       csrfmiddlewaretoken: token
     },
 
@@ -107,7 +140,6 @@ functList.addEventListener("change", () => {
       let functToolTip = document.getElementById("funct_tooltip");
       functToolTip.title = selectedFunct;
       functToolTip.setAttribute("data-original-title", selectedFunct);
-      console.log(docs.desc);
       functToolTip.setAttribute("data-content", "<pre>" + docs.desc + "</pre>");
       functToolTip.style.display = "block";
     },
@@ -123,6 +155,9 @@ let args = document.getElementById("args");
 let keyword = document.getElementById("keyword");
 let argument = document.getElementById("argument");
 
+/*
+  Insert params in fields if there's get arguments.
+ */
 if (getParams != null) {
   // Create a new 'change' event
   let event = new Event("change");
@@ -141,6 +176,7 @@ if (getParams != null) {
     Object.entries(getParams).length !== 0 &&
     getParams.constructor === Object
   ) {
+    // Insert kwargs.
     Object.keys(getParams).forEach(key => {
       keyword.value = key;
       argument.value = getParams[key];
@@ -184,8 +220,35 @@ function addArgs() {
   mainRow.insertAdjacentHTML('afterend', rowArgs);
 }
 
+/*
+  CLI
+ */
+let greetings = [
+  "60% of the time, it works every time!",
+  "srsly dude, why?",
+  " _________________\n" +
+  "( I'm a moooodule )\n" +
+  " -----------------\n" +
+  "        o   ^__^\n" +
+  "         o  (oO)\\_______\n" +
+  "            (__)\\       )\\/\\\n" +
+  "             U  ||----w |\n" +
+  "                ||     ||",
+  "Don't Panic.",
+  "I'm sorry, Dave. I'm afraid I can't do that.",
+  "If your return is not back in five minutes, just wait longer.",
+  "Cool. Cool,Cool,Cool.",
+  "I find your lack of faith disturbing.",
+  "Worst. CLI. Ever.",
+];
+
 let term = $("#terminal").terminal(function(command) {
   if (command !== "") {
+    // Wrong command handling.
+    if (command.split(" ").length <= 2 || command.split(" ")[0] !== "salt") {
+      this.echo("Missing arguments or improper usage");
+      return false;
+    }
     // Hide previous results.
     document.getElementById("results").style.display = "none";
     showNotification(
@@ -220,7 +283,7 @@ let term = $("#terminal").terminal(function(command) {
     this.echo("");
   }
 }, {
-  greetings: null,
+  greetings: greetings[Math.floor(Math.random() * greetings.length)] + "\n",
   name: "js_demo",
   height: 300,
   prompt: "$ > ",
@@ -230,7 +293,8 @@ let term = $("#terminal").terminal(function(command) {
       && minions.includes(this.get_command().split(" ").slice(-2)[0])
       && string.length >= 2
     ) {
-      callback(func);
+      // TODO: ARGS, KWARGS?
+      callback(localFunc);
     }
     else if (this.get_command().match(/^salt /)) {
       callback(minions);
@@ -240,6 +304,7 @@ let term = $("#terminal").terminal(function(command) {
   }
 });
 
+// Init flatpickr.
 $(".flatpickr").flatpickr({
   enableTime: true,
   minDate: "today"

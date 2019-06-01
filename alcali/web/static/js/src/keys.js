@@ -54,7 +54,7 @@ function manageKey(action, target) {
     "center"
   );
   $.ajax({
-    url: '/wheel',
+    url: '/run',
     type: 'POST',
     data: {
       action: action,
