@@ -4,7 +4,7 @@
 
 ### Parse modules
 
-To provide function completion and documentation in [run, runner and wheel](run.md) pages, you need to run this on a selected target.
+To provide function completion and documentation run this on a selected target.
 
 This will run `sys.list_functions`, `sys.doc`, `sys.list_runner_functions` and `sys.runner_doc` on the selected target. 
 

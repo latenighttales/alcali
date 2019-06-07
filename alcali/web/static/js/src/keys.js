@@ -78,8 +78,8 @@ function manageKey(action, target) {
           "bottom",
           "center"
         );
-        tableKeys.ajax.reload();
       }
+      tableKeys.ajax.reload();
     },
 
     // handle a non-successful response
