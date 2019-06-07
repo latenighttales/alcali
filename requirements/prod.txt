@@ -5,7 +5,7 @@ gunicorn==19.9.0
 mysqlclient==1.4.2.post1
 python-dotenv==0.10.3
 pytz
-PyYAML==5.1
+PyYAML==5.1.1
 pendulum==2.0.4
 requests==2.22.0
 salt-pepper==0.7.5
