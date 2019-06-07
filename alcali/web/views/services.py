@@ -1,13 +1,20 @@
-import json
-
 from ansi2html import Ansi2HTMLConverter
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.http import JsonResponse, StreamingHttpResponse
+from django.http import JsonResponse, StreamingHttpResponse  # , HttpResponse
+from django.shortcuts import render  # , get_object_or_404
 
 from alcali.web.utils import render_conformity
-from alcali.web.utils.output import nested_output, highstate_output
+from alcali.web.utils.output import highstate_output
+
+# if settings.ALCALI_BACKEND == 'netapi':
+from ..backend.netapi import (
+    get_events,
+    refresh_schedules,
+    manage_schedules,
+    init_db,
+    create_schedules,
+)
 from ..forms import AlcaliUserForm, AlcaliUserChangeForm
 from ..models.alcali import (
     Schedule,
@@ -18,15 +25,6 @@ from ..models.alcali import (
     Keys,
     Functions,
     Notifications,
-)
-
-# if settings.ALCALI_BACKEND == 'netapi':
-from ..backend.netapi import (
-    get_events,
-    refresh_schedules,
-    manage_schedules,
-    init_db,
-    create_schedules,
 )
 
 
@@ -230,7 +228,6 @@ def search(request):
 def users(request):
 
     form = AlcaliUserForm()
-    change_form = AlcaliUserChangeForm()
     if request.method == "POST":
         form = AlcaliUserForm(request.POST)
         if form.is_valid():
@@ -253,7 +250,24 @@ def users(request):
             )
         return JsonResponse(ret, safe=False)
 
-    return render(request, "users.html", {"form": form, "change_form": change_form})
+    return render(request, "users.html", {"form": form})
+
+
+# @user_passes_test(lambda u: u.is_superuser)
+# def edit_users(request, username):
+#
+#     user_to_edit = get_object_or_404(User, username=username)
+#     if request.POST.get("action") == "edit":
+#         return render(
+#             request,
+#             "template_users.html",
+#             {"form": AlcaliUserChangeForm(instance=user_to_edit)},
+#         )
+#     if request.method == "POST":
+#         form = AlcaliUserChangeForm(request.POST, instance=user_to_edit)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponse("all good")
 
 
 @user_passes_test(lambda u: u.is_superuser)

@@ -112,7 +112,7 @@ function createProgress(id, data) {
     let percent = Math.round(value / totalValue * 100);
     let conformityKeys = Object.keys(data);
     let conformityColor = colorArr[index * 2 + 5];
-    if (['conflict'].indexOf(conformityKeys[index]) >= 0) {
+    if (['conflict', 'False'].indexOf(conformityKeys[index]) >= 0) {
       conformityColor = colorArr[0]
     }
     if (['None', 'unknown'].indexOf(conformityKeys[index]) >= 0) {

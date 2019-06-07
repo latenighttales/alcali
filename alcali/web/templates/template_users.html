@@ -1,0 +1,80 @@
+<form method="post" id="user-form">
+  {% csrf_token %}
+  <div id="crud-user">
+    <div class="row clearfix">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group form-float">
+          <div class="form-line">
+            {{ form.first_name }}
+            <label class="form-label">{{ form.first_name.label }}</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group form-float">
+          <div class="form-line">
+            {{ form.last_name }}
+            <label class="form-label">{{ form.last_name.label }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group form-float">
+          <div class="form-line">
+            {{ form.username }}
+            <label class="form-label">{{ form.username.label }}</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group form-float">
+          <div class="form-line">
+            {{ form.email }}
+            <label class="form-label">{{ form.email.label }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div id="password-fields">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="form-group form-float">
+            <div class="form-line">
+              {{ form.password1 }}
+              <label class="form-label">{{ form.password1.label }}</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="form-group form-float">
+            <div class="form-line">
+              {{ form.password2 }}
+              <label class="form-label">{{ form.password2.label }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <button type="submit" class="btn btn-primary btn-lg m-l-15 waves-effect">SUBMIT</button>
+      </div>
+      {% if form.errors %}
+        <!-- Error messaging -->
+        <div id="errors">
+          <div class="inner">
+            <p>There were some errors in the information you entered. Please correct the following:</p>
+            {{ form.non_field_errors }}
+            <ul>
+              {% for field in form %}
+                {% if field.errors %}
+                  <li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <!-- /Error messaging -->
+      {% endif %}
+    </div>
+  </div>
+</form>

@@ -25,4 +25,4 @@ password: password
 
 and follow the [walkthrough](walkthrough.md).
 
-Once you're done, you can [install](installation.md) it.
+Once you're done, you can [install it](installation.md).

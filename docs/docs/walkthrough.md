@@ -23,6 +23,8 @@ You can either accept keys one by one using the `ACCEPT` button, or use the _Fab
 
 ## Add minions
 
+To store infos on connected minions, we need to add them to the database.
+
 Go to [http://localhost:8000/minions](http://localhost:8000/minions) and use the _Fab_ button <img height="30" src="../../images/fab.png"> to refresh minions.
 
 ![minions](images/minions.png)
@@ -37,7 +39,7 @@ Go to [http://localhost:8000/minions](http://localhost:8000/minions) and use the
 
 ## Minion detail
 
-From the minions view, click on a `minion id` to see the minion detail, for example: [http://localhost:8000/minions/master/](http://localhost:8000/minions/master/).
+From the minions view, you can click on a `minion id` to see its details, for example: [http://localhost:8000/minions/master/](http://localhost:8000/minions/master/).
 
 ![minion_detail](images/minion_detail.png)
 
@@ -48,8 +50,71 @@ Details are parsed from the `grains.items` state. On the right, 4 tabs are prese
   - The last 100 jobs run on this minion
   - A graph of jobs run on this minion
 
-We are going to add more useful infos using **minions fields**.
+We are going to add more useful infos by setting some **minions fields**. To do that, go in the settings view [http://localhost:8000/settings](http://localhost:8000/settings).
 
 ## Settings
+
+Choose a target and run the module parser to have documentation and module completion.
+
+Let's add some minion fields.
+
+![minion_fields](images/minion_fields.png)
+
+We usually add:
+
+ - highstate: `state.show_highstate`
+ 
+ - top file: `state.show_top`
+
+Use the _fab_ button to refresh all minions.
+
+If you go see a minion details, for example, [http://localhost:8000/minions/master/](http://localhost:8000/minions/master/), the new minion fields should be present.
+
+Minion fields are usually used for "static" minion specific data.
+
+For dynamic data, there's conformity.
+
+As a config management tool, it's important to track state of files presence, software version, etc...
+
+Custom conformity let you do that.
+
+![conformity_example](images/conformity_example.png)
+
+As an example, we'll add:
+
+ - foo: `file.file_exists /foo.txt`
+ 
+ - pyversion: `cmd.run "python --version"`
+ 
+If you go to the [overview](http://localhost:8000), the two new custom conformity should be present but empty.
+
+Let's go run some jobs to fix that.
+
+## Run
+
+Go to [http://localhost:8000/run](http://localhost:8000/run)
+You can explore the formatted tab or just use the cli and run:
+
+```commandline
+salt master cmd.run "touch /foo.txt"
+```
+
+We created the file `/foo.txt` on the master, so the master will comply to the "foo" conformity we added earlier.
+
+Conformity is parsed from the states present in the database, so let's run:
+
+```commandline
+salt * cmd.run "python --version"
+salt * cmd.run file.file_exists /foo.txt
+```
+
+By the way, there should be tab completion in the CLI and documentation in the tooltip on the formatted tab thanks to the parse module action we did earlier. 
+
+Finally, highstate any or all minions.
+
+```commandline
+salt master state.apply
+```
+
 
 

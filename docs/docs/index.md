@@ -13,15 +13,12 @@ Alcali is a web based tool for monitoring and administrating **Saltstack®** Sal
 
 - Store your jobs results by leveraging the `master_job_store` setting with Alcali master returner.
 
-- Check your minions conformity to their highstate.
-
-- Keep track of custom state at a glance.
+- Check your minions conformity to their highstate or **any state**.
 
 - Use custom auth module to login into both Alcali and the Salt-api using JWT.
 
 [![Build Status](https://travis-ci.org/latenighttales/alcali.svg?branch=2019.2.0)](https://travis-ci.org/latenighttales/alcali)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Requirements Status](https://requires.io/github/latenighttales/alcali/requirements.svg?branch=2019.2.0)](https://requires.io/github/latenighttales/alcali/requirements/?branch=2019.2.0)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=latenighttales/alcali)](https://dependabot.com)
 [![codecov](https://codecov.io/gh/latenighttales/alcali/branch/2019.2.0/graph/badge.svg)](https://codecov.io/gh/latenighttales/alcali)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
