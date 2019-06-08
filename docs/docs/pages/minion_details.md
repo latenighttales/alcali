@@ -1,6 +1,7 @@
 # Minion Detail
 
-(screenshot)
+![minion_detail](../images/minion_detail.png)
+
 ## Infos and Network
 
 All those details are parsed from `grain.items` except conformity.(see [conformity](conformity.md) for more infos).

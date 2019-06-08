@@ -12,8 +12,8 @@ nav:
         - 'Minions': pages/minions.md
         - 'Minion Details': pages/minion_details.md
         - 'Jobs': pages/jobs.md
-        - 'Job Details': pages/job_details.md
-        - 'Run, Runner and Wheel': pages/run.md
+        - 'Job Detail': pages/job_detail.md
+        - 'Run': pages/run.md
         - 'Schedule': pages/schedule.md
         - 'Conformity': pages/conformity.md
         - 'Keys': pages/keys.md

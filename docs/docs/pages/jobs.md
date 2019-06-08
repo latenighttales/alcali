@@ -1,6 +1,6 @@
 # Jobs
 
-(screenshot)
+![jobs](../images/jobs.png)
 
 By default, only the last 100 jobs are displayed.
 
@@ -12,4 +12,4 @@ Filter by:
  - minion(s).
  - user(s).
 
-To access [job details](job_details.md) either click on the _jid_ or detail button.
+To access [job detail](job_detail.md) either click on the _jid_ or detail button.

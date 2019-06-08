@@ -7,4 +7,3 @@
     
 You can disable and delete schedules.
 
-TODO: add a way to manage jobs by names(on multiple minions).

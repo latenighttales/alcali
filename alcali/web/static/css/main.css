@@ -130,9 +130,11 @@ textarea {
     color: white;
 }
 
+/*
 .ansi32 {
     color: white !important;
 }
+*/
 
 .ansi40 {
     background-color: transparent !important;

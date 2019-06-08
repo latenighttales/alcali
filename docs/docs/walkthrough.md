@@ -88,24 +88,27 @@ As an example, we'll add:
  
 If you go to the [overview](http://localhost:8000), the two new custom conformity should be present but empty.
 
+![empty_conformity](images/empty_conformity.png)
+
 Let's go run some jobs to fix that.
 
 ## Run
 
 Go to [http://localhost:8000/run](http://localhost:8000/run)
+
 You can explore the formatted tab or just use the cli and run:
 
 ```commandline
 salt master cmd.run "touch /foo.txt"
 ```
 
-We created the file `/foo.txt` on the master, so the master will comply to the "foo" conformity we added earlier.
+We just created the file `/foo.txt` on the master, so the master will comply to the "foo" conformity we added earlier.
 
 Conformity is parsed from the states present in the database, so let's run:
 
 ```commandline
 salt * cmd.run "python --version"
-salt * cmd.run file.file_exists /foo.txt
+salt * file.file_exists "/foo.txt"
 ```
 
 By the way, there should be tab completion in the CLI and documentation in the tooltip on the formatted tab thanks to the parse module action we did earlier. 
@@ -116,5 +119,20 @@ Finally, highstate any or all minions.
 salt master state.apply
 ```
 
+## Conformity
+
+In the overview, the conformity card should be filled now, with details when you hover it.
+
+![filled_conformity](images/filled_conformity.png)
+
+You can see the details of both highstate conformity and your custom ones for all minions in the conformity view [http://localhost:8000/conformity](http://localhost:8000/conformity).
+
+![conformity_view](images/conformity_view.png)
+
+And see details about each states by clicking the `DETAIL` button.
+
+![conformity_details](images/conformity_details.png)
+
+Click on each states to see its details.
 
 

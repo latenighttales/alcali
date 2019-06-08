@@ -1,12 +1,20 @@
-# Run, Runner and Wheel
-
-<img height="300" src="../../images/settings.png">
+# Run
 
 You can run job using either the formatted form or a pseudo cli.
 
 ## Formatted
 
-For function completion and documentation, use the [parse module](settings.md#parse-modules) setting. Custom modules should also be present.
+![run_formatted](../images/run_formatted.png)
+
+For function completion and documentation, use the [parse module](settings.md#parse-modules) setting. Your custom modules should also be present.
+
+#### Client type
+
+ - Local: Run execution modules synchronously. Sends a command from the master to the targeted minions. This is the same interface that Salt's own CLI uses.
+ 
+ - Runner: Master side execution sequences.
+ 
+ - Wheel: Master side management routine.
 
 #### Target type
 
@@ -29,8 +37,20 @@ Schedule a recurring job, or postpone it.
 
 ### Test button
 
-The **test** button will run the selected function with `#!python test=True` kwarg set.
+The **test** button will run the selected function with `#!python test=True` kwarg added set.
 
 ## CLI
 
-This pseudo CLI should work like the salt command. Please refer to [Pepper](https://github.com/saltstack/pepper) documentation.
+![run_cli](../images/run_cli.png)
+
+This pseudo CLI should work like the salt command.
+
+There's a basic completion on minions and states.
+
+If you want to run a state using another [client type](#client-type) use `--client=` argument.
+
+For example:
+
+```commandline
+salt --client=wheel key.list_all
+```

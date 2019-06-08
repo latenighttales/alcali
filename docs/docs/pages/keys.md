@@ -1,6 +1,7 @@
 # Keys
 
-If you use the custom alcali returner, Keys should be automatically refreshed. That's the only difference from the original [MySQL Salt returner](https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.mysql.html).
+![keys](../images/keys.png)
+If you use Alcali master returner, Keys should be automatically refreshed. That's the only difference from the original [MySQL Salt returner](https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.mysql.html).
 
 Otherwise, you should refresh keys manually using the _fab_ button.
 
