@@ -1,13 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block css %}
-  <link href="{% static "flatpickr/dist/flatpickr.min.css" %}" rel="stylesheet">
   <link href="{% static "css/plugins/jquery-cron.css" %}" rel="stylesheet">
-  <style>
-    .cronselector {
-      border-bottom: none !important;
-    }
-  </style>
 {% endblock %}
 {% block title %}SCHEDULE{% endblock %}
 {% block content %}
@@ -102,8 +96,6 @@
   </div>
 {% endblock %}
 {% block js %}
-  <script src="{% static "bootstrap-notify/bootstrap-notify.min.js" %}"></script>
   <script src="{% static "js/plugins/jquery-cron-min.js" %}"></script>
-  <script src="{% static "flatpickr/dist/flatpickr.min.js" %}"></script>
   <script src="{% static "js/src/schedule.js" %}"></script>
 {% endblock %}

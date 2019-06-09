@@ -3,5 +3,7 @@
 !README*.md
 **/node_modules
 docs/*
+docker/saltconfig
+docker/sql
 docker-compose.yml
 **/tests

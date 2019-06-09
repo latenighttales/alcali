@@ -1,41 +1,50 @@
 /* Parse module button.
-    Enabled on change.
+    Enabled on valid change.
  */
 let initDb = document.getElementById('init_db');
 let minionListInit = document.getElementsByName('minions')[0];
 let initDbTarget = '';
-minionListInit.addEventListener('change', function() {
-  initDb.disabled = false;
-  initDbTarget = this.value;
-});
+function enableInitDb() {
+  if (minionsList.includes(this.value)) {
+    initDb.disabled = false;
+    initDbTarget = this.value;
+  } else {
+    initDb.disabled = true;
+    initDbTarget = '';
+  }
+}
+minionListInit.addEventListener('change', enableInitDb);
+minionListInit.addEventListener('input', enableInitDb);
 initDb.addEventListener('click', ev => {
-  ev.preventDefault();
-  $.ajax({
-    type: 'POST',
-    data: {
-      'action': 'init_db',
-      'target': initDbTarget,
-      csrfmiddlewaretoken: token
-    },
-    // handle a successful response
-    success: function(ret) {
-      if (ret.result === 'updated') {
-        showNotification(
-          'bg-black',
-          'Function DB updated',
-          'bottom',
-          'center'
-        );
+  if (initDbTarget !== '') {
+    ev.preventDefault();
+    $.ajax({
+      type: 'POST',
+      data: {
+        'action': 'init_db',
+        'target': initDbTarget,
+        csrfmiddlewaretoken: token
+      },
+      // handle a successful response
+      success: function(ret) {
+        if (ret.result === 'updated') {
+          showNotification(
+            'bg-black',
+            'Function DB updated',
+            'bottom',
+            'center'
+          );
+        }
+      },
+      // handle a non-successful response
+      error: function(xhr, errmsg, err) {
+        // TODO: change for graph
+        $('#results').html('<div class=\'alert-box alert radius\' data-alert>Oops! We have encountered an error: ' + errmsg +
+          ' <a href=\'#\' class=\'close\'>&times;</a></div>'); // add the error to the dom
+        console.log(xhr.status + ': ' + xhr.responseText); // provide a bit more info about the error to the console
       }
-    },
-    // handle a non-successful response
-    error: function(xhr, errmsg, err) {
-      // TODO: change for graph
-      $('#results').html('<div class=\'alert-box alert radius\' data-alert>Oops! We have encountered an error: ' + errmsg +
-        ' <a href=\'#\' class=\'close\'>&times;</a></div>'); // add the error to the dom
-      console.log(xhr.status + ': ' + xhr.responseText); // provide a bit more info about the error to the console
-    }
-  });
+    });
+  }
 });
 
 /*
