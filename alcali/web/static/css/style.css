@@ -8135,7 +8135,7 @@ fieldset[disabled] .form-control {
       border-bottom: 2px solid #1f91f3; }
   .dataTables_wrapper .dt-buttons {
     float: left; }
-    .dataTables_wrapper .dt-buttons a.dt-button {
+    .dataTables_wrapper .dt-buttons button.dt-button {
       background-color: #607D8B;
       color: #fff;
       padding: 7px 12px;
@@ -8149,7 +8149,7 @@ fieldset[disabled] .form-control {
       border: none;
       font-size: 13px;
       outline: none; }
-      .dataTables_wrapper .dt-buttons a.dt-button:active {
+      .dataTables_wrapper .dt-buttons button.dt-button:active {
         opacity: 0.8; }
 
 .dt-button-info {

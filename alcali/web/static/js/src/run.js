@@ -310,3 +310,20 @@ $(".flatpickr").flatpickr({
   minDate: "today"
 
 });
+let cronField = $('#cronSelector').cron({
+  initial: '0 0 * * *',
+  customValues: {
+    'half hour': '*/30 * * * *'
+  }
+});
+
+$("input[name='group1']:radio")
+  .change(function() {
+    if (document.getElementById("radio_1").checked) {
+      document.getElementById("cronSchedule").style.display = "block";
+      document.getElementById("dateSchedule").style.display = "none";
+    } else {
+      document.getElementById("cronSchedule").style.display = "none";
+      document.getElementById("dateSchedule").style.display = "block";
+    }
+  });

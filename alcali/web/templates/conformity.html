@@ -1,64 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %}
-  <link href="{% static "flatpickr/dist/flatpickr.min.css" %}" rel="stylesheet">
-  <link href="{% static "css/plugins/jquery-cron.css" %}" rel="stylesheet">
-  <style>
-    .cronselector {
-      border-bottom: none !important;
-    }
-  </style>
-{% endblock %}
 {% block title %}CONFORMITY{% endblock %}
 {% block content %}
   <div class="block-header">
     <h2>CONFORMITY</h2>
   </div>
-  <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="card">
-        <div class="header">
-          <h2>
-            HIGHSTATE
-            <small>Highstate conformity schedule can be managed on the schedule view.</small>
-          </h2>
-        </div>
-        <div class="body">
-          <p class="p-b-10">
-            Highstate conformity will run <code>state.apply test=True</code> on selected targets.
-            You can use salt targeting syntax, e.g: <code>-G 'os:Fedora'</code>.
-          </p>
-          <form>
-            <div class="row clearfix">
-              <div class="col-lg-3">
-                <div class="form-group form-float">
-                  <div class="form-line">
-                    <input type="text" class="form-control" id="target">
-                    <label class="form-label">Targets:
-                      <small> '*' by default</small>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group form-float">
-                  <div class="form-line cronselector">
-                    <div id='cronSelector'></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <button type="button" class="btn btn-lg btn-primary waves-effect m-l-20" id="highstateConformity">
-                  SUBMIT
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Basic Examples -->
   <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -79,8 +25,5 @@
   <!-- #END# Basic Examples -->
 {% endblock %}
 {% block js %}
-  <script src="{% static "bootstrap-notify/bootstrap-notify.min.js" %}"></script>
-  <script src="{% static "js/plugins/jquery-cron-min.js" %}"></script>
-  <script src="{% static "flatpickr/dist/flatpickr.min.js" %}"></script>
   <script src="{% static "js/src/conformity.js" %}"></script>
 {% endblock %}

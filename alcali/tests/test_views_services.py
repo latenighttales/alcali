@@ -47,7 +47,7 @@ def test_schedule_add(admin_client, minion_master):
 
 def test_conformity_highstate_add(admin_client, minion_master):
     response = admin_client.post(
-        reverse("conformity"), {"cron": "0 0 * * *", "target": "master"}
+        reverse("schedule"), {"cron": "0 0 * * *", "target": "master"}
     )
     assert response.status_code == 200
     assert "master" in response.json()["result"]

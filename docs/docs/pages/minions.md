@@ -1,6 +1,6 @@
 # Minions
 
-(screenshot of minions view)
+![minions](../images/minions.png)
 
 List all minions currently in Alcali database.
 
@@ -8,9 +8,9 @@ To add more minions, use the _fab_ button and refresh all minions. Only currentl
 
 !!! info
     
-    By default, refreshing minions will only run `grains.items` on all minions.
+    By default, refreshing minions will run `grains.items` and `pillar.items` on all minions.
     
-    If you add [custom minions fields](settings.md), they will be run too.
+    If you add [custom minions fields](settings.md), the states you add will be run too.
 
 
 To access [minion details](minion_details.md), click on the minion id.

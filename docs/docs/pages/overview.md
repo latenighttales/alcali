@@ -1,10 +1,10 @@
 # Overview
 
-(screenshot of overview)
+![overview](../images/overview.png)
 
 ## Conformity
 
-Conformity settings can be managed on the [conformity](conformity.md) page.
+Conformity details can be managed on the [conformity](conformity.md) page.
 
 You can set a maximum of 4 custom conformity fields. To be relevant, functions tracked by conformity fields must be run regularly.
 
@@ -17,19 +17,19 @@ You can manage keys on the [keys](keys.md) page.
 
 ## Status
 
-#### SALT WEB SOCKET
+### SALT WEB SOCKET
 
 To display notifications on currently running jobs, alcali needs to connect to the Salt master web socket using credentials provided in the [configuration](../configuration.md).
 
-#### JOBS AND EVENTS IN DB
+### JOBS AND EVENTS IN DB
 
 Please refer to [Mysql](https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.mysql.html) or [Postgres](https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.postgres.html) returner documentation on how to manage database from Salt. A summary is provided in the [installation](../installation.md) section.
 
-#### JOBS SCHEDULED
+### JOBS SCHEDULED
 
 How many unique jobs based on the job name are currently enabled (see [schedule](schedule.md) section).
 
-#### JOBS RUNNING
+### JOBS RUNNING
 
 Parsed from Salt web socket.
 
@@ -47,4 +47,4 @@ The last 10 jobs run (see [jobs](jobs.md) section).
 
 ## Real time events
 
-JSON Formatted Events.
+JSON formatted events in real time.

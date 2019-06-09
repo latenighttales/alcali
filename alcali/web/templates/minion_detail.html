@@ -241,8 +241,6 @@
     let customFields = {{ custom_fields_list|safe }};
     let minionId = '{{ minion_id }}';
   </script>
-  <!-- Jquery DataTable Plugin Js -->
-  {% include 'datatable_sources.html' %}
   <script src="{% static "js/job-chart.js" %}"></script>
   <script src="{% static "js/src/minion_detail.js" %}"></script>
 {% endblock %}

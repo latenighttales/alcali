@@ -262,5 +262,8 @@
   </div>
 {% endblock %}
 {% block js %}
+  <script>
+    let minionsList = [{% for i in minion_list %}'{{ i }}', {% endfor %}];
+  </script>
   <script src="{% static "js/src/settings.js" %}"></script>
 {% endblock %}

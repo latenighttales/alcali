@@ -58,12 +58,12 @@ let minionTable;
 function createMinionTable() {
   minionTable = $('.js-exportable').DataTable({
     "order": [[0, "desc"]],
-    dom: "<'row'<'col-sm-2'l><'col-sm-5 pull-left'B><'col-sm-5'f>>" +
+    dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
       "<'row'<'col-sm-12'tr>>" +
-      "<'row'<'col-sm-6'i><'col-sm-6'p>>",
+      "<'row'<'col-sm-2'i><'col-sm-3 pull-left'B><'col-sm-7'p>>",
     responsive: true,
     buttons: [
-      'colvis'
+      "copy", "csv", "excel", "print"
     ],
     "ajax": {
       "url": "/minions",
@@ -83,7 +83,8 @@ $('#defaultModal').on('show.bs.modal', function(e) {
   console.log(minion);
   let deleteBtn = document.getElementById('deleteMinion');
   deleteBtn.addEventListener('click', () => {
-    manageMinion('delete', minion)
+    manageMinion('delete', minion);
+    $('#closeModal').trigger('click');
   });
 });
 

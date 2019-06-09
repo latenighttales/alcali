@@ -37,6 +37,15 @@ from ..models.alcali import (
 @login_required
 def schedule(request):
 
+    # Highstate conformity.
+    if request.POST.get("cron"):
+        cron = request.POST.get("cron")
+        target = request.POST.get("target")
+        if not target:
+            target = "*"
+        ret = create_schedules(target, cron)
+        return JsonResponse({"result": ret})
+
     if request.POST:
 
         # Refresh schedules.
@@ -73,15 +82,6 @@ def schedule(request):
 
 @login_required
 def conformity(request):
-
-    # Highstate conformity.
-    if request.POST.get("cron"):
-        cron = request.POST.get("cron")
-        target = request.POST.get("target")
-        if not target:
-            target = "*"
-        ret = create_schedules(target, cron)
-        return JsonResponse({"result": ret})
 
     # Datatable.
     if request.POST.get("action") == "list":

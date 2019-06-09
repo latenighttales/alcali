@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2019 Matthieu Melquiond
+Copyright (c) 2019 Matt Melquiond
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

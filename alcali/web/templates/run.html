@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block css %}
+  <link href="{% static "css/plugins/jquery-cron.css" %}" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.2.0/css/jquery.terminal.min.css"
         rel="stylesheet"/>
   <!-- JQuery DataTable Css -->
@@ -52,7 +53,7 @@
                         <button type="button" class="btn bg-black btn-xs waves-effect pull-right" data-trigger="focus"
                                 data-container="body" data-toggle="popover"
                                 data-placement="top" title="Client Type" data-html="true"
-                                data-content="<pre>Choose between a local, runner, or wheel client<br><br><b>Local:</b> Default client<br><b>Runner:</b> Master-side execution sequences<br><b>Wheel:</b> Master side management routines</pre>">
+                                data-content="<pre>Choose between a local, runner, or wheel client<br><br><b>Local:</b> Default client<br><b>Runner:</b> Master side execution sequences<br><b>Wheel:</b> Master side management routines</pre>">
                           ?
                         </button>
                       </p>
@@ -185,13 +186,21 @@
                       <i class="material-icons">schedule</i><span>SCHEDULE</span>
                     </button>
                     <div class="collapse" id="collapseExample">
-
-                      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="col-lg-12 col-md-3 col-sm-6 col-xs-12">
                         <div class="input-group">
                           <div class="form-group" style="margin-bottom: 0">
                             <div class="form-line" style="margin-bottom: 0">
-                              <input title="schedule" name="schedule" class="flatpickr flatpickr-input form-control"
-                                     type="text" placeholder="Select DateTime.">
+                              <input name="group1" type="radio" id="radio_1" checked/>
+                              <label for="radio_1">Recurrent</label>
+                              <input name="group1" type="radio" id="radio_2"/>
+                              <label for="radio_2">Once</label>
+                              <div class="form-line cronselector" id="cronSchedule">
+                                <div id='cronSelector'></div>
+                              </div>
+                              <div id="dateSchedule" style="display: none">
+                                <input title="schedule" name="schedule" class="flatpickr flatpickr-input form-control"
+                                       type="text" placeholder="Select DateTime.">
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -243,22 +252,6 @@
           </ul>
         </div>
         <div class="body">
-          <style>
-            .ansi2html-content {
-              background-color: transparent !important;
-              border: none !important;
-              font-size: medium !important;
-              color: white;
-            }
-
-            .ansi32 {
-              color: white !important;
-            }
-
-            .ansi40 {
-              background-color: transparent !important;
-            }
-          </style>
           <div id="ansiResults" class="ansiStyle"></div>
         </div>
       </div>
@@ -275,6 +268,7 @@
   <!-- #END# Advanced Select -->
 {% endblock %}
 {% block js %}
+  <script src="{% static "js/plugins/jquery-cron-min.js" %}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.2.0/js/jquery.terminal.min.js"></script>
   <script src="{% static "js/src/run.js" %}"></script>
 {% endblock %}

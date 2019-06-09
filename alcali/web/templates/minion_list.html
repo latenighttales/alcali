@@ -47,7 +47,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger waves-effect" id="deleteMinion">DELETE</button>
-          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="closeModal">CLOSE</button>
         </div>
       </div>
     </div>
@@ -66,7 +66,5 @@
   </div>
 {% endblock %}
 {% block js %}
-  <!-- Jquery DataTable Plugin Js -->
-  {% include 'datatable_sources.html' %}
   <script src="{% static "js/src/minion_list.js" %}"></script>
 {% endblock %}

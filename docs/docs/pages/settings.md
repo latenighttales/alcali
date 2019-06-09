@@ -1,10 +1,12 @@
 # Settings
 
+![settings](../images/settings.png)
+
 ## General Settings
 
 ### Parse modules
 
-To provide function completion and documentation run this on a selected target.
+To provide **function completion** and **documentation** run this on a selected target.
 
 This will run `sys.list_functions`, `sys.doc`, `sys.list_runner_functions` and `sys.runner_doc` on the selected target. 
 
@@ -25,7 +27,7 @@ We usually add:
     
     Because minions fields are linked to minions, you need to first have some minions present in the database.
     
-    Use the [refresh minions](minions.md) button.
+    Use the refresh minions _fab_ button.
     
 ## User Settings
 
