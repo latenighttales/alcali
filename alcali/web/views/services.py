@@ -43,7 +43,9 @@ def schedule(request):
         target = request.POST.get("target")
         if not target:
             target = "*"
-        ret = create_schedules(target, cron)
+        ret = create_schedules(
+            target, cron, function="state.apply", name="highstate_conformity", test=True
+        )
         return JsonResponse({"result": ret})
 
     if request.POST:

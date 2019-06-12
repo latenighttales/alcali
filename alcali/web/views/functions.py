@@ -6,7 +6,14 @@ from django.shortcuts import render
 # from django.utils.decorators import method_decorator
 # from django.views import View
 
-from ..backend.netapi import run_raw, run_job, run_runner, run_wheel, manage_key
+from ..backend.netapi import (
+    run_raw,
+    run_job,
+    run_runner,
+    run_wheel,
+    manage_key,
+    create_schedules,
+)
 from ..models.alcali import Functions, Minions
 from ..utils.output import highstate_output, nested_output
 from ..utils.input import RawCommand
@@ -64,11 +71,6 @@ def run(request):
         return JsonResponse({"desc": desc})
 
     if request.POST.get("function_list"):
-        # TODO: re implement
-        # if request.POST.get('schedule', None):
-        #     request_data = request.POST
-        #     schedule_return = schedule_run(request_data)
-        #     return HttpResponse(yaml.dump(schedule_return, default_flow_style=False))
         client = request.POST.get("client")
         tgt_type = request.POST.get("target-type")
         tgt = request.POST.get("minion_list")
@@ -87,6 +89,27 @@ def run(request):
         # Kwargs
         if request.POST.get("keyword") and request.POST.get("argument"):
             kwargs.update({request.POST["keyword"]: request.POST["argument"]})
+
+        # Schedules.
+        if request.POST.get("schedule-sw") == "on":
+            schedule_type = request.POST.get("schedule_type")
+            if schedule_type == "once":
+                schedule_date = request.POST.get("schedule")
+                schedule_date = "{}:00".format(schedule_date)
+                ret = create_schedules(
+                    tgt,
+                    function=fun,
+                    once=schedule_date,
+                    once_fmt="%Y-%m-%d %H:%M:%S",
+                    *args,
+                    **kwargs
+                )
+            else:
+                schedule_cron = request.POST.get("cron")
+                ret = create_schedules(
+                    tgt, cron=schedule_cron, function=fun, *args, **kwargs
+                )
+            return HttpResponse(ret)
 
         if client == "local":
             ret = run_job(tgt, fun, args, kwargs=kwargs)
