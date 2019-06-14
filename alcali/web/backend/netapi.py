@@ -3,6 +3,7 @@ import json
 from contextlib import contextmanager
 from urllib.error import URLError
 
+import pendulum
 from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
 
@@ -225,14 +226,29 @@ def manage_schedules(action, name, minion):
                 sched.save()
 
 
-def create_schedules(target, cron, function="state.apply"):
+def create_schedules(
+    target,
+    function=None,
+    cron=None,
+    once=None,
+    once_fmt=None,
+    name=None,
+    *args,
+    **kwargs
+):
+    name = name or pendulum.now().format("YYYYMMDDHHmmss")
     comm_inst = RawCommand(
-        "salt {} schedule.add highstate_conformity function='{}'".format(
-            target, function
-        )
+        "salt {} schedule.add {} function='{}'".format(target, name, function)
     )
     parsed = comm_inst.parse()
-    parsed[0]["arg"].append("job_kwargs={'test': true}")
-    parsed[0]["arg"].append("cron={}".format(cron))
+    if args:
+        parsed[0]["arg"].append("job_args={}".format(args))
+    if kwargs:
+        parsed[0]["arg"].append("job_kwargs={}".format(kwargs))
+    if cron:
+        parsed[0]["arg"].append("cron={}".format(cron))
+    if once and once_fmt:
+        parsed[0]["arg"].append("once={}".format(once))
+        parsed[0]["arg"].append("once_fmt={}".format(once_fmt))
     ret = run_raw(parsed)
     return ret
