@@ -228,12 +228,12 @@ def manage_schedules(action, name, minion):
 
 def create_schedules(
     target,
+    *args,
     function=None,
     cron=None,
     once=None,
     once_fmt=None,
     name=None,
-    *args,
     **kwargs
 ):
     name = name or pendulum.now().format("YYYYMMDDHHmmss")

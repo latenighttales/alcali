@@ -13,8 +13,7 @@ class Jids(models.Model):
     def user(self):
         if "user" in self.loaded_load():
             return self.loaded_load()["user"]
-        else:
-            return ""
+        return ""
 
     class Meta:
         app_label = "web"
@@ -43,13 +42,12 @@ class SaltReturns(models.Model):
         ret = self.loaded_ret()
         if "success" in ret:
             return ret["success"]
-        elif "return" in ret:
+        if "return" in ret:
             if "success" in ret["return"]:
                 return ret["return"]["success"]
-            elif "result" in ret["return"]:
+            if "result" in ret["return"]:
                 return ret["return"]["result"]
-        else:
-            return self.jid
+        return self.jid
 
     class Meta:
         app_label = "web"

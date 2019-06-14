@@ -15,7 +15,7 @@ from ..backend.netapi import (
     init_db,
     create_schedules,
 )
-from ..forms import AlcaliUserForm, AlcaliUserChangeForm
+from ..forms import AlcaliUserForm
 from ..models.alcali import (
     Schedule,
     UserSettings,
