@@ -1,3 +1,4 @@
+import pendulum
 from django.urls import reverse
 
 
@@ -32,15 +33,36 @@ def test_run_raw(admin_client):
     assert response.status_code == 200
 
 
-# def test_runner(admin_client):
-#     response = admin_client.get(reverse('runner'))
-#     assert response.status_code == 200
-#
-#
-# def test_runner_run(admin_client):
-#     response = admin_client.post(reverse('runner'), {'function_list': 'pillar.show_top'})
-#     assert response.status_code == 200
-#     assert b"base" in response.content
+def test_run_schedule_recurrent(admin_client):
+    response = admin_client.post(
+        reverse("run"),
+        {
+            "minion_list": "*",
+            "function_list": "test.ping",
+            "client": "local",
+            "schedule-sw": "on",
+            "schedule_type": "recurrent",
+            "cron": "* * * * *",
+        },
+    )
+    assert response.status_code == 200
+    print(response.content)
+
+
+def test_run_schedule_once(admin_client):
+    response = admin_client.post(
+        reverse("run"),
+        {
+            "minion_list": "*",
+            "function_list": "test.ping",
+            "client": "local",
+            "schedule-sw": "on",
+            "schedule_type": "once",
+            "schedule": pendulum.now().add(days=1).format("YYYY-MM-DD HH:mm"),
+        },
+    )
+    assert response.status_code == 200
+    print(response.content)
 
 
 def test_runner_raw(admin_client):
@@ -49,21 +71,6 @@ def test_runner_raw(admin_client):
     )
     assert response.status_code == 200
     assert b"base" in response.content
-
-
-# def test_wheel(admin_client):
-#     response = admin_client.get(reverse('wheel'))
-#     assert response.status_code == 200
-
-
-# TODO: fix wheel
-# def test_wheel_run(admin_client):
-#     response = admin_client.post(reverse('wheel'), {'function_list': 'key.list_all',
-#                                                     'args': None})
-#     print(response.content)
-#     assert response.status_code == 200
-#     assert b"master" in response.content
-#
 
 
 def test_wheel_raw(admin_client):

@@ -40,16 +40,23 @@ clientType.addEventListener('change', function (ev) {
   Run job.
  */
 function salt_run(type) {
-  let formData;
+  let data = $("form").serializeArray().reduce(function(obj, item) {
+    obj[item.name] = item.value;
+    return obj;
+  }, {});
   // Hide previous results.
   document.getElementById("results").style.display = "none";
 
   // Dry run.
   if (type === "test") {
-    formData = $("form").serializeArray();
-    formData.push({ name: "test", value: "true" });
-  } else {
-    formData = $("form").serialize();
+    data.test = true
+  }
+
+  // schedule
+  if (data['schedule-sw'] === 'on') {
+    data['schedule_type'] = scheduleType;
+    data.cron = cronField.cron("value")
+
   }
 
   // Notification.
@@ -65,12 +72,14 @@ function salt_run(type) {
   $.ajax({
     url: window.location.href.split("?")[0],
     type: "POST",
-    data: formData,
+    data: data,
+
 
     // handle a successful response
     success: function(yaml) {
       // remove the value from the input
-      document.getElementById('salt-run').reset();
+      // TODO: fix switch not being reset.
+      //document.getElementById('salt-run').reset();
       // Insert result html.
       let resDiv = document.getElementById("ansiResults");
       resDiv.innerHTML = yaml;
@@ -317,13 +326,15 @@ let cronField = $('#cronSelector').cron({
   }
 });
 
-$("input[name='group1']:radio")
-  .change(function() {
-    if (document.getElementById("radio_1").checked) {
-      document.getElementById("cronSchedule").style.display = "block";
-      document.getElementById("dateSchedule").style.display = "none";
-    } else {
-      document.getElementById("cronSchedule").style.display = "none";
-      document.getElementById("dateSchedule").style.display = "block";
-    }
-  });
+let scheduleType = 'recurrent';
+$("input[name='group1']:radio").change(function() {
+  if (document.getElementById("radio_1").checked) {
+    scheduleType = 'recurrent';
+    document.getElementById("cronSchedule").style.display = "block";
+    document.getElementById("dateSchedule").style.display = "none";
+  } else {
+    scheduleType = 'once';
+    document.getElementById("cronSchedule").style.display = "none";
+    document.getElementById("dateSchedule").style.display = "block";
+  }
+});
