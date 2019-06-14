@@ -16,10 +16,9 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile-dev
       args:
         USER_ID: ${USER_ID:-1000}
-    command: python alcali/manage.py runserver 0.0.0.0:8000
+    command: gunicorn alcali.config.wsgi:application -c /opt/alcali/code/docker/gunicorn_config.py
     volumes:
       - .:/opt/alcali/code
     ports:
@@ -27,7 +26,7 @@ services:
     depends_on:
       - db
     env_file:
-      - env.dev
+      - .env
   master:
     build:
       context: ./docker
