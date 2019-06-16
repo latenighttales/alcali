@@ -25,8 +25,7 @@ class Command(BaseCommand):
             "DJANGO_SETTINGS",
             "SALT_USER",
             "SALT_PASS",
-            "SALT_HOST",
-            "SALT_PORT",
+            "SALT_URL",
             "SALT_AUTH",
         ]:
             try:

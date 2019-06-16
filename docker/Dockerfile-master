@@ -3,18 +3,17 @@ FROM python:3.7-stretch
 # Upgrade System and Install dependencies
 RUN apt-get update && \
   apt-get upgrade -y -o DPkg::Options::=--force-confold && \
-  apt-get install -y -o DPkg::Options::=--force-confold curl python-mysqldb netcat
+  apt-get install -y -o DPkg::Options::=--force-confold curl python3-mysqldb netcat
 
 # Install Latest Salt from the stable Branch
-RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M stable 2019.2.0
+RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M -x python3 stable 2019.2.0
 
 # Set master and id
 RUN echo "master: master\nid: master">/etc/salt/minion
 
 # Install python dependencies
-RUN pip install CherryPy==3.2.3
+RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api python3-openssl
 RUN pip install honcho
-RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api
 
 # Copy needed files
 COPY saltconfig/etc/master /etc/salt/master
@@ -26,5 +25,8 @@ COPY utils/entrypoint-master.sh .
 
 # Sync auth and returners
 RUN salt-run saltutil.sync_all
+
+# Create salt-api certs
+RUN salt-call --local tls.create_self_signed_cert cacert_path='/etc/pki'
 
 ENTRYPOINT ["./entrypoint-master.sh"]

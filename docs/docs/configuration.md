@@ -27,8 +27,7 @@ DJANGO_SETTINGS=config.settings.dev
 # salt-api
 SALT_USER=admin
 SALT_PASS=testytest
-SALT_HOST=master
-SALT_PORT=8080
+SALT_URL=https://localhost:8080
 SALT_AUTH=alcali
 ```
 

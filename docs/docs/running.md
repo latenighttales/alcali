@@ -31,7 +31,7 @@ alcali check
     
     In a docker container:
     
-    `??`
+    `docker exec -it <name> alcali migrate`
 
 ### Create a super user
 
