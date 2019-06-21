@@ -50,7 +50,7 @@ Details are parsed from the `grains.items` state. On the right, 4 tabs are prese
   - The last 100 jobs run on this minion
   - A graph of jobs run on this minion
 
-We are going to add more useful infos by setting some **minions fields**. To do that, go in the settings view [http://localhost:8000/settings](http://localhost:8000/settings).
+We are going to add more useful infos by setting some **minions fields**. To do that, go to the settings view [http://localhost:8000/settings](http://localhost:8000/settings).
 
 ## Settings
 
@@ -125,14 +125,12 @@ In the overview, the conformity card should be filled now, with details when you
 
 ![filled_conformity](images/filled_conformity.png)
 
-You can see the details of both highstate conformity and your custom ones for all minions in the conformity view [http://localhost:8000/conformity](http://localhost:8000/conformity).
+A table with both highstate conformity and your custom ones for all minions is available in the conformity view [http://localhost:8000/conformity](http://localhost:8000/conformity).
 
 ![conformity_view](images/conformity_view.png)
 
-And see details about each states by clicking the `DETAIL` button.
+Details about each states in the highstate are available by clicking the `DETAIL` button.
 
 ![conformity_details](images/conformity_details.png)
-
-Click on each states to see its details.
 
 

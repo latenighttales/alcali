@@ -26,11 +26,10 @@ if not DB_BACKEND:
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-ALCALI_BACKEND = os.environ.get("ALCALI_BACKEND")
 DATETIME_INPUT_FORMATS += ["%Y, %b %d %H:%M:%S.%f"]
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DJANGO_DEBUG = os.environ.get("DJANGO_DEBUG")
 if DJANGO_DEBUG:
