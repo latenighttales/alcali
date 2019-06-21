@@ -11,7 +11,6 @@ class Command(BaseCommand):
 
         unset = []
         for env in [
-            "ALCALI_BACKEND",
             "MASTER_MINION_ID",
             "DB_BACKEND",
             "DB_NAME",
@@ -19,10 +18,8 @@ class Command(BaseCommand):
             "DB_PASS",
             "DB_HOST",
             "DB_PORT",
-            "DJANGO_DEBUG",
-            "DJANGO_SECRET",
+            "SECRET_KEY",
             "ALLOWED_HOSTS",
-            "DJANGO_SETTINGS",
             "SALT_USER",
             "SALT_PASS",
             "SALT_URL",

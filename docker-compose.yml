@@ -27,7 +27,7 @@ services:
     depends_on:
       - db
     env_file:
-      - env.dev
+      - env.sample
   master:
     build:
       context: ./docker
