@@ -1,5 +1,10 @@
 # Running Alcali
 
+!!!info
+    This page will assume you are running alcali locally.
+    
+    If you are using docker, just prepend commands with `docker exec -it <name>`
+
 First make sure that Alcali is correctly installed.
 
 You can verify installation by running:
@@ -23,15 +28,14 @@ alcali check
 
 !!!danger
 
-    **On the first run and after every update, you need to make sure that the database is synchronized with the current set of models and migrations.**
+    **On the first run and after every update, you need to make sure that the database is synchronized with the current set of models and migrations. If unsure, just run `alcali migrate`**
 
-    Locally:
-    
-    `alcali migrate`
-    
-    In a docker container:
-    
-    `docker exec -it <name> alcali migrate`
+
+Locally:
+
+```commandline
+alcali migrate
+```
 
 ### Create a super user
 

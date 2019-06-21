@@ -85,6 +85,7 @@ def test_conformity_detail_get(
 
 
 def test_conformity_add(admin_client, minion_master):
+    master = minion_master
     response = admin_client.post(
         reverse("run"),
         {
@@ -94,12 +95,13 @@ def test_conformity_add(admin_client, minion_master):
             "client": "local",
         },
     )
+    assert response.status_code == 200
     response = admin_client.post(
         reverse("settings"),
         {"name": "os", "function": "grains.item os", "action": "create_conformity"},
     )
     assert response.status_code == 200
-    assert minion_master.custom_conformity("grains.item", "os")
+    assert master.custom_conformity("grains.item", "os")
     response = admin_client.get(reverse("index"))
     assert "OS" in response.context["conformity_name"]
     assert response.context["conformity"][1]["Debian"] == 1

@@ -3,10 +3,10 @@ site_name: 'ALCALI'
 nav:
     - Home: index.md
     - Try it!: try.md
+    - Walkthrough: walkthrough.md
     - Installation: installation.md
     - Configuration: configuration.md
     - Running Alcali: running.md
-    - Walkthrough: walkthrough.md
     - Views:
         - 'Overview': views/overview.md
         - 'Minions': views/minions.md

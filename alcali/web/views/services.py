@@ -7,7 +7,6 @@ from django.shortcuts import render  # , get_object_or_404
 from alcali.web.utils import render_conformity
 from alcali.web.utils.output import highstate_output
 
-# if settings.ALCALI_BACKEND == 'netapi':
 from ..backend.netapi import (
     get_events,
     refresh_schedules,
@@ -26,12 +25,6 @@ from ..models.alcali import (
     Functions,
     Notifications,
 )
-
-
-# elif settings.ALCALI_BACKEND == 'pyapi':
-#    from ..backend.pyapi import run_job
-# else:
-#    raise ImportError
 
 
 @login_required
