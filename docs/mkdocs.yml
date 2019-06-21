@@ -3,23 +3,23 @@ site_name: 'ALCALI'
 nav:
     - Home: index.md
     - Try it!: try.md
+    - Walkthrough: walkthrough.md
     - Installation: installation.md
     - Configuration: configuration.md
     - Running Alcali: running.md
-    - Walkthrough: walkthrough.md
-    - Pages:
-        - 'Overview': pages/overview.md
-        - 'Minions': pages/minions.md
-        - 'Minion Details': pages/minion_details.md
-        - 'Jobs': pages/jobs.md
-        - 'Job Detail': pages/job_detail.md
-        - 'Run': pages/run.md
-        - 'Schedule': pages/schedule.md
-        - 'Conformity': pages/conformity.md
-        - 'Keys': pages/keys.md
-        - 'Events': pages/events.md
-        - 'Users': pages/users.md
-        - 'Settings': pages/settings.md
+    - Views:
+        - 'Overview': views/overview.md
+        - 'Minions': views/minions.md
+        - 'Minion Details': views/minion_details.md
+        - 'Jobs': views/jobs.md
+        - 'Job Detail': views/job_detail.md
+        - 'Run': views/run.md
+        - 'Schedule': views/schedule.md
+        - 'Conformity': views/conformity.md
+        - 'Keys': views/keys.md
+        - 'Events': views/events.md
+        - 'Users': views/users.md
+        - 'Settings': views/settings.md
     - Contribute: contribute.md
     - Licence: licence.md
 site_description: 'A web based tool for monitoring and administrating Saltstack'
@@ -35,6 +35,8 @@ copyright: 'Copyright &copy; 2019 All rights reserved'
 
 theme:
   name: 'material'
+  feature:
+    tabs: true
   custom_dir: 'theme'
   logo: 'images/logo-144.png'
   favicon: 'images/favicon.ico'

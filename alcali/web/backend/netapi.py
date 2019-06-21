@@ -10,15 +10,13 @@ from django_currentuser.middleware import get_current_user
 from ..utils.input import RawCommand
 from ..models.alcali import Minions, Functions, MinionsCustomFields, Keys, Schedule
 
-url = "http://{host}:{port}".format(
-    host=os.environ.get("SALT_HOST"), port=os.environ.get("SALT_PORT")
-)
+url = os.environ.get("SALT_URL")
 
 
 @contextmanager
 def api_connect():
     user = get_current_user()
-    api = Pepper(url)
+    api = Pepper(url, ignore_ssl_errors=True)
     try:
         login_ret = api.login(
             str(user.username), user.user_settings.token, os.environ.get("SALT_AUTH")
@@ -175,7 +173,7 @@ def manage_key(action, target, kwargs):
 def set_perms():
     try:
         user = get_current_user()
-        api = Pepper(url)
+        api = Pepper(url, ignore_ssl_errors=True)
         login_ret = api.login(
             str(user.username), user.user_settings.token, os.environ.get("SALT_AUTH")
         )
@@ -228,12 +226,12 @@ def manage_schedules(action, name, minion):
 
 def create_schedules(
     target,
+    *args,
     function=None,
     cron=None,
     once=None,
     once_fmt=None,
     name=None,
-    *args,
     **kwargs
 ):
     name = name or pendulum.now().format("YYYYMMDDHHmmss")

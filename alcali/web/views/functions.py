@@ -3,9 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-# from django.utils.decorators import method_decorator
-# from django.views import View
-
 from ..backend.netapi import (
     run_raw,
     run_job,
@@ -21,6 +18,11 @@ from ..utils.input import RawCommand
 
 @login_required
 def run(request):
+    """
+    Run commands.
+    :param request:
+    :return:
+    """
     # Fill form with get params.
     optional_get_params = "null"
     if request.GET:

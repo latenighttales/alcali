@@ -56,8 +56,7 @@ class Minions(models.Model):
                 or state.loaded_ret()["fun_args"][0] == "test=True"
             ):
                 return state
-            else:
-                return None
+            return None
 
     def conformity(self):
         last_highstate = self.last_highstate()
@@ -81,7 +80,7 @@ class Minions(models.Model):
                 ret = job.loaded_ret()
                 # if provided args are the same.
                 if not list(
-                    set(args) ^ set([i for i in ret["fun_args"] if isinstance(i, str)])
+                    set(args) ^ {i for i in ret["fun_args"] if isinstance(i, str)}
                 ):
                     return ret["return"]
         # If no args or kwargs, just return the first job.

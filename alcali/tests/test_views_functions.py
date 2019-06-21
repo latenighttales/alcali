@@ -4,7 +4,7 @@ from django.urls import reverse
 
 def test_dummy_clean(run_sql):
     run_sql("TRUNCATE TABLE `salt_returns`")
-    assert True is True
+    assert True
 
 
 def test_run(admin_client):
@@ -46,7 +46,7 @@ def test_run_schedule_recurrent(admin_client):
         },
     )
     assert response.status_code == 200
-    print(response.content)
+    assert b"master" in response.content
 
 
 def test_run_schedule_once(admin_client):
@@ -62,7 +62,7 @@ def test_run_schedule_once(admin_client):
         },
     )
     assert response.status_code == 200
-    print(response.content)
+    assert b"master" in response.content
 
 
 def test_runner_raw(admin_client):
@@ -83,4 +83,4 @@ def test_wheel_raw(admin_client):
 
 def test_dummy_clean_out(run_sql):
     run_sql("TRUNCATE TABLE `salt_returns`")
-    assert True is True
+    assert True

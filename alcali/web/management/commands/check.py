@@ -1,5 +1,5 @@
 import os
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db import connections
 from django.db.utils import OperationalError
 
@@ -11,7 +11,6 @@ class Command(BaseCommand):
 
         unset = []
         for env in [
-            "ALCALI_BACKEND",
             "MASTER_MINION_ID",
             "DB_BACKEND",
             "DB_NAME",
@@ -19,14 +18,11 @@ class Command(BaseCommand):
             "DB_PASS",
             "DB_HOST",
             "DB_PORT",
-            "DJANGO_DEBUG",
-            "DJANGO_SECRET",
+            "SECRET_KEY",
             "ALLOWED_HOSTS",
-            "DJANGO_SETTINGS",
             "SALT_USER",
             "SALT_PASS",
-            "SALT_HOST",
-            "SALT_PORT",
+            "SALT_URL",
             "SALT_AUTH",
         ]:
             try:

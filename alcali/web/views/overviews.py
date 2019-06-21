@@ -134,7 +134,7 @@ def jobs(request):
         return JsonResponse(ret, safe=False)
 
     # Filter options.
-    user_list = list(set([i.user() for i in Jids.objects.all()]))
+    user_list = list({i.user() for i in Jids.objects.all()})
     minion_list = SaltReturns.objects.values_list("id", flat=True).distinct()
 
     return render(
@@ -187,7 +187,7 @@ def minions(request):
         return JsonResponse({"refreshed": target})
 
     # Datatables.
-    elif request.POST:
+    if request.POST:
         ret = {"data": []}
         minions_data = Minions.objects.all()
         for minion in minions_data:
@@ -264,7 +264,7 @@ def keys(request):
         return JsonResponse({"refreshed": True})
 
     # Datatable.
-    elif request.POST:
+    if request.POST:
         ret = {"data": []}
         keys_data = Keys.objects.all()
         for key in keys_data:

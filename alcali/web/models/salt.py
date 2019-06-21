@@ -3,6 +3,11 @@ import json
 from django.db import models
 
 
+class FindJobManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(fun="saltutil.find_job")
+
+
 class Jids(models.Model):
     jid = models.CharField(primary_key=True, db_index=True, max_length=255)
     load = models.TextField()
@@ -13,8 +18,7 @@ class Jids(models.Model):
     def user(self):
         if "user" in self.loaded_load():
             return self.loaded_load()["user"]
-        else:
-            return ""
+        return ""
 
     class Meta:
         app_label = "web"
@@ -32,6 +36,8 @@ class SaltReturns(models.Model):
     full_ret = models.TextField()
     alter_time = models.DateTimeField()
 
+    objects = FindJobManager()
+
     def loaded_ret(self):
         return json.loads(self.full_ret)
 
@@ -43,13 +49,12 @@ class SaltReturns(models.Model):
         ret = self.loaded_ret()
         if "success" in ret:
             return ret["success"]
-        elif "return" in ret:
+        if "return" in ret:
             if "success" in ret["return"]:
                 return ret["return"]["success"]
-            elif "result" in ret["return"]:
+            if "result" in ret["return"]:
                 return ret["return"]["result"]
-        else:
-            return self.jid
+        return self.jid
 
     class Meta:
         app_label = "web"
