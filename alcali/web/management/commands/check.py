@@ -18,7 +18,6 @@ class Command(BaseCommand):
             "DB_PASS",
             "DB_HOST",
             "DB_PORT",
-            "DJANGO_DEBUG",
             "SECRET_KEY",
             "ALLOWED_HOSTS",
             "SALT_USER",
