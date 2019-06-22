@@ -1,6 +1,18 @@
 from .base import *
 
-DEBUG = True
+from distutils.util import strtobool
+
+DJANGO_DEBUG = os.environ.get("DJANGO_DEBUG")
+if DJANGO_DEBUG:
+    try:
+        # lower('y', 'yes', 't', 'true', 'on', '1')
+        DJANGO_DEBUG = strtobool(DJANGO_DEBUG)
+    # None, empty, bool...
+    except (AttributeError, TypeError, ValueError):
+        DJANGO_DEBUG = False
+else:
+    DJANGO_DEBUG = False
+DEBUG = DJANGO_DEBUG
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

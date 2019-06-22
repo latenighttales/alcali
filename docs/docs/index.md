@@ -1,11 +1,11 @@
 # Welcome to Alcali Documentation
 
-<img align="right" height="300" src="images/logo-1089.png">
+<img align="right" height="300" src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Logo_du_Mois_de_la_contribution_sans_texte.svg">
 
 
 ## What's Alcali?
 
-Alcali is a web based tool for monitoring and administrating **Saltstack®** Salt.
+Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 
 ## Features
 

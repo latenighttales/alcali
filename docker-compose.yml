@@ -10,7 +10,7 @@ services:
       MYSQL_USER: alcali
       MYSQL_PASSWORD: alcali
     volumes:
-      - ./docker/sql:/docker-entrypoint-initdb.d
+      - ./docker/sql/mysql:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
   web:

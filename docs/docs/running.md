@@ -46,6 +46,13 @@ alcali createsuperuser
 ```
 You will be prompted for your desired login, email address and password.
 
+### Collectstatic
+
+Run:
+
+```commandline
+alcali collectstatic
+```
 ## Run
 
 Once migrations are applied and a super user is created, you can start the application.

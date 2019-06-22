@@ -11,7 +11,7 @@
 
 ## What's Alcali?
 
-Alcali is a web based tool for monitoring and administrating **Saltstack®** Salt.
+Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 
 ## Features
 

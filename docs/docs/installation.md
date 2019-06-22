@@ -133,7 +133,7 @@ CREATE INDEX idx_salt_returns_fun ON salt_returns (fun);
 CREATE INDEX idx_salt_returns_updated ON salt_returns (alter_time);
 
 --
--- Table structure for table `salt_events`
+-- Table structure for table 'salt_events'
 --
 
 DROP TABLE IF EXISTS salt_events;
@@ -161,7 +161,7 @@ returner.postgres.host: 'db'
 returner.postgres.user: 'alcali'
 returner.postgres.passwd: 'alcali'
 returner.postgres.db: 'salt'
-returner.postgres.port: 3306
+returner.postgres.port: 5432
 ``` 
 
 </p>
@@ -229,6 +229,18 @@ docker pull latenighttales/alcali:2019.2.0
 ```
 The `alcali` executable is provided as an entrypoint.
 
+### Locally
+
+To install Alcali locally, you'll need to install database connectors dependencies:
+
+For Debian based distribution:
+```commandline
+apt install postgresql-dev
+```
+For Red-Hat based distribution:
+```commandline
+yum install postgresql-devel
+```
 
 #### Using pip
 

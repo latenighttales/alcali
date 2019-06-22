@@ -6,12 +6,12 @@
 
 ```bash
 # Database settings.
-DB_BACKEND=mysql # Options are: mysql or postgres
+DB_BACKEND=mysql # Options are: mysql or postgresql
 DB_NAME=salt
 DB_USER=alcali
 DB_PASS=alcali
 DB_HOST=db # Either hostname or ip
-DB_PORT=3306
+DB_PORT=3306 # By default 3306 for Mysql or 5432 for Postgres
 
 # Alcali settings.
 SECRET_KEY=thisisnotagoodsecret.orisit? # Used to secure signed data.
