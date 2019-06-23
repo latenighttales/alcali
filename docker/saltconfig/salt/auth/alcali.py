@@ -1,52 +1,21 @@
 # -*- coding: utf-8 -*-
 
 """
-Provide authentication using MySQL.
+Alcali authentication.
 
-When using MySQL as an authentication backend, you will need to create or
-use an existing table that has a username and a password column.
+Provide authentication using either MySQL or Postgres.
+Use Returner database connection settings.
 
-To get started, create a simple table that holds just a username and
-a password. The password field will hold a SHA256 checksum.
-
-.. code-block:: sql
-
-    CREATE TABLE `users` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `username` varchar(25) DEFAULT NULL,
-      `password` varchar(70) DEFAULT NULL,
-      PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
-To create a user within MySQL, execute the following statement.
-
-.. code-block:: sql
-
-    INSERT INTO users VALUES (NULL, 'diana', SHA2('secret', 256))
-
-.. code-block:: yaml
-
-    mysql_auth:
-      hostname: localhost
-      database: SaltStack
-      username: root
-      password: letmein
-      auth_sql: 'SELECT username FROM users WHERE username = "{0}" AND password = SHA2("{1}", 256)'
-
-The `auth_sql` contains the SQL that will validate a user to ensure they are
-correctly authenticated. This is where you can specify other SQL queries to
-authenticate users.
-
-Enable MySQL authentication.
+Enable Alcali authentication.
 
 .. code-block:: yaml
 
     external_auth:
-      mysql:
-        damian:
+      alcali:
+        matt:
           - test.*
 
-:depends:   - MySQL-python Python module
+:depends:   - MySQL-python Python module or psycopg2.
 """
 
 from __future__ import absolute_import
@@ -66,18 +35,25 @@ try:
 except ImportError:
     HAS_MYSQL = False
 
+try:
+    import psycopg2
+
+    HAS_POSTGRES = True
+except ImportError:
+    HAS_POSTGRES = False
+
 __virtualname__ = "alcali"
 
 
 def __virtual__():
-    if HAS_MYSQL:
+    if HAS_MYSQL or HAS_POSTGRES:
         return __virtualname__
     return False
 
 
 def _get_options():
     """
-    Returns options used for the MySQL connection.
+    Returns options used for the database connection.
     """
 
     _options = {}
@@ -93,10 +69,19 @@ def _get_options():
     }
 
     for k, v in six.iteritems(defaults):
-        try:
-            _options[k] = __opts__["{}.{}".format("mysql", k)]
-        except KeyError:
-            _options[k] = v
+        if HAS_MYSQL:
+            try:
+                _options[k] = __opts__["{}.{}".format("mysql", k)]
+            except KeyError:
+                _options[k] = v
+        else:
+            # Use "returner.postgres" options.
+            defaults.pop("pass")
+            defaults["port"] = 5432
+            try:
+                _options[k] = __opts__["{}.{}".format("returner.postgres", k)]
+            except KeyError:
+                _options[k] = v
 
     # post processing
     for k, v in six.iteritems(_options):
@@ -113,43 +98,70 @@ def _get_options():
 @contextmanager
 def _get_serv():
     """
-    Return a mysql cursor
+    Return a database cursor
     """
     _options = _get_options()
 
-    log.debug("Generating new MySQL connection pool")
-    try:
-        # An empty ssl_options dictionary passed to MySQLdb.connect will
-        # effectively connect w/o SSL.
-        ssl_options = {}
-        if _options.get("ssl_ca"):
-            ssl_options["ca"] = _options.get("ssl_ca")
-        if _options.get("ssl_cert"):
-            ssl_options["cert"] = _options.get("ssl_cert")
-        if _options.get("ssl_key"):
-            ssl_options["key"] = _options.get("ssl_key")
-        conn = MySQLdb.connect(
-            host=_options.get("host"),
-            user=_options.get("user"),
-            passwd=_options.get("pass"),
-            db=_options.get("db"),
-            port=_options.get("port"),
-            ssl=ssl_options,
-        )
+    log.debug("Generating new DB connection pool")
+    if HAS_MYSQL:
+        try:
+            # An empty ssl_options dictionary passed to MySQLdb.connect will
+            # effectively connect w/o SSL.
+            ssl_options = {}
+            if _options.get("ssl_ca"):
+                ssl_options["ca"] = _options.get("ssl_ca")
+            if _options.get("ssl_cert"):
+                ssl_options["cert"] = _options.get("ssl_cert")
+            if _options.get("ssl_key"):
+                ssl_options["key"] = _options.get("ssl_key")
+            conn = MySQLdb.connect(
+                host=_options.get("host"),
+                user=_options.get("user"),
+                passwd=_options.get("pass"),
+                db=_options.get("db"),
+                port=_options.get("port"),
+                ssl=ssl_options,
+            )
 
-    except MySQLdb.connections.OperationalError as exc:
-        raise salt.exceptions.SaltMasterError(
-            "MySQL returner could not connect to database: {exc}".format(exc=exc)
-        )
+        except MySQLdb.connections.OperationalError as exc:
+            raise salt.exceptions.SaltMasterError(
+                "MySQL returner could not connect to database: {exc}".format(exc=exc)
+            )
 
-    cursor = conn.cursor()
+        cursor = conn.cursor()
 
-    try:
-        yield cursor
-    except MySQLdb.DatabaseError as err:
-        error = err.args
-        sys.stderr.write(str(error))
-        raise err
+        try:
+            yield cursor
+        except MySQLdb.DatabaseError as err:
+            error = err.args
+            sys.stderr.write(str(error))
+            raise err
+    else:
+        try:
+            conn = psycopg2.connect(
+                host=_options.get("host"),
+                user=_options.get("user"),
+                password=_options.get("passwd"),
+                database=_options.get("db"),
+                port=_options.get("port"),
+            )
+
+        except psycopg2.OperationalError as exc:
+            raise salt.exceptions.SaltMasterError(
+                "postgres returner could not connect to database: {exc}".format(exc=exc)
+            )
+
+        cursor = conn.cursor()
+
+        try:
+            yield cursor
+        except psycopg2.DatabaseError as err:
+            error = err.args
+            sys.stderr.write(six.text_type(error))
+            cursor.execute("ROLLBACK")
+            six.reraise(*sys.exc_info())
+        finally:
+            conn.close()
 
 
 def auth(username, password):
