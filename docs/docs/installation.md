@@ -205,6 +205,17 @@ Place it on the salt filesystem (for example: `/srv/salt/auth`) and add it to yo
 auth_dirs: [/srv/salt/auth]
 ```
 
+External auth example:
+```yaml
+external_auth:
+  alcali:
+    admin:
+      - .*
+      - '@runner'
+      - '@wheel'
+```
+See [Saltstack external auth system](https://docs.saltstack.com/en/latest/topics/eauth/index.html#acl-eauth) for more infos.
+
 Tokens can be managed using the [alcali](running.md) command or directly in the [web interface](views/users.md).
 
 ## Installing Alcali

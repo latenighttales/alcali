@@ -1,12 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %}
-  <!-- JQuery DataTable Css -->
-  <link href="{% static "css/plugins/dataTables.bootstrap.css" %}" rel="stylesheet">
-  <link href="{% static "css/plugins/datatables-responsive.css" %}" rel="stylesheet">
-  <link href="{% static "codemirror/lib/codemirror.css" %}" rel="stylesheet">
-  <link href="{% static "css/plugins/made-of-code.css" %}" rel="stylesheet">
-{% endblock %}
 {% block title %}EVENTS{% endblock %}
 {% block content %}
   <div class="block-header">
@@ -52,6 +45,5 @@
   <!-- #END# Exportable Table -->
 {% endblock %}
 {% block js %}
-  <script src="{% static "js/plugins/jquery-datatable/responsive.js" %}"></script>
   <script src="{% static "js/src/event_list.js" %}"></script>
 {% endblock %}
