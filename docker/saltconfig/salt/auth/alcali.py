@@ -24,6 +24,7 @@ import sys
 from contextlib import contextmanager
 
 # Import 3rd-party libs
+import salt.exceptions
 import salt.ext.six as six
 
 log = logging.getLogger(__name__)
@@ -68,16 +69,18 @@ def _get_options():
         "ssl_key": None,
     }
 
-    for k, v in six.iteritems(defaults):
-        if HAS_MYSQL:
+    if HAS_MYSQL:
+        for k, v in six.iteritems(defaults):
             try:
                 _options[k] = __opts__["{}.{}".format("mysql", k)]
             except KeyError:
                 _options[k] = v
-        else:
-            # Use "returner.postgres" options.
-            defaults.pop("pass")
-            defaults["port"] = 5432
+    else:
+        # Use "returner.postgres" options.
+        defaults.pop("pass")
+        defaults["passwd"] = "salt"
+        defaults["port"] = 5432
+        for k, v in six.iteritems(defaults):
             try:
                 _options[k] = __opts__["{}.{}".format("returner.postgres", k)]
             except KeyError:
@@ -157,9 +160,8 @@ def _get_serv():
             yield cursor
         except psycopg2.DatabaseError as err:
             error = err.args
-            sys.stderr.write(six.text_type(error))
-            cursor.execute("ROLLBACK")
-            six.reraise(*sys.exc_info())
+            sys.stderr.write(str(error))
+            raise err
         finally:
             conn.close()
 
@@ -170,16 +172,13 @@ def auth(username, password):
     """
 
     with _get_serv() as cur:
-        sql = "SELECT c.token FROM user_settings c INNER JOIN auth_user a ON c.user_id = a.id AND a.username = '{}'".format(
-            username
-        )
-        cur.execute(sql)
+        sql = """SELECT c.token FROM user_settings c INNER JOIN auth_user a ON c.user_id = a.id AND a.username= %s;"""
+        cur.execute(sql, (username,))
 
-        if cur.rowcount == 1:
-            user_token = cur.fetchone()
-            user_token = [i for i in user_token]
-            user_token = str(user_token[0])
-            if str(user_token) == str(password):
+        user_token = cur.fetchone()
+        if user_token:
+            token = str(user_token[0])
+            if str(token) == str(password):
                 log.debug("Alcali authentication successful")
                 return True
 
