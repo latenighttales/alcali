@@ -3,16 +3,16 @@ FROM python:3.7-stretch
 # Upgrade System and Install dependencies
 RUN apt-get update && \
   apt-get upgrade -y -o DPkg::Options::=--force-confold && \
-  apt-get install -y -o DPkg::Options::=--force-confold curl python3-mysqldb netcat
+  apt-get install -y -o DPkg::Options::=--force-confold curl python-mysqldb netcat
 
 # Install Latest Salt from the stable Branch
-RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M -x python3 stable 2019.2.0
+RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M stable 2018.3.4
 
 # Set master and id
 RUN echo "master: master\nid: master">/etc/salt/minion
 
 # Install python dependencies
-RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api python3-openssl
+RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api python-openssl
 RUN pip install honcho
 
 # Copy needed files
