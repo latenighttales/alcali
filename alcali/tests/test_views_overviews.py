@@ -19,7 +19,7 @@ def test_graph_no_filter(admin_client, highstate, dummy_state):
     highstate()
     response = admin_client.post(reverse("index"), {"period": 0})
     assert response.status_code == 200
-    assert response.json()["series"][0][0] == 2
+    assert response.json()["series"][0][0] == 10
 
 
 def test_graph_highstate_filter(admin_client, highstate, dummy_state):
@@ -33,7 +33,7 @@ def test_graph_other_filter(admin_client, highstate, dummy_state):
     highstate()
     response = admin_client.post(reverse("index"), {"period": 0, "filter": "other"})
     assert response.status_code == 200
-    assert response.json()["series"][0][0] == 1
+    assert response.json()["series"][0][0] == 9
 
 
 def test_jobs(admin_client):
@@ -45,14 +45,14 @@ def test_jobs_default(admin_client, jid, highstate, dummy_jid, dummy_state):
     highstate()
     response = admin_client.post(reverse("job_list"), {"limit": 100})
     assert response.status_code == 200
-    assert len(response.json()["data"]) == 2
+    assert len(response.json()["data"]) == 10
 
 
 def test_jobs_filter_user(admin_client, jid, highstate, dummy_jid, dummy_state):
     highstate()
     response = admin_client.post(reverse("job_list"), {"limit": 100, "user": "admin"})
     assert response.status_code == 200
-    assert len(response.json()["data"]) == 1
+    assert len(response.json()["data"]) == 8
     assert "state.apply" in response.json()["data"][0]
 
 
@@ -62,19 +62,19 @@ def test_jobs_filter_minion(admin_client, jid, highstate, dummy_jid, dummy_state
         reverse("job_list"), {"limit": 100, "minion": "master"}
     )
     assert response.status_code == 200
-    assert len(response.json()["data"]) == 1
+    assert len(response.json()["data"]) == 4
     assert "alcali.pass_salt" in response.json()["data"][0]
 
 
 def test_jobs_filter_date(admin_client, jid, highstate, dummy_jid, dummy_state):
     highstate()
-    today = date = time.strftime("%Y-%m-%d")
+    today = time.strftime("%Y-%m-%d")
     response = admin_client.post(
         reverse("job_list"),
         {"limit": 100, "minion": "master", "date": ["{}".format(today)]},
     )
     assert response.status_code == 200
-    assert len(response.json()["data"]) == 1
+    assert len(response.json()["data"]) == 4
     assert "alcali.pass_salt" in response.json()["data"][0]
 
 
