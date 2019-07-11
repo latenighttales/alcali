@@ -1,5 +1,5 @@
 ansi2html==1.5.2
-Django==2.2.2
+Django==2.2.3
 django-currentuser==0.4.1
 gunicorn==19.9.0
 mysqlclient==1.4.2.post1
@@ -7,7 +7,7 @@ psycopg2==2.8.3
 python-dotenv==0.10.3
 pytz
 PyYAML==5.1.1
-pendulum==2.0.4
+pendulum==2.0.5
 requests==2.22.0
 salt-pepper==0.7.5
 whitenoise==4.1.2
