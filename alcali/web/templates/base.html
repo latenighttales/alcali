@@ -52,7 +52,9 @@
   <div class="search-icon">
     <i class="material-icons">search</i>
   </div>
-  <input type="text" placeholder="SEARCH JOBS, MINIONS ...">
+  <form method="get" action="{% url 'search' %}">
+    <input type="text" placeholder="SEARCH JOBS, MINIONS ..." name="q">
+  </form>
   <div class="close-search">
     <i class="material-icons">close</i>
   </div>
@@ -97,7 +99,7 @@
                           </p>
                         </div>
                       </a>
-                        <span class="btn badge" onclick="notifDelete({{ notif.id }})">x</span>
+                      <span class="btn badge" onclick="notifDelete({{ notif.id }})">x</span>
                     </li>
                   {% endfor %}
                 {% endif %}
@@ -131,10 +133,6 @@
           <ul class="dropdown-menu pull-right">
             <li><a href="{% url 'users' %}?user={{ request.user.username }}"><i
                 class="material-icons">person</i>User</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-            <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="{% url 'logout' %}"><i class="material-icons">input</i>Sign Out</a></li>
           </ul>
@@ -241,13 +239,9 @@
         <p>GENERAL SETTINGS</p>
         <ul class="setting-list">
           <li>
-            <span>Init Database</span>
-            <button class="btn bg-purple waves-effect pull-right" id="initDb">Submit</button>
-          </li>
-          <li>
-            <span>Mini sidebar</span>
+            <span>CLI MOTD</span>
             <div class="switch">
-              <label><input type="checkbox" id="miniSidebar"><span class="lever"></span></label>
+              <label><input type="checkbox" id="cliMotd"><span class="lever"></span></label>
             </div>
           </li>
         </ul>

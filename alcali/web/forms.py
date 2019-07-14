@@ -32,3 +32,7 @@ class AlcaliUserChangeForm(UserChangeForm):
         super(UserChangeForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs["class"] = "form-control"
+
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "email")

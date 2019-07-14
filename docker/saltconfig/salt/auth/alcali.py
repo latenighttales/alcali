@@ -171,15 +171,15 @@ def auth(username, password):
     Authenticate using a MySQL user table
     """
 
-    with _get_serv() as cur:
-        sql = """SELECT c.token FROM user_settings c INNER JOIN auth_user a ON c.user_id = a.id AND a.username= %s;"""
-        cur.execute(sql, (username,))
+    if str(password) and str(password) != "REVOKED":
+        with _get_serv() as cur:
+            sql = """SELECT c.token FROM user_settings c INNER JOIN auth_user a ON c.user_id = a.id AND a.username= %s;"""
+            cur.execute(sql, (username,))
 
-        user_token = cur.fetchone()
-        if user_token:
-            token = str(user_token[0])
-            if str(token) == str(password):
-                log.debug("Alcali authentication successful")
-                return True
-
+            user_token = cur.fetchone()
+            if user_token:
+                token = str(user_token[0])
+                if str(token) == str(password):
+                    log.debug("Alcali authentication successful")
+                    return True
     return False

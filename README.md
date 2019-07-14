@@ -63,4 +63,4 @@ Once you're done, you can [install it](https://alcali.dev/installation/).
 
 If you'd like to contribute, simply fork the repository, commit your changes, run the tests and send a pull request.
 
-<sub><sub>Image: Jean-Philippe WMFr, œuvre dérivée : User:Benoit Rochon [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)</sub></sub>
+<sub><sub>Image: Jean-Philippe WMFr, derivative work : User:Benoit Rochon [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)</sub></sub>

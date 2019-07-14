@@ -50,7 +50,7 @@ Details are parsed from the `grains.items` state. On the right, 4 tabs are prese
   - The last 100 jobs run on this minion
   - A graph of jobs run on this minion
 
-We are going to add more useful infos by setting some **minions fields**. To do that, go to the settings view [http://localhost:8000/settings](http://localhost:8000/settings).
+Let's add some useful infos by setting some **minions fields**. To do so, go to the settings view [http://localhost:8000/settings](http://localhost:8000/settings).
 
 ## Settings
 
@@ -68,7 +68,7 @@ We usually add:
 
 Use the _fab_ button to refresh all minions.
 
-If you go see a minion details, for example, [http://localhost:8000/minions/master/](http://localhost:8000/minions/master/), the new minion fields should be present.
+If you go see a minion's details, for example, [http://localhost:8000/minions/master/](http://localhost:8000/minions/master/), the new minion fields should be present.
 
 Minion fields are usually used for "static" minion specific data.
 
