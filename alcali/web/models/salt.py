@@ -45,6 +45,12 @@ class SaltReturns(models.Model):
         # TODO: find a better way?
         return Jids.objects.get(jid=self.jid).user()
 
+    def arguments(self):
+        ret = self.loaded_ret()
+        if "fun_args" in ret and ret["fun_args"]:
+            return [str(i) for i in ret["fun_args"]]
+        return ""
+
     def success_bool(self):
         ret = self.loaded_ret()
         if "success" in ret:

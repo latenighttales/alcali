@@ -1,5 +1,6 @@
 import time
 import pytest
+from django.contrib.auth.models import User
 
 from alcali.web.models.salt import SaltReturns, Jids
 from alcali.web.models.alcali import Keys, Minions, Schedule, Notifications
@@ -307,3 +308,10 @@ def notification(admin_user):
         '"id":"master"}',
     }
     ret = Notifications.objects.create(user=admin_user, **notif)
+
+
+@pytest.fixture
+def dummy_user():
+    return User.objects.create_superuser(
+        "dummy_user", "dummy_user@example.com", "dummy_userpassword"
+    )

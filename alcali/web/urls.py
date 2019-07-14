@@ -19,6 +19,8 @@ from alcali.web.views.services import (
     settings,
     notifications,
     conformity_detail,
+    edit_user,
+    search,
 )
 
 urlpatterns = [
@@ -26,10 +28,12 @@ urlpatterns = [
     path("run", run, name="run"),
     url(r"^event_stream$", event_stream, name="event_stream"),
     url(r"^schedule$", schedule, name="schedule"),
+    url(r"^search$", search, name="search"),
     url(r"^conformity$", conformity, name="conformity"),
     path("conformity/<str:minion_id>/", conformity_detail, name="conformity_detail"),
     url(r"^keys$", keys, name="keys"),
     url(r"^users$", users, name="users"),
+    path("users/<str:username>", edit_user, name="edit_user"),
     url(r"^settings$", settings, name="settings"),
     url(r"^events$", events, name="events"),
     url(r"^minions$", minions, name="minions"),

@@ -8,21 +8,13 @@
   </div>
   <!-- Basic Examples -->
   <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="card">
-        <div class="header">
-          <i class="material-icons" style="vertical-align: bottom">person_add</i>
-          <span> ADD/EDIT USER</span>
-        </div>
-        <div class="body">
-          {% include 'template_users.html' %}
-        </div>
-      </div>
+    <div id="crud-user">
+      {% include 'template_users.html' %}
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="header">
-          <i class="material-icons" style="vertical-align: bottom">mode_edit</i>
+          <i class="material-icons" style="vertical-align: bottom">format_list_bulleted</i>
           <span>USERS</span>
         </div>
         <div class="body">
@@ -48,7 +40,39 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="showToken" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          If you delete minions data, you'll have to refresh minions
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="closeModal">CLOSE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="defaultModalLabel">Delete Minion data?</h4>
+        </div>
+        <div class="modal-body">
+          This action is irreversible.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger waves-effect" id="deleteUserBtn">DELETE</button>
+          <button type="button" class="btn btn-link waves-effect" data-dismiss="modal" id="closedeleteUserModal">CLOSE
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 {% block js %}
+  <script>
+    let currentUser = '{{ request.user.username }}';
+  </script>
   <script src="{% static "js/src/users.js" %}"></script>
 {% endblock %}

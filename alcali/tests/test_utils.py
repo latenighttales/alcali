@@ -1,4 +1,10 @@
+from datetime import timedelta
+import pytest
+
+from django.utils import timezone
+
 from alcali.web.utils import RawCommand
+from alcali.web.utils import graph_data
 
 
 def test_simple_command():
@@ -78,3 +84,10 @@ def test_client_kwarg():
         "client": "wheel",
         "kwarg": "{foo: bar}",
     }
+
+
+@pytest.mark.django_db
+def test_graph_data():
+    today = str(timezone.now().date() - timedelta(days=2))
+    days, count, error_count = graph_data(period=3, fun="all")
+    assert today in days

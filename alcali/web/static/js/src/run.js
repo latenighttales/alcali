@@ -292,7 +292,7 @@ let term = $("#terminal").terminal(function(command) {
     this.echo("");
   }
 }, {
-  greetings: greetings[Math.floor(Math.random() * greetings.length)] + "\n",
+  greetings: cliMotdValue === true ? greetings[Math.floor(Math.random() * greetings.length)] + "\n": null,
   name: "js_demo",
   height: 300,
   prompt: "$ > ",

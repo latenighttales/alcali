@@ -52,19 +52,19 @@ if (supports_local_storage() === true) {
     leftSideBar.style.width = 55 + "px";
     contentSection.style.marginLeft = (55 + 15) + "px";
   }
-}
+  // Mini Sidebar
+  $('#miniSidebar1').click(() => {
+    sidebarToggled = JSON.parse(localStorage.getItem('sidebarToggled'));
+    if (sidebarToggled === null) {
+      localStorage.setItem('sidebarToggled', 'true');
+      toggleSidebar(true);
+    } else {
+      localStorage.setItem('sidebarToggled', !sidebarToggled);
+      toggleSidebar(sidebarToggled);
+    }
+  });
 
-// Mini Sidebar
-$('#miniSidebar1').click(() => {
-  sidebarToggled = JSON.parse(localStorage.getItem('sidebarToggled'));
-  if (sidebarToggled === null) {
-    localStorage.setItem('sidebarToggled', 'true');
-    toggleSidebar(true);
-  } else {
-    localStorage.setItem('sidebarToggled', !sidebarToggled);
-    toggleSidebar(sidebarToggled);
-  }
-});
+}
 
 /*$('#miniSidebar1').click(function () {
   sidebarToggled = JSON.parse(localStorage.getItem('sidebarToggled'));
@@ -139,6 +139,25 @@ function toggleSidebar(toggled) {
   }
 }
 
+/*
+  CLI MOTD.
+ */
+let cliMotdValue = JSON.parse(localStorage.getItem('cliMotd'));
+if (cliMotdValue === true) {
+  $("#cliMotd").prop('checked', true);
+}
+
+if (supports_local_storage() === true) {
+  $("#cliMotd").change(function() {
+    cliMotdValue = JSON.parse(localStorage.getItem("cliMotd"));
+    if (cliMotdValue === null) {
+      localStorage.setItem("cliMotd", "true");
+    } else {
+      localStorage.setItem("cliMotd", !cliMotdValue);
+    }
+  });
+}
+
 $(function () {
   //Tooltip
   $('[data-toggle="tooltip"]').tooltip({
@@ -204,4 +223,19 @@ let jobColDef = [
   }
 ];
 
+/*
+  Keyboard shortcuts.
+  Listen for "/", trigger showSearchBar if not already on input field.
+ */
+document.onkeyup = function(e) {
+  e = e || window.event;
+  let element;
+  if (e.target) element = e.target;
+  else if (e.srcElement) element = e.srcElement;
+  if (element.nodeType == 3) element = element.parentNode;
 
+  if (element.tagName == "INPUT" || element.tagName == "TEXTAREA") return;
+  if (e.which === 191) {
+    $.AdminBSB.search.showSearchBar();
+  }
+};

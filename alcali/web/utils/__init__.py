@@ -3,7 +3,6 @@ from collections import Counter
 # from difflib import SequenceMatcher
 from datetime import timedelta
 
-from django.core.exceptions import PermissionDenied
 from django.utils import timezone
 from django.db.models import Count, Q
 
@@ -142,23 +141,3 @@ def render_conformity(target=None):
         ret.append(dict(Counter(field_ret)))
 
     return conformity_names, ret, details
-
-
-# def check_permission(function):
-#     """
-#     Check if user has permission, from Salt-api login return.
-#
-#     :param function:
-#     :return:
-#     """
-#
-#     def _function(request, *args, **kwargs):
-#         if hasattr(request.user.user_settings, function.__name__):
-#             perm = getattr(request.user.user_settings, function.__name__)()
-#             if not perm:
-#                 raise PermissionDenied
-#         else:
-#             raise PermissionDenied
-#         return function(request, *args, **kwargs)
-#
-#     return _function

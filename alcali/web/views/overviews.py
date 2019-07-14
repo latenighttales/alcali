@@ -111,9 +111,6 @@ def jobs(request):
         # Datatable return.
         ret = {"data": []}
         for job in filtered_jobs:
-            arguments = ""
-            if "fun_args" in job.loaded_ret() and job.loaded_ret()["fun_args"]:
-                arguments = [str(i) for i in job.loaded_ret()["fun_args"]]
             # Filter user if requested.
             if user:
                 if job.user() not in user:
@@ -124,7 +121,7 @@ def jobs(request):
                     job.jid,
                     job.id,
                     job.fun,
-                    arguments,
+                    job.arguments(),
                     job.user(),
                     job.success_bool(),
                     job.alter_time,

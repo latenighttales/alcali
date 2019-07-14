@@ -1,13 +1,25 @@
+from django.contrib.auth.models import User
 from django.urls import reverse
 import pytest
 
 from alcali.web.models.alcali import MinionsCustomFields, Notifications
-from ..web.forms import AlcaliUserForm
+from ..web.forms import AlcaliUserForm, AlcaliUserChangeForm
 
 
 def test_event_stream(admin_client):
     response = admin_client.get(reverse("event_stream"))
     assert response.status_code == 200
+
+
+def test_search(admin_client, minion_master, dummy_state):
+    response = admin_client.get(reverse("search") + "?q=master")
+    assert response.status_code == 200
+    assert response.context["minions"]
+    response = admin_client.get(reverse("search") + "?q=pass_salt")
+    assert response.status_code == 200
+    assert response.context["jobs"]
+    response = admin_client.get(reverse("search"))
+    assert response.status_code == 302
 
 
 def test_schedule(admin_client):
@@ -101,10 +113,21 @@ def test_conformity_add(admin_client, minion_master):
         {"name": "os", "function": "grains.item os", "action": "create_conformity"},
     )
     assert response.status_code == 200
-    # assert master.custom_conformity("grains.item", "os")
-    # response = admin_client.get(reverse("index"))
-    # assert "OS" in response.context["conformity_name"]
-    # assert response.context["conformity"][1]["Debian"] == 1
+    assert response.json()["result"] == "updated"
+
+
+def test_conformity_delete(admin_client):
+    response = admin_client.post(
+        reverse("settings"),
+        {"name": "foo", "function": "bar", "action": "create_conformity"},
+    )
+    assert response.status_code == 200
+    assert response.json()["result"] == "updated"
+    response = admin_client.post(
+        reverse("settings"), {"action": "delete_conformity", "target": "foo"}
+    )
+    assert response.status_code == 200
+    assert "result" in response.json()
 
 
 def test_settings(admin_client):
@@ -163,6 +186,75 @@ def test_users_list(admin_client):
     assert "admin" in response.json()["data"][0]
 
 
+def test_users_renew(admin_client, admin_user):
+    current_token = admin_user.user_settings.token
+    response = admin_client.post(reverse("users"), {"action": "renew", "user": "admin"})
+    assert response.status_code == 200
+    assert response.json()["result"] == "success"
+    assert current_token != User.objects.get(username="admin").user_settings.token
+
+
+def test_users_revoke(admin_client, admin_user):
+    response = admin_client.post(
+        reverse("users"), {"action": "revoke", "user": "admin"}
+    )
+    assert response.status_code == 200
+    assert response.json()["result"] == "success"
+    assert User.objects.get(username="admin").user_settings.token == "REVOKED"
+    admin_client.post(reverse("users"), {"action": "renew", "user": "admin"})
+
+
+def test_users_delete(admin_client, dummy_user):
+    response = admin_client.post(
+        reverse("users"), {"action": "delete", "user": "dummy_user"}
+    )
+    assert response.status_code == 200
+    assert response.json()["result"] == "success"
+    with pytest.raises(User.DoesNotExist):
+        User.objects.get(username="dummy_user")
+
+
+def test_users_edit(admin_client, dummy_user):
+    response = admin_client.post(
+        reverse("users"), {"action": "edit", "user": "dummy_user"}
+    )
+    assert response.status_code == 200
+    assert response.context["form"]
+
+
+def test_users_create(admin_client):
+    response = admin_client.post(
+        reverse("users"),
+        {
+            "username": "foobar",
+            "first_name": "bar",
+            "last_name": "baz",
+            "email": "foo@example.com",
+        },
+    )
+    assert response.status_code == 200
+
+
+def test_users_edit_form(admin_client, admin_user):
+    response = admin_client.get(reverse("edit_user", args=["admin"]))
+    assert response.status_code == 200
+    assert response.context["form"]
+
+
+def test_users_edit_post(admin_client, dummy_user):
+    response = admin_client.post(
+        reverse("edit_user", args=["dummy_user"]),
+        {
+            "username": "dummy_user",
+            "first_name": "dummy",
+            "last_name": "user",
+            "email": "dummy_user1@example.com",
+        },
+    )
+    assert response.status_code == 200
+    assert response.json()["result"] == "success"
+
+
 def test_notifications(admin_client, admin_user, minion_master):
     response = admin_client.post(
         reverse("run"),
@@ -213,6 +305,12 @@ def test_notifications_delete_all(admin_client, notification):
     assert Notifications.objects.count() == 0
 
 
+def test_404(admin_client):
+    response = admin_client.get("/foo")
+    assert response.status_code == 404
+    assert response.context["exception"]
+
+
 @pytest.mark.django_db
 def test_users_form_create():
     form_data = {
@@ -224,4 +322,16 @@ def test_users_form_create():
         "password2": "superstrongpassword",
     }
     form = AlcaliUserForm(data=form_data)
+    assert form.is_valid()
+
+
+@pytest.mark.django_db
+def test_users_form_update():
+    form_data = {
+        "username": "foobar",
+        "first_name": "bar",
+        "last_name": "baz",
+        "email": "foo@example.com",
+    }
+    form = AlcaliUserChangeForm(data=form_data)
     assert form.is_valid()

@@ -1,9 +1,11 @@
 from ansi2html import Ansi2HTMLConverter
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.http import JsonResponse, StreamingHttpResponse  # , HttpResponse
-from django.shortcuts import render  # , get_object_or_404
+from django.db.models import Q
+from django.http import JsonResponse, StreamingHttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 
+from alcali.web.models.salt import SaltReturns
 from alcali.web.utils import render_conformity
 from alcali.web.utils.output import highstate_output
 
@@ -14,7 +16,7 @@ from ..backend.netapi import (
     init_db,
     create_schedules,
 )
-from ..forms import AlcaliUserForm
+from ..forms import AlcaliUserForm, AlcaliUserChangeForm
 from ..models.alcali import (
     Schedule,
     UserSettings,
@@ -218,16 +220,45 @@ def event_stream(request):
 @login_required
 def search(request):
 
-    # TODO: search.
     if request.GET.get("q"):
         query = request.GET.get("q")
+        # First try to match minions.
+        minion_results = Minions.objects.filter(minion_id__icontains=query)
+        return_results = SaltReturns.objects.filter(
+            Q(jid__icontains=query) | Q(fun__icontains=query)
+        )
+        if minion_results or return_results:
+            return render(
+                request,
+                "search.html",
+                {"minions": minion_results, "jobs": return_results, "query": query},
+            )
+
+    # Return to referer
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
-@user_passes_test(lambda u: u.is_superuser)
 def users(request):
-
     form = AlcaliUserForm()
     if request.method == "POST":
+        if request.POST.get("action") == "renew":
+            user = User.objects.get(username=request.POST.get("user"))
+            user.user_settings.generate_token()
+            return JsonResponse({"result": "success"})
+        if request.POST.get("action") == "revoke":
+            user = User.objects.get(username=request.POST.get("user"))
+            user.user_settings.token = "REVOKED"
+            user.user_settings.save()
+            print(user.user_settings.token)
+            return JsonResponse({"result": "success"})
+        if request.POST.get("action") == "delete":
+            user = User.objects.get(username=request.POST.get("user"))
+            user.delete()
+            return JsonResponse({"result": "success"})
+        if request.POST.get("action") == "edit":
+            user = User.objects.get(username=request.POST.get("user"))
+            form = AlcaliUserChangeForm(instance=user)
+            return render(request, "template_users.html", {"form": form})
         form = AlcaliUserForm(request.POST)
         if form.is_valid():
             form.save()
@@ -252,21 +283,16 @@ def users(request):
     return render(request, "users.html", {"form": form})
 
 
-# @user_passes_test(lambda u: u.is_superuser)
-# def edit_users(request, username):
-#
-#     user_to_edit = get_object_or_404(User, username=username)
-#     if request.POST.get("action") == "edit":
-#         return render(
-#             request,
-#             "template_users.html",
-#             {"form": AlcaliUserChangeForm(instance=user_to_edit)},
-#         )
-#     if request.method == "POST":
-#         form = AlcaliUserChangeForm(request.POST, instance=user_to_edit)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponse("all good")
+def edit_user(request, username):
+    user_to_edit = get_object_or_404(User, username=username)
+    if request.method == "POST":
+        form = AlcaliUserChangeForm(request.POST, instance=user_to_edit)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({"result": "success"})
+
+    form = AlcaliUserChangeForm(instance=user_to_edit)
+    return render(request, "template_users.html", {"form": form})
 
 
 @user_passes_test(lambda u: u.is_superuser)
