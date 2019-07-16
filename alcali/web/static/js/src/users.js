@@ -54,7 +54,7 @@ function createUserTable() {
             name: "Actions",
             render: function(data, type, row, meta) {
               if (type === "display") {
-                data = '<button type="button" class="btn btn-primary waves-effect edit-user" value="' + row[0] + '" id="' + row[0] +'edit">EDIT</button>\n';
+                data = '<button type="button" class="btn btn-primary waves-effect edit-user" value="' + row[7] + '" id="' + row[0] +'edit">EDIT</button>\n';
                 if (row[0] === currentUser) {
                   data += '<button type="button" class="btn btn-danger waves-effect" disabled>DELETE</button>\n';
                 } else {
@@ -70,7 +70,6 @@ function createUserTable() {
     },
     complete: function() {
       addEditBtn();
-
     }
   });
 }
@@ -103,10 +102,10 @@ function addEditBtn() {
           let userEditIcon = document.getElementById('userEditIcon');
           userEditIcon.innerText = 'mode_edit';
 
-          let formSubmit = document.getElementById('formSubmit');
-          formSubmit.addEventListener('click', function(e) {
+          let formSubmit = document.getElementById('user-form');
+          formSubmit.addEventListener("submit", function(e) {
             e.preventDefault();
-            let formData = $('#user-form').serializeArray();
+            let formData = $("#user-form").serializeArray();
             $.ajax({
               type: "POST",
               url: "/users/" + userBtnValue,
@@ -121,6 +120,7 @@ function addEditBtn() {
                 }
               }
             });
+            return false;
           });
           // Add discard button.
           let userFormFooter = document.getElementById('userFormFooter');

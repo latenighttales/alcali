@@ -236,14 +236,14 @@ def test_users_create(admin_client):
 
 
 def test_users_edit_form(admin_client, admin_user):
-    response = admin_client.get(reverse("edit_user", args=["admin"]))
+    response = admin_client.get(reverse("edit_user", args=[admin_user.id]))
     assert response.status_code == 200
     assert response.context["form"]
 
 
 def test_users_edit_post(admin_client, dummy_user):
     response = admin_client.post(
-        reverse("edit_user", args=["dummy_user"]),
+        reverse("edit_user", args=[dummy_user.id]),
         {
             "username": "dummy_user",
             "first_name": "dummy",
