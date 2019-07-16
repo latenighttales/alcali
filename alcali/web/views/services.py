@@ -275,7 +275,7 @@ def users(request):
                     user.user_settings.token,
                     user.user_settings.salt_permissions,
                     user.last_login,
-                    "",
+                    user.pk,
                 ]
             )
         return JsonResponse(ret, safe=False)
@@ -283,8 +283,8 @@ def users(request):
     return render(request, "users.html", {"form": form})
 
 
-def edit_user(request, username):
-    user_to_edit = get_object_or_404(User, username=username)
+def edit_user(request, pk):
+    user_to_edit = get_object_or_404(User, id=pk)
     if request.method == "POST":
         form = AlcaliUserChangeForm(request.POST, instance=user_to_edit)
         if form.is_valid():
