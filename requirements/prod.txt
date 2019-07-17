@@ -1,6 +1,6 @@
 ansi2html==1.5.2
 Django==2.2.2
-django-currentuser==0.4.1
+django-currentuser==0.4.2
 gunicorn==19.9.0
 mysqlclient==1.4.2.post1
 psycopg2==2.8.3
