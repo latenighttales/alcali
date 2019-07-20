@@ -49,7 +49,7 @@ class RawCommand:
             low["batch"] = None
             low["arg"] = args
 
-        elif self.client.startswith("runner"):
+        elif self.client.startswith("runner") or self.client.startswith("wheel"):
             low["fun"] = args.pop(0)
             for arg in args:
                 if "=" in arg:
@@ -61,17 +61,6 @@ class RawCommand:
                 else:
                     low.setdefault("arg", []).append(arg)
 
-        elif self.client.startswith("wheel"):
-            low["fun"] = args.pop(0)
-            for arg in args:
-                if "=" in arg:
-                    key, value = arg.split("=", 1)
-                    try:
-                        low[key] = json.loads(value)
-                    except JSONDecodeError:
-                        low[key] = value
-                else:
-                    low.setdefault("arg", []).append(arg)
         else:
             # This should never happen
             return "Client not implemented: {0}".format(self.client)

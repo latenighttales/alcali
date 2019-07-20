@@ -6,11 +6,12 @@ def notifications(request):
         notifs_list = []
         notifs = Notifications.objects.all()
         for notif in notifs:
-            notif_data = {
-                "notif_attr": notif.notif_attr(),
-                "id": notif.id,
-                "datetime": notif.datetime(),
-            }
-            notifs_list.append(notif_data)
+            notifs_list.append(
+                {
+                    "notif_attr": notif.notif_attr(),
+                    "id": notif.id,
+                    "datetime": notif.datetime(),
+                }
+            )
         return {"notifs_list": notifs_list}
     return {}

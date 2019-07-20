@@ -35,9 +35,7 @@ def schedule(request):
     # Highstate conformity.
     if request.POST.get("cron"):
         cron = request.POST.get("cron")
-        target = request.POST.get("target")
-        if not target:
-            target = "*"
+        target = request.POST.get("target", "*")
         ret = create_schedules(
             target,
             function="state.apply",
@@ -171,24 +169,18 @@ def conformity_detail(request, minion_id):
         last_highstate = last_highstate.loaded_ret()["return"]
         for state in last_highstate:
             state_name = state.split("_|-")[1]
+            formatted = highstate_output.output(
+                {minion_id: {state: last_highstate[state]}}, summary=False
+            )
             if last_highstate[state]["result"] is True:
-                formatted = highstate_output.output(
-                    {minion_id: {state: last_highstate[state]}}, summary=False
-                )
                 succeeded[state_name] = conv.convert(
                     formatted, ensure_trailing_newline=True
                 )
             elif last_highstate[state]["result"] is None:
-                formatted = highstate_output.output(
-                    {minion_id: {state: last_highstate[state]}}, summary=False
-                )
                 unchanged[state_name] = conv.convert(
                     formatted, ensure_trailing_newline=True
                 )
             else:
-                formatted = highstate_output.output(
-                    {minion_id: {state: last_highstate[state]}}, summary=False
-                )
                 failed[state_name] = conv.convert(
                     formatted, ensure_trailing_newline=True
                 )
@@ -343,10 +335,7 @@ def settings(request):
     if request.POST.get("action") == "notifications":
         user_notifs = {}
         for status in notifs_status:
-            if status.split("_")[1] in request.POST:
-                user_notifs[status] = True
-            else:
-                user_notifs[status] = False
+            user_notifs[status] = status.split("_")[1] in request.POST
 
         user = UserSettings.objects.get(user=user)
         for k, v in user_notifs.items():

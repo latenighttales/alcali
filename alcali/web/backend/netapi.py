@@ -41,16 +41,14 @@ def get_keys(refresh=False):
         }
 
         with api_connect() as api:
-            api_ret = api.wheel("key.list_all")
-            api_ret = api_ret["return"][0]["data"]["return"]
+            api_ret = api.wheel("key.list_all")["return"][0]["data"]["return"]
 
             Keys.objects.all().delete()
             for key, value in minion_status.items():
                 for minion in api_ret[key]:
                     finger_ret = api.wheel(
                         "key.finger", match=minion, hash_type="sha256"
-                    )
-                    finger_ret = finger_ret["return"][0]["data"]["return"][key]
+                    )["return"][0]["data"]["return"][key]
                     obj, created = Keys.objects.update_or_create(
                         minion_id=minion,
                         defaults={"status": value, "pub": finger_ret[minion]},
@@ -81,14 +79,11 @@ def refresh_minion(minion_id):
                 "name", "function"
             ).distinct()
             for field in minion_fields:
-                name = field["name"]
-                func = field["function"]
-                comm_inst = RawCommand("salt {} {}".format(minion_id, func))
-                parsed = comm_inst.parse()
-                custom_field_return = run_raw(parsed)
+                command = RawCommand("salt {} {}".format(minion_id, field["function"]))
+                custom_field_return = run_raw(command.parse())
                 MinionsCustomFields.objects.update_or_create(
-                    name=name,
-                    function=func,
+                    name=field["name"],
+                    function=field["function"],
                     minion=Minions.objects.get(minion_id=minion_id),
                     defaults={"value": json.dumps(custom_field_return[minion_id])},
                 )
@@ -97,8 +92,7 @@ def refresh_minion(minion_id):
 def run_job(tgt, fun, args, kwargs=None):
     with api_connect() as api:
         api_ret = api.local(tgt, fun, arg=args, kwarg=kwargs)
-    api_ret = api_ret["return"][0]
-    return api_ret
+    return api_ret["return"][0]
 
 
 def run_raw(load):
