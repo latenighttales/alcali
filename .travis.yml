@@ -9,7 +9,7 @@ env:
 before_install:
   # Stop the postgres instance travis sets up automatically
   - sudo /etc/init.d/postgresql stop
-  - sudo service mysql stop
+  - sudo /etc/init.d/mysql stop
 
   # Update Docker compose
   - sudo rm /usr/local/bin/docker-compose
@@ -26,7 +26,6 @@ before_install:
 install:
   - pip install black
   - docker-compose -f docker-compose-ci.yml up --build -d
-  - docker-compose up --build -d
 
 script:
   - bash docker/utils/ci_script.sh

@@ -23,7 +23,9 @@ def test_run_failed_tooltip(admin_client):
         reverse("run"), {"tooltip": "foobar", "client": "local"}
     )
     assert response.status_code == 200
-    assert response.json() == {}
+    assert response.json() == {
+        "desc": "Please run Parse Module setting to have module documentation."
+    }
 
 
 def test_run_raw(admin_client):

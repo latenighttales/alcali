@@ -27,9 +27,9 @@ def index(request):
 
     # Update graph data with filters.
     if request.POST.get("period"):
-        period_req = request.POST["period"]
-        filter_req = request.POST.get("filter")
-        days, count, error_count = graph_data(int(period_req), fun=filter_req)
+        days, count, error_count = graph_data(
+            int(request.POST.get("period")), fun=request.POST.get("filter")
+        )
         return JsonResponse({"labels": days, "series": [count, error_count]})
 
     # Status widget.
@@ -229,25 +229,21 @@ def minion_detail(request, minion_id):
     js_custom_fields = [i.name.replace(" ", "") for i in custom_fields]
 
     grain = minion.loaded_grain()
-    last_job = minion.last_job()
-    last_highstate = minion.last_highstate()
-    minion_conformity = minion.conformity()
     grain_yaml = yaml.dump(grain, default_flow_style=False)
-    pillar_yaml = yaml.dump(json.loads(minion.pillar), default_flow_style=False)
 
     return render(
         request,
         "minion_detail.html",
         {
             "minion_id": minion_id,
-            "last_job": last_job,
-            "last_highstate": last_highstate,
-            "conformity": minion_conformity,
+            "last_job": minion.last_job(),
+            "last_highstate": minion.last_highstate(),
+            "conformity": minion.conformity(),
             "custom_fields": custom_fields,
             "custom_fields_list": js_custom_fields,
             "grain": grain,
             "grain_yaml": grain_yaml,
-            "pillar": pillar_yaml,
+            "pillar": yaml.dump(json.loads(minion.pillar), default_flow_style=False),
         },
     )
 

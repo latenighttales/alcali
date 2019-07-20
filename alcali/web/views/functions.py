@@ -44,18 +44,17 @@ def run(request):
 
     # Raw command
     if request.POST.get("command"):
-        command = request.POST.get("command")
-        comm_inst = RawCommand(command)
-        parsed = comm_inst.parse()
-        ret = run_raw(parsed)
+        command = RawCommand(request.POST.get("command"))
+        parsed_command = command.parse()
+        ret = run_raw(parsed_command)
         formatted = "\n"
-        if parsed[0]["fun"] in ["state.apply", "state.highstate"]:
-            for k, v in ret.items():
-                minion_ret = highstate_output.output({k: v})
+        if parsed_command[0]["fun"] in ["state.apply", "state.highstate"]:
+            for state, out in ret.items():
+                minion_ret = highstate_output.output({state: out})
                 formatted += minion_ret + "\n\n"
         else:
-            for k, v in ret.items():
-                minion_ret = nested_output.output({k: v})
+            for state, out in ret.items():
+                minion_ret = nested_output.output({state: out})
                 formatted += minion_ret + "\n\n"
         conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
         html = conv.convert(formatted, ensure_trailing_newline=True)
@@ -63,14 +62,14 @@ def run(request):
 
     # Tooltip function documentation.
     if request.POST.get("tooltip") and request.POST.get("client"):
-        try:
-            desc = Functions.objects.filter(
-                name=request.POST.get("tooltip"), type=request.POST.get("client")
-            ).values_list("description", flat=True)
-            desc = desc[0]
-        except IndexError:
-            return JsonResponse({})
-        return JsonResponse({"desc": desc})
+        desc = Functions.objects.filter(
+            name=request.POST.get("tooltip"), type=request.POST.get("client")
+        ).values_list("description", flat=True)
+        if desc:
+            return JsonResponse({"desc": desc[0]})
+        return JsonResponse(
+            {"desc": "Please run Parse Module setting to have module documentation."}
+        )
 
     if request.POST.get("function_list"):
         client = request.POST.get("client")
@@ -122,12 +121,12 @@ def run(request):
 
         formatted = "\n"
         if fun in ["state.apply", "state.highstate"]:
-            for k, v in ret.items():
-                minion_ret = highstate_output.output({k: v})
+            for state, out in ret.items():
+                minion_ret = highstate_output.output({state: out})
                 formatted += minion_ret + "\n\n"
         else:
-            for k, v in ret.items():
-                minion_ret = nested_output.output({k: v})
+            for state, out in ret.items():
+                minion_ret = nested_output.output({state: out})
                 formatted += minion_ret + "\n\n"
         conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
         html = conv.convert(formatted, ensure_trailing_newline=True)
