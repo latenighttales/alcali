@@ -9,11 +9,12 @@ import 'codemirror/lib/codemirror.css';
 import 'datatables.net-bs/css/dataTables.bootstrap.min.css';
 import 'datatables.net-buttons-bs/css/buttons.bootstrap.min.css';
 import 'flatpickr/dist/flatpickr.min.css';
+import 'material-design-icons/iconfont/material-icons.css';
+import 'animate.css/animate.min.css';
 // Custom Css.
 import '../../css/plugins/dataTables.bootstrap.css';
-import '../../css/plugins/animate.css';
 import '../../css/style.css';
-import '../../css/themes/theme-black.css';
+import '../../css/themes/theme-black.min.css';
 import '../../css/main.css';
 import '../../css/plugins/made-of-code.css';
 
