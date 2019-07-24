@@ -230,6 +230,7 @@ def search(request):
     return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
+@user_passes_test(lambda u: u.is_staff)
 def users(request):
     form = AlcaliUserForm()
     if request.method == "POST":
@@ -267,6 +268,7 @@ def users(request):
                     user.user_settings.token,
                     user.user_settings.salt_permissions,
                     user.last_login,
+                    user.is_staff,
                     user.pk,
                 ]
             )
@@ -275,6 +277,7 @@ def users(request):
     return render(request, "users.html", {"form": form})
 
 
+@user_passes_test(lambda u: u.is_staff)
 def edit_user(request, pk):
     user_to_edit = get_object_or_404(User, id=pk)
     if request.method == "POST":
@@ -287,7 +290,6 @@ def edit_user(request, pk):
     return render(request, "template_users.html", {"form": form})
 
 
-@user_passes_test(lambda u: u.is_superuser)
 def settings(request):
 
     user = User.objects.get(username=request.user)
@@ -300,7 +302,7 @@ def settings(request):
     ]
 
     # Delete minion custom field, delete conformity, or init_db.
-    if request.POST.get("target"):
+    if request.POST.get("target") and user.is_staff:
         target = request.POST.get("target")
         if request.POST.get("action") == "delete_conformity":
             ret = Conformity.objects.filter(name=target).delete()
@@ -314,7 +316,7 @@ def settings(request):
         return JsonResponse({"result": ret})
 
     # Create minion custom field, create conformity.
-    if request.POST.get("name") and request.POST.get("function"):
+    if request.POST.get("name") and request.POST.get("function") and user.is_staff:
         name = request.POST.get("name")
         function = request.POST.get("function")
 

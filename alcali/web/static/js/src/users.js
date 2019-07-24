@@ -11,7 +11,6 @@ function createUserTable() {
       action: "list"
     },
     success: function(result) {
-      //userTable.destroy();
       userTable = $(".js-exportable").DataTable({
         "order": [[0, "desc"]],
         dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
@@ -51,10 +50,23 @@ function createUserTable() {
             }
           },
           {
+            name: "Is Staff",
+            render: function(data, type, row, meta) {
+              if (type === "display") {
+                if (data === true) {
+                  data = '<span class="label bg-green">STAFF</span>';
+                } else {
+                  data = '<span class="label label-danger">NOT STAFF</span>';
+                }
+              }
+              return data;
+            },
+          },
+          {
             name: "Actions",
             render: function(data, type, row, meta) {
               if (type === "display") {
-                data = '<button type="button" class="btn btn-primary waves-effect edit-user" value="' + row[7] + '" id="' + row[0] +'edit">EDIT</button>\n';
+                data = '<button type="button" class="btn btn-primary waves-effect edit-user" value="' + row[8] + '" id="' + row[0] +'edit">EDIT</button>\n';
                 if (row[0] === currentUser) {
                   data += '<button type="button" class="btn btn-danger waves-effect" disabled>DELETE</button>\n';
                 } else {

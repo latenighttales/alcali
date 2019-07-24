@@ -1,4 +1,7 @@
-// FAB.
+/*
+  FAB.
+  There can be 4 fab mini buttons by pages.
+ */
 let fab1 = document.getElementById('fab1');
 let fabIcon = document.getElementById('fabIcon');
 let innerFabs = document.getElementsByClassName('inner-fabs')[0];
@@ -48,6 +51,8 @@ if (supports_local_storage() === true) {
     $('.sidebar .menu .list .header').hide();
     $('.sidebar .user-info .info-container .name').hide();
     $('.sidebar .user-info .info-container .email').hide();
+    $('#miniSidebar1 > div > div > div > span > b').hide();
+    $('#miniSidebar1 > div > div > div > i').toggleClass('down');
     $('.sidebar .user-info .info-container .user-helper-dropdown').css({position: 'inherit'});
     leftSideBar.style.width = 55 + "px";
     contentSection.style.marginLeft = (55 + 15) + "px";
@@ -66,76 +71,43 @@ if (supports_local_storage() === true) {
 
 }
 
-/*$('#miniSidebar1').click(function () {
-  sidebarToggled = JSON.parse(localStorage.getItem('sidebarToggled'));
-  if (sidebarToggled === null) {
-    $('.sidebar-toggle').toggle(300);
-  } else {
-    $('#leftsidebar').animate({
-      width: 'toggle'
-    }, 350);
-  }
-});*/
-
 
 function toggleSidebar(toggled) {
-  let leftSideBar = document.getElementById('leftsidebar');
-  let contentSection = document.getElementsByClassName('content')[0];
   if (toggled === false) {
-    let pos = 300;
-    let id = setInterval(frameDown, 0);
-
-    function frameDown() {
-      if (pos === 55) {
-        // Add tooltip to mini sidebar.
-        $('.sidebar .menu .list a span').each((idx, val) => {
-          $(val).siblings().attr('data-toggle', 'tooltip');
-          $(val).siblings().attr('data-placement', 'right');
-          $(val).siblings().attr('title', $(val).text());
-          $(val).hide();
-        });
-        $('[data-toggle="tooltip"]').tooltip({
-          container: 'body'
-        });
-        //$('.sidebar .menu .list a span').hide();
-        $('.sidebar .menu .list .header').hide();
-        $('.sidebar .user-info .info-container .name').hide();
-        $('.sidebar .user-info .info-container .email').hide();
-        $('#miniSidebar1 > div > div > div > span > b').hide();
-        $('#miniSidebar1 > div > div > div > i').toggleClass('down');
-        $('.sidebar .user-info .info-container .user-helper-dropdown').css({position: 'inherit'});
-        clearInterval(id);
-      } else {
-        pos--;
-        leftSideBar.style.width = pos + "px";
-        contentSection.style.marginLeft = (pos + 15) + "px";
-      }
-    }
+    // Add tooltip to mini sidebar.
+    $('#leftsidebar').animate({width: '55px'}, 'fast', 'linear');
+    $('#sectionContent').animate({marginLeft: '70px'}, 'fast', 'linear');
+    $('.sidebar .menu .list a span').each((idx, val) => {
+      $(val).siblings().attr('data-toggle', 'tooltip');
+      $(val).siblings().attr('data-placement', 'right');
+      $(val).siblings().attr('title', $(val).text());
+      $(val).hide();
+    });
+    $('[data-toggle="tooltip"]').tooltip({
+      container: 'body'
+    });
+    $('.sidebar .menu .list .header').hide();
+    $('.sidebar .user-info .info-container .name').hide();
+    $('.sidebar .user-info .info-container .email').hide();
+    $('#miniSidebar1 > div > div > div > span > b').hide();
+    $('#miniSidebar1 > div > div > div > i').toggleClass('down');
+    $('.sidebar .user-info .info-container .user-helper-dropdown').css({position: 'inherit'});
   } else {
-    let pos = 55;
-    let id = setInterval(frameUp, 0);
-
-    function frameUp() {
-      if (pos === 300) {
-        $('.sidebar .menu .list a span').each((idx, val) => {
-          $(val).siblings().removeAttr('data-toggle');
-          $(val).siblings().removeAttr('data-placement');
-          $(val).siblings().removeAttr('title');
-          $(val).show();
-        });
-        $('.sidebar .menu .list .header').show();
-        $('.sidebar .user-info .info-container .name').show();
-        $('.sidebar .user-info .info-container .email').show();
-        $('#miniSidebar1 > div > div > div > span > b').show();
-        $('#miniSidebar1 > div > div > div > i').toggleClass('down');
-        $('.sidebar .user-info .info-container .user-helper-dropdown').css({position: 'absolute'});
-        clearInterval(id);
-      } else {
-        pos++;
-        leftSideBar.style.width = pos + "px";
-        contentSection.style.marginLeft = (pos + 15) + "px";
-      }
-    }
+    $('#leftsidebar').animate({width: '300px'}, 'fast', 'linear');
+    $('#sectionContent').animate({marginLeft: '315px'}, 'fast', 'linear');
+    $('.sidebar .menu .list a span').each((idx, val) => {
+      $(val).siblings().removeAttr('data-toggle');
+      $(val).siblings().removeAttr('data-placement');
+      $(val).siblings().removeAttr('data-original-title');
+      $(val).siblings().removeAttr('title');
+      $(val).show();
+    });
+    $('.sidebar .menu .list .header').show();
+    $('.sidebar .user-info .info-container .name').show();
+    $('.sidebar .user-info .info-container .email').show();
+    $('#miniSidebar1 > div > div > div > span > b').show();
+    $('#miniSidebar1 > div > div > div > i').toggleClass('down');
+    $('.sidebar .user-info .info-container .user-helper-dropdown').css({position: 'absolute'});
   }
 }
 

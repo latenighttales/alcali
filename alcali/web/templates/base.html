@@ -97,7 +97,7 @@
                           </p>
                         </div>
                       </a>
-                      <span class="btn badge" onclick="notifDelete({{ notif.id }})">x</span>
+                      <span class="btn badge" onclick="notifDelete({{ notif.id }})" style="position: absolute;right: 0;">x</span>
                     </li>
                   {% endfor %}
                 {% endif %}
@@ -198,13 +198,13 @@
               <span>Users</span>
             </a>
           </li>
+        {% endif %}
           <li  {% if request.path == '/settings' %} class="active"{% endif %}>
             <a href="{% url 'settings' %}">
               <i class="material-icons">settings</i>
               <span>Settings</span>
             </a>
           </li>
-        {% endif %}
       </ul>
     </div>
     <!-- #Menu -->
@@ -279,7 +279,7 @@
   <!-- #END# Right Sidebar -->
 </section>
 
-<section class="content">
+<section class="content" id="sectionContent">
   <div class="container-fluid">
     {% block content %}
     {% endblock %}
