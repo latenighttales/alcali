@@ -6,6 +6,7 @@
     <h2>SETTINGS</h2>
   </div>
   <div class="row clearfix">
+  {% if request.user.is_staff %}
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="header">
@@ -192,6 +193,7 @@
         </div>
       </div>
     </div>
+  {% endif %}
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="header">

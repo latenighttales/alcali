@@ -24,6 +24,7 @@ class AlcaliUserForm(UserCreationForm):
             "email",
             "password1",
             "password2",
+            "is_staff",
         )
 
 
@@ -35,4 +36,4 @@ class AlcaliUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ("username", "first_name", "last_name", "email")
+        fields = ("username", "first_name", "last_name", "email", "is_staff")
