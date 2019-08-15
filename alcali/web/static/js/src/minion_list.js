@@ -57,7 +57,6 @@ let minionColDef = [
 let minionTable;
 function createMinionTable() {
   minionTable = $('.js-exportable').DataTable({
-    "order": [[0, "desc"]],
     dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
       "<'row'<'col-sm-12'tr>>" +
       "<'row'<'col-sm-2'i><'col-sm-3 pull-left'B><'col-sm-7'p>>",
