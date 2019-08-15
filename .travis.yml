@@ -25,7 +25,7 @@ before_install:
 
 install:
   - pip install black
-  - docker-compose up --build -d
+  - docker-compose -f docker-compose-ci.yml up --build -d
 
 script:
   - bash docker/utils/ci_script.sh
