@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker-compose exec -u alcali web pip install --quiet --user -r requirements/test.txt
+docker-compose exec -u alcali web pip install --quiet --user -r backend/requirements/test.txt
 while ! [[ $(docker-compose logs | grep "mysqld: ready for connections.") ]];
 do
     echo "Waiting Database..."

@@ -1,0 +1,80 @@
+<template>
+  <v-app id="inspire">
+    <v-content>
+      <v-container
+          class="fill-height"
+          fluid
+      >
+        <v-row
+            align="center"
+            justify="center"
+        >
+          <v-col
+              cols="12"
+              sm="8"
+              md="4"
+          >
+            <v-card class="elevation-12">
+              <v-toolbar
+                  color="black"
+                  dark
+                  flat
+              >
+                <v-toolbar-title>ALCALI</v-toolbar-title>
+                <v-spacer></v-spacer>
+              </v-toolbar>
+              <v-card-text>
+                <v-form>
+                  <v-text-field
+                      label="Login"
+                      name="login"
+                      v-model="username"
+                      prepend-icon="person"
+                      type="text"
+                  ></v-text-field>
+
+                  <v-text-field
+                      label="Password"
+                      v-model="password"
+                      name="password"
+                      prepend-icon="lock"
+                      type="password"
+                  ></v-text-field>
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="purple" dark @click.prevent="authenticate">Login</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
+</template>
+<script>
+  export default {
+    name: "Login",
+    data: () => ({
+      username: null,
+      password: null,
+    }),
+    methods: {
+      authenticate() {
+        let username = this.username
+        let password = this.password
+
+        this.$store.dispatch('login', {username, password})
+          .then(() => this.$router.push('/'))
+          .catch(err => console.log(err))
+      }
+    }
+  }
+</script>
+<style scoped>
+  html {
+    overflow-y: auto !important
+  }
+
+</style>
