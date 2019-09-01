@@ -32,71 +32,74 @@ function CronUI(container, opts) {
 
 
 CronUI.prototype.render = function() {
-  var el = this.el
+  let suffix
+  let j
+  let i
+  let el = this.el
 
   // -------  build some static data -------
 
   // options for minutes in an hour
-  var str_opt_mih = ""
-  for (var i = 0; i < 60; i++) {
-    var j = (i < 10) ? "0" : ""
+  let str_opt_mih = ""
+  for (i = 0; i < 60; i++) {
+    j = (i < 10) ? "0" : ""
     str_opt_mih += "<option value='" + i + "'>" + j + i + "</option>\n"
   }
 
   // options for hours in a day
-  var str_opt_hid = ""
-  for (var i = 0; i < 24; i++) {
-    var j = (i < 10) ? "0" : ""
+  let str_opt_hid = ""
+  for (i = 0; i < 24; i++) {
+    j = (i < 10) ? "0" : ""
     str_opt_hid += "<option value='" + i + "'>" + j + i + "</option>\n"
   }
 
   // options for days of month
-  var str_opt_dom = ""
-  for (var i = 1; i < 32; i++) {
+  let str_opt_dom = ""
+  for (i = 1; i < 32; i++) {
     if (i == 1 || i == 21 || i == 31) {
-      var suffix = "st"
+      suffix = "st"
     } else if (i == 2 || i == 22) {
-      var suffix = "nd"
+      suffix = "nd"
     } else if (i == 3 || i == 23) {
-      var suffix = "rd"
+      suffix = "rd"
     } else {
-      var suffix = "th"
+      suffix = "th"
     }
     str_opt_dom += "<option value='" + i + "'>" + i + suffix + "</option>\n"
   }
 
   // options for months
-  var str_opt_month = ""
-  var months = ["January", "February", "March", "April",
+  let str_opt_month = ""
+  const months = ["January", "February", "March", "April",
     "May", "June", "July", "August",
     "September", "October", "November", "December"]
-  for (var i = 0; i < months.length; i++) {
+  for (i = 0; i < months.length; i++) {
     str_opt_month += "<option value='" + (i + 1) + "'>" + months[i] + "</option>\n"
   }
 
   // options for day of week
-  var str_opt_dow = ""
-  var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+  let str_opt_dow = ""
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
     "Friday", "Saturday"]
-  for (var i = 0; i < days.length; i++) {
+  for (i = 0; i < days.length; i++) {
     str_opt_dow += "<option value='" + i + "'>" + days[i] + "</option>\n"
   }
 
   // options for period
-  var str_opt_period = ""
-  var periods = ["minute", "hour", "day", "week", "month", "year"]
-  for (var i = 0; i < periods.length; i++) {
+  let str_opt_period = ""
+  const periods = ["minute", "hour", "day", "week", "month", "year"]
+  for (i = 0; i < periods.length; i++) {
     str_opt_period += "<option value='" + periods[i] + "'>" + periods[i] + "</option>\n"
   }
 
 
   // ---- define select boxes in the right order -----
-  var blocks = {}
+  let blocks = {}
 
   // Period
   el.insertAdjacentHTML("beforeend",
     "<span class='cron-period'><select>" + str_opt_period + "</select></span>")
-  var periodEl = el.querySelector(".cron-period select")
+  let periodEl = el.querySelector(".cron-period select")
   periodEl.addEventListener("change", this.periodChanged.bind(this))
   periodEl.addEventListener("change", this.changeEvent.bind(this))
 
@@ -132,7 +135,7 @@ CronUI.prototype.render = function() {
   blocks["time"] = el.querySelector(".cron-block-time")
 
   // Atttach the change event to all selectors
-  for (var blockName in blocks) {
+  for (let blockName in blocks) {
     [].forEach.call(blocks[blockName].querySelectorAll("select"), function(selectEl) {
       selectEl.addEventListener("change", this.changeEvent.bind(this))
     }.bind(this))
@@ -143,19 +146,19 @@ CronUI.prototype.render = function() {
 }
 
 CronUI.prototype.periodChanged = function() {
-  var blocks = this.blocks
-  var cronPeriodEl = this.el.querySelector(".cron-period select")
-  var period = cronPeriodEl.options[cronPeriodEl.selectedIndex].value
+  let blocks = this.blocks
+  let cronPeriodEl = this.el.querySelector(".cron-period select")
+  let period = cronPeriodEl.options[cronPeriodEl.selectedIndex].value
 
   // Hide all current blocks
-  for (var blockName in blocks) {
+  for (let blockName in blocks) {
     blocks[blockName].style.display = "none"
   }
 
   // Show only blocks that needs to be shown by the period chosen
   if (CronUI.displayMatrix.hasOwnProperty(period)) {
-    var b = CronUI.displayMatrix[period]
-    for (var i = 0; i < b.length; i++) {
+    let b = CronUI.displayMatrix[period]
+    for (let i = 0; i < b.length; i++) {
       blocks[b[i]].style.display = ""
     }
   }
@@ -173,15 +176,15 @@ CronUI.prototype.changeEvent = function() {
 
 
 CronUI.prototype.getCronString = function() {
-  var min, hour, day, month, dow
+  let min, hour, day, month, dow
   min = hour = day = month = dow = "*"
-  var blocks = this.blocks
+  let blocks = this.blocks
   // Helper to get value from select fields
-  var getSelectValue = function(el) {
+  let getSelectValue = function(el) {
     return el.options[el.selectedIndex].value
   }
 
-  var selectedPeriod = getSelectValue(this.el.querySelector(".cron-period select"))
+  let selectedPeriod = getSelectValue(this.el.querySelector(".cron-period select"))
   switch (selectedPeriod) {
     case "minute":
       break
@@ -222,15 +225,15 @@ CronUI.prototype.getCronString = function() {
 }
 
 CronUI.prototype.setCronString = function(cronString) {
-  var blocks = this.blocks
-  var cronType = CronUI.getCronType(cronString)
+  let blocks = this.blocks
+  let cronType = CronUI.getCronType(cronString)
 
   if (!cronType) {
     return false
   }
 
-  var d = cronString.split(" ")
-  var v = {
+  let d = cronString.split(" ")
+  let v = {
     "mins": d[0],
     "hour": d[1],
     "dom": d[2],
@@ -239,9 +242,9 @@ CronUI.prototype.setCronString = function(cronString) {
   }
 
   // update appropriate select boxes
-  var targets = CronUI.displayMatrix[cronType]
-  for (var i = 0; i < targets.length; i++) {
-    var tgt = targets[i]
+  let targets = CronUI.displayMatrix[cronType]
+  for (let i = 0; i < targets.length; i++) {
+    let tgt = targets[i]
     if (tgt == "time") {
       blocks[tgt].querySelector(".cron-time-hour").value = v["hour"]
 
@@ -284,16 +287,16 @@ CronUI.getCronType = function(cronString) {
   cronString = cronString ? cronString : this.getCronString()
 
   // check format of initial cron value
-  var valid_cron = /^((\d{1,2}|\*)\s){4}(\d{1,2}|\*)$/
+  const valid_cron = /^((\d{1,2}|\*)\s){4}(\d{1,2}|\*)$/
   if (typeof cronString != "string" || !valid_cron.test(cronString)) {
     return undefined
   }
 
   // check actual cron values
-  var d = cronString.split(" ")
+  let d = cronString.split(" ")
   //            mm, hh, DD, MM, DOW
-  var minval = [0, 0, 1, 1, 0]
-  var maxval = [59, 23, 31, 12, 6]
+  let minval = [0, 0, 1, 1, 0]
+  let maxval = [59, 23, 31, 12, 6]
   for (var i = 0; i < d.length; i++) {
     if (d[i] == "*") continue
     var v = parseInt(d[i])
@@ -303,7 +306,7 @@ CronUI.getCronType = function(cronString) {
   }
 
   // determine combination
-  for (var type in CronUI.cronTypes) {
+  for (let type in CronUI.cronTypes) {
     if (CronUI.cronTypes[type].test(cronString)) {
       return type
     }
