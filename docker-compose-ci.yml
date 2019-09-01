@@ -18,7 +18,7 @@ services:
       context: .
       args:
         USER_ID: ${USER_ID:-1000}
-    command: gunicorn alcali.config.wsgi:application -c /opt/alcali/code/docker/gunicorn_config.py
+    command: gunicorn backend.config.wsgi:application -c /opt/alcali/code/docker/gunicorn_config.py
     volumes:
       - .:/opt/alcali/code
     ports:
