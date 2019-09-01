@@ -1,10 +1,10 @@
 [run]
 omit =
-    backend/config/settings.py
-    backend/api/apps.py
-    backend/api/migrations/*
-    backend/tests/*
-    backend/api/backend/pyapi.py
-    backend/config/wsgi.py
-    backend/manage.py
-    backend/api/utils/output/*
+    config/settings.py
+    api/apps.py
+    api/migrations/*
+    tests/*
+    api/pyapi.py
+    config/wsgi.py
+    manage.py
+    api/utils/output/*

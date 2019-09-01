@@ -2,7 +2,7 @@
 import os
 import sys
 
-DJANGO_SETTINGS = os.environ.get("DJANGO_SETTINGS", "backend.config.settings")
+DJANGO_SETTINGS = os.environ.get("DJANGO_SETTINGS", "config.settings")
 
 
 def manage():  # pragma: no cover

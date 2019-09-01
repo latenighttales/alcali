@@ -29,6 +29,7 @@ class Jids(models.Model):
     class Meta:
         managed = False
         db_table = "jids"
+        app_label = "api"
 
 
 class SaltReturns(models.Model):
@@ -70,6 +71,7 @@ class SaltReturns(models.Model):
     class Meta:
         managed = False
         db_table = "salt_returns"
+        app_label = "api"
 
 
 class SaltEvents(models.Model):
@@ -85,6 +87,7 @@ class SaltEvents(models.Model):
     class Meta:
         managed = False
         db_table = "salt_events"
+        app_label = "api"
 
 
 # Alcali custom.
@@ -98,6 +101,7 @@ class Functions(models.Model):
 
     class Meta:
         db_table = "salt_functions"
+        app_label = "api"
 
 
 class Minions(models.Model):
@@ -168,6 +172,7 @@ class Minions(models.Model):
 
     class Meta:
         db_table = "salt_minions"
+        app_label = "api"
 
 
 class Keys(models.Model):
@@ -187,6 +192,7 @@ class Keys(models.Model):
     class Meta:
         # TODO add constraints (only one accepted per minion_id)
         db_table = "salt_keys"
+        app_label = "api"
 
 
 class MinionsCustomFields(models.Model):
@@ -202,6 +208,7 @@ class MinionsCustomFields(models.Model):
 
     class Meta:
         db_table = "minions_custom_fields"
+        app_label = "api"
 
 
 class Schedule(models.Model):
@@ -211,6 +218,9 @@ class Schedule(models.Model):
 
     def loaded_job(self):
         return json.loads(self.job)
+
+    class Meta:
+        app_label = "api"
 
 
 def generate_key():
@@ -240,6 +250,7 @@ class UserSettings(models.Model):
 
     class Meta:
         db_table = "user_settings"
+        app_label = "api"
 
     def save(self, *args, **kwargs):
         if not self.token:
@@ -256,6 +267,7 @@ class Conformity(models.Model):
 
     class Meta:
         db_table = "conformity"
+        app_label = "api"
 
 
 class Notifications(models.Model):
@@ -286,3 +298,4 @@ class Notifications(models.Model):
 
     class Meta:
         db_table = "notifications"
+        app_label = "api"
