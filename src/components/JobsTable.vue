@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row no-gutters>
+    <v-row no-gutters v-if="filter == null">
       <v-col sm="12">
-        <v-card v-if="filter == null">
+        <v-card>
           <v-row>
             <v-col lg="2">
               <v-card-title>Search Jobs</v-card-title>
@@ -59,9 +59,9 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row no-gutters>
       <v-col sm="12">
-        <v-card>
+        <v-card :elevation="filter == null ? 2 : 0">
           <v-card-title>
             Jobs
             <v-spacer></v-spacer>

@@ -17,14 +17,12 @@
           <v-list-item-avatar>
             <v-icon large>person</v-icon>
           </v-list-item-avatar>
-
           <v-list-item-content>
             <v-list-item-title>{{username}}</v-list-item-title>
             <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
-
       <v-divider></v-divider>
       <v-list dense v-for="route in routes" :key="route.name">
         <v-list-item :to="`${route.path}`">
@@ -115,7 +113,6 @@
       <v-btn icon @click="expand_search = !expand_search" class="mr-2">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-
       <v-menu
           bottom
           left
@@ -132,7 +129,7 @@
             <v-icon v-else>notifications</v-icon>
           </v-badge>
         </template>
-        <v-card  max-width="500px" max-height="700px">
+        <v-card max-width="500px" max-height="700px">
           <v-list>
             <v-list-item
                 v-for="(item, i) in messages"
@@ -151,14 +148,12 @@
           </v-list>
         </v-card>
       </v-menu>
-
       <v-menu bottom left offset-y offset-x close-on-click>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon>
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
-
         <v-list>
           <v-list-item
               @click="toggleTheme"
@@ -175,12 +170,12 @@
       </v-menu>
     </v-app-bar>
     <v-content>
-      <v-container
-      >
+      <v-container>
         <v-fade-transition mode="out-in">
-        <router-view></router-view>
-        </v-fade-transition>
 
+          <router-view></router-view>
+
+        </v-fade-transition>
       </v-container>
     </v-content>
   </v-app>
@@ -196,7 +191,7 @@
     },
     data: () => ({
       expand_search: false,
-      searchInput: '',
+      searchInput: "",
       drawer: true,
       mini: true,
       messages: [],
@@ -253,10 +248,9 @@
         })
       },
       searchBar() {
-        this.$http.get("api/search/?q="+this.searchInput).then(response => {
-          console.log(response.data)
-        })
-        //this.$router.push("/search?q="+this.searchInput)
+        if (this.searchInput !== "") {
+          this.$router.push({ name: "search", query: { q: this.searchInput } })
+        }
       },
       getPrefs() {
         this.$http.get("api/userssettings/" + this.$store.getters.user_id + "/").then(response => {

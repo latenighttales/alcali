@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card :elevation="minion == null ? 2 : 0">
       <v-list-item three-line dense>
         <v-list-item-content>
           <v-list-item-title class="headline mb-1">Jobs Stats</v-list-item-title>
