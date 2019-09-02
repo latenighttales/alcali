@@ -1,7 +1,11 @@
 <template>
   <v-container>
-    <ScheduleTable :key="refreshKey"></ScheduleTable>
-    <Fab v-if="fabs" :fabs="fabs" v-on:fab_action="fabAction"></Fab>
+    <v-row>
+      <v-col sm="12">
+        <ScheduleTable :key="refreshKey"></ScheduleTable>
+        <Fab v-if="fabs" :fabs="fabs" v-on:fab_action="fabAction"></Fab>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

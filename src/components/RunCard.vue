@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row no-gutters>
       <v-col sm="12">
         <v-card>
           <v-card-title>Run</v-card-title>
@@ -117,7 +117,7 @@
 
       </v-col>
     </v-row>
-    <v-row no-gutters>
+    <v-row>
       <v-col sm="12">
         <v-card v-if="results">
           <v-card-title>Results</v-card-title>

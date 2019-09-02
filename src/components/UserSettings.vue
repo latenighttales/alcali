@@ -1,31 +1,29 @@
 <template>
-  <v-row>
-    <v-col sm="12">
-      <v-card>
-        <v-card-title>User Settings</v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col sm="6">
-                <span>Jobs Notifications</span>
-                <div v-for="(val, name) in notifs" :key="name">
-                  <v-switch v-model="notifs[name]" :label="name" hide-details></v-switch>
-                </div>
-              </v-col>
-              <v-col sm="6">
-                <span>Max Notifications</span>
-                <v-text-field v-model="max_notifs"></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="updateUserSettings">Submit</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-container>
+    <v-card>
+      <v-card-title>User Settings</v-card-title>
+      <v-card-text>
+        <v-container>
+          <v-row>
+            <v-col sm="6">
+              <span>Jobs Notifications</span>
+              <div v-for="(val, name) in notifs" :key="name">
+                <v-switch v-model="notifs[name]" :label="name" color="primary" hide-details></v-switch>
+              </div>
+            </v-col>
+            <v-col sm="6">
+              <span>Max Notifications</span>
+              <v-text-field v-model="max_notifs"></v-text-field>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" @click="updateUserSettings">Submit</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-container>
 </template>
 
 <script>

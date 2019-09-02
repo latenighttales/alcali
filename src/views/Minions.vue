@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col sm="12">
+      <v-col sm="12" cols="12">
         <MinionsTable :key="refreshKey"></MinionsTable>
         <Fab v-if="fabs" :fabs="fabs" v-on:fab_action="fabAction"></Fab>
       </v-col>

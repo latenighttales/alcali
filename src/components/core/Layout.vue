@@ -106,8 +106,10 @@
             class="mx-auto"
             flat
             hide-details
-            label="Search"
+            label="Search jids, minions, states..."
             solo-inverted
+            v-model="searchInput"
+            @keyup.native.enter="searchBar"
         ></v-text-field>
       </v-expand-transition>
       <v-btn icon @click="expand_search = !expand_search" class="mr-2">
@@ -130,24 +132,25 @@
             <v-icon v-else>notifications</v-icon>
           </v-badge>
         </template>
-        <v-list max-width="500px">
-          <v-list-item
-              v-for="(item, i) in messages"
-              :key="i"
-              :to="item.link"
-          >
-            <v-list-item-avatar>
-              <v-icon dark :color="item.color" size="62">{{item.icon}}</v-icon>
-            </v-list-item-avatar>
+        <v-card  max-width="500px" max-height="700px">
+          <v-list>
+            <v-list-item
+                v-for="(item, i) in messages"
+                :key="i"
+                :to="item.link"
+            >
+              <v-list-item-avatar>
+                <v-icon dark :color="item.color" size="62">{{item.icon}}</v-icon>
+              </v-list-item-avatar>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item.text }}</v-list-item-title>
-              <v-list-item-subtitle>{{ item.tag}}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.text }}</v-list-item-title>
+                <v-list-item-subtitle>{{ item.tag}}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card>
       </v-menu>
-
 
       <v-menu bottom left offset-y offset-x close-on-click>
         <template v-slot:activator="{ on }">
@@ -174,7 +177,9 @@
     <v-content>
       <v-container
       >
+        <v-fade-transition mode="out-in">
         <router-view></router-view>
+        </v-fade-transition>
 
       </v-container>
     </v-content>
@@ -191,140 +196,147 @@
     },
     data: () => ({
       expand_search: false,
+      searchInput: '',
       drawer: true,
       mini: true,
       messages: [],
       settings: null,
       notif_nb: 0,
-      notifs: {created: false, published: false, returned: false, event: false},
+      notifs: { created: false, published: false, returned: false, event: false },
       routes: [
         {
           name: "Overview",
           path: "/",
-          icon: "dashboard"
+          icon: "dashboard",
         },
         {
           name: "Minions",
           path: "/minions",
-          icon: "device_hub"
+          icon: "device_hub",
         },
         {
           name: "Jobs",
           path: "/jobs",
-          icon: "playlist_play"
+          icon: "playlist_play",
         },
         {
           name: "Run",
           path: "/run",
-          icon: "play_arrow"
+          icon: "play_arrow",
         },
         {
           name: "Schedules",
           path: "/schedules",
-          icon: "schedule"
+          icon: "schedule",
         },
         {
           name: "Conformity",
           path: "/conformity",
-          icon: "done_all"
+          icon: "done_all",
         },
         {
           name: "Keys",
           path: "/keys",
-          icon: "compare_arrows"
+          icon: "compare_arrows",
         },
         {
           name: "Events",
           path: "/events",
-          icon: "playlist_add"
+          icon: "playlist_add",
         },
       ],
     }),
     methods: {
-      logout: function () {
+      logout: function() {
         this.$store.dispatch("logout").then(() => {
-          this.$router.push("/login");
-        });
+          this.$router.push("/login")
+        })
+      },
+      searchBar() {
+        this.$http.get("api/search/?q="+this.searchInput).then(response => {
+          console.log(response.data)
+        })
+        //this.$router.push("/search?q="+this.searchInput)
       },
       getPrefs() {
         this.$http.get("api/userssettings/" + this.$store.getters.user_id + "/").then(response => {
           this.settings = response.data
           Object.keys(this.notifs).forEach(notif => {
-            this.notifs[notif] = this.settings['notifs_' + notif]
+            this.notifs[notif] = this.settings["notifs_" + notif]
           })
         })
       },
       toggleTheme() {
-        this.$store.dispatch('toggleTheme').then(() => {
+        this.$store.dispatch("toggleTheme").then(() => {
           this.$vuetify.theme.dark = this.$store.getters.theme
         })
       },
       saltStatus() {
         // Various Salt event tag matchers.
-        let isJobEvent = helpersMixin.methods.fnmatch('salt/job/*')
-        let isJobNew = helpersMixin.methods.fnmatch('salt/job/*/new')
-        let isJobReturn = helpersMixin.methods.fnmatch('salt/job/*/ret/*')
-        let es = new EventSource('/api/event_stream/');
-        es.addEventListener('open', () => {
-          this.$store.dispatch('updateWs')
+        let isJobEvent = helpersMixin.methods.fnmatch("salt/job/*")
+        let isJobNew = helpersMixin.methods.fnmatch("salt/job/*/new")
+        let isJobReturn = helpersMixin.methods.fnmatch("salt/job/*/ret/*")
+        let es = new EventSource("/api/event_stream/")
+        es.addEventListener("open", () => {
+          this.$store.dispatch("updateWs")
 
         })
-        es.addEventListener('message', event => {
-          let data = JSON.parse(event.data);
+        es.addEventListener("message", event => {
+          let data = JSON.parse(event.data)
           // Display only activated notifs.
           if (isJobNew(data.tag) && this.notifs.published === true) {
-            data.type = 'new'
-            data.color = 'green'
-            data.icon = 'keyboard_tab'
-            data.link = ''
-            let target = ''
-            if (data.data.hasOwnProperty('tgt')) {
+            data.type = "new"
+            data.color = "green"
+            data.icon = "keyboard_tab"
+            data.link = ""
+            let target = ""
+            if (data.data.hasOwnProperty("tgt")) {
               target = data.data.tgt
             } else {
-              target = data.data.minions.length + ' minion(s)'
+              target = data.data.minions.length + " minion(s)"
             }
-            data.text = 'Job ' + data.data.fun + ' published for ' + target
+            data.text = "Job " + data.data.fun + " published for " + target
             this.messages.unshift(data)
             if (this.messages.length > this.settings.max_notifs) {
               this.messages.pop()
             }
             this.notif_nb += 1
           } else if (isJobReturn(data.tag) && this.notifs.returned === true) {
-            data.type = 'return'
-            data.color = 'primary'
-            data.icon = 'subdirectory_arrow_left'
-            data.text = 'Job ' + data.data.fun + ' returned for ' + data.data.id
-            data.link = '/jobs/' + data.data.jid + '/' + data.data.id
+            data.type = "return"
+            data.color = "primary"
+            data.icon = "subdirectory_arrow_left"
+            data.text = "Job " + data.data.fun + " returned for " + data.data.id
+            data.link = "/jobs/" + data.data.jid + "/" + data.data.id
             this.messages.unshift(data)
             if (this.messages.length > this.settings.max_notifs) {
               this.messages.pop()
             }
             this.notif_nb += 1
           } else if (isJobEvent(data.tag) && this.notifs.event === true) {
-            data.type = 'event'
-            data.color = 'orange'
-            data.icon = 'more_horiz'
-            data.text = 'Job Event'
-            data.link = ''
+            data.type = "event"
+            data.color = "orange"
+            data.icon = "more_horiz"
+            data.text = "Job Event"
+            data.link = ""
             this.messages.unshift(data)
             if (this.messages.length > this.settings.max_notifs) {
               this.messages.pop()
             }
             this.notif_nb += 1
           } else if (/^\w{20}$/.test(data.tag) && this.notifs.created === true) {
-            data.type = 'created'
-            data.color = 'secondary'
-            data.icon = 'add'
-            data.text = 'New Job Created'
-            data.link = ''
+            data.type = "created"
+            data.color = "secondary"
+            data.icon = "add"
+            data.text = "New Job Created"
+            data.link = ""
             this.messages.unshift(data)
             if (this.messages.length > this.settings.max_notifs) {
               this.messages.pop()
             }
             this.notif_nb += 1
           }
-        }, false);
-      }
+        }, false)
+      },
     },
     mounted() {
       this.getPrefs()
@@ -337,8 +349,8 @@
       },
       email() {
         return this.$store.state.email
-      }
-    }
+      },
+    },
 
   }
 </script>

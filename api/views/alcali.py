@@ -3,7 +3,13 @@ from collections import Counter
 
 from ansi2html import Ansi2HTMLConverter
 from django.contrib.auth.models import User
-from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
+from django.db.models import Q
+from django.http import (
+    HttpResponse,
+    JsonResponse,
+    StreamingHttpResponse,
+    HttpResponseRedirect,
+)
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
@@ -38,6 +44,7 @@ from api.serializers import (
     FunctionsSerializer,
     ScheduleSerializer,
     MyTokenObtainPairSerializer,
+    SaltReturnsSerializer,
 )
 from api.serializers import KeysSerializer, MinionsSerializer
 from api.utils import graph_data, render_conformity, RawCommand
@@ -332,6 +339,33 @@ def parse_modules(request):
 
         return Response({"result": "modules updated"})
     return Response({"error": "toto"})
+
+
+@api_view(["GET"])
+def search(request):
+    if request.query_params.get("q", None):
+        query = request.query_params.get("q")
+        # First try to match minions.
+        minion_results = []
+        return_results = []
+        minion_query = Minions.objects.filter(minion_id__icontains=query)
+        return_query = SaltReturns.objects.filter(
+            Q(jid__icontains=query) | Q(fun__icontains=query)
+        )
+        if minion_query:
+            for res in minion_query:
+                minion = MinionsSerializer(res)
+                minion_results.append(minion.data)
+        if return_query:
+            for res in return_query:
+                job = SaltReturnsSerializer(res)
+                return_results.append(job.data)
+        return Response(
+            {"minions": minion_results, "jobs": return_results, "query": query}
+        )
+
+        # Return to referer
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
 
 
 @api_view(["GET"])

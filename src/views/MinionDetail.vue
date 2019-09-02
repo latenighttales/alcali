@@ -2,16 +2,8 @@
   <v-container>
     <v-row>
       <v-col sm="12" lg="3">
-        <v-row no-gutters>
-          <v-col lg="12">
-            <InfosCard v-if="minion !== null" :minion="minion"></InfosCard>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col lg="12">
-            <NetworkCard v-if="minion !== null" :minion="minion"></NetworkCard>
-          </v-col>
-        </v-row>
+        <InfosCard v-if="minion !== null" :minion="minion"></InfosCard>
+        <NetworkCard v-if="minion !== null" :minion="minion"></NetworkCard>
       </v-col>
       <v-col sm="12" lg="9">
         <MinionDetailCard v-if="minion !== null" :minion="minion"></MinionDetailCard>
@@ -21,22 +13,22 @@
 </template>
 
 <script>
-  import InfosCard from "../components/InfosCard";
+  import InfosCard from "../components/InfosCard"
 
   function addedGrains(data) {
-    let grain = JSON.parse(data.grain);
+    let grain = JSON.parse(data.grain)
     for (let key in grain) {
-      data[key] = grain[key];
+      data[key] = grain[key]
     }
-    return data;
+    return data
   }
 
-  import NetworkCard from "../components/NetworkCard";
-  import MinionDetailCard from "../components/MinionDetailCard";
+  import NetworkCard from "../components/NetworkCard"
+  import MinionDetailCard from "../components/MinionDetailCard"
 
   export default {
     name: "MinionDetail",
-    components: {MinionDetailCard, InfosCard, NetworkCard},
+    components: { MinionDetailCard, InfosCard, NetworkCard },
     data() {
       return {
         minion: null,
@@ -51,8 +43,8 @@
       },
     },
     props: [
-      'minion_id'
-    ]
+      "minion_id",
+    ],
   }
 </script>
 

@@ -1,18 +1,19 @@
 <template>
-    <v-container fluid grid-list-lg>
-    <v-layout row wrap>
-      <v-flex lg12>
-      <EventsTable></EventsTable>
-      </v-flex>
-    </v-layout>
+  <v-container>
+    <v-row>
+      <v-col sm="12">
+        <EventsTable></EventsTable>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-  import EventsTable from "../components/EventsTable";
+  import EventsTable from "../components/EventsTable"
+
   export default {
     name: "Events",
-    components: {EventsTable}
+    components: { EventsTable },
   }
 </script>
 

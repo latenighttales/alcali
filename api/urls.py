@@ -25,6 +25,7 @@ from api.views.alcali import (
     UserSettingsViewSet,
     ScheduleViewSet,
     MyTokenObtainPairView,
+    search,
 )
 from rest_framework import routers
 
@@ -44,6 +45,7 @@ urlpatterns = [
     path("api/token/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/", include(router.urls)),
+    path("api/search/", search, name="search"),
     path("api/stats/", stats, name="stats"),
     path("api/settings/initdb", parse_modules, name="parse_modules"),
     path("api/event_stream/", event_stream, name="event_stream"),
