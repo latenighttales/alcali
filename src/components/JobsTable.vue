@@ -2,7 +2,7 @@
   <v-container>
     <v-row no-gutters v-if="filter == null">
       <v-col sm="12">
-        <v-card>
+        <v-card class="mb-8">
           <v-row>
             <v-col lg="2">
               <v-card-title>Search Jobs</v-card-title>

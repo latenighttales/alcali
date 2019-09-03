@@ -20,15 +20,21 @@
     data: () => ({
       fabs: [
         {
-          color: "pink",
+          color: "blue",
           action: "refreshKeys",
-          icon: "refresh",
+          icon: "compare_arrows",
           tooltip: "Refresh keys",
+        },
+        {
+          color: "orange",
+          action: "rejectAll",
+          icon: "close",
+          tooltip: "Reject all keys",
         },
         {
           color: "green",
           action: "acceptAll",
-          icon: "playlist_play",
+          icon: "done",
           tooltip: "Accept all keys",
         },
       ],
@@ -48,6 +54,26 @@
           alert(error)
         })
 
+      },
+      acceptAll() {
+        let formData = new FormData
+        formData.set("action", "accept")
+        formData.set("target", "*")
+        this.$http.post("api/keys/manage_keys/", formData).then(response => {
+          this.$toast(response.data.result)
+        }).then(() => {
+          this.refreshKey += 1
+        })
+      },
+      rejectAll() {
+        let formData = new FormData
+        formData.set("action", "reject")
+        formData.set("target", "*")
+        this.$http.post("api/keys/manage_keys/", formData).then(response => {
+          this.$toast(response.data.result)
+        }).then(() => {
+          this.refreshKey += 1
+        })
       },
     },
   }

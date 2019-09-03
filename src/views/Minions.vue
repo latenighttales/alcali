@@ -10,28 +10,28 @@
 </template>
 
 <script>
-  import MinionsTable from "../components/MinionsTable";
-  import Fab from "../components/core/Fab";
+  import MinionsTable from "../components/MinionsTable"
+  import Fab from "../components/core/Fab"
 
   export default {
     name: "Minions",
-    components: {Fab, MinionsTable},
+    components: { Fab, MinionsTable },
     data: () => ({
       refreshKey: 0,
       fabs: [
         {
-          color: 'pink',
-          action: 'refreshMinions',
-          icon: 'refresh',
-          tooltip: 'Refresh all minions'
+          color: "pink",
+          action: "refreshMinions",
+          icon: "refresh",
+          tooltip: "Refresh all minions",
         },
         {
-          color: 'orange',
-          action: 'runAll',
-          icon: 'playlist_play',
-          tooltip: 'Run job on all minions'
+          color: "orange",
+          action: "runAll",
+          icon: "playlist_play",
+          tooltip: "Run job on all minions",
         },
-      ]
+      ],
     }),
     methods: {
       fabAction(action) {
@@ -43,12 +43,12 @@
           this.$toast("minions refreshed")
         }).then(() => {
           this.refreshKey += 1
-        }).catch(function (error) {
+        }).catch(function(error) {
           alert(error)
-        });
+        })
       },
       runAll() {
-        this.$router.push('/run/?target=*')
+        this.$router.push("/run/?target=*")
       },
     },
   }

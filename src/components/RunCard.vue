@@ -2,7 +2,7 @@
   <v-container>
     <v-row no-gutters>
       <v-col sm="12">
-        <v-card>
+        <v-card class="mb-8">
           <v-card-title>Run</v-card-title>
           <v-tabs
               v-model="tab"
@@ -95,9 +95,9 @@
                     <v-row>
                       <v-col lg="2">
                         <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"></v-switch>
-                          <div v-show="scheduleSwitch">
-                            Every <span id="cron"></span>
-                          </div>
+                        <div v-show="scheduleSwitch">
+                          Every <span id="cron"></span>
+                        </div>
                       </v-col>
                     </v-row>
                   </v-container>

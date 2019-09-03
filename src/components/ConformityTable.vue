@@ -103,7 +103,7 @@
     },
     methods: {
       loadData() {
-        this.$http.get("api/conformity/render").then(response => {
+        this.$http.get("api/conformity/render/").then(response => {
           this.headers = response.data.name
           this.headers.push({ text: "Actions", value: "action", sortable: false })
           this.conformity = response.data.data
