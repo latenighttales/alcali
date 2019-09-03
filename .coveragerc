@@ -8,3 +8,5 @@ omit =
     config/wsgi.py
     manage.py
     api/utils/output/*
+    setup.py
+    bin/__init__.py

@@ -1,4 +1,4 @@
-.PHONY: ci clean-pyc docs-serve tests dev
+.PHONY: ci clean-pyc docs-serve tests
 
 clean-pyc:
 	find . -name '*.pyc' -type f -exec rm -f {} +
@@ -16,6 +16,3 @@ docs-serve:
 
 tests:
 	@docker-compose exec -u alcali web pytest
-
-dev:
-	@docker-compose -f docker-compose-dev.yml up --build --renew-anon-volumes
