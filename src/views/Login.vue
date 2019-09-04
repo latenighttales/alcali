@@ -14,13 +14,14 @@
               sm="8"
               md="4"
           >
+            <h1 class="text-center font-weight-bold display-4 mb-8">ALCALI</h1>
             <v-card class="elevation-12">
               <v-toolbar
                   color="black"
                   dark
                   flat
               >
-                <v-toolbar-title>ALCALI</v-toolbar-title>
+                <v-toolbar-title>Login</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
@@ -44,7 +45,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="purple" dark @click.prevent="authenticate">Login</v-btn>
+                <v-btn color="primary" dark @click.prevent="authenticate">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -65,11 +66,11 @@
         let username = this.username
         let password = this.password
 
-        this.$store.dispatch('login', {username, password})
-          .then(() => this.$router.push('/'))
+        this.$store.dispatch("login", { username, password })
+          .then(() => this.$router.push("/"))
           .catch(err => console.log(err))
-      }
-    }
+      },
+    },
   }
 </script>
 <style scoped>

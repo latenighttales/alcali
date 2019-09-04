@@ -1,18 +1,18 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
+import Vue from "vue"
+import Vuex from "vuex"
+import axios from "axios"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    username: localStorage.getItem('username') || '',
-    email: localStorage.getItem('email') || '',
-    id: localStorage.getItem('id') || '',
-    access: localStorage.getItem('access') || '',
-    refresh: localStorage.getItem('refresh') || '',
+    username: localStorage.getItem("username") || "",
+    email: localStorage.getItem("email") || "",
+    id: localStorage.getItem("id") || "",
+    access: localStorage.getItem("access") || "",
+    refresh: localStorage.getItem("refresh") || "",
     ws_status: false,
-    theme: localStorage.getItem('theme') || false
+    theme: localStorage.getItem("theme") || false,
   },
   mutations: {
     auth_success(state, data) {
@@ -21,7 +21,7 @@ export default new Vuex.Store({
       })
     },
     logout(state) {
-      state.access = ''
+      state.access = ""
     },
     updateWs(state) {
       state.ws_status = true
@@ -36,22 +36,21 @@ export default new Vuex.Store({
     user_id: state => state.id,
   },
   actions: {
-    updateWs({commit}) {
-      commit('updateWs')
+    updateWs({ commit }) {
+      commit("updateWs")
     },
-    toggleTheme({commit}) {
-      commit('toggleTheme')
-      //localStorage.setItem('theme', JSON.stringify(!))
+    toggleTheme({ commit }) {
+      commit("toggleTheme")
     },
-    login({commit}, user_data) {
+    login({ commit }, user_data) {
       return new Promise((resolve, reject) => {
-        axios({url: '/api/token/', data: user_data, method: 'POST'})
+        axios({ url: "/api/token/", data: user_data, method: "POST" })
           .then(resp => {
             Object.keys(resp.data).forEach(key => {
               localStorage.setItem(key, resp.data[key])
             })
             axios.defaults.headers.common.Authorization = `Bearer ${resp.data.access}`
-            commit('auth_success', resp.data)
+            commit("auth_success", resp.data)
             resolve(resp)
           })
           .catch(err => {
@@ -60,14 +59,14 @@ export default new Vuex.Store({
           })
       })
     },
-    logout({commit}) {
+    logout({ commit }) {
       return new Promise((resolve) => {
-        commit('logout')
+        commit("logout")
         localStorage.clear()
-        delete axios.defaults.headers.common['Authorization']
+        delete axios.defaults.headers.common["Authorization"]
         resolve()
       })
-    }
+    },
 
-  }
+  },
 })

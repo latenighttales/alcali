@@ -3,18 +3,6 @@
     <v-card>
       <v-card-title>
         Highstate Conformity
-        <v-expand-transition>
-          <v-text-field
-              v-show="expand_search"
-              class="mx-auto"
-              hide-details
-              label="Search"
-              solo-inverted
-          ></v-text-field>
-        </v-expand-transition>
-        <v-btn icon @click="expand_search = !expand_search">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
       </v-card-title>
       <v-expansion-panels>
         <v-expansion-panel

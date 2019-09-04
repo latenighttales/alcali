@@ -3,84 +3,83 @@
     <v-row>
       <v-col sm="12">
         <v-card>
-          <v-card-title>{{ editing === true ? 'Update User' : 'Create User'}}</v-card-title>
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col lg="6">
-                  <v-text-field v-model="user.username" label="Username" :rules="userRules" required></v-text-field>
-                </v-col>
-                <v-col lg="6">
-                  <v-text-field v-model="user.email" label="Email" :rules="emailRules" required></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col lg="6">
-                  <v-text-field v-model="user.first_name" label="First Name"></v-text-field>
-                </v-col>
-                <v-col lg="6">
-                  <v-text-field v-model="user.last_name" label="Last Name"></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col lg="6">
-                  <v-text-field
-                      v-model="user.password"
-                      :append-icon="show ? 'visibility' : 'visibility_off'"
-                      :type="show ? 'text' : 'password'"
-                      name="input-10-1"
-                      label="Password"
-                      counter
-                      @click:append="show = !show"
-                  ></v-text-field>
-                </v-col>
-                <v-col lg="6">
-                  <v-checkbox
-                      v-model="user.is_staff"
-                      label="Staff User"
-                  ></v-checkbox>
-                </v-col>
-              </v-row>
-            </v-container>
-
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" v-if="editing" @click="resetUser">Discard</v-btn>
-            <v-btn color="warning" v-if="editing" @click="updateUser">Update</v-btn>
-            <v-btn color="warning" v-if="!editing" :disabled="user.username == null || user.email == ''"
-                   @click="createUser">Create
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col sm="12">
-        <v-card>
-          <v-card-title>
-            Users
-            <v-spacer></v-spacer>
-            <v-text-field
-                v-model="search"
-                append-icon="search"
-                label="Search"
-                single-line
-                hide-details
-            ></v-text-field>
-          </v-card-title>
           <v-data-table
               sort-by="username"
               :headers="headers"
               :items="users"
-              :search="search"
               class="elevation-1"
           >
+            <template v-slot:top>
+              <v-toolbar flat>
+                <v-toolbar-title class="headline">Users</v-toolbar-title>
+                <div class="flex-grow-1"></div>
+                <v-dialog v-model="dialog" max-width="500px">
+                  <template v-slot:activator="{ on }">
+                    <v-btn color="primary" dark class="mb-2" v-on="on">Create</v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title>{{ editing === true ? "Update User" : "Create User"}}</v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col lg="6">
+                            <v-text-field v-model="user.username" label="Username" :rules="userRules"
+                                          required></v-text-field>
+                          </v-col>
+                          <v-col lg="6">
+                            <v-text-field v-model="user.email" label="Email" :rules="emailRules"
+                                          required></v-text-field>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col lg="6">
+                            <v-text-field v-model="user.first_name" label="First Name"></v-text-field>
+                          </v-col>
+                          <v-col lg="6">
+                            <v-text-field v-model="user.last_name" label="Last Name"></v-text-field>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col lg="6">
+                            <v-text-field
+                                v-model="user.password"
+                                :append-icon="show ? 'visibility' : 'visibility_off'"
+                                :type="show ? 'text' : 'password'"
+                                name="input-10-1"
+                                label="Password"
+                                counter
+                                @click:append="show = !show"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col lg="6">
+                            <v-checkbox
+                                v-model="user.is_staff"
+                                label="Staff User"
+                            ></v-checkbox>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" v-if="editing" @click="resetUser">Discard</v-btn>
+                      <v-btn color="warning" v-if="editing" @click="updateUser">Update</v-btn>
+                      <v-btn color="warning" v-if="!editing" :disabled="user.username == null || user.email == ''"
+                             @click="createUser">Create
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+
+                </v-dialog>
+              </v-toolbar>
+            </template>
+
             <template v-slot:item.is_staff="{ item }">
               <v-chip color="primary" v-if="item.is_staff" dark>{{ item.is_staff }}</v-chip>
             </template>
             <template v-slot:item.date_joined="{ item }">
-              {{new Date(item.date_joined).toLocaleString('en-GB')}}
+              {{new Date(item.date_joined).toLocaleString("en-GB")}}
             </template>
             <template v-slot:item.action="{ item }">
               <div class="text-center">
@@ -99,6 +98,7 @@
                     color="red"
                     tile
                     dark
+                    :disabled="String(item.id) === currentUserId"
                     @click="deleteUser(item.id)"
                 >
                   delete
@@ -117,31 +117,38 @@
     name: "UserCard",
     data() {
       return {
-        search: '',
+        search: "",
         headers: [
-          {text: 'Username', value: 'username'},
-          {text: 'First Name', value: 'first_name'},
-          {text: 'Last Name', value: 'last_name'},
-          {text: 'Email', value: 'email'},
-          {text: 'Staff', value: 'is_staff'},
-          {text: 'Date Joined', value: 'date_joined'},
-          {text: 'Actions', value: 'action', sortable: false},
+          { text: "Username", value: "username" },
+          { text: "First Name", value: "first_name" },
+          { text: "Last Name", value: "last_name" },
+          { text: "Email", value: "email" },
+          { text: "Staff", value: "is_staff" },
+          { text: "Date Joined", value: "date_joined" },
+          { text: "Actions", value: "action", sortable: false },
         ],
         userRules: [
-          v => !!v || 'Username is required',
+          v => !!v || "Username is required",
         ],
         emailRules: [
-          v => !!v || 'E-mail is required',
-          v => /.+@.+/.test(v) || 'E-mail must be valid',
+          v => !!v || "E-mail is required",
+          v => /.+@.+/.test(v) || "E-mail must be valid",
         ],
         users: [],
         user: {},
         editing: false,
         show: false,
+        dialog: false,
       }
     },
     mounted() {
       this.getUsers()
+    },
+    computed: {
+      currentUserId() {
+        return this.$store.state.id
+      }
+
     },
     methods: {
       getUsers() {
@@ -154,6 +161,7 @@
         Object.keys(this.user).forEach(key => formData.append(key, this.user[key]))
         this.$http.post("api/users/", formData).then(() => {
           this.$toast("User created")
+          this.dialog = false
         }).then(() => {
           this.user = {}
           this.getUsers()
@@ -162,14 +170,15 @@
       updateUser() {
         this.editing = false
         let formData = new FormData
-        formData.set('username', this.user.username)
-        formData.set('email', this.user.email)
-        formData.set('first_name', this.user.first_name)
-        formData.set('last_name', this.user.last_name)
-        formData.set('password', this.user.password)
-        formData.set('is_staff', this.user.is_staff)
+        formData.set("username", this.user.username)
+        formData.set("email", this.user.email)
+        formData.set("first_name", this.user.first_name)
+        formData.set("last_name", this.user.last_name)
+        formData.set("password", this.user.password)
+        formData.set("is_staff", this.user.is_staff)
         this.$http.patch("api/users/" + this.user.id + "/", formData).then(() => {
           this.$toast("User updated")
+          this.dialog = false
           this.user = {}
         }).then(() => {
           this.getUsers()
@@ -181,10 +190,12 @@
         }).then(() => this.getUsers())
       },
       editUser(user) {
+        this.dialog = true
         this.editing = true
         this.user = user
       },
       resetUser() {
+        this.dialog = false
         this.editing = false
         this.user = {}
       },
