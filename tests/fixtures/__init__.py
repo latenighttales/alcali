@@ -2,7 +2,7 @@ import time
 import pytest
 from django.contrib.auth.models import User
 
-from api.models import SaltReturns, Jids, Keys, Minions, Schedule, Notifications
+from api.models import SaltReturns, Jids, Keys, Minions, Schedule
 
 
 @pytest.fixture
@@ -211,6 +211,7 @@ def dummy_state():
         full_ret='{"oh": "no"}',
         alter_time=time.strftime("%Y-%m-%d %H:%M:%S"),
     )
+    return ret
 
 
 @pytest.fixture
@@ -303,19 +304,6 @@ def schedule(minion_master):
         'false, "splay": null, "jid_include": true, '
         '"maxrunning": 1}}}',
     )
-
-
-@pytest.fixture
-def notification(admin_user):
-    notif = {
-        "notif_type": "returned",
-        "tag": "salt/job/20190525145731820194/ret/master",
-        "data": '{"fun_args":[],"jid":"20190525145731820194","return":true,'
-        '"retcode":0,"success":true,"cmd":"_return",'
-        '"_stamp":"2019-05-25T14:57:31.890646","fun":"test.ping",'
-        '"id":"master"}',
-    }
-    ret = Notifications.objects.create(user=admin_user, **notif)
 
 
 @pytest.fixture

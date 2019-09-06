@@ -272,7 +272,7 @@ class ScheduleViewSet(viewsets.ReadOnlyModelViewSet):
         name = request.data.get("name")
         manage_schedules(action, name, minion)
         return Response(
-            {"result": "schedule " + name + " on " + minion + " " + action + "ed"}
+            {"result": "schedule " + name + " on " + minion + " " + action + "d"}
         )
 
 
@@ -428,7 +428,6 @@ def run(request):
             schedule_type = request.POST.get("schedule_type")
             if schedule_type == "once":
                 schedule_date = request.POST.get("schedule")
-                schedule_date = "{}:00".format(schedule_date)
                 ret = create_schedules(
                     tgt,
                     function=fun,

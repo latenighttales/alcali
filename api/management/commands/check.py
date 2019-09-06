@@ -20,8 +20,6 @@ class Command(BaseCommand):
             "DB_PORT",
             "SECRET_KEY",
             "ALLOWED_HOSTS",
-            "SALT_USER",
-            "SALT_PASS",
             "SALT_URL",
             "SALT_AUTH",
         ]:

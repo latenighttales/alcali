@@ -179,32 +179,6 @@ class Migration(migrations.Migration):
             options={"db_table": "user_settings"},
         ),
         migrations.CreateModel(
-            name="Notifications",
-            fields=[
-                (
-                    "id",
-                    models.AutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("notif_type", models.CharField(max_length=32)),
-                ("tag", models.CharField(max_length=255)),
-                ("data", models.TextField()),
-                (
-                    "user",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        related_name="notifications",
-                        to=settings.AUTH_USER_MODEL,
-                    ),
-                ),
-            ],
-            options={"db_table": "notifications"},
-        ),
-        migrations.CreateModel(
             name="MinionsCustomFields",
             fields=[
                 (

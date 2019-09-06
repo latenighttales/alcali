@@ -81,9 +81,6 @@ class SaltEvents(models.Model):
     alter_time = models.DateTimeField()
     master_id = models.CharField(max_length=255)
 
-    def loaded_data(self):
-        return json.loads(self.data)
-
     class Meta:
         managed = False
         db_table = "salt_events"
@@ -267,35 +264,4 @@ class Conformity(models.Model):
 
     class Meta:
         db_table = "conformity"
-        app_label = "api"
-
-
-class Notifications(models.Model):
-    user = models.ForeignKey(
-        User, related_name="notifications", on_delete=models.CASCADE
-    )
-    notif_type = models.CharField(max_length=32)
-    tag = models.CharField(max_length=255)
-    data = models.TextField()
-
-    def loaded_data(self):
-        return json.loads(self.data)
-
-    def jid(self):
-        return self.loaded_data().get("jid")
-
-    def fun(self):
-        return self.loaded_data().get("fun")
-
-    def minions(self):
-        return self.loaded_data().get("minions")
-
-    def minion_id(self):
-        return self.loaded_data().get("id")
-
-    def datetime(self):
-        return pendulum.parse(self.loaded_data().get("_stamp"))
-
-    class Meta:
-        db_table = "notifications"
         app_label = "api"

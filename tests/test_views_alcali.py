@@ -1,7 +1,9 @@
+import datetime
+
 import pytest
 from django.urls import reverse
 
-from api.models import Keys, Minions, SaltReturns, MinionsCustomFields
+from api.models import Keys, Minions, SaltReturns, MinionsCustomFields, Schedule
 
 
 @pytest.mark.django_db()
@@ -55,10 +57,6 @@ def test_minions_delete(minion, admin_client, jwt):
 
 @pytest.mark.django_db()
 def test_minions_refresh(minion, admin_client, jwt):
-    minion = Minions.objects.first()
-    MinionsCustomFields.objects.create(
-        name="highstate", value="{}", function="state.show_highstate", minion=minion
-    )
     response = admin_client.post(
         "/api/minions/refresh_minions/", {"minion_id": minion.minion_id}, **jwt
     )
@@ -74,8 +72,23 @@ def test_minions_conformity(minion, admin_client, jwt):
 
 
 @pytest.mark.django_db()
+def test_minions_conformity_change(minion, highstate_diff, admin_client, jwt):
+    response = admin_client.get("/api/minions/conformity/", **jwt)
+    assert "HIGHSTATE" in response.json()["name"]
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db()
 def test_minions_conformity_detail(minion, highstate, admin_client, jwt):
     highstate()
+    response = admin_client.get(
+        "/api/minions/{}/conformity_detail/".format(minion.minion_id), **jwt
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db()
+def test_minions_conformity_detail_highstate(minion, highstate_diff, admin_client, jwt):
     response = admin_client.get(
         "/api/minions/{}/conformity_detail/".format(minion.minion_id), **jwt
     )
@@ -99,6 +112,21 @@ def test_minions_conformity_render(minion, highstate, minion_master, admin_clien
 
 
 @pytest.mark.django_db()
+def test_minion_field_delete(admin_client, jwt):
+    response = admin_client.post(
+        "/api/minionsfields/",
+        {"name": "highstate", "function": "state.show_highstate", "value": "{}"},
+        **jwt
+    )
+    assert response.status_code == 201
+
+    response = admin_client.post(
+        "/api/minionsfields/delete_field/", {"name": "highstate"}, **jwt
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db()
 def test_schedules_list(schedule, admin_client, jwt):
     response = admin_client.get("/api/schedules/", **jwt)
     assert response.json()[0]["minion"] == "master"
@@ -114,7 +142,18 @@ def test_schedules_refresh(admin_client, jwt):
 
 
 @pytest.mark.django_db()
-def test_schedules_manage(schedule, admin_client, jwt):
+def test_schedules_manage(admin_client, jwt):
+    response = admin_client.post(
+        "/api/run/",
+        {
+            "command": "salt master schedule.add job2 function='test.ping' seconds=3600",
+            "raw": True,
+        },
+        **jwt
+    )
+    assert response.status_code == 200
+    response = admin_client.post("/api/schedules/refresh/", {}, **jwt)
+    assert response.status_code == 200
     response = admin_client.post(
         "/api/schedules/manage/",
         {"action": "delete", "name": "job2", "minion": "master"},
@@ -157,7 +196,7 @@ def test_stats(admin_client, jwt):
 
 
 @pytest.mark.django_db()
-def test_run_scheduled(admin_client, jwt):
+def test_run_scheduled_cron(admin_client, jwt):
     response = admin_client.post(
         "/api/run/",
         {
@@ -165,7 +204,26 @@ def test_run_scheduled(admin_client, jwt):
             "function": "test.ping",
             "client": "local",
             "schedule": "true",
+            "schedule_type": "cron",
             "cron": "* * * * *",
+        },
+        **jwt
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db()
+def test_run_scheduled_once(admin_client, jwt):
+    response = admin_client.post(
+        "/api/run/",
+        {
+            "target": "*",
+            "function": "test.ping",
+            "client": "local",
+            "schedule": "{}".format(
+                datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            ),
+            "schedule_type": "once",
         },
         **jwt
     )
@@ -186,3 +244,17 @@ def test_wheel_raw(admin_client, jwt):
         **jwt
     )
     assert response.status_code == 200
+
+
+@pytest.mark.django_db()
+def test_search_minion(admin_client, dummy_state, minion_master, jwt):
+    response = admin_client.get("/api/search/?q=master", **jwt)
+    assert response.json()["query"] == "master"
+    assert response.json()["minions"][0]["minion_id"] == "master"
+
+
+@pytest.mark.django_db()
+def test_search_job(admin_client, dummy_state, dummy_jid, minion_master, jwt):
+    response = admin_client.get("/api/search/?q=20190507190955945844", **jwt)
+    assert response.json()["query"] == "20190507190955945844"
+    assert response.json()["jobs"][0]["jid"] == dummy_state.jid

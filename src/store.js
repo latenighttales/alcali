@@ -28,6 +28,7 @@ export default new Vuex.Store({
     },
     toggleTheme(state) {
       state.theme = !state.theme
+      localStorage.setItem('theme', JSON.stringify(state.theme))
     },
   },
   getters: {

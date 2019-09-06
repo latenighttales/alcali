@@ -262,7 +262,7 @@
       },
       toggleTheme() {
         this.$store.dispatch("toggleTheme").then(() => {
-          this.$vuetify.theme.dark = this.$store.getters.theme
+          this.$vuetify.theme.dark = JSON.parse(this.$store.state.theme)
         })
       },
       saltStatus() {
@@ -335,7 +335,7 @@
     mounted() {
       this.getPrefs()
       this.saltStatus()
-      this.$vuetify.theme.dark = this.$store.getters.theme
+      this.$vuetify.theme.dark = JSON.parse(this.$store.getters.theme)
     },
     computed: {
       username() {
@@ -344,6 +344,9 @@
       email() {
         return this.$store.state.email
       },
+      theme() {
+        return this.$store.state.theme
+      }
     },
 
   }

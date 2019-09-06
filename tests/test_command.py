@@ -16,12 +16,12 @@ def test_check():
 @pytest.mark.django_db
 def test_check_env_fail():
     out = StringIO()
-    salt_user = os.environ["SALT_USER"]
-    del os.environ["SALT_USER"]
+    salt_url = os.environ["SALT_URL"]
+    del os.environ["SALT_URL"]
     call_command("check", stdout=out)
     assert "db:\tok" in out.getvalue()
-    assert "SALT_USER" in out.getvalue()
-    os.environ["SALT_USER"] = str(salt_user)
+    assert "SALT_URL" in out.getvalue()
+    os.environ["SALT_URL"] = str(salt_url)
 
 
 @pytest.mark.django_db

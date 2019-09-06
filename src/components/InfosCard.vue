@@ -68,7 +68,7 @@
           { name: "Kernel", grain: "kernelrelease" },
           { name: "Last Job", grain: "last_job" },
           { name: "Last Highstate", grain: "last_highstate" },
-          { name: "Conformity", grain: "conformity" },
+          { name: "Highstate Conformity", grain: "conformity" },
         ],
         salt: [
           { name: "ID", grain: "id" },
