@@ -193,22 +193,23 @@ def manage_schedules(action, name, minion):
         if api_ret["return"][0][target]["result"]:
             if "delete" in action:
                 Schedule.objects.filter(minion=minion, name=name).delete()
-            else:
-                try:
-                    sched = Schedule.objects.filter(minion=minion, name=name).get()
-                except Schedule.DoesNotExist:
-                    refresh_schedules(minion)
-                    try:
-                        sched = Schedule.objects.filter(minion=minion, name=name).get()
-                    except Schedule.DoesNotExist:
-                        return False
-                loaded_job = sched.loaded_job()
-                if "enable" in action:
-                    loaded_job["enabled"] = True
-                elif "disable" in action:
-                    loaded_job["enabled"] = False
-                sched.job = json.dumps(loaded_job)
-                sched.save()
+                # TODO: disable, enable
+            # else:
+            #     try:
+            #         sched = Schedule.objects.filter(minion=minion, name=name).get()
+            #     except Schedule.DoesNotExist:
+            #         refresh_schedules(minion)
+            #         try:
+            #             sched = Schedule.objects.filter(minion=minion, name=name).get()
+            #         except Schedule.DoesNotExist:
+            #             return False
+            #     loaded_job = sched.loaded_job()
+            #     if "enable" in action:
+            #         loaded_job["enabled"] = True
+            #     elif "disable" in action:
+            #         loaded_job["enabled"] = False
+            #     sched.job = json.dumps(loaded_job)
+            #     sched.save()
 
 
 def create_schedules(

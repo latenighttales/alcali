@@ -30,11 +30,6 @@ def test_add_keys(admin_client, jwt):
     """
     user_settings are working as expected, and /wheel behave correctly.
     """
-    res = admin_client.post(
-        "/api/token/", data={"username": "admin", "password": "password"}
-    )
-    token = res.data["access"]
-    # assert Keys.objects.get(minion_id="master").status != "accepted"
     response = admin_client.post(
         "/api/keys/manage_keys/", {"action": "accept", "target": "*"}, **jwt
     )
@@ -118,41 +113,6 @@ def test_init_db(admin_client, jwt):
     assert response.status_code == 200
     for funct_type in ["local", "runner", "wheel"]:
         assert Functions.objects.filter(type=funct_type).count() > 0
-    # # Assert tooltips are working.
-    # response = admin_client.post(
-    #     reverse("run"), {"tooltip": "grains.item", "client": "local"}
-    # )
-    # assert response.status_code == 200
-    # assert (
-    #     response.json()["desc"]
-    #     == Functions.objects.filter(name="grains.item").values_list(
-    #         "description", flat=True
-    #     )[0]
-    # )
-    #
-    # response = admin_client.post(
-    #     reverse("run"), {"tooltip": "state.event", "client": "runner"}
-    # )
-    # assert response.status_code == 200
-    # assert (
-    #     response.json()["desc"]
-    #     == Functions.objects.filter(name="state.event", type="runner").values_list(
-    #         "description", flat=True
-    #     )[0]
-    # )
-    #
-    # response = admin_client.post(
-    #     reverse("run"), {"tooltip": "key.list_all", "client": "wheel"}
-    # )
-    # assert response.status_code == 200
-    # assert (
-    #     response.json()["desc"]
-    #     == Functions.objects.filter(name="key.list_all").values_list(
-    #         "description", flat=True
-    #     )[0]
-    # )
-    #
-    #
 
 
 @pytest.mark.django_db()
@@ -202,4 +162,4 @@ def test_schedules(admin_client, run_sql, jwt):
     response = admin_client.post("/api/schedules/refresh/", {}, **jwt)
     assert response.status_code == 200
     assert len(Schedule.objects.all()) > 0
-    run_sql("TRUNCATE TABLE `salt_returns`")
+    # run_sql("TRUNCATE TABLE `salt_returns`")
