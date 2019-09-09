@@ -5,9 +5,7 @@ django-currentuser==0.4.2
 djangorestframework==3.10.2
 djangorestframework-simplejwt==4.3.0
 gunicorn==19.9.0
-mysqlclient==1.4.4
 pendulum==2.0.5
-psycopg2==2.8.3
 python-dotenv==0.10.3
 pytz
 requests==2.22.0
