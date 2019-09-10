@@ -4,7 +4,6 @@ from contextlib import contextmanager
 from urllib.error import URLError
 
 import pendulum
-from django.contrib.auth.models import User
 from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
 
@@ -16,7 +15,7 @@ url = os.environ.get("SALT_URL", "https://127.0.0.1:8080")
 
 @contextmanager
 def api_connect():
-    user = User.objects.get(username="admin")  # get_current_user()
+    user = get_current_user()
     api = Pepper(url, ignore_ssl_errors=True)
     try:
         login_ret = api.login(

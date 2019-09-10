@@ -2,6 +2,6 @@
 
 # Wait for web
 echo "Waiting for web"
-./wait-for web:8000
+./wait-for -t 30 web:8000
 
 exec "$@"

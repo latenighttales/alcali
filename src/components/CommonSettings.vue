@@ -100,7 +100,7 @@
     name: "CommonSettings",
     data() {
       return {
-        minions: null,
+        minions: [],
         target: null,
         functions: null,
         minionsfields: [],
