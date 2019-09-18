@@ -1,10 +1,10 @@
+import datetime
 import os
 import json
 from contextlib import contextmanager
 import urllib3
 from urllib.error import URLError
 
-import pendulum
 from django.contrib.auth.models import User
 from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
@@ -233,7 +233,7 @@ def create_schedules(
     name=None,
     **kwargs
 ):
-    name = name or pendulum.now().format("YYYYMMDDHHmmss")
+    name = name or datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     comm_inst = RawCommand(
         "salt {} schedule.add {} function='{}'".format(target, name, function)
     )

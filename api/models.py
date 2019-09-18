@@ -120,10 +120,10 @@ class Minions(models.Model):
 
     def last_highstate(self):
         # Get all potential jobs.
-        # TODO: FIND OUT WHY CAN'T ORDER BY DATE??
         states = SaltReturns.objects.filter(
             Q(fun="state.apply") | Q(fun="state.highstate"), id=self.minion_id
         )
+        states = sorted(states, key=lambda x: x.jid, reverse=True)
 
         # Remove jobs with arguments.
         for state in states:
