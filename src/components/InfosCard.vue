@@ -25,7 +25,11 @@
             <tbody>
             <tr v-for="item in common" :key="item.name">
               <td>{{ item.name }}</td>
-              <td class="text-right">{{minion[item.grain]}}</td>
+              <td v-if="item.grain === 'last_job' || item.grain === 'last_highstate' && minion[item.grain] !== null"
+                  class="text-right">{{ new Date(minion[item.grain]).toLocaleString("en-GB")}}
+              </td>
+              <td v-else-if="item.grain === 'conformity'" class="text-right"><v-chip :color="boolRepr(minion[item.grain])" dark>{{ minion[item.grain] == null ? "unknown": minion[item.grain] }}</v-chip></td>
+              <td v-else class="text-right">{{minion[item.grain]}}</td>
             </tr>
             </tbody>
           </v-simple-table>
@@ -87,6 +91,15 @@
       }
     },
     props: ["minion"],
+    methods: {
+      boolRepr(bool) {
+        if (bool === true) {
+          return "green"
+        } else if (bool === false) {
+          return "red"
+        } else return "primary"
+      },
+    },
   }
 </script>
 

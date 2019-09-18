@@ -1,20 +1,25 @@
 import os
 import json
 from contextlib import contextmanager
+import urllib3
 from urllib.error import URLError
 
 import pendulum
+from django.contrib.auth.models import User
 from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
 
 from ..utils.input import RawCommand
 from ..models import Minions, Functions, MinionsCustomFields, Keys, Schedule
 
+urllib3.disable_warnings()
+
 url = os.environ.get("SALT_URL", "https://127.0.0.1:8080")
 
 
 @contextmanager
 def api_connect():
+    # TODO fix this!
     user = get_current_user()
     api = Pepper(url, ignore_ssl_errors=True)
     try:
@@ -119,8 +124,15 @@ def run_wheel(fun, args, kwarg=None, **kwargs):
 
 
 def get_events():
-    with api_connect() as api:
-        response = api.req_stream("/events")
+    api = Pepper(url, ignore_ssl_errors=True)
+    # TODO: find a way.
+    user = User.objects.first()
+    api.login(
+        str(user.username),
+        user.user_settings.token,
+        os.environ.get("SALT_AUTH", "alcali"),
+    )
+    response = api.req_stream("/events")
     return response
 
 

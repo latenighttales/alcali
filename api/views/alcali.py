@@ -14,7 +14,12 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from rest_framework import viewsets
-from rest_framework.decorators import action, api_view
+from rest_framework.decorators import (
+    action,
+    api_view,
+    renderer_classes,
+    permission_classes,
+)
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -36,6 +41,7 @@ from api.backend.netapi import (
 from api.models import SaltReturns, Keys, Minions, SaltEvents, Schedule, Conformity
 from api.models import UserSettings, MinionsCustomFields, Functions
 from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
+from api.renderer import StreamingRenderer
 from api.serializers import (
     ConformitySerializer,
     UsersSerializer,
@@ -280,7 +286,6 @@ class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UsersSerializer
 
-    # Add this code block
     def get_permissions(self):
         permission_classes = []
         if self.action == "create":
@@ -294,6 +299,17 @@ class UsersViewSet(viewsets.ModelViewSet):
         elif self.action == "list" or self.action == "destroy":
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
+
+    @action(methods=["POST"], detail=True)
+    def manage_token(self, request, pk):
+        user = self.get_object()
+        action = request.data.get("action")
+        if action == "renew":
+            user.user_settings.generate_token()
+        elif action == "revoke":
+            user.user_settings.token = "REVOKED"
+            user.user_settings.save()
+        return Response({"result": "{} successful".format(action)})
 
 
 class UserSettingsViewSet(viewsets.ModelViewSet):
@@ -377,12 +393,15 @@ def stats(request):
     return Response({"jobs": jobs_nb, "events": events_nb, "schedules": schedules_nb})
 
 
+@api_view(["GET"])
+@permission_classes([AllowAny])
+@renderer_classes([StreamingRenderer])
 def event_stream(request):
     # Web socket.
     response = StreamingHttpResponse(
         get_events(), status=200, content_type="text/event-stream"
     )
-    response["Cache-Control"] = "no-cache"
+    # response["Cache-Control"] = "no-cache"
     return response
 
 

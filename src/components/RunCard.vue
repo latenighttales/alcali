@@ -93,10 +93,70 @@
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col lg="2">
-                        <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"></v-switch>
+                      <v-col sm="12">
+                        <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
+                                  v-show="selected_client === 'local'"></v-switch>
                         <div v-show="scheduleSwitch">
-                          Every <span id="cron"></span>
+                          <v-radio-group v-model="scheduleType">
+                            <v-radio value="once" color="primary">
+                              <template v-slot:label>
+                                <span><strong>Once:  </strong></span>
+                                <v-row>
+                                  <v-col sm="4" class="ml-2">
+                                    <v-menu
+                                        v-model="dateMenu"
+                                        :close-on-content-click="false"
+                                        transition="scale-transition"
+                                        offset-y
+                                        full-width
+                                        min-width="290px"
+                                    >
+                                      <template v-slot:activator="{ on }">
+                                        <v-text-field
+                                            v-model="scheduleDate"
+                                            readonly
+                                            v-on="on"
+                                        ></v-text-field>
+                                      </template>
+                                      <v-date-picker :min="scheduleDate" v-model="scheduleDate"
+                                                     @input="dateMenu = false"></v-date-picker>
+                                    </v-menu>
+                                  </v-col>
+                                  <v-col sm="4">
+                                    <v-menu
+                                        ref="menu"
+                                        v-model="timeMenu"
+                                        :close-on-content-click="false"
+                                        :nudge-right="40"
+                                        transition="scale-transition"
+                                        offset-y
+                                        full-width
+                                        max-width="290px"
+                                        min-width="290px"
+                                    >
+                                      <template v-slot:activator="{ on }">
+                                        <v-text-field
+                                            v-model="scheduleTime"
+                                            readonly
+                                            v-on="on"
+                                        ></v-text-field>
+                                      </template>
+                                      <v-time-picker
+                                          v-if="timeMenu"
+                                          v-model="scheduleTime"
+                                          full-width
+                                      ></v-time-picker>
+                                    </v-menu>
+                                  </v-col>
+                                </v-row>
+                              </template>
+                            </v-radio>
+                            <v-radio value="recurring" color="primary">
+                              <template v-slot:label>
+                                <div><strong>Recurring: </strong> Every <span id="cron"></span></div>
+                              </template>
+                            </v-radio>
+                          </v-radio-group>
                         </div>
                       </v-col>
                     </v-row>
@@ -104,7 +164,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="orange" large dark @click="dialog = false">Test</v-btn>
+                  <v-btn color="orange" large dark @click="runJob(test=true)">Test</v-btn>
                   <v-btn color="info" large dark @click="runJob">Run</v-btn>
                 </v-card-actions>
               </v-card>
@@ -162,6 +222,11 @@
         results: "",
         termKey: 0,
         cron: null,
+        scheduleType: null,
+        dateMenu: false,
+        timeMenu: false,
+        scheduleDate: new Date().toISOString().substr(0, 10),
+        scheduleTime: new Date().toISOString().substr(11, 11).split(":").slice(0, -1).join(":"),
       }
     },
     methods: {
@@ -173,30 +238,32 @@
           response.data.forEach(item => this.minions.push(item.minion_id))
         })
       },
-      runJob() {
+      runJob(test = false) {
         let formData = new FormData
         let action = "Running"
         formData.set("client", this.selected_client)
-        formData.set("target", this.target)
+        if (this.selected_client === "local") formData.set("target", this.target)
         formData.set("function", this.selectedFunction.name || this.selectedFunction)
-        formData.set("args", this.args)
-        if (this.scheduleSwitch) {
-          action = "Scheduling"
-          formData.set("schedule", "true")
-          formData.set("cron", this.cron.currentValue)
+        if (test === true) this.kwargs.test = "True"
+        if (Object.keys(this.kwargs).length !== 0 && this.kwargs.constructor === Object) {
+          for (let key in this.kwargs) {
+            formData.set(key, this.kwargs[key])
+          }
         }
-        this.$toast(action + " " + this.selectedFunction.name + " on " + this.target)
+        if (this.args) formData.set("args", this.args)
+        if (this.scheduleSwitch && this.scheduleType) {
+          action = "Scheduling"
+          formData.set("schedule_type", this.scheduleType)
+          if (this.scheduleType === "once") {
+            formData.set("schedule", this.scheduleDate + " " + this.scheduleTime + ":00")
+          } else {
+            formData.set("cron", this.cron.currentValue)
+          }
+        }
+        this.$toast(action + " " + this.selectedFunction.name || this.selectedFunction + " on " + this.target)
         this.$http.post("api/run/", formData).then(response => {
           this.results = response.data + this.results
         })
-      },
-      fitTerminal() {
-        /*
-                setTimeout(() => {
-                  this.$refs.term.initTerm()
-                }, 10)
-        */
-        //this.termKey += 1
       },
     },
     computed: {

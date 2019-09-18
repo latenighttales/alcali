@@ -15,7 +15,7 @@
                 <div class="flex-grow-1"></div>
                 <v-dialog v-model="dialog" max-width="500px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark class="mb-2" v-on="on">Create</v-btn>
+                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}">Create</v-btn>
                   </template>
                   <v-card>
                     <v-card-title>{{ editing === true ? "Update User" : "Create User"}}</v-card-title>
@@ -78,6 +78,40 @@
             <template v-slot:item.is_staff="{ item }">
               <v-chip color="primary" v-if="item.is_staff" dark>{{ item.is_staff }}</v-chip>
             </template>
+            <template v-slot:item.token="{ item }">
+              <div class="text-center">
+                <v-btn
+                    small
+                    class="ma-2"
+                    color="primary"
+                    tile
+                    dark
+                    @click="showToken(item)"
+                >
+                  view
+                </v-btn>
+                <v-btn
+                    small
+                    class="ma-2"
+                    color="orange"
+                    tile
+                    dark
+                    @click="manageToken('renew', item)"
+                >
+                  renew
+                </v-btn>
+                <v-btn
+                    small
+                    color="red"
+                    tile
+                    dark
+                    :disabled="String(item.id) === currentUserId"
+                    @click="manageToken('revoke', item)"
+                >
+                  revoke
+                </v-btn>
+              </div>
+            </template>
             <template v-slot:item.date_joined="{ item }">
               {{new Date(item.date_joined).toLocaleString("en-GB")}}
             </template>
@@ -99,7 +133,7 @@
                     tile
                     dark
                     :disabled="String(item.id) === currentUserId"
-                    @click="deleteUser(item.id)"
+                    @click="confirmDelete(item)"
                 >
                   delete
                 </v-btn>
@@ -109,6 +143,79 @@
         </v-card>
       </v-col>
     </v-row>
+    <div class="text-center">
+      <v-dialog
+          v-model="dialogDelete"
+          width="500"
+      >
+        <v-card>
+          <v-card-title
+              class="headline red"
+              primary-title
+          >
+            Delete {{ user.username }} ?
+          </v-card-title>
+
+          <v-card-text>
+            <br>
+            this action is irreversible.
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="primary"
+                text
+                @click="dialogDelete = false"
+            >
+              close
+            </v-btn>
+            <v-btn
+                color="red"
+                text
+                @click="deleteUser(user.id)"
+            >
+              delete
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+    <div class="text-center">
+      <v-dialog
+          v-model="dialogToken"
+          width="500"
+      >
+        <v-card>
+          <v-card-title
+              class="headline primary"
+              primary-title
+          >
+            {{ user.username }} Token
+          </v-card-title>
+
+          <v-card-text v-if="user.user_settings">
+            <br>
+            {{user.user_settings.token}}
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                color="primary"
+                text
+                @click="dialogToken = false"
+            >
+              close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </v-container>
 </template>
 
@@ -124,6 +231,7 @@
           { text: "Last Name", value: "last_name" },
           { text: "Email", value: "email" },
           { text: "Staff", value: "is_staff" },
+          { text: "Token", value: "token", sortable: false },
           { text: "Date Joined", value: "date_joined" },
           { text: "Actions", value: "action", sortable: false },
         ],
@@ -139,6 +247,8 @@
         editing: false,
         show: false,
         dialog: false,
+        dialogDelete: false,
+        dialogToken: false,
       }
     },
     mounted() {
@@ -147,7 +257,7 @@
     computed: {
       currentUserId() {
         return this.$store.state.id
-      }
+      },
 
     },
     methods: {
@@ -184,8 +294,26 @@
           this.getUsers()
         })
       },
+      showToken(user) {
+        this.dialogToken = true
+        this.user = user
+      },
+      manageToken(action, user) {
+        let formData = new FormData
+        formData.set("action", action)
+        this.$http.post("api/users/" + user.id + "/manage_token/", formData).then((response) => {
+          this.$toast(response.data.result)
+        }).then(() => {
+          this.getUsers()
+        })
+      },
+      confirmDelete(user) {
+        this.dialogDelete = true
+        this.user = user
+      },
       deleteUser(id) {
         this.$http.delete("api/users/" + id).then(() => {
+          this.dialogDelete = false
           this.$toast("User deleted")
         }).then(() => this.getUsers())
       },

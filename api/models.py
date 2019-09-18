@@ -2,7 +2,6 @@ import binascii
 import json
 import os
 
-import pendulum
 from django.contrib.auth.models import User
 from django.db.models import Q
 
@@ -121,9 +120,10 @@ class Minions(models.Model):
 
     def last_highstate(self):
         # Get all potential jobs.
+        # TODO: FIND OUT WHY CAN'T ORDER BY DATE??
         states = SaltReturns.objects.filter(
             Q(fun="state.apply") | Q(fun="state.highstate"), id=self.minion_id
-        ).order_by("-alter_time")
+        )
 
         # Remove jobs with arguments.
         for state in states:
