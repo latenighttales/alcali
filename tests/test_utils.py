@@ -3,7 +3,7 @@ import pytest
 
 from django.utils import timezone
 
-from api.utils import RawCommand, graph_data
+from api.utils import RawCommand, graph_data, render_conformity
 
 
 def test_simple_command():
@@ -90,3 +90,11 @@ def test_graph_data():
     today = str(timezone.now().date() - timedelta(days=2))
     days, count, error_count = graph_data(period=3, fun="all")
     assert today in days
+
+
+@pytest.mark.django_db
+def test_render_conformity(minion_master, foo_conformity, dummy_state):
+    conformity_names, ret, details = render_conformity()
+    assert conformity_names == ["FOO"]
+    assert ret == [{"noice": 1}]
+    assert details == {"master": [{"foo": "noice"}]}

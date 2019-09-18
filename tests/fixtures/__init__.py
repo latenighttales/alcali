@@ -2,7 +2,7 @@ import time
 import pytest
 from django.contrib.auth.models import User
 
-from api.models import SaltReturns, Jids, Keys, Minions, Schedule
+from api.models import SaltReturns, Jids, Keys, Minions, Schedule, Conformity
 
 
 @pytest.fixture
@@ -208,7 +208,7 @@ def dummy_state():
         return_field='{"oh": "no"}',
         id="master",
         success=1,
-        full_ret='{"oh": "no"}',
+        full_ret='{"return": "noice"}',
         alter_time=time.strftime("%Y-%m-%d %H:%M:%S"),
     )
     return ret
@@ -311,3 +311,8 @@ def dummy_user():
     return User.objects.create_superuser(
         "dummy_user", "dummy_user@example.com", "dummy_userpassword"
     )
+
+
+@pytest.fixture
+def foo_conformity():
+    return Conformity.objects.create(name="foo", function="alcali.pass_salt")

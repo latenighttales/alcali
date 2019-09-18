@@ -145,14 +145,15 @@ class Minions(models.Model):
                 return False
         return True
 
-    def custom_conformity(self, fun, *args, **kwargs):
+    def custom_conformity(self, fun, *args):
 
         # First, filter with fun.
         jobs = SaltReturns.objects.filter(fun=fun, id=self.minion_id).order_by(
             "-alter_time"
         )
-        # TODO: kwargs...
-        if args or kwargs:
+        if not jobs:
+            return False
+        if args:
             for job in jobs:
                 ret = job.loaded_ret()
                 # if provided args are the same.
@@ -162,7 +163,8 @@ class Minions(models.Model):
                     return ret["return"]
         # If no args or kwargs, just return the first job.
         else:
-            return [job.loaded_ret()["return"] for job in jobs.first()]
+            job = jobs.first()
+            return job.loaded_ret()["return"]
 
     def __str__(self):
         return "{}".format(self.minion_id)

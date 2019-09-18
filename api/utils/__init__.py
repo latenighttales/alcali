@@ -127,7 +127,12 @@ def render_conformity(target=None):
         parsed = parser.parse()[0]
 
         for minion in minions_all:
-            conformity_field = minion.custom_conformity(parsed["fun"], *parsed["arg"])
+            if "arg" in parsed:
+                conformity_field = minion.custom_conformity(
+                    parsed["fun"], *parsed["arg"]
+                )
+            else:
+                conformity_field = minion.custom_conformity(parsed["fun"])
 
             # If the job return is a dict, get the value.
             if isinstance(conformity_field, dict):

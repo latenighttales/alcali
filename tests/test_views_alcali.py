@@ -3,7 +3,14 @@ import datetime
 import pytest
 from django.urls import reverse
 
-from api.models import Keys, Minions, SaltReturns, MinionsCustomFields, Schedule
+from api.models import (
+    Keys,
+    Minions,
+    SaltReturns,
+    MinionsCustomFields,
+    Schedule,
+    UserSettings,
+)
 
 
 @pytest.mark.django_db()
@@ -167,6 +174,23 @@ def test_users_list(admin_client, admin_user, jwt):
     response = admin_client.get("/api/users/", **jwt)
     assert response.json()[0]["id"] == admin_user.id
     assert response.status_code == 200
+
+
+def test_users_refresh_token(admin_client, admin_user, jwt):
+    current_token = admin_user.user_settings.token
+    response = admin_client.post(
+        "/api/users/{}/manage_token/".format(admin_user.id), {"action": "renew"}, **jwt
+    )
+    assert response.status_code == 200
+    assert UserSettings.objects.get(user=admin_user).token != current_token
+
+
+def test_users_revoke_token(admin_client, admin_user, jwt):
+    response = admin_client.post(
+        "/api/users/{}/manage_token/".format(admin_user.id), {"action": "revoke"}, **jwt
+    )
+    assert response.status_code == 200
+    assert UserSettings.objects.get(user=admin_user).token == "REVOKED"
 
 
 def test_jobs_graph(admin_client, jwt):
