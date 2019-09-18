@@ -1,8 +1,9 @@
 #!/bin/bash
 
 docker-compose exec -u alcali web pip install --quiet --user -r requirements/test.txt
-while ! [[ $(docker-compose logs | grep "mysqld: ready for connections.") ]]; do
+while ! [[ $(docker-compose exec -u alcali web alcali check | grep -P "db:\tok") ]]; do
   echo "Waiting Database..."
+  docker-compose exec -u alcali web alcali check
   sleep 10
 done
 docker-compose exec -u alcali web alcali migrate
