@@ -99,6 +99,7 @@ class MinionsViewSet(viewsets.ModelViewSet):
     queryset = Minions.objects.all()
     serializer_class = MinionsSerializer
     lookup_field = "minion_id"
+    lookup_value_regex = '[0-9a-zA-Z.]+'
 
     @action(detail=False, methods=["post"])
     def refresh_minions(self, request):
@@ -148,23 +149,27 @@ class MinionsViewSet(viewsets.ModelViewSet):
 
         if last_highstate:
             last_highstate = last_highstate.loaded_ret()["return"]
-            for state in last_highstate:
-                state_name = state.split("_|-")[1]
-                formatted = highstate_output.output(
-                    {minion.minion_id: {state: last_highstate[state]}}, summary=False
-                )
-                if last_highstate[state]["result"] is True:
-                    succeeded[state_name] = conv.convert(
-                        formatted, ensure_trailing_newline=True
+            # Sls error
+            if isinstance(last_highstate, list):
+                failed = {"error": last_highstate[0]}
+            else:
+                for state in last_highstate:
+                    state_name = state.split("_|-")[1]
+                    formatted = highstate_output.output(
+                        {minion.minion_id: {state: last_highstate[state]}}, summary=False
                     )
-                elif last_highstate[state]["result"] is None:
-                    unchanged[state_name] = conv.convert(
-                        formatted, ensure_trailing_newline=True
-                    )
-                else:
-                    failed[state_name] = conv.convert(
-                        formatted, ensure_trailing_newline=True
-                    )
+                    if last_highstate[state]["result"] is True:
+                        succeeded[state_name] = conv.convert(
+                            formatted, ensure_trailing_newline=True
+                        )
+                    elif last_highstate[state]["result"] is None:
+                        unchanged[state_name] = conv.convert(
+                            formatted, ensure_trailing_newline=True
+                        )
+                    else:
+                        failed[state_name] = conv.convert(
+                            formatted, ensure_trailing_newline=True
+                        )
         return Response(
             {
                 "custom_conformity": custom_conformity,
@@ -194,6 +199,7 @@ class MinionsCustomFieldsViewSet(viewsets.ModelViewSet):
 class ConformityViewSet(viewsets.ModelViewSet):
     queryset = Conformity.objects.all()
     serializer_class = ConformitySerializer
+    lookup_value_regex = '[0-9a-zA-Z.]+'
 
     @action(detail=False)
     def render(self, request):
@@ -220,13 +226,17 @@ class ConformityViewSet(viewsets.ModelViewSet):
             if last_highstate:
                 last_highstate_date = last_highstate.alter_time
                 last_highstate = last_highstate.loaded_ret()["return"]
-                for state in last_highstate:
-                    if last_highstate[state]["result"] is True:
-                        succeeded += 1
-                    elif last_highstate[state]["result"] is None:
-                        unchanged += 1
-                    else:
-                        failed += 1
+                # Sls error
+                if isinstance(last_highstate, list):
+                    succeeded, unchanged, failed = None, None, 1
+                else:
+                    for state in last_highstate:
+                        if last_highstate[state]["result"] is True:
+                            succeeded += 1
+                        elif last_highstate[state]["result"] is None:
+                            unchanged += 1
+                        else:
+                            failed += 1
             else:
                 last_highstate_date, succeeded, unchanged, failed = (
                     None,
