@@ -18,7 +18,7 @@ from .models import (
 
 class SaltReturnsSerializer(serializers.ModelSerializer):
     user = serializers.CharField()
-    arguments = serializers.ListField()
+    arguments = serializers.CharField()
     success = serializers.BooleanField(source="success_bool")
 
     class Meta:

@@ -92,12 +92,13 @@
                         <v-text-field label="Argument"></v-text-field>
                       </v-col>
                     </v-row>
-                    <v-row>
+                    <v-row dense>
                       <v-col sm="12">
                         <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
                                   v-show="selected_client === 'local'"></v-switch>
                         <div v-show="scheduleSwitch">
-                          <v-radio-group v-model="scheduleType">
+                          <v-text-field label="Schedule name" v-model="scheduleName" style="width: 350px;"></v-text-field>
+                          <v-radio-group v-model="scheduleType" class="mt-0">
                             <v-radio value="once" color="primary">
                               <template v-slot:label>
                                 <span><strong>Once:  </strong></span>
@@ -222,11 +223,12 @@
         results: "",
         termKey: 0,
         cron: null,
-        scheduleType: null,
         dateMenu: false,
         timeMenu: false,
+        scheduleType: null,
         scheduleDate: new Date().toISOString().substr(0, 10),
         scheduleTime: new Date().toISOString().substr(11, 11).split(":").slice(0, -1).join(":"),
+        scheduleName: null,
       }
     },
     methods: {
@@ -254,6 +256,7 @@
         if (this.scheduleSwitch && this.scheduleType) {
           action = "Scheduling"
           formData.set("schedule_type", this.scheduleType)
+          if (this.scheduleName) formData.set("schedule_name", this.scheduleName)
           if (this.scheduleType === "once") {
             formData.set("schedule", this.scheduleDate + " " + this.scheduleTime + ":00")
           } else {

@@ -1,5 +1,6 @@
+import datetime
 import json
-from collections import Counter
+from collections import Counter, OrderedDict
 
 from ansi2html import Ansi2HTMLConverter
 from django.contrib.auth.models import User
@@ -66,17 +67,20 @@ class KeysViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(methods=["POST"], detail=False)
     def refresh(self, request):
-        keys = get_keys(refresh=True)
+        get_keys(refresh=True)
         return Response({"result": "refreshed"})
 
     @action(detail=False)
     def keys_status(self, request):
         keys_status = list(Keys.objects.values_list("status", flat=True))
         keys_status = dict(Counter(keys_status))
+        od = OrderedDict()
         for status in ["accepted", "rejected", "denied", "unaccepted"]:
             if status not in keys_status:
-                keys_status[status] = 0
-        return Response(keys_status)
+                od[status] = 0
+            else:
+                od[status] = keys_status[status]
+        return Response(od)
 
     @action(methods=["post"], detail=False)
     def manage_keys(self, request):
@@ -443,12 +447,16 @@ def run(request):
             kwargs.update({request.POST["keyword"]: request.POST["argument"]})
 
         # Schedules.
-        if request.POST.get("schedule"):
+        if request.POST.get("schedule_type"):
             schedule_type = request.POST.get("schedule_type")
+            schedule_name = request.POST.get(
+                "schedule_name", datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+            )
             if schedule_type == "once":
                 schedule_date = request.POST.get("schedule")
                 ret = create_schedules(
                     tgt,
+                    name=schedule_name,
                     function=fun,
                     once=schedule_date,
                     once_fmt="%Y-%m-%d %H:%M:%S",
@@ -458,9 +466,17 @@ def run(request):
             else:
                 schedule_cron = request.POST.get("cron")
                 ret = create_schedules(
-                    tgt, cron=schedule_cron, function=fun, *args, **kwargs
+                    tgt,
+                    name=schedule_name,
+                    cron=schedule_cron,
+                    function=fun,
+                    *args,
+                    **kwargs
                 )
-            return HttpResponse(ret)
+            formatted = nested_output.output(ret)
+            conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
+            html = conv.convert(formatted, ensure_trailing_newline=True)
+            return HttpResponse(html)
 
         if client == "local":
             ret = run_job(tgt, fun, args, kwargs=kwargs)

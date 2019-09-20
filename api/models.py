@@ -53,7 +53,7 @@ class SaltReturns(models.Model):
     def arguments(self):
         ret = self.loaded_ret()
         if "fun_args" in ret and ret["fun_args"]:
-            return [str(i) for i in ret["fun_args"]]
+            return " ".join(str(i) for i in ret["fun_args"])
         return ""
 
     def success_bool(self):
@@ -133,7 +133,7 @@ class Minions(models.Model):
                 or state.loaded_ret()["fun_args"][0] == "test=True"
             ):
                 return state
-            return None
+        return None
 
     def conformity(self):
         last_highstate = self.last_highstate()
@@ -141,6 +141,10 @@ class Minions(models.Model):
             return None
         highstate_ret = last_highstate.loaded_ret()
         for state in highstate_ret["return"]:
+            # Flat out error(return is a string)
+            if isinstance(highstate_ret["return"], list):
+                return False
+            # One of the state is not ok
             if not highstate_ret["return"][state]["result"]:
                 return False
         return True

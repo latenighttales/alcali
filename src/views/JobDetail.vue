@@ -23,7 +23,7 @@
               </tr>
               <tr v-if="job.arguments.length > 0">
                 <td>ARGUMENTS:</td>
-                <td class="text-right"><span v-for="arg in job.arguments">{{ arg }}</span></td>
+                <td class="text-right">{{ job.arguments }}</td>
               </tr>
               <tr>
                 <td>MINION ID:</td>

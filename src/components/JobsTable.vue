@@ -86,6 +86,9 @@
             <template v-slot:item.jid="{ item }">
               <v-btn text small class="text-none" :to="'/jobs/'+item.jid+'/'+item.id">{{ item.jid }}</v-btn>
             </template>
+            <template v-slot:item.arguments="{ item }">
+              {{ item.arguments.length > 20 ? item.arguments.slice(0, 20)+'...': item.arguments }}
+            </template>
             <template v-slot:item.success="{ item }">
               <v-chip :color="boolRepr(item.success)" dark>{{ boolText(item.success) }}</v-chip>
             </template>
@@ -158,9 +161,6 @@
           uniqueid: index,
           ...item,
         }))
-      },
-      themeColor() {
-        return this.$store.getters.theme
       },
     },
     mounted() {
