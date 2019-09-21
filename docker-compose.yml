@@ -19,7 +19,7 @@ services:
       dockerfile: ./docker/Dockerfile-dev
       args:
         USER_ID: ${USER_ID:-1000}
-    command: python alcali/manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/opt/alcali/code
     ports:
