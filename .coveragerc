@@ -2,6 +2,7 @@
 omit =
     config/settings.py
     api/apps.py
+    api/permissions.py
     api/migrations/*
     tests/*
     api/pyapi.py

@@ -377,7 +377,7 @@ def search(request):
         minion_query = Minions.objects.filter(minion_id__icontains=query)
         return_query = SaltReturns.objects.filter(
             Q(jid__icontains=query) | Q(fun__icontains=query)
-        )
+        )[:200]
         if minion_query:
             for res in minion_query:
                 minion = MinionsSerializer(res)
