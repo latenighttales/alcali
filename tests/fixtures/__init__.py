@@ -316,3 +316,82 @@ def dummy_user():
 @pytest.fixture
 def foo_conformity():
     return Conformity.objects.create(name="foo", function="alcali.pass_salt")
+
+
+@pytest.fixture
+def version_conformity():
+    return Conformity.objects.create(
+        name="version", function="cmd.run alcali --version"
+    )
+
+
+@pytest.fixture
+def alcali_version_state():
+    ret = SaltReturns.objects.create(
+        fun="cmd.run",
+        jid="20190507190955945844",
+        return_field='{"oh": "no"}',
+        id="master",
+        success=1,
+        alter_time=time.strftime("%Y-%m-%d %H:%M:%S"),
+        full_ret='{"fun_args": ["alcali --version"], "return": "2019.2.2"}',
+    )
+    return ret
+
+
+@pytest.fixture
+def jobs_arguments():
+    ret = SaltReturns.objects.create(
+        fun="dummy.state",
+        jid="20190507190955945844",
+        return_field='{"oh": "no"}',
+        id="master",
+        success=1,
+        alter_time=time.strftime("%Y-%m-%d %H:%M:%S"),
+        full_ret='{"fun_args": ["foo", 1, "bar=baz"], "return": "2019.2.2"}',
+    )
+    return ret
+
+
+@pytest.fixture
+def highstate_failed():
+    ret = SaltReturns.objects.create(
+        fun="state.apply",
+        jid="20190507190955945843",
+        return_field='{"pkg_|-common_packages_'
+        '|-common_packages_|-installed": {'
+        '"comment": "The following packages '
+        "would "
+        'be installed/updated: vim", "name": '
+        '"common_packages", "start_time": '
+        '"19:09:59.565546", "result": null, '
+        '"duration": 412.241, "__run_num__": '
+        "0, "
+        '"__sls__": "common.packages", '
+        '"changes": '
+        '{}, "__id__": "common_packages"}, '
+        '"pkg_|-install_alcali_'
+        "|-install_alcali_ "
+        '|-installed": {"comment": "All '
+        "specified "
+        'packages are already installed", '
+        '"name": '
+        '"curl", "start_time": '
+        '"19:09:59.978059", '
+        '"result": true, "duration": 34.526, '
+        '"__run_num__": 1, "__sls__": '
+        '"alcali", '
+        '"changes": {}, "__id__": '
+        '"install_alcali"}}',
+        id="2e220fd40bc5",
+        success=1,
+        full_ret='{"fun_args": ["test=True"], "jid": '
+        '"20190507190955945843", "return": ["SLS Data failed to compile"], '
+        '"retcode": 0, "success": false, '
+        '"cmd": "_return", "_stamp": '
+        '"2019-05-07T19:10:00.018461", '
+        '"fun": "state.apply", "id": "master", '
+        '"out": "highstate"}',
+        alter_time="2019-05-07 19:10:00",
+    )
+    return ret

@@ -219,6 +219,11 @@ def test_stats(admin_client, jwt):
     assert response.status_code == 200
 
 
+def test_get_events(admin_client):
+    response = admin_client.get("/api/event_stream/")
+    assert response.status_code == 200
+
+
 @pytest.mark.django_db()
 def test_run_scheduled_cron(admin_client, jwt):
     response = admin_client.post(

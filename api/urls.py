@@ -6,13 +6,13 @@ from api.views.salt import (
     SaltReturnsRetrieve,
     EventsViewSet,
     jobs_filters,
+    job_rendered,
 )
 
 from api.views.alcali import (
     index_view,
     KeysViewSet,
     MinionsViewSet,
-    job_rendered,
     jobs_graph,
     stats,
     event_stream,

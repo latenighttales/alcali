@@ -328,24 +328,6 @@ class UserSettingsViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["GET"])
-def job_rendered(request, jid, minion_id):
-    # TODO: move to Saltreturn model view
-    # Retrieve job from database.
-    job = SaltReturns.objects.get(jid=jid, id=minion_id)
-
-    # Use different output.
-    if job.fun in ["state.apply", "state.highstate"]:
-        formatted = highstate_output.output({minion_id: job.loaded_ret()["return"]})
-    else:
-        formatted = nested_output.output({minion_id: job.loaded_ret()["return"]})
-
-    # Convert it to html.
-    conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
-    html_detail = conv.convert(formatted, ensure_trailing_newline=True)
-    return Response(html_detail)
-
-
-@api_view(["GET"])
 def jobs_graph(request):
     id = request.query_params.get("id", None)
     params = {
@@ -362,9 +344,7 @@ def jobs_graph(request):
 def parse_modules(request):
     if request.data.get("target"):
         init_db(request.data.get("target"))
-
         return Response({"result": "modules updated"})
-    return Response({"error": "toto"})
 
 
 @api_view(["GET"])
@@ -455,7 +435,10 @@ def run(request):
 
         ret = run_raw(parsed_command)
         formatted = "\n"
-        if parsed_command[0]["fun"] in ["state.apply", "state.highstate"]:
+        if (
+            parsed_command[0]["fun"] in ["state.apply", "state.highstate"]
+            and parsed_command[0]["client"] != "local_async"
+        ):
             for state, out in ret.items():
                 minion_ret = highstate_output.output({state: out})
                 formatted += minion_ret + "\n\n"

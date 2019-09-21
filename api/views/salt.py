@@ -1,3 +1,4 @@
+from ansi2html import Ansi2HTMLConverter
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, viewsets
 from rest_framework.decorators import api_view
@@ -5,6 +6,7 @@ from rest_framework.response import Response
 
 from api.models import SaltReturns, SaltEvents, Jids
 from api.serializers import SaltReturnsSerializer, EventsSerializer
+from api.utils.output import highstate_output, nested_output
 
 
 class MultipleFieldLookupMixin(object):
@@ -62,6 +64,23 @@ class SaltReturnsRetrieve(MultipleFieldLookupMixin, generics.RetrieveAPIView):
     queryset = SaltReturns.objects.all().order_by("-alter_time")
     serializer_class = SaltReturnsSerializer
     lookup_fields = ["jid", "id"]
+
+
+@api_view(["GET"])
+def job_rendered(request, jid, minion_id):
+    # Retrieve job from database.
+    job = SaltReturns.objects.get(jid=jid, id=minion_id)
+
+    # Use different output.
+    if job.fun in ["state.apply", "state.highstate"]:
+        formatted = highstate_output.output({minion_id: job.loaded_ret()["return"]})
+    else:
+        formatted = nested_output.output({minion_id: job.loaded_ret()["return"]})
+
+    # Convert it to html.
+    conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
+    html_detail = conv.convert(formatted, ensure_trailing_newline=True)
+    return Response(html_detail)
 
 
 class EventsViewSet(viewsets.ReadOnlyModelViewSet):
