@@ -52,9 +52,7 @@ def test_run_highstate(admin_client, jwt):
     for minion in Minions.objects.all():
         assert minion.conformity() is False
     response = admin_client.post(
-        "/api/run/",
-        {"target": "*", "function": "state.apply", "client": "local"},
-        **jwt
+        "/api/run/", {"raw": "true", "command": "salt * state.apply"}, **jwt
     )
     assert response.status_code == 200
     assert SaltReturns.objects.filter(fun="state.apply")
@@ -65,7 +63,9 @@ def test_run_highstate(admin_client, jwt):
 @pytest.mark.django_db()
 def test_runner(admin_client, jwt):
     response = admin_client.post(
-        "/api/run/", {"function": "jobs.active", "client": "runner"}, **jwt
+        "/api/run/",
+        {"raw": "true", "command": "salt --client=runner jobs.active"},
+        **jwt
     )
     assert response.status_code == 200
 
@@ -74,19 +74,17 @@ def test_runner(admin_client, jwt):
 def test_wheel(admin_client, jwt):
     response = admin_client.post(
         "/api/run/",
-        {"function": "key.name_match", "args": "master", "client": "wheel"},
+        {"raw": "true", "command": "salt --client=wheel key.name_match master"},
         **jwt
     )
     assert response.status_code == 200
-    # assert SaltReturns.objects.filter(fun='key.name_match')
+    jobs = SaltReturns.objects.all()
 
 
 @pytest.mark.django_db()
 def test_run_conformity_state(admin_client, jwt):
     response = admin_client.post(
-        "/api/run/",
-        {"target": "*", "function": "grains.item", "args": "os", "client": "local"},
-        **jwt
+        "/api/run/", {"raw": "true", "command": "salt * grains.item os"}, **jwt
     )
     response = admin_client.post(
         "/api/run/", {"command": "salt * grains.item saltversion", "raw": True}, **jwt

@@ -134,12 +134,12 @@
     data() {
       return {
         limit: [50, 100, 200, 500, 1000],
-        selectedLimit: null,
         selectedDate: [new Date(), new Date()],
-        minions: [],
-        selectedTarget: null,
-        users: [],
+        selectedLimit: null,
         selectedUsers: null,
+        selectedTarget: null,
+        minions: [],
+        users: [],
         search: "",
         headers: [
           { text: "Jid", value: "jid" },
@@ -193,7 +193,8 @@
         }).then(response => {
           this.jobs = response.data
           this.loading = false
-          this.selectedDate = this.selectedUsers = this.selectedTarget = this.selectedLimit = this.selectedDate = null
+          this.selectedUsers = this.selectedTarget = this.selectedLimit = this.selectedDate = null
+          this.selectedDate = [new Date(), new Date()]
         })
       },
       boolRepr(bool) {

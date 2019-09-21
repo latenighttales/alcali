@@ -69,6 +69,18 @@ def test_failed_cmd():
     assert parsed == "Command or target not specified"
 
 
+def test_batch():
+    command = RawCommand("salt --client=local_batch '*' state.apply test=True -b 1")
+    parsed = command.parse()
+    assert parsed[0]["batch"] == "1"
+
+
+def test_timeout():
+    command = RawCommand("salt --client=local '*' state.apply test=True -t 9")
+    parsed = command.parse()
+    assert parsed[0]["timeout"] == 9
+
+
 def test_client_kwarg():
     command = RawCommand("salt --client=runner pillar.show_top kwarg='{foo: bar}'")
     parsed = command.parse()

@@ -12,7 +12,6 @@ from django.http import (
     HttpResponseRedirect,
 )
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from rest_framework import viewsets
 from rest_framework.decorators import (
@@ -30,10 +29,6 @@ from api.backend.netapi import (
     manage_key,
     get_events,
     init_db,
-    create_schedules,
-    run_job,
-    run_runner,
-    run_wheel,
     refresh_schedules,
     run_raw,
     get_keys,
@@ -99,7 +94,7 @@ class MinionsViewSet(viewsets.ModelViewSet):
     queryset = Minions.objects.all()
     serializer_class = MinionsSerializer
     lookup_field = "minion_id"
-    lookup_value_regex = '[0-9a-zA-Z.]+'
+    lookup_value_regex = "[0-9a-zA-Z.]+"
 
     @action(detail=False, methods=["post"])
     def refresh_minions(self, request):
@@ -156,7 +151,8 @@ class MinionsViewSet(viewsets.ModelViewSet):
                 for state in last_highstate:
                     state_name = state.split("_|-")[1]
                     formatted = highstate_output.output(
-                        {minion.minion_id: {state: last_highstate[state]}}, summary=False
+                        {minion.minion_id: {state: last_highstate[state]}},
+                        summary=False,
                     )
                     if last_highstate[state]["result"] is True:
                         succeeded[state_name] = conv.convert(
@@ -199,7 +195,7 @@ class MinionsCustomFieldsViewSet(viewsets.ModelViewSet):
 class ConformityViewSet(viewsets.ModelViewSet):
     queryset = Conformity.objects.all()
     serializer_class = ConformitySerializer
-    lookup_value_regex = '[0-9a-zA-Z.]+'
+    lookup_value_regex = "[0-9a-zA-Z.]+"
 
     @action(detail=False)
     def render(self, request):
@@ -415,7 +411,7 @@ def event_stream(request):
     response = StreamingHttpResponse(
         get_events(), status=200, content_type="text/event-stream"
     )
-    # response["Cache-Control"] = "no-cache"
+    response["Cache-Control"] = "no-cache"
     return response
 
 
@@ -424,6 +420,39 @@ def run(request):
     if request.POST.get("raw"):
         command = RawCommand(request.POST.get("command"))
         parsed_command = command.parse()
+        # Schedules.
+        if request.POST.get("schedule_type"):
+            schedule_type = request.POST.get("schedule_type")
+            schedule_name = request.POST.get(
+                "schedule_name", datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+            )
+            schedule_parsed = [
+                {
+                    "client": "local",
+                    "batch": None,
+                    "tgt_type": parsed_command[0]["tgt_type"],
+                    "tgt": parsed_command[0]["tgt"],
+                    "fun": "schedule.add",
+                    "arg": [
+                        schedule_name,
+                        "function={}".format(parsed_command[0]["fun"]),
+                        "job_args={}".format(parsed_command[0]["arg"]),
+                    ],
+                }
+            ]
+            if schedule_type == "once":
+                schedule_date = request.POST.get("schedule")
+                schedule_parsed[0]["arg"].append("once={}".format(schedule_date))
+                schedule_parsed[0]["arg"].append("once_fmt=%Y-%m-%d %H:%M:%S")
+            else:
+                cron = request.POST.get("cron")
+                schedule_parsed[0]["arg"].append("cron={}".format(cron))
+            ret = run_raw(schedule_parsed)
+            formatted = nested_output.output(ret)
+            conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
+            html = conv.convert(formatted, ensure_trailing_newline=True)
+            return HttpResponse(html)
+
         ret = run_raw(parsed_command)
         formatted = "\n"
         if parsed_command[0]["fun"] in ["state.apply", "state.highstate"]:
@@ -434,76 +463,8 @@ def run(request):
             for state, out in ret.items():
                 minion_ret = nested_output.output({state: out})
                 formatted += minion_ret + "\n\n"
-        return JsonResponse({"results": formatted})
-
-    if request.POST.get("function"):
-        client = request.POST.get("client")
-        tgt_type = request.POST.get("target-type")
-        tgt = request.POST.get("target")
-        fun = request.POST["function"]
-        args = ()
-        kwargs = {}
-
-        # Dry run button
-        if request.POST.get("test"):
-            kwargs["test"] = True
-
-        # Arguments
-        if request.POST.get("args") and request.POST["args"] != "":
-            args = [request.POST["args"]]
-
-        # Kwargs
-        if request.POST.get("keyword") and request.POST.get("argument"):
-            kwargs.update({request.POST["keyword"]: request.POST["argument"]})
-
-        # Schedules.
-        if request.POST.get("schedule_type"):
-            schedule_type = request.POST.get("schedule_type")
-            schedule_name = request.POST.get(
-                "schedule_name", datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-            )
-            if schedule_type == "once":
-                schedule_date = request.POST.get("schedule")
-                ret = create_schedules(
-                    tgt,
-                    name=schedule_name,
-                    function=fun,
-                    once=schedule_date,
-                    once_fmt="%Y-%m-%d %H:%M:%S",
-                    *args,
-                    **kwargs
-                )
-            else:
-                schedule_cron = request.POST.get("cron")
-                ret = create_schedules(
-                    tgt,
-                    name=schedule_name,
-                    cron=schedule_cron,
-                    function=fun,
-                    *args,
-                    **kwargs
-                )
-            formatted = nested_output.output(ret)
-            conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
-            html = conv.convert(formatted, ensure_trailing_newline=True)
-            return HttpResponse(html)
-
-        if client == "local":
-            ret = run_job(tgt, fun, args, kwargs=kwargs)
-        elif client == "runner":
-            ret = run_runner(fun, args, kwargs=kwargs)
-        elif client == "wheel":
-            ret = run_wheel(fun, args, kwarg=None, **kwargs)
-
-        formatted = "\n"
-        if fun in ["state.apply", "state.highstate"]:
-            for state, out in ret.items():
-                minion_ret = highstate_output.output({state: out})
-                formatted += minion_ret + "\n\n"
-        else:
-            for state, out in ret.items():
-                minion_ret = nested_output.output({state: out})
-                formatted += minion_ret + "\n\n"
+        if request.POST.get("cli"):
+            return JsonResponse({"results": formatted})
         conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
         html = conv.convert(formatted, ensure_trailing_newline=True)
         return HttpResponse(html)

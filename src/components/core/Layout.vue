@@ -129,8 +129,8 @@
             <v-icon v-else>notifications</v-icon>
           </v-badge>
         </template>
-        <v-card max-width="500px" max-height="700px">
-          <v-list>
+        <v-card max-width="500px">
+          <v-list max-height="700px">
             <v-list-item
                 v-for="(item, i) in messages"
                 :key="i"
@@ -146,6 +146,10 @@
               </v-list-item-content>
             </v-list-item>
           </v-list>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="messages = []">Clear</v-btn>
+          </v-card-actions>
         </v-card>
       </v-menu>
       <v-menu bottom left offset-y offset-x close-on-click>
@@ -346,7 +350,7 @@
       },
       theme() {
         return this.$store.state.theme
-      }
+      },
     },
 
   }
@@ -369,8 +373,9 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #555;
   }
+
   span .v-chip__content {
-  white-space: nowrap;
-}
+    white-space: nowrap;
+  }
 
 </style>

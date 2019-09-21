@@ -25,14 +25,26 @@
                 <v-card-text>
                   <v-container>
                     <v-row>
-                      <v-col cols="12" sm="6" lg="1" align-self="center" class="text-right">
+                      <v-col sm="3" lg="1" align-self="center" class="text-right">
                         <span>Client Type:</span>
                       </v-col>
-                      <v-col cols="12" sm="6" lg="2">
+                      <v-col sm="3" lg="1">
                         <v-select
                             :items="client"
                             v-model="selected_client"
                         ></v-select>
+                      </v-col>
+                      <v-col sm="3" lg="1" offset-lg="1" v-if="!client_batch && !scheduleSwitch">
+                        <v-checkbox v-model="client_async" label="Async" color="primary"></v-checkbox>
+                      </v-col>
+                      <v-col sm="3" lg="1" :offset-lg="client_batch ? 3: 1" v-if="selected_client === 'local' && !scheduleSwitch">
+                        <v-checkbox v-model="client_batch" label="Batch" color="primary"></v-checkbox>
+                      </v-col>
+                      <v-col sm="3" lg="1" v-if="selected_client === 'local' && client_batch && !scheduleSwitch">
+                        <v-text-field label="Batch" v-model="batch"></v-text-field>
+                      </v-col>
+                      <v-col sm="3" lg="1" :offset-lg="client_batch ? 0: 1" v-if="selected_client === 'local' && !scheduleSwitch">
+                        <v-text-field label="Timeout" v-model="timeout" type="number"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -49,13 +61,8 @@
                         <v-text-field
                             label="Target"
                             v-model="target"
-                            v-if="selected_client === 'local' && selected_target_type=== 'custom'"
+                            v-if="selected_client === 'local'"
                         ></v-text-field>
-                        <v-select
-                            :items="minions"
-                            v-model="target"
-                            v-if="selected_client === 'local' && selected_target_type=== 'single'"
-                        ></v-select>
                       </v-col>
                       <v-col lg="2">
                         <v-combobox
@@ -85,11 +92,8 @@
                       <v-col lg="2">
                         <v-text-field label="Arguments" v-model="args"></v-text-field>
                       </v-col>
-                      <v-col lg="2">
-                        <v-text-field label="Keyword"></v-text-field>
-                      </v-col>
-                      <v-col lg="2">
-                        <v-text-field label="Argument"></v-text-field>
+                      <v-col lg="3">
+                        <v-text-field label="Keyword Arguments" v-model="kwargs"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row dense>
@@ -97,7 +101,8 @@
                         <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
                                   v-show="selected_client === 'local'"></v-switch>
                         <div v-show="scheduleSwitch">
-                          <v-text-field label="Schedule name" v-model="scheduleName" style="width: 350px;"></v-text-field>
+                          <v-text-field label="Schedule name" v-model="scheduleName"
+                                        style="width: 350px;"></v-text-field>
                           <v-radio-group v-model="scheduleType" class="mt-0">
                             <v-radio value="once" color="primary">
                               <template v-slot:label>
@@ -203,23 +208,34 @@
         tab: null,
         client: [
           { text: "Local", value: "local" },
-          { text: "Local Runner", value: "runner" },
+          { text: "Runner", value: "runner" },
           { text: "Wheel", value: "wheel" },
         ],
         selected_client: "local",
+        client_async: false,
+        client_batch: false,
         minions: [],
         functions: null,
         selectedFunction: null,
         description: null,
+        batch: null,
+        timeout: null,
         target_type: [
-          { text: "Single", value: "single" },
-          { text: "Group", value: "group" },
-          { text: "Custom", value: "custom" },
+          { text: "glob", value: "glob" },
+          { text: "pcre", value: "--pcre" },
+          { text: "list", value: "--list" },
+          { text: "grain", value: "--grain" },
+          { text: "grain_pcre", value: "--grain-pcre" },
+          { text: "pillar", value: "--pillar" },
+          { text: "pillar_pcre", value: "--pillar-pcre" },
+          { text: "range", value: "--range" },
+          { text: "compound", value: "--compound" },
+          { text: "nodegroup", value: "--nodegroup" },
         ],
-        selected_target_type: "custom",
+        selected_target_type: "glob",
         target: "",
         args: "",
-        kwargs: {},
+        kwargs: "",
         results: "",
         termKey: 0,
         cron: null,
@@ -241,18 +257,18 @@
         })
       },
       runJob(test = false) {
-        let formData = new FormData
         let action = "Running"
-        formData.set("client", this.selected_client)
-        if (this.selected_client === "local") formData.set("target", this.target)
-        formData.set("function", this.selectedFunction.name || this.selectedFunction)
-        if (test === true) this.kwargs.test = "True"
-        if (Object.keys(this.kwargs).length !== 0 && this.kwargs.constructor === Object) {
-          for (let key in this.kwargs) {
-            formData.set(key, this.kwargs[key])
-          }
+        let command = `salt --client=${this.client_batch ? "local_batch" : this.selected_client}${this.client_async && !this.client_batch ? "_async" : ""}`
+        if (this.selected_client === "local") {
+          if (this.selected_target_type !== "glob") command += " " + this.selected_target_type + " " + this.target
+          else command += " " + this.target
         }
-        if (this.args) formData.set("args", this.args)
+        command += ` ${this.selectedFunction.hasOwnProperty('name') ? this.selectedFunction.name : this.selectedFunction}`
+        command += `${this.args ? ` ${this.args}` : ""}${test === true ? " test=True" : ""}${this.kwargs ? ` ${this.kwargs}` : ""}`
+        command += `${this.client_batch && this.batch ? ` -b ${this.batch}` : ""}${this.timeout ? ` -t ${this.timeout}` : ""}`
+        let formData = new FormData
+        formData.set("raw", true)
+        formData.set("command", command)
         if (this.scheduleSwitch && this.scheduleType) {
           action = "Scheduling"
           formData.set("schedule_type", this.scheduleType)
@@ -263,8 +279,9 @@
             formData.set("cron", this.cron.currentValue)
           }
         }
-        this.$toast(action + " " + this.selectedFunction.name || this.selectedFunction + " on " + this.target)
+        this.$toast(action + " " + command)
         this.$http.post("api/run/", formData).then(response => {
+          console.log(response.data)
           this.results = response.data + this.results
         })
       },

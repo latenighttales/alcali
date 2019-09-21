@@ -26,6 +26,28 @@ class RawCommand:
             if len(args) < 2:
                 return "Command or target not specified"
 
+            # Batch option
+            low["batch"] = None
+            if self.client == "local_batch":
+                batch_index = None
+                for index, arg in enumerate(args):
+                    if arg in ["-b", "--batch", "--batch-size"]:
+                        low["batch"] = args[index + 1]
+                        batch_index = index
+                if batch_index:
+                    args.pop(batch_index)
+                    args.pop(batch_index)
+            # Timeout option
+            timeout_index = None
+            for index, arg in enumerate(args):
+                if arg in ["-t", "--timeout"]:
+                    low["timeout"] = int(args[index + 1])
+                    timeout_index = index
+            if timeout_index:
+                args.pop(timeout_index)
+                args.pop(timeout_index)
+
+            # take care of targeting.
             target_dict = {
                 "pcre": ["-E", "--pcre"],
                 "list": ["-L", "--list"],
@@ -45,8 +67,6 @@ class RawCommand:
             low["tgt_type"] = self.options["expr_form"]
             low["tgt"] = args.pop(0)
             low["fun"] = args.pop(0)
-            # TODO
-            low["batch"] = None
             low["arg"] = args
 
         elif self.client.startswith("runner") or self.client.startswith("wheel"):

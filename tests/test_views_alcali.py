@@ -224,9 +224,8 @@ def test_run_scheduled_cron(admin_client, jwt):
     response = admin_client.post(
         "/api/run/",
         {
-            "target": "*",
-            "function": "test.ping",
-            "client": "local",
+            "raw": "true",
+            "command": "salt * test.ping",
             "schedule": "true",
             "schedule_type": "cron",
             "cron": "* * * * *",
@@ -241,9 +240,8 @@ def test_run_scheduled_once(admin_client, jwt):
     response = admin_client.post(
         "/api/run/",
         {
-            "target": "*",
-            "function": "test.ping",
-            "client": "local",
+            "raw": "true",
+            "command": "salt * test.ping",
             "schedule": "{}".format(
                 datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             ),

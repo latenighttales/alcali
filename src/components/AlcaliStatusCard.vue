@@ -8,7 +8,6 @@
           <td>Salt WebSocket</td>
           <td class="text-right">
             <v-chip
-                class="ma-2"
                 :color="wsStatus ? 'green': 'red'"
                 text-color="white"
             >
@@ -19,10 +18,6 @@
         <tr v-for="(count, status) in stats" :key="status">
           <td>{{ status }}</td>
           <td class="text-right">{{ count }}</td>
-        </tr>
-        <tr>
-          <td>Jobs Running</td>
-          <td class="text-right">{{ currentjobs }}</td>
         </tr>
         </tbody>
       </v-simple-table>
@@ -39,7 +34,6 @@
     data() {
       return {
         stats: {},
-        currentjobs: 0
       }
     },
     mounted() {

@@ -90,29 +90,9 @@ def refresh_minion(minion_id):
             )
 
 
-def run_job(tgt, fun, args, kwargs=None):
-    api = api_connect()
-    api_ret = api.local(tgt, fun, arg=args, kwarg=kwargs)
-    return api_ret["return"][0]
-
-
 def run_raw(load):
     api = api_connect()
     api_ret = api.low(load)
-    api_ret = api_ret["return"][0]
-    return api_ret
-
-
-def run_runner(fun, args, kwargs=None):
-    api = api_connect()
-    api_ret = api.runner(fun, arg=args, kwarg=kwargs)
-    api_ret = api_ret["return"][0]
-    return api_ret
-
-
-def run_wheel(fun, args, kwarg=None, **kwargs):
-    api = api_connect()
-    api_ret = api.wheel(fun, arg=args, kwarg=kwarg, **kwargs)
     api_ret = api_ret["return"][0]
     return api_ret
 
@@ -215,30 +195,3 @@ def manage_schedules(action, name, minion):
             #         loaded_job["enabled"] = False
             #     sched.job = json.dumps(loaded_job)
             #     sched.save()
-
-
-def create_schedules(
-    target,
-    *args,
-    function=None,
-    cron=None,
-    once=None,
-    once_fmt=None,
-    name=None,
-    **kwargs
-):
-    comm_inst = RawCommand(
-        "salt {} schedule.add {} function='{}'".format(target, name, function)
-    )
-    parsed = comm_inst.parse()
-    if args:
-        parsed[0]["arg"].append("job_args={}".format(args))
-    if kwargs:
-        parsed[0]["arg"].append("job_kwargs={}".format(kwargs))
-    if cron:
-        parsed[0]["arg"].append("cron={}".format(cron))
-    if once and once_fmt:
-        parsed[0]["arg"].append("once={}".format(once))
-        parsed[0]["arg"].append("once_fmt={}".format(once_fmt))
-    ret = run_raw(parsed)
-    return ret
