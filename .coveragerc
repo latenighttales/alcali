@@ -1,10 +1,13 @@
 [run]
 omit =
-    alcali/config/settings/*
-    alcali/web/apps.py
-    alcali/web/migrations/*
-    alcali/tests/*
-    alcali/web/backend/pyapi.py
-    alcali/config/wsgi.py
-    alcali/manage.py
-    alcali/web/utils/output/*
+    config/settings.py
+    api/apps.py
+    api/permissions.py
+    api/migrations/*
+    tests/*
+    api/pyapi.py
+    config/wsgi.py
+    manage.py
+    api/utils/output/*
+    setup.py
+    bin/__init__.py

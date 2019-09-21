@@ -1,13 +1,12 @@
 ansi2html==1.5.2
-Django==2.2.4
+Django==2.2.5
+django-cors-headers==3.1.0
 django-currentuser==0.4.2
+djangorestframework==3.10.2
+djangorestframework-simplejwt==4.3.0
 gunicorn==19.9.0
-mysqlclient==1.4.4
-psycopg2==2.8.3
 python-dotenv==0.10.3
 pytz
-PyYAML==5.1.2
-pendulum==2.0.5
 requests==2.22.0
 salt-pepper==0.7.5
 whitenoise==4.1.3

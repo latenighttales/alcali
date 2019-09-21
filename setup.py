@@ -39,6 +39,5 @@ setup(
     ],
     install_requires=requirements,
     extras_require={"dev": dev_requirements},
-    entry_points={"console_scripts": ["alcali = alcali:manage"]},
-    scripts=["alcali/__init__.py"],
+    entry_points={"console_scripts": ["alcali = bin:manage"]},
 )

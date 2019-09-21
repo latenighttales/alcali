@@ -20,8 +20,6 @@ MASTER_MINION_ID=master # Master's minion id.
 
 
 # salt-api settings.
-SALT_USER=admin
-SALT_PASS=testytest
 SALT_URL=https://localhost:8080
 SALT_AUTH=alcali
 ```

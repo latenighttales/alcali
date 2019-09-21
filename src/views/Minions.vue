@@ -1,0 +1,59 @@
+<template>
+  <v-container>
+    <v-row>
+      <v-col sm="12" cols="12">
+        <MinionsTable :key="refreshKey"></MinionsTable>
+        <Fab v-if="fabs" :fabs="fabs" v-on:fab_action="fabAction"></Fab>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+  import MinionsTable from "../components/MinionsTable"
+  import Fab from "../components/core/Fab"
+
+  export default {
+    name: "Minions",
+    components: { Fab, MinionsTable },
+    data: () => ({
+      refreshKey: 0,
+      fabs: [
+        {
+          color: "pink",
+          action: "refreshMinions",
+          icon: "refresh",
+          tooltip: "Refresh all minions",
+        },
+        {
+          color: "orange",
+          action: "runAll",
+          icon: "playlist_play",
+          tooltip: "Run job on all minions",
+        },
+      ],
+    }),
+    methods: {
+      fabAction(action) {
+        this[action]()
+      },
+      refreshMinions() {
+        this.$toast("refreshing minions")
+        this.$http.post("/api/minions/refresh_minions/").then(() => {
+          this.$toast("minions refreshed")
+        }).then(() => {
+          this.refreshKey += 1
+        }).catch(function(error) {
+          alert(error)
+        })
+      },
+      runAll() {
+        this.$router.push("/run/?target=*")
+      },
+    },
+  }
+</script>
+
+<style scoped>
+
+</style>

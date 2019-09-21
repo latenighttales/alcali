@@ -268,7 +268,11 @@ yum install postgresql-devel
 Simply do:
 
 ```commandline
-pip install 'alcali>=2019.2.0,2019.3.0'
+pip install --user 'alcali>=2019.2.0,2019.3.0'
+# and for mysql/mariadb:
+pip install --user mysqlclient
+# for postgres:
+pip install --user psycopg2
 ```
 
 #### From Sources
@@ -276,7 +280,11 @@ pip install 'alcali>=2019.2.0,2019.3.0'
 ```commandline
 git clone https://github.com/latenighttales/alcali.git
 git checkout 2019.2.0
-pip install .
+pip install --user . 
+# and for mysql/mariadb:
+pip install --user mysqlclient
+# for postgres:
+pip install --user psycopg2
 ```
 
 ## Troubleshooting
