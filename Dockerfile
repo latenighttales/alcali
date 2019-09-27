@@ -1,4 +1,4 @@
-FROM python:3.7-stretch
+FROM python:3.7-slim-stretch
 
 MAINTAINER Matt Melquiond
 
@@ -7,8 +7,7 @@ ARG USER_ID=1000
 
 # Upgrade System and Install dependencies
 RUN apt-get update && \
-  apt-get upgrade -y -o DPkg::Options::=--force-confold && \
-  apt-get install -y -o DPkg::Options::=--force-confold netcat
+  apt-get install -y --no-install-recommends -o DPkg::Options::=--force-confold netcat libmariadbclient-dev libpq-dev build-essential
 
 # Upgrade pip
 RUN pip install --upgrade pip

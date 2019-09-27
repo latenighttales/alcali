@@ -1,6 +1,5 @@
 from shlex import split
 import json
-from json import JSONDecodeError
 
 
 class RawCommand:
@@ -76,7 +75,7 @@ class RawCommand:
                     key, value = arg.split("=", 1)
                     try:
                         low[key] = json.loads(value)
-                    except JSONDecodeError:
+                    except json.JSONDecodeError:
                         low[key] = value
                 else:
                     low.setdefault("arg", []).append(arg)
