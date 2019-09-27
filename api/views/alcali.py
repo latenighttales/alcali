@@ -86,7 +86,7 @@ class KeysViewSet(viewsets.ReadOnlyModelViewSet):
             kwargs = {"include_rejected": True, "include_denied": True}
         elif key_action == "reject":
             kwargs = {"include_accepted": True, "include_denied": True}
-        response = manage_key(key_action, key, kwargs)
+        manage_key(key_action, key, kwargs)
         return Response({"result": "{} on {}: done".format(key_action, key)})
 
 
