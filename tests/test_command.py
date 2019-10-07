@@ -51,7 +51,7 @@ def test_manage_token_reset(admin_user):
 def test_current_version():
     out = StringIO()
     call_command("current_version", stdout=out)
-    assert "alcali version 2019.2.1" in out.getvalue()
+    assert "alcali version 2018.3.2" in out.getvalue()
 
 
 def test_location():
