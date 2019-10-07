@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,9 +44,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.0284f74d.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.01803549.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -192,7 +192,7 @@
         
   <li class="md-tabs__item">
     
-      <a href=".." title="Home" class="md-tabs__link md-tabs__link--active">
+      <a href=".." class="md-tabs__link md-tabs__link--active">
         Home
       </a>
     
@@ -214,8 +214,23 @@
   
     <li class="md-tabs__item">
       
-        <a href="../views/overview/" title="Views" class="md-tabs__link">
+        <a href="../views/overview/" class="md-tabs__link">
           Views
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../screenshots/" class="md-tabs__link">
+          Screenshots
         </a>
       
     </li>
@@ -230,7 +245,7 @@
   </div>
 </nav>
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -362,7 +377,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#first-run" title="First Run" class="md-nav__link">
+  <a href="#first-run" class="md-nav__link">
     First Run
   </a>
   
@@ -370,14 +385,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#apply-migrations" title="Apply migrations" class="md-nav__link">
+  <a href="#apply-migrations" class="md-nav__link">
     Apply migrations
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#create-a-super-user" title="Create a super user" class="md-nav__link">
+  <a href="#create-a-super-user" class="md-nav__link">
     Create a super user
   </a>
   
@@ -389,7 +404,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#run" title="Run" class="md-nav__link">
+  <a href="#run" class="md-nav__link">
     Run
   </a>
   
@@ -580,6 +595,54 @@
 
 
   <li class="md-nav__item">
+    <a href="../troubleshooting/" title="Troubleshooting" class="md-nav__link">
+      Troubleshooting
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Screenshots
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Screenshots
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../screenshots/" title="" class="md-nav__link">
+      
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../contribute/" title="Contribute" class="md-nav__link">
       Contribute
     </a>
@@ -619,7 +682,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#first-run" title="First Run" class="md-nav__link">
+  <a href="#first-run" class="md-nav__link">
     First Run
   </a>
   
@@ -627,14 +690,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#apply-migrations" title="Apply migrations" class="md-nav__link">
+  <a href="#apply-migrations" class="md-nav__link">
     Apply migrations
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#create-a-super-user" title="Create a super user" class="md-nav__link">
+  <a href="#create-a-super-user" class="md-nav__link">
     Create a super user
   </a>
   
@@ -646,7 +709,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#run" title="Run" class="md-nav__link">
+  <a href="#run" class="md-nav__link">
     Run
   </a>
   
@@ -677,12 +740,12 @@
 </div>
 <p>First make sure that Alcali is correctly installed.</p>
 <p>You can verify installation by running:</p>
-<div class="codehilite"><pre><span></span>alcali --version
+<div class="codehilite"><pre><span></span>alcali current_version
 # alcali version 2019.2.1
 </pre></div>
 
 
-<p>You  can also check that Alcali can access <code>salt</code> database and that <a href="../configuration/">needed env var</a> are set by running:</p>
+<p>You  can also check that Alcali can access <code>salt</code> database and that <a href="../configuration/">needed env var</a> are set and loaded by running:</p>
 <div class="codehilite"><pre><span></span>alcali check
 # db: ok
 # env: ok
@@ -709,14 +772,27 @@
 <p>You will be prompted for your desired login, email address and password.</p>
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
 <p>Once migrations are applied and a super user is created, you can start the application.</p>
-<p>Locally:</p>
-<div class="codehilite"><pre><span></span>ENV_PATH=. alcali runserver 0.0.0.0:8000
+<p>Alcali use Gunicorn as a WSGI HTTP server. It is installed during the installation process of Alcali.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If the .env file is not in your current directory, prepend your command with <code>ENV_PATH=/path/to/env_file</code></p>
+</div>
+<p>If you installed Alcali from sources, at the root of the repository, run:</p>
+<div class="codehilite"><pre><span></span>gunicorn config.wsgi:application -w 4
+</pre></div>
+
+
+<p>If you installed Alcali using pip, run:</p>
+<div class="codehilite"><pre><span></span>gunicorn config.wsgi:application -w 4 --chdir $(alcali location)
 </pre></div>
 
 
 <p>In a docker container:</p>
-<div class="codehilite"><pre><span></span>docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.0
+<div class="codehilite"><pre><span></span>docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.1 bash -c &quot;gunicorn config.wsgi:application -w 4 --chdir $(alcali location)&quot;
 </pre></div>
+
+
+<p>Where FILE is the location of the <a href="../configuration/">.env file</a></p>
                 
                   
                 
@@ -837,7 +913,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.245445c6.js"></script>
+      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
