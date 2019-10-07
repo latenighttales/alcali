@@ -11,7 +11,7 @@ You can verify installation by running:
 
 ```commandline
 alcali current_version
-# alcali version 2019.2.1
+# alcali version 2019.2.2
 ```
 
 You  can also check that Alcali can access `salt` database and that [needed env var](configuration.md) are set and loaded by running:
@@ -70,6 +70,6 @@ gunicorn config.wsgi:application -w 4 --chdir $(alcali location)
 
 In a docker container:
 ```commandline
-docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.1 bash -c "gunicorn config.wsgi:application -w 4 --chdir $(alcali location)"
+docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.2 bash -c "gunicorn config.wsgi:application -w 4 --chdir $(alcali location)"
 ```
 Where FILE is the location of the [.env file](configuration.md)

@@ -7,4 +7,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # TODO: Dynamic
-        self.stdout.write("alcali version 2019.2.1")
+        self.stdout.write("alcali version 2019.2.2")

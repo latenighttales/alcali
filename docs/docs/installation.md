@@ -266,7 +266,8 @@ Otherwise, there is a [Formula](https://github.com/latenighttales/alcali-formula
 The official [Docker image](https://hub.docker.com/r/latenighttales/alcali) for Alcali comes with all dependencies pre-installed and ready-to-use with the latest version published on PyPI. Pull it with:
 
 ```commandline
-docker pull latenighttales/alcali:2019.2.1
+# you can specify which version: latenighttales/alcali:2018.3.2
+docker pull latenighttales/alcali:latest
 ```
 The `alcali` executable is provided as an entrypoint.
 
