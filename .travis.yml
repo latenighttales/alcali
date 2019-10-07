@@ -35,7 +35,6 @@ after_script:
 
 after_success:
   - docker-compose exec -u alcali web safety check
-  - docker-compose exec -u alcali web apt install git
   - docker-compose exec -u alcali -e CODECOV_TOKEN web codecov -X s3
 
 after_failure:

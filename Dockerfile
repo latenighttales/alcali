@@ -6,8 +6,9 @@ MAINTAINER Matt Melquiond
 ARG USER_ID=1000
 
 # Upgrade System and Install dependencies
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends -o DPkg::Options::=--force-confold netcat libmariadbclient-dev libpq-dev build-essential
+RUN apt-get update \
+  && seq 1 8 | xargs -I{} mkdir -p /usr/share/man/man{} \
+  && apt-get install -y --no-install-recommends -o DPkg::Options::=--force-confold netcat libmariadbclient-dev libpq-dev build-essential git
 
 # Upgrade pip
 RUN pip install --upgrade pip
