@@ -54,7 +54,12 @@ password: password
 
 and follow the [walkthrough](https://alcali.dev/walkthrough/).
 
-Once you're done, you can [install it](https://alcali.dev/installation/).
+Once you're done, you can [install it](https://alcali.dev/installation/) using the salt [formula](https://github.com/latenighttales/alcali-formula).
+
+## Screenshots
+
+See what it looks like [here](https://github.com/latenighttales/alcali/blob/2019.2/docs/docs/screenshots.md).
+
 ## Licence
 
 [MIT](LICENSE)
