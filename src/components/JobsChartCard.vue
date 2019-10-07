@@ -32,8 +32,8 @@
 </template>
 
 <script>
-  import Chart from "chart.js";
-  import gradientLinePlugin from "../assets/js/utils/chart-line-gradient";
+  import Chart from "chart.js"
+  import gradientLinePlugin from "../assets/js/utils/chart-line-gradient"
 
   export default {
     name: "JobsChartCard",
@@ -42,53 +42,52 @@
       return {
         filters: [{ text: "All", value: "all" }, { text: "Highstate", value: "highstate" }, {
           text: "Other",
-          value: "other"
+          value: "other",
         }],
         periods: [{ text: "Week", value: 7 }, { text: "Two Weeks", value: 14 }, { text: "Month", value: 30 }, {
           text: "Year",
-          value: 365
+          value: 365,
         }],
         jobchart: null,
         selectedFilter: null,
         selectedPeriod: null,
         labels: null,
-        chart_data:[]
-      };
+        chart_data: [],
+      }
     },
     mounted() {
-      this.createChart();
+      this.createChart()
     },
     methods: {
       loadData() {
-        let filter = this.selectedFilter == null ? "all" : this.selectedFilter.value;
-        let period = this.selectedPeriod == null ? 7 : this.selectedPeriod.value;
-        let params = { params: { fun: filter, period: period } };
+        let filter = this.selectedFilter == null ? "all" : this.selectedFilter.value
+        let period = this.selectedPeriod == null ? 7 : this.selectedPeriod.value
+        let params = { params: { fun: filter, period: period } }
         if (this.minion) {
-          params.params.id = this.minion;
+          params.params.id = this.minion
         }
         this.$http.get("api/jobs/graph", params).then(response => {
-          this.labels = response.data.labels;
-          this.jobchart.data.datasets[0].data = response.data.series[0];
-          this.jobchart.data.datasets[1].data = response.data.series[1];
-        }).then(() => {
-          return this.jobchart.update();
-        });
+          this.jobchart.data.labels = response.data.labels
+          this.jobchart.data.datasets[0].data = response.data.series[0]
+          this.jobchart.data.datasets[1].data = response.data.series[1]
+          this.jobchart.update()
+        })
       },
       createChart() {
-        let filter = this.selectedFilter == null ? "all" : this.selectedFilter.value;
-        let period = this.selectedPeriod == null ? 7 : this.selectedPeriod.value;
-        let params = { params: { fun: filter, period: period } };
+        let filter = this.selectedFilter == null ? "all" : this.selectedFilter.value
+        let period = this.selectedPeriod == null ? 7 : this.selectedPeriod.value
+        let params = { params: { fun: filter, period: period } }
         if (this.minion) {
-          params.params.id = this.minion;
+          params.params.id = this.minion
         }
         if (this.jobchart != null) {
-          this.jobchart.destroy();
+          this.jobchart.destroy()
         }
         this.$http.get("api/jobs/graph", params).then(response => {
-          this.labels = response.data.labels;
-          this.chart_data[0] = response.data.series[0];
-          this.chart_data[1] = response.data.series[1];
-          this.$refs.chart.height = 60;
+          this.labels = response.data.labels
+          this.chart_data[0] = response.data.series[0]
+          this.chart_data[1] = response.data.series[1]
+          this.$refs.chart.height = 60
           this.jobchart = new Chart(this.$refs.chart, {
             type: "line",
             data: {
@@ -99,46 +98,46 @@
                 data: this.chart_data[0], // fake data before update(needed for plugin).
                 fill: false,
                 colorStart: "rgba(0, 173, 238, 1.0)",
-                colorEnd: "rgba(231, 18, 143, 1.0)"
+                colorEnd: "rgba(231, 18, 143, 1.0)",
               }, {
                 lineTension: 0.1,
                 pointRadius: 1,
                 data: this.chart_data[1],
                 fill: false,
                 colorStart: "rgba(255, 255, 255, 1.0)",
-                colorEnd: "rgba(255, 0, 0, 1.0)"
-              }]
+                colorEnd: "rgba(255, 0, 0, 1.0)",
+              }],
             },
             options: {
               linearGradientLine: true,
               legend: {
-                display: false
+                display: false,
               },
               scales: {
                 xAxes: [{
                   gridLines: {
-                    display: true
-                  }
+                    display: true,
+                  },
                 }],
                 yAxes: [{
                   gridLines: {
-                    display: true
+                    display: true,
                   },
                   ticks: {
                     autoSkip: true,
                     beginAtZero: true,
-                    maxTicksLimit: 6
-                  }
-                }]
+                    maxTicksLimit: 6,
+                  },
+                }],
               },
-              responsive: true
+              responsive: true,
             },
-            plugins: [gradientLinePlugin]
-          });
-        });
-      }
-    }
-  };
+            plugins: [gradientLinePlugin],
+          })
+        })
+      },
+    },
+  }
 </script>
 
 <style scoped>

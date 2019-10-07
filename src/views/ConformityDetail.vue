@@ -17,16 +17,16 @@
 </template>
 
 <script>
-  import ConformityDetailCard from "../components/ConformityDetailCard";
-  import ConformityCard from "../components/ConformityCard";
+  import ConformityDetailCard from "../components/ConformityDetailCard"
+  import ConformityCard from "../components/ConformityCard"
 
   export default {
     name: "ConformityDetail",
     props: ["minion_id"],
-    components: {ConformityCard, ConformityDetailCard},
+    components: { ConformityCard, ConformityDetailCard },
     data() {
       return {
-        conformity: '',
+        conformity: "",
         succeeded: {},
         unchanged: {},
         failed: {},
@@ -45,8 +45,8 @@
           this.unchanged = response.data.unchanged
           this.failed = response.data.failed
         })
-      }
-    }
+      },
+    },
   }
 </script>
 

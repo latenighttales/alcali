@@ -5,11 +5,11 @@
 </template>
 
 <script>
-  import UserCard from "../components/mixins/UserCard";
+  import UserCard from "../components/mixins/UserCard"
 
   export default {
     name: "Users",
-    components: {UserCard},
+    components: { UserCard },
   }
 </script>
 

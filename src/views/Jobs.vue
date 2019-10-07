@@ -9,13 +9,13 @@
 </template>
 
 <script>
-  import JobsTable from "../components/JobsTable";
+  import JobsTable from "../components/JobsTable"
 
   export default {
     name: "Jobs",
     components: {
-      JobsTable
-    }
+      JobsTable,
+    },
   }
 
 </script>

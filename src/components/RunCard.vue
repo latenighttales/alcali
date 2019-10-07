@@ -37,13 +37,15 @@
                       <v-col sm="3" lg="1" offset-lg="1" v-if="!client_batch && !scheduleSwitch">
                         <v-checkbox v-model="client_async" label="Async" color="primary"></v-checkbox>
                       </v-col>
-                      <v-col sm="3" lg="1" :offset-lg="client_batch ? 3: 1" v-if="selected_client === 'local' && !scheduleSwitch">
+                      <v-col sm="3" lg="1" :offset-lg="client_batch ? 3: 1"
+                             v-if="selected_client === 'local' && !scheduleSwitch">
                         <v-checkbox v-model="client_batch" label="Batch" color="primary"></v-checkbox>
                       </v-col>
                       <v-col sm="3" lg="1" v-if="selected_client === 'local' && client_batch && !scheduleSwitch">
                         <v-text-field label="Batch" v-model="batch"></v-text-field>
                       </v-col>
-                      <v-col sm="3" lg="1" :offset-lg="client_batch ? 0: 1" v-if="selected_client === 'local' && !scheduleSwitch">
+                      <v-col sm="3" lg="1" :offset-lg="client_batch ? 0: 1"
+                             v-if="selected_client === 'local' && !scheduleSwitch">
                         <v-text-field label="Timeout" v-model="timeout" type="number"></v-text-field>
                       </v-col>
                     </v-row>
@@ -89,81 +91,89 @@
                           </template>
                         </v-combobox>
                       </v-col>
-                      <v-col lg="2">
+                      <v-col lg="3">
                         <v-text-field label="Arguments" v-model="args"></v-text-field>
                       </v-col>
-                      <v-col lg="3">
+                      <v-col lg="4">
                         <v-text-field label="Keyword Arguments" v-model="kwargs"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row dense>
-                      <v-col sm="12">
+                      <v-col sm="3">
                         <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
                                   v-show="selected_client === 'local'"></v-switch>
-                        <div v-show="scheduleSwitch">
-                          <v-text-field label="Schedule name" v-model="scheduleName"
-                                        style="width: 350px;"></v-text-field>
-                          <v-radio-group v-model="scheduleType" class="mt-0">
-                            <v-radio value="once" color="primary">
-                              <template v-slot:label>
-                                <span><strong>Once:  </strong></span>
-                                <v-row>
-                                  <v-col sm="4" class="ml-2">
-                                    <v-menu
-                                        v-model="dateMenu"
-                                        :close-on-content-click="false"
-                                        transition="scale-transition"
-                                        offset-y
-                                        full-width
-                                        min-width="290px"
-                                    >
-                                      <template v-slot:activator="{ on }">
-                                        <v-text-field
-                                            v-model="scheduleDate"
-                                            readonly
-                                            v-on="on"
-                                        ></v-text-field>
-                                      </template>
-                                      <v-date-picker :min="scheduleDate" v-model="scheduleDate"
-                                                     @input="dateMenu = false"></v-date-picker>
-                                    </v-menu>
-                                  </v-col>
-                                  <v-col sm="4">
-                                    <v-menu
-                                        ref="menu"
-                                        v-model="timeMenu"
-                                        :close-on-content-click="false"
-                                        :nudge-right="40"
-                                        transition="scale-transition"
-                                        offset-y
-                                        full-width
-                                        max-width="290px"
-                                        min-width="290px"
-                                    >
-                                      <template v-slot:activator="{ on }">
-                                        <v-text-field
-                                            v-model="scheduleTime"
-                                            readonly
-                                            v-on="on"
-                                        ></v-text-field>
-                                      </template>
-                                      <v-time-picker
-                                          v-if="timeMenu"
+                      </v-col>
+                      <v-col sm="3">
+                        <v-switch v-model="pillarSwitch" label="Pillar" color="primary"
+                                  v-show="selected_client === 'local'"></v-switch>
+                      </v-col>
+                      <v-col sm="12" v-show="pillarSwitch">
+                        <codemirror v-model="code" :options="cmOptions"></codemirror>
+                      </v-col>
+                      <v-col sm="12" v-show="pillarSwitch">
+                        <span v-html="pillarRendered"></span>
+                      </v-col>
+                      <v-col sm="12" v-show="scheduleSwitch">
+                        <v-text-field label="Schedule name" v-model="scheduleName"
+                                      style="width: 350px;"></v-text-field>
+                        <v-radio-group v-model="scheduleType" class="mt-0">
+                          <v-radio value="once" color="primary">
+                            <template v-slot:label>
+                              <span><strong>Once:  </strong></span>
+                              <v-row>
+                                <v-col sm="4" class="ml-2">
+                                  <v-menu
+                                      v-model="dateMenu"
+                                      :close-on-content-click="false"
+                                      transition="scale-transition"
+                                      offset-y
+                                      min-width="290px"
+                                  >
+                                    <template v-slot:activator="{ on }">
+                                      <v-text-field
+                                          v-model="scheduleDate"
+                                          readonly
+                                          v-on="on"
+                                      ></v-text-field>
+                                    </template>
+                                    <v-date-picker :min="scheduleDate" v-model="scheduleDate"
+                                                   @input="dateMenu = false"></v-date-picker>
+                                  </v-menu>
+                                </v-col>
+                                <v-col sm="4">
+                                  <v-menu
+                                      ref="menu"
+                                      v-model="timeMenu"
+                                      :close-on-content-click="false"
+                                      :nudge-right="40"
+                                      transition="scale-transition"
+                                      offset-y
+                                      max-width="290px"
+                                      min-width="290px"
+                                  >
+                                    <template v-slot:activator="{ on }">
+                                      <v-text-field
                                           v-model="scheduleTime"
-                                          full-width
-                                      ></v-time-picker>
-                                    </v-menu>
-                                  </v-col>
-                                </v-row>
-                              </template>
-                            </v-radio>
-                            <v-radio value="recurring" color="primary">
-                              <template v-slot:label>
-                                <div><strong>Recurring: </strong> Every <span id="cron"></span></div>
-                              </template>
-                            </v-radio>
-                          </v-radio-group>
-                        </div>
+                                          readonly
+                                          v-on="on"
+                                      ></v-text-field>
+                                    </template>
+                                    <v-time-picker
+                                        v-if="timeMenu"
+                                        v-model="scheduleTime"
+                                        full-width
+                                    ></v-time-picker>
+                                  </v-menu>
+                                </v-col>
+                              </v-row>
+                            </template>
+                          </v-radio>
+                          <v-radio value="recurring" color="primary">
+                            <template v-slot:label>
+                              <div><strong>Recurring: </strong> Every <span id="cron"></span></div>
+                            </template>
+                          </v-radio>
+                        </v-radio-group>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -198,13 +208,43 @@
 
   import TerminalCard from "./TerminalCard"
   import CronUI from "../assets/js/utils/cron-ui"
+  // require component
+  import { codemirror } from "vue-codemirror"
+
+  import "codemirror/addon/display/autorefresh.js"
+  import "codemirror/addon/fold/foldcode.js"
+  import "codemirror/addon/fold/brace-fold.js"
+  import "codemirror/addon/fold/foldgutter.js"
+  import "codemirror/addon/fold/indent-fold.js"
+  import "codemirror/mode/javascript/javascript.js"
+
+  // require styles
+  import "codemirror/lib/codemirror.css"
+  // language js
+  import "codemirror/mode/yaml/yaml.js"
+  // theme css
+  import "../assets/css/made-of-code.css"
+
+  import yaml from "js-yaml"
 
   export default {
     name: "RunCard",
-    components: { TerminalCard },
+    components: { TerminalCard, codemirror },
     data() {
       return {
         scheduleSwitch: false,
+        pillarSwitch: false,
+        code: "# Type valid yaml to override pillars\n\n\n",
+        cmOptions: {
+          tabSize: 4,
+          mode: "yaml",
+          theme: "made-of-code",
+          line: true,
+          autoRefresh: true,
+          lineNumbers: false,
+          foldGutter: true,
+          gutters: ["CodeMirror-foldgutter"],
+        },
         tab: null,
         client: [
           { text: "Local", value: "local" },
@@ -263,8 +303,9 @@
           if (this.selected_target_type !== "glob") command += " " + this.selected_target_type + " " + this.target
           else command += " " + this.target
         }
-        command += ` ${this.selectedFunction.hasOwnProperty('name') ? this.selectedFunction.name : this.selectedFunction}`
+        command += ` ${this.selectedFunction.hasOwnProperty("name") ? this.selectedFunction.name : this.selectedFunction}`
         command += `${this.args ? ` ${this.args}` : ""}${test === true ? " test=True" : ""}${this.kwargs ? ` ${this.kwargs}` : ""}`
+        command += `${this.pillarSwitch ? ` pillar='${this.pillarRendered}'` : ""}`
         command += `${this.client_batch && this.batch ? ` -b ${this.batch}` : ""}${this.timeout ? ` -t ${this.timeout}` : ""}`
         let formData = new FormData
         formData.set("raw", true)
@@ -281,7 +322,6 @@
         }
         this.$toast(action + " " + command)
         this.$http.post("api/run/", formData).then(response => {
-          console.log(response.data)
           this.results = response.data + this.results
         })
       },
@@ -294,6 +334,9 @@
         return this.functions.filter((item) => {
           return item.type === this.selected_client
         })
+      },
+      pillarRendered: function() {
+        return `${JSON.stringify(yaml.safeLoad(this.code)=== null ? {}: yaml.safeLoad(this.code))}`
       },
     },
     mounted() {

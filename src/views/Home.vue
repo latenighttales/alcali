@@ -28,20 +28,20 @@
 <script>
   // @ is an alias to /src
 
-  import KeysStatusCard from "../components/KeysStatusCard";
-  import JobsChartCard from "../components/JobsChartCard";
-  import AlcaliStatusCard from "../components/AlcaliStatusCard";
-  import ConformityChart from "../components/ConformityChart";
-  import JobsTable from "../components/JobsTable";
+  import KeysStatusCard from "../components/KeysStatusCard"
+  import JobsChartCard from "../components/JobsChartCard"
+  import AlcaliStatusCard from "../components/AlcaliStatusCard"
+  import ConformityChart from "../components/ConformityChart"
+  import JobsTable from "../components/JobsTable"
 
   export default {
-    name: 'home',
+    name: "home",
     components: {
       JobsTable,
       ConformityChart,
       AlcaliStatusCard,
       KeysStatusCard,
       JobsChartCard,
-    }
+    },
   }
 </script>

@@ -455,3 +455,16 @@ def run(request):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def verify(request):
+    if request.POST.get("username") and request.POST.get("password"):
+        try:
+            user = User.objects.get(username=request.POST.get("username"))
+        except User.DoesNotExist:
+            return HttpResponse("Unauthorized", status=401)
+        if request.POST.get("password") == user.user_settings.token:
+            return Response({request.POST.get("username"): None})
+        return HttpResponse("Unauthorized", status=401)

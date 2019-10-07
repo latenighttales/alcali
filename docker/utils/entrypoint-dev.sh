@@ -6,6 +6,6 @@ echo "Waiting for $DB_HOST"
 
 # Migrate database and create default user
 python manage.py migrate
-python manage.py shell -c "from django.contrib.auth.models import User; User.objects.filter(username='admin').count() or User.objects.create_superuser('admin', 'admin@example.com', 'password')"
+python manage.py shell -c "from django.contrib.auth.models import User; User.objects.filter(username='admin').count() or User.objects.create_superuser('admin', 'admin@example.com', 'password', first_name='admin', last_name='user')"
 
 exec "$@"
