@@ -24,14 +24,14 @@
           <v-btn text small class="text-none" :to="'/minions/'+item.minion_id">{{ item.minion_id }}</v-btn>
         </template>
         <template v-slot:item.conformity="{ item }">
-          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity == null ? 'unknown': item.conformity }}
+          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity == null ? "unknown": item.conformity }}
           </v-chip>
         </template>
         <template v-slot:item.last_job="{ item }">
-          {{item.last_job === null ? '': new Date(item.last_job).toLocaleString('en-GB')}}
+          {{item.last_job === null ? "": new Date(item.last_job).toLocaleString("en-GB")}}
         </template>
         <template v-slot:item.last_highstate="{ item }">
-          {{item.last_highstate === null ? '': new Date(item.last_highstate).toLocaleString('en-GB')}}
+          {{item.last_highstate === null ? "": new Date(item.last_highstate).toLocaleString("en-GB")}}
         </template>
         <template v-slot:item.action="{ item }">
           <div class="text-center">
@@ -118,18 +118,18 @@
     name: "MinionsTable",
     data() {
       return {
-        search: '',
+        search: "",
         dialog: false,
         headers: [
-          {text: 'Minion Id', value: 'minion_id'},
-          {text: 'Highstate Conformity', value: 'conformity'},
-          {text: 'F.Q.D.N', value: 'fqdn'},
-          {text: 'O.S', value: 'os'},
-          {text: 'O.S Version', value: 'oscodename'},
-          {text: 'Kernel', value: 'kernelrelease'},
-          {text: 'Last Job', value: 'last_job'},
-          {text: 'Last Highstate', value: 'last_highstate'},
-          {text: 'Actions', value: 'action', sortable: false},
+          { text: "Minion Id", value: "minion_id" },
+          { text: "Highstate Conformity", value: "conformity" },
+          { text: "F.Q.D.N", value: "fqdn" },
+          { text: "O.S", value: "os" },
+          { text: "O.S Version", value: "oscodename" },
+          { text: "Kernel", value: "kernelrelease" },
+          { text: "Last Job", value: "last_job" },
+          { text: "Last Highstate", value: "last_highstate" },
+          { text: "Actions", value: "action", sortable: false },
         ],
         minions: [],
         target: null,
@@ -144,12 +144,12 @@
         this.$http.get("api/minions/").then(response => {
           function addedGrains(data) {
             data.forEach(min => {
-              let grain = JSON.parse(min.grain);
+              let grain = JSON.parse(min.grain)
               for (let key in grain) {
-                min[key] = grain[key];
+                min[key] = grain[key]
               }
-            });
-            return data;
+            })
+            return data
           }
 
           this.minions = addedGrains(response.data)
@@ -158,15 +158,15 @@
       },
       boolRepr(bool) {
         if (bool === true) {
-          return 'green'
+          return "green"
         } else if (bool === false) {
-          return 'red'
-        } else return 'primary'
+          return "red"
+        } else return "primary"
       },
       refreshMinion(minion_id) {
         this.$toast("refreshing " + minion_id)
         let formData = new FormData
-        formData.set('minion_id', minion_id)
+        formData.set("minion_id", minion_id)
         this.$http.post("/api/minions/refresh_minions/", formData).then(response => {
           this.$toast(response.data.result)
         })
@@ -181,8 +181,8 @@
       showDialog(minion_id) {
         this.target = minion_id
         this.dialog = true
-      }
-    }
+      },
+    },
   }
 </script>
 

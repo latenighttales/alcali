@@ -10,11 +10,11 @@ First make sure that Alcali is correctly installed.
 You can verify installation by running:
 
 ```commandline
-alcali --version
+alcali current_version
 # alcali version 2019.2.1
 ```
 
-You  can also check that Alcali can access `salt` database and that [needed env var](configuration.md) are set by running:
+You  can also check that Alcali can access `salt` database and that [needed env var](configuration.md) are set and loaded by running:
 
 ```commandline
 alcali check
@@ -46,24 +46,30 @@ alcali createsuperuser
 ```
 You will be prompted for your desired login, email address and password.
 
-### Collectstatic
-
-Run:
-
-```commandline
-alcali collectstatic
-```
 ## Run
 
 Once migrations are applied and a super user is created, you can start the application.
 
-Locally:
+Alcali use Gunicorn as a WSGI HTTP server. It is installed during the installation process of Alcali.
+
+!!!warning
+    If the .env file is not in your current directory, prepend your command with `ENV_PATH=/path/to/env_file`
+
+If you installed Alcali from sources, at the root of the repository, run:
 
 ```commandline
-ENV_PATH=. alcali runserver 0.0.0.0:8000
+gunicorn config.wsgi:application -w 4
+```
+
+
+If you installed Alcali using pip, run:
+
+```commandline
+gunicorn config.wsgi:application -w 4 --chdir $(alcali location)
 ```
 
 In a docker container:
 ```commandline
-docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.0
+docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.1 bash -c "gunicorn config.wsgi:application -w 4 --chdir $(alcali location)"
 ```
+Where FILE is the location of the [.env file](configuration.md)

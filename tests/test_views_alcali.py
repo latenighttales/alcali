@@ -1,4 +1,5 @@
 import datetime
+import os
 
 import pytest
 from django.urls import reverse
@@ -285,3 +286,27 @@ def test_search_job(admin_client, dummy_state, dummy_jid, minion_master, jwt):
     response = admin_client.get("/api/search/?q=20190507190955945844", **jwt)
     assert response.json()["query"] == "20190507190955945844"
     assert response.json()["jobs"][0]["jid"] == dummy_state.jid
+
+
+@pytest.mark.django_db()
+def test_verify_token(admin_client, admin_user, jwt):
+    response = admin_client.post(
+        "/api/token/verify/",
+        {"username": admin_user.username, "password": admin_user.user_settings.token},
+        **jwt
+    )
+    assert response.json()[admin_user.username] is None
+
+    response = admin_client.post(
+        "/api/token/verify/",
+        {"username": "wrong_username", "password": admin_user.user_settings.token},
+        **jwt
+    )
+    assert response.status_code == 401
+
+    response = admin_client.post(
+        "/api/token/verify/",
+        {"username": admin_user.username, "password": "wrong_password"},
+        **jwt
+    )
+    assert response.status_code == 401

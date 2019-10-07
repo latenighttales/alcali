@@ -4,7 +4,7 @@
 
 List all minions currently in Alcali database.
 
-To add more minions, use the _fab_ button and refresh all minions. Only currently accepted keys will be added.
+To add more minions, use the action button and refresh all minions. Only currently accepted keys will be added.
 
 !!! info
     

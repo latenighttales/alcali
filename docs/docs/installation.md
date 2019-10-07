@@ -195,9 +195,34 @@ Please refer to Salt [rest_cherrypy](https://docs.saltstack.com/en/latest/ref/ne
 
 ### Authentication
 
-Alcali provide a simple token based auth module for Salt.
+Alcali provide two authentication methods:
 
-You can get the Alcali auth module [here](https://raw.githubusercontent.com/latenighttales/alcali/2019.2.0/docker/saltconfig/salt/auth/alcali.py)
+- a **rest endpoint** on alcali.
+- a custom token based **auth module** for Salt.
+
+#### Rest endpoint authentication
+
+To use the rest endpoint authentication, the salt master must be able to connect to alcali.
+
+Set `SALT_AUTH=rest` in the [env file](configuration.md) and use the [rest external auth](https://docs.saltstack.com/en/latest/ref/auth/all/salt.auth.rest.html) in the salt master configuration.
+
+the `^url` key is how the salt master connect to alcali.
+
+```yaml
+external_auth:
+  rest:
+    ^url: http://127.0.0.1:8000/api/token/verify/
+    admin:
+      - .*
+      - '@runner'
+      - '@wheel'
+```
+
+#### Custom token auth module
+
+Set `SALT_AUTH=rest` in the [env file](configuration.md)
+
+You can get the Alcali auth module [here](https://raw.githubusercontent.com/latenighttales/alcali/2019.2/docker/saltconfig/salt/auth/alcali.py)
 
 Place it on the salt filesystem (for example: `/srv/salt/auth`) and add it to your Salt master configuration:
 
@@ -214,6 +239,9 @@ external_auth:
       - '@runner'
       - '@wheel'
 ```
+
+Don't forget to run `salt-run saltutil.sync_all` on the salt master.
+
 See [Saltstack external auth system](https://docs.saltstack.com/en/latest/topics/eauth/index.html#acl-eauth) for more infos.
 
 Tokens can be managed using the [alcali](running.md) command or directly in the [web interface](views/users.md).
@@ -223,20 +251,22 @@ Tokens can be managed using the [alcali](running.md) command or directly in the 
 !!!info
     Alcali follow Salt major and minor versioning.
     
-    If you are using `2019.2.0` Salt version, you should install `2019.2.X` Alcali version.
+    If you are using `2019.2.X` Salt version, you should install `2019.2.X` Alcali version.
  
-There are 3 different ways to install Alcali:
+There are 3 different ways to install Alcali manually:
 
  - Using a docker container
  - From PyPI
  - From Sources
  
+Otherwise, there is a [Formula](https://github.com/latenighttales/alcali-formula) to install it.
+
 #### Using Docker
 
-The official [Docker image]() for Alcali comes with all dependencies pre-installed and ready-to-use with the latest version published on PyPI. Pull it with:
+The official [Docker image](https://hub.docker.com/r/latenighttales/alcali) for Alcali comes with all dependencies pre-installed and ready-to-use with the latest version published on PyPI. Pull it with:
 
 ```commandline
-docker pull latenighttales/alcali:2019.2.0
+docker pull latenighttales/alcali:2019.2.1
 ```
 The `alcali` executable is provided as an entrypoint.
 
@@ -246,11 +276,17 @@ To install Alcali locally, you'll need to install database connectors dependenci
 
 For Debian based distribution:
 ```commandline
-apt install postgresql-dev
+# For postgres database
+apt install libpq-dev gcc
+# For mariadb database
+apt install libmariadbclient-dev gcc
 ```
 For Red-Hat based distribution:
 ```commandline
-yum install postgresql-devel
+# For postgres database
+yum install libpq-devel gcc
+# For mariadb database
+yum install mysql-devel gcc
 ```
 
 #### Using pip
@@ -268,10 +304,15 @@ yum install postgresql-devel
 Simply do:
 
 ```commandline
-pip install --user 'alcali>=2019.2.0,2019.3.0'
-# and for mysql/mariadb:
+pip install --user alcali
+```
+
+And for mysql/mariadb:
+```commandline
 pip install --user mysqlclient
-# for postgres:
+```
+or for postgres:
+```commandline
 pip install --user psycopg2
 ```
 
@@ -279,12 +320,15 @@ pip install --user psycopg2
 
 ```commandline
 git clone https://github.com/latenighttales/alcali.git
-git checkout 2019.2.0
+git checkout 2019.2 # or 2018.3
 pip install --user . 
-# and for mysql/mariadb:
-pip install --user mysqlclient
-# for postgres:
-pip install --user psycopg2
 ```
 
-## Troubleshooting
+And for mysql/mariadb:
+```commandline
+pip install --user mysqlclient
+```
+or for postgres:
+```commandline
+pip install --user psycopg2
+```

@@ -79,6 +79,16 @@
             >
               detail
             </v-btn>
+            <v-btn
+                small
+                class="ma-2"
+                color="orange"
+                tile
+                dark
+                :to="'/run/?target='+item.minion_id+'&function=state.apply'"
+            >
+              highstate
+            </v-btn>
           </div>
         </template>
       </v-data-table>

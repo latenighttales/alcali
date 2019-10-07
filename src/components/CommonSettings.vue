@@ -145,6 +145,8 @@
         formData.set("target", this.target)
         this.$http.post("api/settings/initdb", formData).then(response => {
           this.$toast(response.data.result)
+        }).then(()=> {
+          this.loadData()
         })
       },
       deleteConformity(id) {

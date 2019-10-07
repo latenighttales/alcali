@@ -14,11 +14,12 @@
 </template>
 
 <script>
-  import CommonSettings from "../components/CommonSettings";
-  import UserSettings from "../components/UserSettings";
+  import CommonSettings from "../components/CommonSettings"
+  import UserSettings from "../components/UserSettings"
+
   export default {
     name: "Settings",
-    components: {UserSettings, CommonSettings}
+    components: { UserSettings, CommonSettings },
   }
 </script>
 

@@ -25,7 +25,6 @@
     methods: {
       initTerm() {
         let terminalContainer = document.getElementById("terminal")
-        console.log(terminalContainer)
         this.term = new Terminal({
           cursorBlink: true,
           fontSize: 20,
@@ -53,7 +52,7 @@
           return this.functions.map(item => item.name)
         })
 
-        const help = "Usage: salt [options] '<target>' <function> [arguments]";
+        const help = "Usage: salt [options] '<target>' <function> [arguments]"
         // Infinite loop of reading lines
         const readLine = () => {
           localEcho.read(" ~$ ").then((input) => {

@@ -1,6 +1,6 @@
 # Alcali
 
-[![Build Status](https://travis-ci.org/latenighttales/alcali.svg?branch=2019.2.0)](https://travis-ci.org/latenighttales/alcali)
+[![Build Status](https://travis-ci.org/latenighttales/alcali.svg?branch=2019.2)](https://travis-ci.org/latenighttales/alcali)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=latenighttales/alcali)](https://dependabot.com)
 [![codecov](https://codecov.io/gh/latenighttales/alcali/branch/2019.2.0/graph/badge.svg)](https://codecov.io/gh/latenighttales/alcali)
@@ -17,7 +17,7 @@ Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 
 - Get notified in real time when a job is created, updated or has returned. 
 
-- Store your jobs results by leveraging the `master_job_store` setting with Alcali master returner.
+- Store your jobs results by leveraging the `master_job_store` setting with database master returner.
 
 - Check your minions conformity to their highstate.
 
@@ -29,7 +29,7 @@ Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 
 If you just want to have a look, just clone the [repository](https://github.com/latenighttales/alcali.git) and use [docker-compose](https://docs.docker.com/compose/):
 
-```bash
+```commandline
 git clone https://github.com/latenighttales/alcali.git
 cd alcali
 docker-compose up --scale minion=2
@@ -38,7 +38,7 @@ docker-compose up --scale minion=2
 
 Once you see minions waiting to be approved by the master, you're good to go:
 
-```bash
+```commandline
 ...
 minion_1  | [ERROR   ] The Salt Master has cached the public key for this node, this salt minion will wait for 10 seconds before attempting to re-authenticate
 minion_1  | [INFO    ] Waiting 10 seconds before retry.
@@ -54,7 +54,12 @@ password: password
 
 and follow the [walkthrough](https://alcali.dev/walkthrough/).
 
-Once you're done, you can [install it](https://alcali.dev/installation/).
+Once you're done, you can [install it](https://alcali.dev/installation/) using the salt [formula](https://github.com/latenighttales/alcali-formula).
+
+## Screenshots
+
+See what it looks like [here](https://github.com/latenighttales/alcali/blob/2019.2/docs/docs/screenshots.md).
+
 ## Licence
 
 [MIT](LICENSE)

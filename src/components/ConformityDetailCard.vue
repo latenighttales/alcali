@@ -3,9 +3,32 @@
     <v-card>
       <v-card-title>
         Highstate Conformity
+        <v-spacer></v-spacer>
+        <v-checkbox
+            class="mb-0 mt-0"
+            v-show="Object.keys(succeeded).length>0"
+            color="green"
+            v-model="succeeded_checkbox"
+            :label="`Succeeded: ${Object.keys(succeeded).length}`"
+        ></v-checkbox>
+        <v-checkbox
+            v-show="Object.keys(unchanged).length>0"
+            class="ml-3 mb-0 mt-0"
+            color="orange"
+            v-model="unchanged_checkbox"
+            :label="`Unchanged: ${Object.keys(unchanged).length}`"
+        ></v-checkbox>
+        <v-checkbox
+            v-show="Object.keys(failed).length>0"
+            class="ml-3 mb-0 mt-0"
+            color="red"
+            v-model="failed_checkbox"
+            :label="`Failed: ${Object.keys(failed).length}`"
+        ></v-checkbox>
       </v-card-title>
       <v-expansion-panels>
         <v-expansion-panel
+            v-if="succeeded_checkbox"
             v-for="(item,i) in succeeded"
             :key="i"
             dark
@@ -22,6 +45,7 @@
 
       <v-expansion-panels>
         <v-expansion-panel
+            v-if="unchanged_checkbox"
             v-for="(item,i) in unchanged"
             :key="i"
         >
@@ -37,6 +61,7 @@
 
       <v-expansion-panels>
         <v-expansion-panel
+            v-if="failed_checkbox"
             v-for="(item,i) in failed"
             :key="i"
         >
@@ -60,6 +85,9 @@
     data() {
       return {
         expand_search: false,
+        succeeded_checkbox: true,
+        unchanged_checkbox: true,
+        failed_checkbox: true,
       }
     },
   }

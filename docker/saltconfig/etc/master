@@ -236,6 +236,23 @@ mysql.port: 3306
 #    fred:
 #      - test.*
 external_auth:
+  rest:
+    ^url: http://web:8000/api/token/verify/
+    apiuser:
+      - test.ping
+      - minion\*:
+          - network.*
+      - '@wheel':
+          - key.list_all
+      - minion2:
+          - network.*
+          - state.*
+      - 'G@os:RedHat':
+          - kmod.*
+    admin:
+      - .*
+      - '@runner'
+      - '@wheel'
   alcali:
     apiuser:
       - test.ping
