@@ -9,11 +9,11 @@
 </template>
 
 <script>
-  import RunCard from "../components/RunCard";
+  import RunCard from "../components/RunCard"
 
   export default {
     name: "Run",
-    components: {RunCard}
+    components: { RunCard },
   }
 </script>
 

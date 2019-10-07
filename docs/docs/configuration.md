@@ -2,29 +2,75 @@
 
 ## Configure Alcali
 
-### `.env` file
+If you used the [formula](https://github.com/latenighttales/alcali-formula) to install alcali, you should use the pillar to set those environment variable.
+
+### `DB_BACKEND`
+
+Must either be set to `mysql` or `postgresql` depending on your database choice.
+
+### `DB_NAME`
+
+Must always be set to `salt`.
+
+### `DB_USER`
+
+The username used to connect to the salt database.
+
+### `DB_PASS`
+
+The password used to connect to the salt database.
+
+### `DB_HOST`
+
+Either the hostname or the IP used to connect to the salt database.
+
+### `DB_PORT`
+
+By default 3306 for Mysql or 5432 for Postgres.
+
+### `SECRET_KEY`
+
+Used to provide cryptographic signing, and should be set to a unique, unpredictable value.
+
+### `ALLOWED_HOSTS`
+
+Values in this list can be fully qualified names (e.g. 'www.example.com'), in which case they will be matched against the request’s Host header exactly (case-insensitive, not including port).
+
+A value beginning with a period can be used as a subdomain wildcard: '.example.com' will match example.com, www.example.com, and any other subdomain of example.com. A value of '*' will match anything.
+
+### `MASTER_MINION_ID`
+
+Salt master's minion id. leave empty if not managed.
+
+### `SALT_URL`
+
+The salt-api url.
+
+Must be formed with protocol, host and port (e.g. 'https://localhost:8080')
+
+###`SALT_AUTH`
+
+How you choose to [authenticate](installation.md#authentication) to the salt-api.
+
+Must either be rest or alcali.
+
+## `.env` file example:
 
 ```bash
-# Database settings.
-DB_BACKEND=mysql # Options are: mysql or postgresql
+DB_BACKEND=mysql
 DB_NAME=salt
 DB_USER=alcali
 DB_PASS=alcali
-DB_HOST=db # Either hostname or ip
-DB_PORT=3306 # By default 3306 for Mysql or 5432 for Postgres
+DB_HOST=db
+DB_PORT=3306
 
-# Alcali settings.
-SECRET_KEY=thisisnotagoodsecret.orisit? # Used to secure signed data.
+SECRET_KEY=thisisnotagoodsecret.orisit?
 ALLOWED_HOSTS=*
-MASTER_MINION_ID=master # Master's minion id.
+MASTER_MINION_ID=master
 
-
-# salt-api settings.
 SALT_URL=https://localhost:8080
 SALT_AUTH=alcali
 ```
-
-Use this as an example.
 
 ## Docker
 
@@ -35,6 +81,12 @@ See [running Alcali](running.md).
 ## Running locally
 
 Use the `ENV_PATH` environment variable.
+
+Example:
+```commandline
+# Assuming the .env file is in /opt/alcali
+ENV_PATH=/opt/alcali /opt/alcali/.venv/bin/gunicorn config.wsgi:application -b 127.0.0.1:8000 -w 3
+```
 
 See [running Alcali](running.md).
 

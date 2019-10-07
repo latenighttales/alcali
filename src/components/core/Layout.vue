@@ -114,8 +114,11 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-menu
+          v-model="notif_menu"
           bottom
           left
+          offset-y
+          offset-x
       >
         <template v-slot:activator="{ on }">
           <v-badge
@@ -125,12 +128,16 @@
             <template v-slot:badge>
               <span v-if="notif_nb > 0">{{ notif_nb }}</span>
             </template>
-            <v-icon v-on="on" @click="notif_nb = 0" v-if="messages.length > 0">notifications</v-icon>
-            <v-icon v-else>notifications</v-icon>
+            <v-icon v-on="on" @click="notif_nb = 0">notifications</v-icon>
           </v-badge>
         </template>
-        <v-card max-width="500px">
+        <v-card min-width="500px" max-width="500px">
           <v-list max-height="700px">
+            <v-list-item v-if="messages.length === 0">
+              <v-list-item-content>
+                <v-list-item-subtitle>No new notifications</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
             <v-list-item
                 v-for="(item, i) in messages"
                 :key="i"
@@ -146,7 +153,7 @@
               </v-list-item-content>
             </v-list-item>
           </v-list>
-          <v-card-actions>
+          <v-card-actions v-show="messages.length > 0">
             <v-spacer></v-spacer>
             <v-btn text @click="messages = []">Clear</v-btn>
           </v-card-actions>
@@ -195,6 +202,7 @@
     },
     data: () => ({
       expand_search: false,
+      notif_menu: false,
       searchInput: "",
       drawer: true,
       mini: true,
@@ -376,6 +384,10 @@
 
   span .v-chip__content {
     white-space: nowrap;
+  }
+
+  .v-list {
+    border-radius: 0px !important;
   }
 
 </style>

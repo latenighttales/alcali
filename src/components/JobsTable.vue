@@ -9,39 +9,75 @@
             </v-col>
             <v-divider></v-divider>
             <v-col lg="2" align-self="center">
-              <vc-date-picker
-                  :max-date='new Date()'
-                  v-model="selectedDate"
-                  mode="range"
-                  :input-props='{ class: "input", placeholder: "Select Date(s)"}'
-                  :formats="{input: ['YYYY-MM-DD']}"
-              ></vc-date-picker>
+              <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="selectedDate"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                      v-model="dateRangeText"
+                      label="Select date(s)"
+                      readonly
+                      v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                    :max="new Date().toISOString().split('T')[0]"
+                    v-model="selectedDate"
+                    reactive
+                    no-title
+                    range
+                >
+                  <div class="flex-grow-1"></div>
+                  <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                  <v-btn text color="primary" @click="$refs.menu.save(selectedDate)">OK</v-btn>
+                </v-date-picker>
+              </v-menu>
             </v-col>
             <v-col lg="2">
-              <v-select
+              <v-autocomplete
                   :items="users"
                   v-model="selectedUsers"
-                  placeholder="User(s)"
+                  label="User(s)"
                   multiple
                   single-line
               >
-              </v-select>
+                <template v-slot:selection="{ item, index }">
+                  <span v-if="index === 0">{{ item }}</span>
+                  <span
+                      v-if="index === 1"
+                      class="grey--text caption"
+                  > (+{{ selectedUsers.length - 1 }} others)</span>
+                </template>
+              </v-autocomplete>
             </v-col>
             <v-col lg="2">
               <v-autocomplete
                   :items="minions"
                   v-model="selectedTarget"
-                  placeholder="Target(s)"
+                  label="Target(s)"
                   multiple
                   single-line
               >
+                <template v-slot:selection="{ item, index }">
+                  <span v-if="index === 0">{{ item }}</span>
+                  <span
+                      v-if="index === 1"
+                      class="grey--text caption"
+                  > (+{{ selectedTarget.length - 1 }} others)</span>
+                </template>
               </v-autocomplete>
             </v-col>
             <v-col lg="1">
               <v-select
                   :items="limit"
                   v-model="selectedLimit"
-                  placeholder="Limit"
+                  label="Limit"
                   single-line
               >
               </v-select>
@@ -87,7 +123,7 @@
               <v-btn text small class="text-none" :to="'/jobs/'+item.jid+'/'+item.id">{{ item.jid }}</v-btn>
             </template>
             <template v-slot:item.arguments="{ item }">
-              {{ item.arguments.length > 20 ? item.arguments.slice(0, 20)+'...': item.arguments }}
+              {{ item.arguments.length > 20 ? item.arguments.slice(0, 20)+"...": item.arguments }}
             </template>
             <template v-slot:item.success="{ item }">
               <v-chip :color="boolRepr(item.success)" dark>{{ boolText(item.success) }}</v-chip>
@@ -133,8 +169,9 @@
     props: ["filter"],
     data() {
       return {
+        menu: false,
         limit: [50, 100, 200, 500, 1000],
-        selectedDate: [new Date(), new Date()],
+        selectedDate: [],
         selectedLimit: null,
         selectedUsers: null,
         selectedTarget: null,
@@ -162,6 +199,9 @@
           ...item,
         }))
       },
+      dateRangeText() {
+        return this.selectedDate.join(" ~ ")
+      },
     },
     mounted() {
       this.loadData()
@@ -184,9 +224,9 @@
           target: this.selectedTarget,
           users: this.selectedUsers,
         }
-        if (this.selectedDate.start && this.selectedDate.end) {
-          params.start = this.selectedDate.start.toISOString().slice(0, 10)
-          params.end = this.selectedDate.end.toISOString().slice(0, 10)
+        if (this.selectedDate.length > 0) {
+          params.start = this.selectedDate[0]
+          params.end = this.selectedDate[1] || this.selectedDate[0]
         }
         this.$http.get("api/jobs/", {
           params: params,
@@ -194,7 +234,7 @@
           this.jobs = response.data
           this.loading = false
           this.selectedUsers = this.selectedTarget = this.selectedLimit = this.selectedDate = null
-          this.selectedDate = [new Date(), new Date()]
+          this.selectedDate = []
         })
       },
       boolRepr(bool) {

@@ -1,6 +1,6 @@
 # Walkthrough
 
-After you logged in at [http://localhost:8000](http://localhost:8000) with:
+After you logged in at [http://localhost:8000/#/login](http://localhost:8000/#/login) with:
 
 ```commandline
 username: admin
@@ -13,19 +13,19 @@ You should land on the Dashboard view.
 For now it's empty, but you can already see that some **keys** are `UNACCEPTED`.
 
 
-So let's go to the Keys view: [http://localhost:8000/keys](http://localhost:8000/keys)
+So let's go to the Keys view: [http://localhost:8000/#/keys](http://localhost:8000/#/keys)
 
 ## Accept keys
 
 ![keys](images/keys.png)
 
-You can either accept keys one by one using the `ACCEPT` button, or use the _Fab_ button <img height="30" src="../../images/fab.png"> to accept all keys.
+You can either accept keys one by one using the `ACCEPT` button, or use the action button <img height="30" src="../../images/fab.png"> to accept all keys.
 
 ## Add minions
 
 To store infos on connected minions, we need to add them to the database.
 
-Go to [http://localhost:8000/minions](http://localhost:8000/minions) and use the _Fab_ button <img height="30" src="../../images/fab.png"> to refresh minions.
+Go to [http://localhost:8000/#/minions](http://localhost:8000/#/minions) and use the action button <img height="30" src="../../images/fab.png"> to refresh minions.
 
 ![minions](images/minions.png)
 
@@ -39,7 +39,7 @@ Go to [http://localhost:8000/minions](http://localhost:8000/minions) and use the
 
 ## Minion detail
 
-From the minions view, you can click on a `minion id` to see its details, for example: [http://localhost:8000/minions/master/](http://localhost:8000/minions/master/).
+From the minions view, you can click on a `minion id` to see its details, for example: [http://localhost:8000/#/minions/master/](http://localhost:8000/#/minions/master/).
 
 ![minion_detail](images/minion_detail.png)
 
@@ -50,7 +50,7 @@ Details are parsed from the `grains.items` state. On the right, 4 tabs are prese
   - The last 100 jobs run on this minion
   - A graph of jobs run on this minion
 
-Let's add some useful infos by setting some **minions fields**. To do so, go to the settings view [http://localhost:8000/settings](http://localhost:8000/settings).
+Let's add some useful infos by setting some **minions fields**. To do so, go to the settings view [http://localhost:8000/#/settings](http://localhost:8000/#/settings).
 
 ## Settings
 
@@ -66,9 +66,9 @@ We usually add:
  
  - top file: `state.show_top`
 
-Use the _fab_ button to refresh all minions.
+Use the action button to refresh all minions.
 
-If you go see a minion's details, for example, [http://localhost:8000/minions/master/](http://localhost:8000/minions/master/), the new minion fields should be present.
+If you go see a minion's details, for example, [http://localhost:8000/#/minions/master/](http://localhost:8000/#/minions/master/), the new minion fields should be present.
 
 Minion fields are usually used for "static" minion specific data.
 
@@ -94,7 +94,7 @@ Let's go run some jobs to fix that.
 
 ## Run
 
-Go to [http://localhost:8000/run](http://localhost:8000/run)
+Go to [http://localhost:8000/#/run](http://localhost:8000/#/run)
 
 You can explore the formatted tab or just use the cli and run:
 
@@ -125,7 +125,7 @@ In the overview, the conformity card should be filled now, with details when you
 
 ![filled_conformity](images/filled_conformity.png)
 
-A table with both highstate conformity and your custom ones for all minions is available in the conformity view [http://localhost:8000/conformity](http://localhost:8000/conformity).
+A table with both highstate conformity and your custom ones for all minions is available in the conformity view [http://localhost:8000/#/conformity](http://localhost:8000/#/conformity).
 
 ![conformity_view](images/conformity_view.png)
 

@@ -11,7 +11,7 @@
                 :color="wsStatus ? 'green': 'red'"
                 text-color="white"
             >
-              {{ wsStatus ? 'OK': 'NOT OK' }}
+              {{ wsStatus ? "OK": "NOT OK" }}
             </v-chip>
           </td>
         </tr>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import helpersMixin from "./mixins/helpersMixin";
+  import helpersMixin from "./mixins/helpersMixin"
 
   export default {
     name: "AlcaliStatusCard",
@@ -37,18 +37,18 @@
       }
     },
     mounted() {
-      this.loadData();
+      this.loadData()
     },
     computed: {
       wsStatus() {
         return this.$store.state.ws_status
-      }
+      },
     },
     methods: {
       loadData() {
         this.$http.get("api/stats/").then(response => this.stats = response.data)
       },
-    }
+    },
   }
 </script>
 

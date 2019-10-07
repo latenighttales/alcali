@@ -21,7 +21,7 @@
                 <td>JID:</td>
                 <td class="text-right">{{ job.jid }}</td>
               </tr>
-              <tr v-if="job.arguments.length > 0">
+              <tr v-if="job.arguments">
                 <td>ARGUMENTS:</td>
                 <td class="text-right">{{ job.arguments }}</td>
               </tr>

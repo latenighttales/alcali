@@ -1,3 +1,5 @@
+import os
+
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -26,6 +28,7 @@ from api.views.alcali import (
     ScheduleViewSet,
     MyTokenObtainPairView,
     search,
+    verify,
 )
 from rest_framework import routers
 
@@ -64,3 +67,6 @@ urlpatterns = [
     ),
     path("api/jobs/graph", jobs_graph, name="jobs_graph"),
 ]
+
+if os.environ.get("SALT_AUTH") == "rest":
+    urlpatterns += [path("api/token/verify/", verify, name="token_verify")]

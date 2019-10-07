@@ -1,27 +1,30 @@
 # Project Infos.
 site_name: 'ALCALI'
 nav:
-    - Home: index.md
-    - Try it!: try.md
-    - Walkthrough: walkthrough.md
-    - Installation: installation.md
-    - Configuration: configuration.md
-    - Running Alcali: running.md
-    - Views:
-        - 'Overview': views/overview.md
-        - 'Minions': views/minions.md
-        - 'Minion Details': views/minion_details.md
-        - 'Jobs': views/jobs.md
-        - 'Job Detail': views/job_detail.md
-        - 'Run': views/run.md
-        - 'Schedule': views/schedule.md
-        - 'Conformity': views/conformity.md
-        - 'Keys': views/keys.md
-        - 'Events': views/events.md
-        - 'Users': views/users.md
-        - 'Settings': views/settings.md
-    - Contribute: contribute.md
-    - Licence: licence.md
+  - Home: index.md
+  - Try it!: try.md
+  - Walkthrough: walkthrough.md
+  - Installation: installation.md
+  - Configuration: configuration.md
+  - Running Alcali: running.md
+  - Views:
+      - 'Overview': views/overview.md
+      - 'Minions': views/minions.md
+      - 'Minion Details': views/minion_details.md
+      - 'Jobs': views/jobs.md
+      - 'Job Detail': views/job_detail.md
+      - 'Run': views/run.md
+      - 'Schedule': views/schedule.md
+      - 'Conformity': views/conformity.md
+      - 'Keys': views/keys.md
+      - 'Events': views/events.md
+      - 'Users': views/users.md
+      - 'Settings': views/settings.md
+  - Troubleshooting: troubleshooting.md
+  - Screenshots:
+      - '': screenshots.md
+  - Contribute: contribute.md
+  - Licence: licence.md
 site_description: 'A web based tool for monitoring and administrating Saltstack'
 site_author: 'Matt Melquiond'
 

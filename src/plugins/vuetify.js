@@ -3,7 +3,6 @@ import Vue from 'vue';
 import Vuetify, {VSnackbar, VBtn, VIcon} from 'vuetify/lib'
 
 import VuetifyToast from 'vuetify-toast-snackbar';
-import VCalendar from 'v-calendar';
 
 Vue.use(Vuetify, {
   components: {
@@ -12,10 +11,6 @@ Vue.use(Vuetify, {
     VIcon
   }
 });
-
-Vue.use(VCalendar, {
-   componentPrefix: 'vc',
-})
 
 Vue.use(VuetifyToast, {
   x: 'center', // default

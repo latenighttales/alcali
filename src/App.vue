@@ -6,19 +6,19 @@
 </template>
 <script>
 
-  import Layout from "./components/core/Layout";
-  import SimpleLayout from "./components/core/SimpleLayout";
+  import Layout from "./components/core/Layout"
+  import SimpleLayout from "./components/core/SimpleLayout"
 
   export default {
     computed: {
       layout() {
         return this.$route.meta.plainLayout
-      }
+      },
     },
     components: {
-      'app-layout': Layout,
-      'simple-layout': SimpleLayout
-    }
+      "app-layout": Layout,
+      "simple-layout": SimpleLayout,
+    },
   }
 </script>
 <style>

@@ -27,7 +27,7 @@ We usually add:
     
     Because minions fields are linked to minions, you need to first have some minions present in the database.
     
-    Use the refresh minions _fab_ button.
+    Use the refresh minions action button.
     
 ## User Settings
 

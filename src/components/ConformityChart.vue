@@ -32,10 +32,10 @@
 </template>
 
 <script>
-  import Chart from 'chart.js'
-  import 'chartjs-plugin-stacked100'
+  import Chart from "chart.js"
+  import "chartjs-plugin-stacked100"
 
-  import colors from 'vuetify/lib/util/colors';
+  import colors from "vuetify/lib/util/colors"
 
   export default {
     name: "ConformityChart",
@@ -44,7 +44,7 @@
         conformitynames: null,
         confchart: null,
         conformity: null,
-        customTool: '',
+        customTool: "",
       }
     },
     created() {
@@ -62,15 +62,15 @@
           this.conformity.forEach((conformity, idx) => {
             let chart_data = {
               labels: [this.conformitynames[idx]],
-              datasets: []
+              datasets: [],
             }
             Object.keys(conformity).forEach((value) => {
-              let color = ''
-              if (['conflict', 'false'].indexOf(value) >= 0) {
-                color = '#F44336'
-              } else if (['conform', 'true'].indexOf(value) >= 0) {
-                color = '#41f40e'
-              } else if (['None', 'unknown', 'null'].indexOf(value) >= 0) {
+              let color = ""
+              if (["conflict", "false"].indexOf(value) >= 0) {
+                color = "#F44336"
+              } else if (["conform", "true"].indexOf(value) >= 0) {
+                color = "#41f40e"
+              } else if (["None", "unknown", "null"].indexOf(value) >= 0) {
                 color = this.$vuetify.theme.themes.light.primary
               } else {
                 let keys = Object.keys(colors)
@@ -83,39 +83,39 @@
               })
             })
             new Chart(this.$refs[this.conformitynames[idx]], {
-              type: 'horizontalBar',
+              type: "horizontalBar",
               data: chart_data,
               options: {
                 animation: false,
                 plugins: {
-                  stacked100: {enable: true}
+                  stacked100: { enable: true },
                 },
                 tooltips: {
                   enabled: false,
-                  mode: 'index',
+                  mode: "index",
                   intersect: false,
                   custom: (tooltip) => {
                     if (!tooltip) {
                       return
                     }
                     if (tooltip.body) {
-                      var bodyLines = tooltip.body.map(lines => lines.lines);
+                      let bodyLines = tooltip.body.map(lines => lines.lines)
 
-                      var innerHtml = '';
+                      let innerHtml = ""
 
-                      bodyLines.forEach(function (body, i) {
-                        var colors = tooltip.labelColors[i];
-                        var style = 'background:' + colors.backgroundColor;
-                        style += '; border-color:' + colors.borderColor;
-                        style += '; border-width: 2px';
-                        var span = '<span class="chartjs-tooltip-key" style="' + style + '">__</span>';
-                        innerHtml += '<tr><td>' + span + '  ' + body + '</td></tr>';
-                      });
+                      bodyLines.forEach(function(body, i) {
+                        let colors = tooltip.labelColors[i]
+                        let style = "background:" + colors.backgroundColor
+                        style += "; border-color:" + colors.borderColor
+                        style += "; border-width: 2px"
+                        let span = `<span class="chartjs-tooltip-key" style="${style}">__</span>`
+                        innerHtml += "<tr><td>" + span + "  " + body + "</td></tr>"
+                      })
                       this.customTool = innerHtml
                     }
-                  }
+                  },
                 },
-                legend: {display: false},
+                legend: { display: false },
                 scales: {
                   xAxes: [{
                     stacked: true,
@@ -127,7 +127,7 @@
                     },
                     ticks: {
                       display: false,
-                      padding: -20
+                      padding: -20,
                     },
                   }],
                   yAxes: [{
@@ -135,21 +135,21 @@
                     display: false, //this will remove all the x-axis grid lines
                     ticks: {
                       display: false,
-                      padding: -20
+                      padding: -20,
                     },
                     gridLines: {
                       drawTicks: false,
                       display: false,
                       drawBorder: false,
-                    }
+                    },
                   }],
                 },
-              }
+              },
             })
           })
         })
       },
-    }
+    },
   }
 </script>
 

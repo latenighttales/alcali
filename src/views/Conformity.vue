@@ -9,11 +9,11 @@
 </template>
 
 <script>
-  import ConformityTable from "../components/ConformityTable";
+  import ConformityTable from "../components/ConformityTable"
 
   export default {
     name: "Conformity",
-    components: {ConformityTable}
+    components: { ConformityTable },
   }
 </script>
 
