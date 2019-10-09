@@ -568,8 +568,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../views/job_detail/" title="Job Detail" class="md-nav__link">
-      Job Detail
+    <a href="../views/job_detail/" title="Job Details" class="md-nav__link">
+      Job Details
     </a>
   </li>
 
@@ -606,6 +606,18 @@
   <li class="md-nav__item">
     <a href="../views/conformity/" title="Conformity" class="md-nav__link">
       Conformity
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../views/conformity_details/" title="Conformity Details" class="md-nav__link">
+      Conformity Details
     </a>
   </li>
 
@@ -1090,7 +1102,7 @@ salt-call --local tls.create_self_signed_cert <span class="nv">cacert_path</span
 
 
 <h4 id="custom-token-auth-module">Custom token auth module<a class="headerlink" href="#custom-token-auth-module" title="Permanent link">&para;</a></h4>
-<p>Set <code>SALT_AUTH=rest</code> in the <a href="../configuration/">env file</a></p>
+<p>Set <code>SALT_AUTH=alcali</code> in the <a href="../configuration/">env file</a></p>
 <p>You can get the Alcali auth module <a href="https://raw.githubusercontent.com/latenighttales/alcali/2019.2/docker/saltconfig/salt/auth/alcali.py">here</a></p>
 <p>Place it on the salt filesystem (for example: <code>/srv/salt/auth</code>) and add it to your Salt master configuration:</p>
 <div class="codehilite"><pre><span></span><span class="nt">auth_dirs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">/srv/salt/auth</span><span class="p p-Indicator">]</span>
@@ -1111,21 +1123,22 @@ salt-call --local tls.create_self_signed_cert <span class="nv">cacert_path</span
 <p>See <a href="https://docs.saltstack.com/en/latest/topics/eauth/index.html#acl-eauth">Saltstack external auth system</a> for more infos.</p>
 <p>Tokens can be managed using the <a href="../running/">alcali</a> command or directly in the <a href="../views/users/">web interface</a>.</p>
 <h2 id="installing-alcali">Installing Alcali<a class="headerlink" href="#installing-alcali" title="Permanent link">&para;</a></h2>
+<p>The easiest way to install Alcali is to use the Salt <a href="https://github.com/latenighttales/alcali-formula">Formula</a></p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>Alcali follow Salt major and minor versioning.</p>
 <p>If you are using <code>2019.2.X</code> Salt version, you should install <code>2019.2.X</code> Alcali version.</p>
 </div>
-<p>There are 3 different ways to install Alcali manually:</p>
+<p>Otherwise, there are 3 different ways to install Alcali manually:</p>
 <ul>
 <li>Using a docker container</li>
 <li>From PyPI</li>
 <li>From Sources</li>
 </ul>
-<p>Otherwise, there is a <a href="https://github.com/latenighttales/alcali-formula">Formula</a> to install it.</p>
 <h4 id="using-docker">Using Docker<a class="headerlink" href="#using-docker" title="Permanent link">&para;</a></h4>
 <p>The official <a href="https://hub.docker.com/r/latenighttales/alcali">Docker image</a> for Alcali comes with all dependencies pre-installed and ready-to-use with the latest version published on PyPI. Pull it with:</p>
-<div class="codehilite"><pre><span></span>docker pull latenighttales/alcali:2019.2.1
+<div class="codehilite"><pre><span></span># you can specify which version: latenighttales/alcali:2018.3.2
+docker pull latenighttales/alcali:latest
 </pre></div>
 
 

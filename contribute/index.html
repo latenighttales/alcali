@@ -429,8 +429,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../views/job_detail/" title="Job Detail" class="md-nav__link">
-      Job Detail
+    <a href="../views/job_detail/" title="Job Details" class="md-nav__link">
+      Job Details
     </a>
   </li>
 
@@ -467,6 +467,18 @@
   <li class="md-nav__item">
     <a href="../views/conformity/" title="Conformity" class="md-nav__link">
       Conformity
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../views/conformity_details/" title="Conformity Details" class="md-nav__link">
+      Conformity Details
     </a>
   </li>
 
@@ -612,6 +624,40 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#install-a-dev-environment" class="md-nav__link">
+    Install a dev environment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend-dev" class="md-nav__link">
+    Frontend dev
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-dev" class="md-nav__link">
+    Backend dev
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#submitting-changes" class="md-nav__link">
     Submitting changes
   </a>
@@ -669,6 +715,40 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#install-a-dev-environment" class="md-nav__link">
+    Install a dev environment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend-dev" class="md-nav__link">
+    Frontend dev
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-dev" class="md-nav__link">
+    Backend dev
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#submitting-changes" class="md-nav__link">
     Submitting changes
   </a>
@@ -693,47 +773,104 @@
                 
                 
                 <h1 id="contributing-guide">Contributing Guide<a class="headerlink" href="#contributing-guide" title="Permanent link">&para;</a></h1>
-<ul>
-<li>Contributing to Alcali is fairly easy. This document shows you how to get started</li>
-</ul>
+<p>Contributing to Alcali is fairly easy. This document shows you how to get started</p>
 <h2 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Please ensure that any changes you make are in accordance with the Coding Guidelines of this repo.
-Just use <a href="https://github.com/python/black">Black</a> to validate your code.</li>
-</ul>
+<p>Please ensure that any changes you make are in accordance with the Coding Guidelines of this repo.</p>
+<p>Just use <a href="https://github.com/python/black">Black</a> to validate your python code.</p>
+<h2 id="install-a-dev-environment">Install a dev environment<a class="headerlink" href="#install-a-dev-environment" title="Permanent link">&para;</a></h2>
+<p>First <a href="https://github.com/latenighttales/alcali/fork">fork</a> the repository and install your fork locally.</p>
+<div class="codehilite"><pre><span></span>git clone git@github.com:&lt;YOUR USERNAME&gt;/alcali.git
+cd alcali
+</pre></div>
+
+
+<p>Alcali use Vuejs for the frontend and Django for the backend.</p>
+<h3 id="frontend-dev">Frontend dev<a class="headerlink" href="#frontend-dev" title="Permanent link">&para;</a></h3>
+<p>Add a pre-commit hook to build the project:</p>
+<div class="codehilite"><pre><span></span>cat &lt;&lt;-EOF&gt;.git/hooks/pre-commit
+#!/bin/sh
+
+echo &quot;building frontend ...&quot;
+npm run build
+git add dist/*
+EOF
+</pre></div>
+
+
+<p>Make it executable:</p>
+<div class="codehilite"><pre><span></span>chmod +x .git/hooks/pre-commit
+</pre></div>
+
+
+<p>Install the Vue CLI:</p>
+<div class="codehilite"><pre><span></span>npm install -g @vue/cli
+# OR
+yarn global add @vue/cli
+</pre></div>
+
+
+<p>install js deps:</p>
+<div class="codehilite"><pre><span></span>npm install
+# OR
+yarn install
+</pre></div>
+
+
+<p>and run your build locally:</p>
+<div class="codehilite"><pre><span></span>npm run serve -- --port 8001
+</pre></div>
+
+
+<p>You will also need a <a href="#backend-dev">backend</a> running in another terminal.</p>
+<h3 id="backend-dev">Backend dev<a class="headerlink" href="#backend-dev" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span>docker-compose up --build --force-recreate --renew-anon-volumes --scale minion=2
+</pre></div>
+
+
+<h3 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h3>
+<p>To contribute to the documentation, you'll need to install the python requirements, preferably in a virtualenv:</p>
+<div class="codehilite"><pre><span></span>python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements/docs.txt
+</pre></div>
+
+
+<p>And build it locally:</p>
+<div class="codehilite"><pre><span></span>cd docs
+mkdocs serve -a 127.0.0.1:8003
+</pre></div>
+
+
 <h2 id="submitting-changes">Submitting changes<a class="headerlink" href="#submitting-changes" title="Permanent link">&para;</a></h2>
+<p>Check out a new branch based and name it to what you intend to do:</p>
+<div class="codehilite"><pre><span></span>$ git checkout -b BRANCH_NAME feature/fooBar
+</pre></div>
+
+
+<p>If you get an error, you may need to fetch fooBar first by using</p>
+<div class="codehilite"><pre><span></span>$ git remote update &amp;&amp; git fetch
+</pre></div>
+
+
+<p>Use one branch per fix / feature</p>
+<p>Commit your changes</p>
 <ul>
-<li>Fork the repo<ul>
-<li><a href="https://github.com/latenighttales/alcali/fork">https://github.com/latenighttales/alcali/fork</a></li>
-</ul>
-</li>
-<li>Check out a new branch based and name it to what you intend to do:<ul>
-<li>Example:
-    <code>$ git checkout -b BRANCH_NAME feature/fooBar</code>
-    If you get an error, you may need to fetch fooBar first by using
-    <code>$ git remote update &amp;&amp; git fetch</code></li>
-<li>Use one branch per fix / feature</li>
-</ul>
-</li>
-<li>Commit your changes<ul>
 <li>Please provide a git message that explains what you've done</li>
 <li>Please make sure your commits follow the <a href="https://gist.github.com/robertpainsi/b632364184e70900af4ab688decf6f53#file-commit-message-guidelines-md">conventions</a></li>
 <li>Commit to the forked repository</li>
-<li>Example:
-    <code>$ git commit -am 'Add some fooBar'</code></li>
 </ul>
-</li>
-<li>Push to the branch<ul>
-<li>Example:
-    <code>$ git push origin feature/fooBar</code></li>
-</ul>
-</li>
-<li>Make a pull request<ul>
-<li>Make sure you send the PR to the <code>fooBar</code> branch</li>
-<li>Travis CI is watching you!</li>
-</ul>
-</li>
-</ul>
+<div class="codehilite"><pre><span></span>$ git commit -am &#39;Add some fooBar&#39;
+</pre></div>
+
+
+<p>Push to the branch</p>
+<div class="codehilite"><pre><span></span>$ git push origin feature/fooBar
+</pre></div>
+
+
+<p>Make a pull request
+- Make sure you send the PR to the <code>fooBar</code> branch
+- Travis CI is watching you!</p>
 <p>If you follow these instructions, your PR will land pretty safely in the main repo!</p>
                 
                   

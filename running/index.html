@@ -494,8 +494,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../views/job_detail/" title="Job Detail" class="md-nav__link">
-      Job Detail
+    <a href="../views/job_detail/" title="Job Details" class="md-nav__link">
+      Job Details
     </a>
   </li>
 
@@ -532,6 +532,18 @@
   <li class="md-nav__item">
     <a href="../views/conformity/" title="Conformity" class="md-nav__link">
       Conformity
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../views/conformity_details/" title="Conformity Details" class="md-nav__link">
+      Conformity Details
     </a>
   </li>
 
@@ -741,7 +753,7 @@
 <p>First make sure that Alcali is correctly installed.</p>
 <p>You can verify installation by running:</p>
 <div class="codehilite"><pre><span></span>alcali current_version
-# alcali version 2019.2.1
+# alcali version 2019.2.2
 </pre></div>
 
 
@@ -788,7 +800,7 @@
 
 
 <p>In a docker container:</p>
-<div class="codehilite"><pre><span></span>docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.1 bash -c &quot;gunicorn config.wsgi:application -w 4 --chdir $(alcali location)&quot;
+<div class="codehilite"><pre><span></span>docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.2 bash -c &quot;gunicorn config.wsgi:application -w 4 --chdir $(alcali location)&quot;
 </pre></div>
 
 
