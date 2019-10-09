@@ -19,7 +19,7 @@ Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 
 - Store your jobs results by leveraging the `master_job_store` setting with database master returner.
 
-- Check your minions conformity to their highstate.
+- Check your minions conformity to their highstate or **any state**.
 
 - Keep track of custom state at a glance.
 
@@ -54,18 +54,22 @@ password: password
 
 and follow the [walkthrough](https://alcali.dev/walkthrough/).
 
-Once you're done, you can [install it](https://alcali.dev/installation/) using the salt [formula](https://github.com/latenighttales/alcali-formula).
+## Installation
+
+The easiest way to install it is to use the salt [formula](https://github.com/latenighttales/alcali-formula).
+
+Make sure to check the [installation](https://alcali.dev/installation/) docs first!
 
 ## Screenshots
 
 See what it looks like [here](https://github.com/latenighttales/alcali/blob/2019.2/docs/docs/screenshots.md).
 
-## Licence
+## License
 
 [MIT](LICENSE)
 
 ## Contributing
 
-If you'd like to contribute, simply fork the repository, commit your changes, run the tests and send a pull request.
+If you'd like to contribute, check the [contribute](https://alcali.dev/contribute/) documentation on how to install a dev environment and submit PR!
 
 <sub><sub>Image: Jean-Philippe WMFr, derivative work : User:Benoit Rochon [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)</sub></sub>

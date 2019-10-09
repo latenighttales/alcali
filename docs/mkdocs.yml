@@ -12,10 +12,11 @@ nav:
       - 'Minions': views/minions.md
       - 'Minion Details': views/minion_details.md
       - 'Jobs': views/jobs.md
-      - 'Job Detail': views/job_detail.md
+      - 'Job Details': views/job_detail.md
       - 'Run': views/run.md
       - 'Schedule': views/schedule.md
       - 'Conformity': views/conformity.md
+      - 'Conformity Details': views/conformity_details.md
       - 'Keys': views/keys.md
       - 'Events': views/events.md
       - 'Users': views/users.md

@@ -1,6 +1,6 @@
 # Jobs
 
-![jobs](../images/jobs.png)
+![jobs](../images/screenshots/jobs.png)
 
 By default, only the last 100 jobs are displayed.
 

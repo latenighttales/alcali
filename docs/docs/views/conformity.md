@@ -1,5 +1,7 @@
 # Conformity
 
+![conformity](../images/conformity_view.png)
+
 ## Highstate
 
 Highstate conformity will schedule a job named **highstate_conformity** on selected targets.
