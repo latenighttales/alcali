@@ -220,7 +220,7 @@ external_auth:
 
 #### Custom token auth module
 
-Set `SALT_AUTH=rest` in the [env file](configuration.md)
+Set `SALT_AUTH=alcali` in the [env file](configuration.md)
 
 You can get the Alcali auth module [here](https://raw.githubusercontent.com/latenighttales/alcali/2019.2/docker/saltconfig/salt/auth/alcali.py)
 
@@ -248,19 +248,20 @@ Tokens can be managed using the [alcali](running.md) command or directly in the 
 
 ## Installing Alcali
 
+The easiest way to install Alcali is to use the Salt [Formula](https://github.com/latenighttales/alcali-formula)
+
 !!!info
     Alcali follow Salt major and minor versioning.
     
     If you are using `2019.2.X` Salt version, you should install `2019.2.X` Alcali version.
  
-There are 3 different ways to install Alcali manually:
+
+Otherwise, there are 3 different ways to install Alcali manually:
 
  - Using a docker container
  - From PyPI
  - From Sources
  
-Otherwise, there is a [Formula](https://github.com/latenighttales/alcali-formula) to install it.
-
 #### Using Docker
 
 The official [Docker image](https://hub.docker.com/r/latenighttales/alcali) for Alcali comes with all dependencies pre-installed and ready-to-use with the latest version published on PyPI. Pull it with:

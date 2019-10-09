@@ -17,7 +17,7 @@ So let's go to the Keys view: [http://localhost:8000/#/keys](http://localhost:80
 
 ## Accept keys
 
-![keys](images/keys.png)
+![keys](images/screenshots/keys.png)
 
 You can either accept keys one by one using the `ACCEPT` button, or use the action button <img height="30" src="../../images/fab.png"> to accept all keys.
 
@@ -27,7 +27,7 @@ To store infos on connected minions, we need to add them to the database.
 
 Go to [http://localhost:8000/#/minions](http://localhost:8000/#/minions) and use the action button <img height="30" src="../../images/fab.png"> to refresh minions.
 
-![minions](images/minions.png)
+![minions](images/screenshots/minions.png)
 
 !!! info
     **By default**, refreshing minions will run:
@@ -41,7 +41,7 @@ Go to [http://localhost:8000/#/minions](http://localhost:8000/#/minions) and use
 
 From the minions view, you can click on a `minion id` to see its details, for example: [http://localhost:8000/#/minions/master/](http://localhost:8000/#/minions/master/).
 
-![minion_detail](images/minion_detail.png)
+![minion_detail](images/screenshots/minion-detail-dark.png)
 
 Details are parsed from the `grains.items` state. On the right, 4 tabs are present for now:
 

@@ -1,6 +1,6 @@
 # Keys
 
-![keys](../images/keys.png)
+![keys](../images/screenshots/keys.png)
 If you use Alcali master returner, Keys should be automatically refreshed. That's the only difference from the original [MySQL Salt returner](https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.mysql.html).
 
 Otherwise, you should refresh keys manually using the action button.

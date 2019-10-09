@@ -10,7 +10,7 @@ Login              | Login Dark
 #### Minions
 ![](images/screenshots/minions.png)
 
-#### Minion Detail
+#### Minion Details
 ![](images/screenshots/minion-detail-dark.png)
 
 Jobs              | Jobs Dark 
@@ -27,6 +27,15 @@ Keys              | Keys Dark
 :-------------------------:|:-------------------------:
 ![](images/screenshots/keys.png)  |  ![](images/screenshots/keys-dark.png)
 
+#### Conformity
+![](images/conformity_view.png)
+
+#### Conformity Details
+![](images/conformity_details.png)
+
 #### Users
 ![](images/screenshots/users.png)
+
+#### Settings
+![](images/settings.png)
 

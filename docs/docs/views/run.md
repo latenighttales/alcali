@@ -4,7 +4,7 @@ You can run job using either the formatted form or a pseudo cli.
 
 ## Formatted
 
-![run_formatted](../images/run_formatted.png)
+![run_formatted](../images/screenshots/run.png)
 
 For function completion and documentation, use the [parse module](settings.md#parse-modules) setting. Your custom modules should also be present.
 

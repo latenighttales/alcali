@@ -1,6 +1,6 @@
 # Overview
 
-![overview](../images/overview.png)
+![overview](../images/screenshots/dashboard-dark.png)
 
 ## Conformity
 
