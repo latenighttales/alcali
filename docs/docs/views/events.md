@@ -1,5 +1,7 @@
 # Events
 
+![events](../images/events.png)
+
 By default, display only the last 100 Events.
 
 !!!danger

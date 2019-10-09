@@ -1,5 +1,7 @@
 # Schedule
 
+![schedules](../images/schedules.png)
+
 !!! warning
 
     Schedules are not automatically added to the list.

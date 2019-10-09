@@ -1,5 +1,5 @@
 # Users
 
-Create, update and delete users.
+![users](../images/screenshots/users.png)
 
-If you use Alcali [auth module](../auth.md), you can also manage token renewal and revocation.
+Create, update and delete users.

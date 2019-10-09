@@ -1,6 +1,6 @@
 # Minions
 
-![minions](../images/minions.png)
+![minions](../images/screenshots/minions.png)
 
 List all minions currently in Alcali database.
 

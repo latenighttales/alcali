@@ -1,6 +1,6 @@
 # Minion Detail
 
-![minion_detail](../images/minion_detail.png)
+![minion_detail](../images/screenshots/minion-detail-dark.png)
 
 ## Infos and Network
 
