@@ -27,8 +27,19 @@
           <div class="text-center">
             <v-btn
                 small
+                :color="item.enabled ? 'orange': 'green'"
+                tile
+                class="ma-2"
+                dark
+                @click="manageSchedule(item.enabled ? 'disable_job': 'enable_job', item.name, item.minion)"
+            >
+              {{ item.enabled ? "disable":"enable"}}
+            </v-btn>
+            <v-btn
+                small
                 color="red"
                 tile
+                class="ma-2"
                 dark
                 @click="manageSchedule('delete', item.name, item.minion)"
             >
@@ -59,7 +70,7 @@
           this.schedules = response.data
           if (this.schedules.length > 0) {
             // Custom headers ordering
-            let headers = new Set(['minion', 'name', 'function'])
+            let headers = new Set(["minion", "name", "function"])
             // Add all needed header
             this.schedules.forEach(schedule => {
               Object.keys(schedule).forEach(key => {
@@ -75,13 +86,17 @@
         })
       },
       manageSchedule(action, name, minion) {
+        this.$toast(`${action} on ${minion} for job ${name}`)
         let formData = new FormData
         formData.set("action", action)
         formData.set("name", name)
         formData.set("minion", minion)
-        this.$toast("performing " + action + " schedule " + name + " on " + minion)
-        this.$http.post("api/schedules/manage/", formData).then(response => {
-          this.$toast(response.data.result)
+        this.$http.post("api/schedules/manage/", formData).then(() => {
+          this.$toast(`${action} on ${minion} for job ${name}: done`)
+        }).then(() => {
+          this.headers = []
+          this.schedules = []
+          this.loadData()
         })
       },
       boolRepr(bool) {

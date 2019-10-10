@@ -78,6 +78,19 @@ cd docs
 mkdocs serve -a 127.0.0.1:8003
 ```
 
+### Run tests locally
+
+```commandline
+dc -f docker-compose-ci.yml up --build --force-recreate --renew-anon-volumes
+```
+
+and in another shell:
+
+```commandline
+./docker/utils/ci_script.sh
+```
+Tests are idempotent~ish
+
 
 ## Submitting changes
 
