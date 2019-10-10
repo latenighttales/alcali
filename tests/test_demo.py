@@ -146,7 +146,7 @@ def test_change_notifs(admin_client, admin_user, jwt):
 
 
 @pytest.mark.django_db()
-def test_schedules(admin_client, run_sql, jwt):
+def test_schedules(admin_client, jwt):
     assert Schedule.objects.count() == 0
     response = admin_client.post(
         "/api/run/",
@@ -160,4 +160,23 @@ def test_schedules(admin_client, run_sql, jwt):
     response = admin_client.post("/api/schedules/refresh/", {}, **jwt)
     assert response.status_code == 200
     assert len(Schedule.objects.all()) > 0
+    response = admin_client.post(
+        "/api/schedules/manage/",
+        {"action": "disable_job", "name": "job1", "minion": "master"},
+        **jwt
+    )
+    assert "disable" in response.json()["result"]
+    assert Schedule.objects.filter(name="job1").get().loaded_job()["enabled"] is False
+    response = admin_client.post(
+        "/api/schedules/manage/",
+        {"action": "enable_job", "name": "job1", "minion": "master"},
+        **jwt
+    )
+    assert "enable" in response.json()["result"]
+    assert Schedule.objects.first().loaded_job()["enabled"] is True
+    response = admin_client.post(
+        "/api/schedules/manage/",
+        {"action": "delete", "name": "job1", "minion": "master"},
+        **jwt
+    )
     # run_sql("TRUNCATE TABLE `salt_returns`")
