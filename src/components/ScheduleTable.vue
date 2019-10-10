@@ -46,7 +46,7 @@
     name: "ScheduleTable",
     data() {
       return {
-        search: '',
+        search: "",
         headers: [],
         schedules: [],
         loading: true,
@@ -58,20 +58,27 @@
         this.$http.get("api/schedules/").then(response => {
           this.schedules = response.data
           if (this.schedules.length > 0) {
-            Object.keys(response.data[0]).forEach(key => {
-              if (key !== "id") {
-                this.headers.push({text: key, value: key})
-              }
+            // Custom headers ordering
+            let headers = new Set(['minion', 'name', 'function'])
+            // Add all needed header
+            this.schedules.forEach(schedule => {
+              Object.keys(schedule).forEach(key => {
+                headers.add(key)
+              })
             })
-            this.headers.push({text: "action", value: "action"})
+            headers.delete("id")
+            headers.forEach(header => {
+              this.headers.push({ text: header, value: header })
+            })
+            this.headers.push({ text: "action", value: "action" })
           }
         })
       },
       manageSchedule(action, name, minion) {
         let formData = new FormData
-        formData.set('action', action)
-        formData.set('name', name)
-        formData.set('minion', minion)
+        formData.set("action", action)
+        formData.set("name", name)
+        formData.set("minion", minion)
         this.$toast("performing " + action + " schedule " + name + " on " + minion)
         this.$http.post("api/schedules/manage/", formData).then(response => {
           this.$toast(response.data.result)
@@ -79,10 +86,10 @@
       },
       boolRepr(bool) {
         if (bool === true) {
-          return 'green'
+          return "green"
         } else if (bool === false) {
-          return 'red'
-        } else return 'primary'
+          return "red"
+        } else return "primary"
       },
     },
     mounted() {
