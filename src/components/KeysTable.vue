@@ -84,7 +84,7 @@
           return "green"
         } else if (status.startsWith("reject")) {
           return "orange"
-        } else if (status.startsWith("den")) {
+        } else if (status.startsWith("de")) {
           return "red"
         } else {
           return "grey"
@@ -92,13 +92,13 @@
       },
       keyAction(status) {
         if (status === "accepted") {
-          return ["reject", "deny"]
+          return ["reject", "delete"]
         } else if (status === "rejected") {
-          return ["accept", "deny"]
+          return ["accept", "delete"]
         } else if (status === "denied") {
           return ["accept"]
         } else {
-          return ["accept", "deny"]
+          return ["accept", "delete"]
         }
       },
       manageKey(action, key) {
