@@ -208,7 +208,7 @@ def dummy_state():
         return_field='{"oh": "no"}',
         id="master",
         success=1,
-        full_ret='{"return": "noice"}',
+        full_ret='{"return": "noice","retcode": 0}',
         alter_time=time.strftime("%Y-%m-%d %H:%M:%S"),
     )
     return ret
