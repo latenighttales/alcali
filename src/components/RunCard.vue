@@ -322,7 +322,27 @@
         }
         this.$toast(action + " " + command)
         this.$http.post("api/run/", formData).then(response => {
-          this.results = response.data + this.results
+          let result = response.data
+          // If we're expecting an async result, display a link to the minion's result.
+          if (this.client_async) {
+            let parser = new DOMParser()
+            let htmlRes = parser.parseFromString(result, "text/html")
+            let resultChild = htmlRes.getElementsByClassName("ansi2html-content")[0].children
+            let jid = resultChild[resultChild.length - 1].innerText
+            // for all targeted minions.
+            for (let i = 1; i < resultChild.length - 2; i++) {
+              // create link and add it to html.
+              let a = document.createElement("a")
+              let linkText = document.createTextNode(resultChild[i].innerText)
+              a.appendChild(linkText)
+              a.title = `Async result to job for ${resultChild[i].innerText.replace("- ", "")}`
+              a.href = `/#/jobs/${jid}/${resultChild[i].innerText.replace("- ", "")}`
+              resultChild[i].innerHTML = ""
+              resultChild[i].appendChild(a)
+            }
+            result = new XMLSerializer().serializeToString(htmlRes)
+          }
+          this.results = result + this.results
         })
       },
     },
@@ -336,7 +356,7 @@
         })
       },
       pillarRendered: function() {
-        return `${JSON.stringify(yaml.safeLoad(this.code)=== null ? {}: yaml.safeLoad(this.code))}`
+        return `${JSON.stringify(yaml.safeLoad(this.code) === null ? {} : yaml.safeLoad(this.code))}`
       },
     },
     mounted() {
