@@ -5,15 +5,15 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col sm="6">
+            <v-col lg="2">
               <span>Jobs Notifications</span>
               <div v-for="(val, name) in notifs" :key="name">
                 <v-switch v-model="notifs[name]" :label="name" color="primary" hide-details></v-switch>
               </div>
             </v-col>
-            <v-col sm="6">
+            <v-col lg="2">
               <span>Max Notifications</span>
-              <v-text-field v-model="max_notifs"></v-text-field>
+              <v-text-field v-model="max_notifs" type="number"></v-text-field>
             </v-col>
           </v-row>
         </v-container>
