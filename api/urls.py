@@ -29,6 +29,7 @@ from api.views.alcali import (
     MyTokenObtainPairView,
     search,
     verify,
+    version,
 )
 from rest_framework import routers
 
@@ -50,6 +51,7 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("api/search/", search, name="search"),
     path("api/stats/", stats, name="stats"),
+    path("api/version/", version, name="version"),
     path("api/settings/initdb", parse_modules, name="parse_modules"),
     path("api/event_stream/", event_stream, name="event_stream"),
     path("api/jobs/", SaltReturnsList.as_view(), name="jobs-list"),

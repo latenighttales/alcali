@@ -5,10 +5,10 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col lg="2" align-self="center">
+            <v-col sm="4" lg="2" align-self="center">
               Parse modules from:
             </v-col>
-            <v-col lg="2">
+            <v-col sm="4" lg="2">
               <v-select
                   :items="minions"
                   item-text="minion_id"
@@ -19,6 +19,12 @@
             </v-col>
             <v-col align-self="center">
               <v-btn :disabled="target == null" @click="parseModules" color="primary">Submit</v-btn>
+            </v-col>
+            <v-col sm="4" lg="1" align-self="center">
+              Alcali Version:
+            </v-col>
+            <v-col sm="4" lg="2" align-self="center">
+              <span>{{version}}</span>
             </v-col>
           </v-row>
           <v-row>
@@ -100,6 +106,7 @@
     name: "CommonSettings",
     data() {
       return {
+        version: "unknown",
         minions: [],
         target: null,
         functions: null,
@@ -138,6 +145,9 @@
         this.$http.get("api/minionsfields/").then(response => {
           this.minionsfields = response.data
         })
+        this.$http.get("api/version/").then(response => {
+          this.version = response.data.version
+        })
       },
       parseModules() {
         this.$toast("Parse module started")
@@ -145,7 +155,7 @@
         formData.set("target", this.target)
         this.$http.post("api/settings/initdb", formData).then(response => {
           this.$toast(response.data.result)
-        }).then(()=> {
+        }).then(() => {
           this.loadData()
         })
       },

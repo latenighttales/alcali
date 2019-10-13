@@ -148,3 +148,9 @@ REST_FRAMEWORK = {
 # SIMPLE_JWT = {
 #     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 #     'REFRESH_TOKEN_LIFETIME': timedelta(days=1)}
+
+try:
+    with open(os.path.join(BASE_DIR, "VERSION"), "r") as fh:
+        VERSION = fh.read()
+except FileNotFoundError:
+    VERSION = "unknown"

@@ -3,6 +3,7 @@ import json
 from collections import Counter, OrderedDict
 
 from ansi2html import Ansi2HTMLConverter
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import (
@@ -381,6 +382,12 @@ def stats(request):
     events_nb = SaltEvents.objects.count()
     schedules_nb = Schedule.objects.count()
     return Response({"jobs": jobs_nb, "events": events_nb, "schedules": schedules_nb})
+
+
+@api_view(["GET"])
+def version(request):
+
+    return Response({"version": settings.VERSION})
 
 
 @api_view(["GET"])

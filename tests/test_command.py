@@ -3,6 +3,7 @@ from io import StringIO
 
 import pytest
 from django.core.management import call_command, CommandError
+from django.conf import settings
 
 
 @pytest.mark.django_db
@@ -51,7 +52,7 @@ def test_manage_token_reset(admin_user):
 def test_current_version():
     out = StringIO()
     call_command("current_version", stdout=out)
-    assert "alcali version 2018.3.2" in out.getvalue()
+    assert "alcali version {}".format(settings.VERSION) in out.getvalue()
 
 
 def test_location():
