@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 from collections import Counter, OrderedDict
 
 from ansi2html import Ansi2HTMLConverter
@@ -25,16 +26,29 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-from api.backend.netapi import (
-    refresh_minion,
-    manage_key,
-    get_events,
-    init_db,
-    refresh_schedules,
-    run_raw,
-    get_keys,
-    manage_schedules,
-)
+if os.environ.get("API_BACKEND", "netapi") != "netapi":
+    from api.backend.pyapi import (
+        refresh_minion,
+        manage_key,
+        get_events,
+        init_db,
+        refresh_schedules,
+        run_raw,
+        get_keys,
+        manage_schedules,
+    )
+else:
+    from api.backend.netapi import (
+        refresh_minion,
+        manage_key,
+        get_events,
+        init_db,
+        refresh_schedules,
+        run_raw,
+        get_keys,
+        manage_schedules,
+    )
+
 from api.models import SaltReturns, Keys, Minions, SaltEvents, Schedule, Conformity
 from api.models import UserSettings, MinionsCustomFields, Functions
 from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
