@@ -25,11 +25,16 @@
       </v-tabs>
       <v-tabs-items v-model="tab">
         <v-tab-item id="grain">
-          <v-btn @click="fold">toto</v-btn>
+          <div class="text-right">
+            <v-btn @click="fold('grainCm')" class="overlayedBtn">{{ grainCmFolded ? "unfold" : "fold" }}</v-btn>
+          </div>
           <codemirror v-model="code" ref="grainCm" :options="cmOptions"></codemirror>
         </v-tab-item>
         <v-tab-item id="pillar">
-          <codemirror v-model="codepillar" :options="cmOptions"></codemirror>
+          <div class="text-right">
+            <v-btn @click="fold('pillarCm')" class="overlayedBtn">{{ pillarCmFolded ? "unfold" : "fold" }}</v-btn>
+          </div>
+          <codemirror v-model="codepillar" ref="pillarCm" :options="cmOptions"></codemirror>
         </v-tab-item>
         <v-tab-item id="history">
           <JobsTable :filter="{'target[]': minion.minion_id}"></JobsTable>
@@ -48,7 +53,7 @@
 <script>
 
   // require component
-  import CodeMirror from 'codemirror'
+  import CodeMirror from "codemirror"
   import { codemirror } from "vue-codemirror"
 
   import "codemirror/addon/display/autorefresh.js"
@@ -81,7 +86,8 @@
         tab: null,
         code: yaml.safeDump(JSON.parse(this.minion.grain)),
         codepillar: yaml.safeDump(JSON.parse(this.minion.pillar)),
-        grain_folded: false,
+        grainCmFolded: false,
+        pillarCmFolded: false,
         cmOptions: {
           tabSize: 4,
           mode: "yaml",
@@ -101,21 +107,25 @@
       yamlRepr(data) {
         return yaml.safeDump(JSON.parse(data))
       },
-      fold() {
-        return this.grain_folded === true ? CodeMirror.commands.unfoldAll(this.$refs.grainCm.codemirror) : CodeMirror.commands.foldAll(this.$refs.grainCm.codemirror)
-      }
-    },
-    mounted() {
-    },
-    computed: {
-      grainCodeMirror() {
-        return this.$refs.grainCm.codemirror
-      }
+      fold(ref) {
+        if (this[ref+'Folded'] === true) {
+          CodeMirror.commands.unfoldAll(this.$refs[ref].codemirror)
+          this[ref+'Folded'] = false
+        } else {
+          CodeMirror.commands.foldAll(this.$refs[ref].codemirror)
+          this[ref+'Folded'] = true
+        }
+      },
     },
     props: ["minion"],
   }
 </script>
 
 <style scoped>
+  .overlayedBtn {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+  }
 
 </style>
