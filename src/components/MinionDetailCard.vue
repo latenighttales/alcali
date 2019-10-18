@@ -25,7 +25,8 @@
       </v-tabs>
       <v-tabs-items v-model="tab">
         <v-tab-item id="grain">
-          <codemirror v-model="code" :options="cmOptions"></codemirror>
+          <v-btn @click="fold">toto</v-btn>
+          <codemirror v-model="code" ref="grainCm" :options="cmOptions"></codemirror>
         </v-tab-item>
         <v-tab-item id="pillar">
           <codemirror v-model="codepillar" :options="cmOptions"></codemirror>
@@ -47,6 +48,7 @@
 <script>
 
   // require component
+  import CodeMirror from 'codemirror'
   import { codemirror } from "vue-codemirror"
 
   import "codemirror/addon/display/autorefresh.js"
@@ -79,6 +81,7 @@
         tab: null,
         code: yaml.safeDump(JSON.parse(this.minion.grain)),
         codepillar: yaml.safeDump(JSON.parse(this.minion.pillar)),
+        grain_folded: false,
         cmOptions: {
           tabSize: 4,
           mode: "yaml",
@@ -98,6 +101,16 @@
       yamlRepr(data) {
         return yaml.safeDump(JSON.parse(data))
       },
+      fold() {
+        return this.grain_folded === true ? CodeMirror.commands.unfoldAll(this.$refs.grainCm.codemirror) : CodeMirror.commands.foldAll(this.$refs.grainCm.codemirror)
+      }
+    },
+    mounted() {
+    },
+    computed: {
+      grainCodeMirror() {
+        return this.$refs.grainCm.codemirror
+      }
     },
     props: ["minion"],
   }
