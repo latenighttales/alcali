@@ -324,7 +324,7 @@
         this.$http.post("api/run/", formData).then(response => {
           let result = response.data
           // If we're expecting an async result, display a link to the minion's result.
-          if (this.client_async) {
+          if (this.client_async && this.selected_client === 'local') {
             let parser = new DOMParser()
             let htmlRes = parser.parseFromString(result, "text/html")
             let resultChild = htmlRes.getElementsByClassName("ansi2html-content")[0].children

@@ -1,3 +1,3 @@
 black==19.3b0
-django-extensions==2.2.3
+django-extensions==2.2.5
 ipython==7.8.0
