@@ -7,6 +7,9 @@ with open("requirements/prod.txt", "r") as fh:
 with open("requirements/dev.txt", "r") as fh:
     dev_requirements = fh.read().splitlines()
 
+with open("requirements/ldap.txt", "r") as fh:
+    ldap_requirements = fh.read().splitlines()
+
 with open("VERSION", "r") as fh:
     version = fh.read()
 
@@ -38,6 +41,6 @@ setup(
         "Topic :: System :: Systems Administration",
     ],
     install_requires=requirements,
-    extras_require={"dev": dev_requirements},
+    extras_require={"dev": dev_requirements, "ldap": ldap_requirements},
     entry_points={"console_scripts": ["alcali = bin:manage"]},
 )

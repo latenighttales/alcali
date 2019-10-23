@@ -46,3 +46,9 @@ services:
     command: salt-minion -l info
     depends_on:
       - master
+#  ldap-server:
+#    image: osixia/openldap:1.3.0
+#    restart: always
+#    ports:
+#      - "389:389"
+#      - "636:636"
