@@ -68,7 +68,9 @@
 
         this.$store.dispatch("login", { username, password })
           .then(() => this.$router.push("/"))
-          //.catch(err => console.log(err))
+          .catch((err) => {
+            this.$toast.error("Invalid Login / Password")
+          })
       },
     },
   }

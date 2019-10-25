@@ -291,7 +291,7 @@ yum install libpq-devel gcc
 yum install mysql-devel gcc
 ```
 
-#### Using pip
+#### Install from PyPI
 
 !!!warning
 
@@ -318,7 +318,7 @@ or for postgres:
 pip install --user psycopg2
 ```
 
-#### From Sources
+#### Install from Sources
 
 ```commandline
 git clone https://github.com/latenighttales/alcali.git
@@ -333,4 +333,28 @@ pip install --user mysqlclient
 or for postgres:
 ```commandline
 pip install --user psycopg2
+```
+
+#### Installation with LDAP support
+
+if you want to use LDAP to authenticate users, you'll need these system dependencies:
+
+For Debian based distribution:
+```commandline
+apt install libldap2-dev libsasl2-dev ldap-utils
+```
+
+For Red-Hat based distribution:
+```commandline
+yum install openldap-devel
+```
+
+To add LDAP support to alcali, just append `[ldap]` to the chosen install method i.e:
+
+```commandline
+# Install from PyPI
+pip install --user alcali[ldap]
+
+# Install from Source
+pip install --user .[ldap]
 ```

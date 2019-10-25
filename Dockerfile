@@ -8,7 +8,7 @@ ARG USER_ID=1000
 # Upgrade System and Install dependencies
 RUN apt-get update \
   && seq 1 8 | xargs -I{} mkdir -p /usr/share/man/man{} \
-  && apt-get install -y --no-install-recommends -o DPkg::Options::=--force-confold netcat libmariadbclient-dev libpq-dev build-essential git
+  && apt-get install -y --no-install-recommends -o DPkg::Options::=--force-confold netcat libmariadbclient-dev libpq-dev build-essential libldap2-dev libsasl2-dev ldap-utils
 
 # Upgrade pip
 RUN pip install --upgrade pip
@@ -32,7 +32,7 @@ WORKDIR /opt/alcali/code
 RUN pip install --user -U setuptools
 
 # Install project
-RUN pip install --user . mysqlclient psycopg2
+RUN pip install --user .[ldap] mysqlclient psycopg2
 
 EXPOSE 8000
 

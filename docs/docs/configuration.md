@@ -52,7 +52,50 @@ Must be formed with protocol, host and port (e.g. 'https://localhost:8080')
 
 How you choose to [authenticate](installation.md#authentication) to the salt-api.
 
-Must either be rest or alcali.
+Must be set to  `rest` or `alcali`.
+
+## LDAP configuration
+
+Please refer to django-auth-ldap [documentation reference](https://django-auth-ldap.readthedocs.io/en/latest/reference.html).
+
+Here is a list of the supported settings:
+
+- AUTH_LDAP_SERVER_URI
+- AUTH_LDAP_BIND_DN
+- AUTH_LDAP_BIND_PASSWORD
+- AUTH_LDAP_USER_DN_TEMPLATE
+- AUTH_LDAP_REQUIRE_GROUP
+- AUTH_LDAP_DENY_GROUP
+- AUTH_LDAP_START_TLS
+
+### search/bind and direct bind
+
+If you set `AUTH_LDAP_USER_DN_TEMPLATE` the search phase will be skipped.
+
+Otherwise, you can set the search base cn with:
+
+`AUTH_LDAP_USER_BASE_CN` 
+
+and the search filter with:
+
+`AUTH_LDAP_USER_SEARCH_FILTER` default: `"(objectClass=*)"`
+
+see next for an example.
+
+### Attribute mapping
+
+Here is the default attribute mapping and the env var to use to override them:
+
+```python
+# Populate the Django user from the LDAP directory.
+AUTH_LDAP_USER_ATTR_MAP = {
+    "username": os.environ.get("AUTH_LDAP_USER_ATTR_MAP_USERNAME", "sAMAccountName"),
+    "first_name": os.environ.get("AUTH_LDAP_USER_ATTR_MAP_FIRST_NAME", "givenName"),
+    "last_name": os.environ.get("AUTH_LDAP_USER_ATTR_MAP_LAST_NAME", "sn"),
+    "email": os.environ.get("AUTH_LDAP_USER_ATTR_MAP_EMAIL", "mail"),
+}
+```
+
 
 ## `.env` file example:
 
@@ -70,6 +113,17 @@ MASTER_MINION_ID=master
 
 SALT_URL=https://localhost:8080
 SALT_AUTH=alcali
+```
+
+If you want to use LDAP authentication, you'll also need:
+
+```bash
+AUTH_BACKEND=ldap
+AUTH_LDAP_SERVER_URI=ldap://ldap-server
+AUTH_LDAP_BIND_DN=cn=admin,dc=example,dc=org
+AUTH_LDAP_BIND_PASSWORD=admin
+AUTH_LDAP_USER_BASE_CN=dc=example,dc=org
+AUTH_LDAP_USER_SEARCH_FILTER=(uid=%(user)s)
 ```
 
 ## Docker
