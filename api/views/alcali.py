@@ -299,8 +299,9 @@ class UsersViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         permission_classes = []
+        # Only Staff users are allowed to create users.
         if self.action == "create":
-            permission_classes = [AllowAny]
+            permission_classes = [IsAdminUser]
         elif (
             self.action == "retrieve"
             or self.action == "update"

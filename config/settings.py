@@ -8,6 +8,7 @@ import os
 # If there's our env var, it means that env file was loaded somehow(docker).
 from os.path import join
 from pathlib import Path
+from distutils.util import strtobool
 
 from dotenv import load_dotenv
 
@@ -29,9 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-from distutils.util import strtobool
-
-DJANGO_DEBUG = os.environ.get("DJANGO_DEBUG", None)
+DJANGO_DEBUG = os.environ.get("DJANGO_DEBUG")
 if DJANGO_DEBUG:
     try:
         # lower('y', 'yes', 't', 'true', 'on', '1')
@@ -149,8 +148,21 @@ REST_FRAMEWORK = {
 #     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 #     'REFRESH_TOKEN_LIFETIME': timedelta(days=1)}
 
+# # TODO!
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "handlers": {"console": {"class": "logging.StreamHandler"}},
+#     "loggers": {"django_auth_ldap": {"level": "DEBUG", "handlers": ["console"]}},
+# }
+#
+# Get version from file.
 try:
     with open(os.path.join(BASE_DIR, "VERSION"), "r") as fh:
         VERSION = fh.read()
 except FileNotFoundError:
     VERSION = "unknown"
+
+# LDAP Authentication.
+if os.environ.get("AUTH_BACKEND") and os.environ["AUTH_BACKEND"].lower() == "ldap":
+    from .ldap_config import *
