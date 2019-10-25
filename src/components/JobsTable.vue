@@ -113,7 +113,7 @@
               sort-by="jid"
               sort-desc
               item-key="uniqueid"
-              :headers="headers"
+              :headers="filteredHeaders"
               :items="indexedItems"
               :search="search"
               class="elevation-1"
@@ -121,6 +121,9 @@
           >
             <template v-slot:item.jid="{ item }">
               <v-btn text small class="text-none" :to="'/jobs/'+item.jid+'/'+item.id">{{ item.jid }}</v-btn>
+            </template>
+            <template v-slot:item.id="{ item }">
+              {{ filter? "":item.id }}
             </template>
             <template v-slot:item.arguments="{ item }">
               {{ item.arguments.length > 20 ? item.arguments.slice(0, 20)+"...": item.arguments }}
@@ -201,6 +204,12 @@
       },
       dateRangeText() {
         return this.selectedDate.join(" ~ ")
+      },
+      filteredHeaders() {
+        if (this.filter) {
+          this.headers.splice(1, 1)
+        }
+        return this.headers
       },
     },
     mounted() {
