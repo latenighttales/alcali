@@ -123,10 +123,13 @@
               <v-btn text small class="text-none" :to="'/jobs/'+item.jid+'/'+item.id">{{ item.jid }}</v-btn>
             </template>
             <template v-slot:item.id="{ item }">
-              {{ filter ? "" :item.id }}
+              <v-btn text small class="text-none" :to="'/minions/'+item.id" v-show="!filter">{{ item.id }}</v-btn>
             </template>
             <template v-slot:item.arguments="{ item }">
               {{ item.arguments.length > 20 ? item.arguments.slice(0, 20)+"...": item.arguments }}
+            </template>
+            <template v-slot:item.keyword_arguments="{ item }">
+              {{ item.keyword_arguments.length > 20 ? item.keyword_arguments.slice(0, 20)+"...": item.keyword_arguments }}
             </template>
             <template v-slot:item.success="{ item }">
               <v-chip :color="boolRepr(item.success)" dark>{{ boolText(item.success) }}</v-chip>
@@ -152,7 +155,7 @@
                     color="blue-grey"
                     tile
                     dark
-                    :to="'/run/?target='+item.id+'&function='+item.fun+'&args='+item.arguments"
+                    :to="'/run?tgt='+item.id+'&fun='+item.fun+'&arg='+item.arguments+'&kwarg='+item.keyword_arguments"
                 >
                   rerun
                 </v-btn>
@@ -186,6 +189,7 @@
           { text: "Target", value: "id" },
           { text: "Function", value: "fun" },
           { text: "Arguments", value: "arguments" },
+          { text: "Keyword Arguments", value: "keyword_arguments" },
           { text: "User", value: "user" },
           { text: "Status", value: "success" },
           { text: "Date", value: "alter_time" },

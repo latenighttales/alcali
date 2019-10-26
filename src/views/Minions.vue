@@ -48,7 +48,7 @@
         })
       },
       runAll() {
-        this.$router.push("/run/?target=*")
+        this.$router.push("/run?tgt=*")
       },
     },
   }

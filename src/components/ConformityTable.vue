@@ -85,7 +85,7 @@
                 color="orange"
                 tile
                 dark
-                :to="'/run/?target='+item.minion_id+'&function=state.apply'"
+                :to="'/run?tgt='+item.minion_id+'&fun=state.apply'"
             >
               highstate
             </v-btn>

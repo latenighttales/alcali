@@ -77,10 +77,10 @@
         })
       },
       runMinion() {
-        this.$router.push("/run/?target=" + this.minion_id)
+        this.$router.push("/run?tgt=" + this.minion_id)
       },
       highstateMinion() {
-        this.$router.push("/run/?target=" + this.minion_id + "&function=state.apply")
+        this.$router.push("/run?tgt=" + this.minion_id + "&fun=state.apply")
       },
     },
     props: [
