@@ -29,7 +29,7 @@
           </template>
         </template>
         <template v-slot:item.status="{ item }">
-          <v-chip :color="keysRepr(item.status)" dark>{{ item.status }}</v-chip>
+          <v-chip :color="keysRepr(item.status)" dark>{{ item.status.toString() }}</v-chip>
         </template>
         <template v-slot:item.action="{ item }">
           <template v-for="action in keyAction(item.status)">
