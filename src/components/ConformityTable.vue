@@ -28,7 +28,7 @@
           {{item.last_highstate === null ? "": new Date(item.last_highstate).toLocaleString("en-GB")}}
         </template>
         <template v-slot:item.conformity="{ item }">
-          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity == null ? "unknown": item.conformity }}
+          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity == null ? "unknown": item.conformity.toString() }}
           </v-chip>
         </template>
         <template v-slot:item.succeeded="{ item }">

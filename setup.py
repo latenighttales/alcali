@@ -10,10 +10,10 @@ with open("requirements/dev.txt", "r") as fh:
 with open("requirements/ldap.txt", "r") as fh:
     ldap_requirements = fh.read().splitlines()
 
-with open("VERSION", "r") as fh:
+with open("VERSION", "r", encoding="utf-8") as fh:
     version = fh.read()
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
