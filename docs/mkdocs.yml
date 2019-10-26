@@ -14,6 +14,7 @@ nav:
       - 'Jobs': views/jobs.md
       - 'Job Details': views/job_detail.md
       - 'Run': views/run.md
+      - 'Job Templates': views/job_templates.md
       - 'Schedule': views/schedule.md
       - 'Conformity': views/conformity.md
       - 'Conformity Details': views/conformity_details.md
@@ -22,8 +23,7 @@ nav:
       - 'Users': views/users.md
       - 'Settings': views/settings.md
   - Troubleshooting: troubleshooting.md
-  - Screenshots:
-      - '': screenshots.md
+  - Screenshots: screenshots.md
   - Contribute: contribute.md
   - Licence: licence.md
 site_description: 'A web based tool for monitoring and administrating Saltstack'
@@ -39,8 +39,6 @@ copyright: 'Copyright &copy; 2019 All rights reserved'
 
 theme:
   name: 'material'
-  feature:
-    tabs: true
   custom_dir: 'theme'
   logo: 'images/logo-144.png'
   favicon: 'images/favicon.ico'

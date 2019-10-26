@@ -99,88 +99,100 @@
                       </v-col>
                     </v-row>
                     <v-row dense>
-                      <v-col sm="3">
-                        <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
-                                  v-show="selected_client === 'local'"></v-switch>
+                      <v-col sm=12 lg="3">
+                        <v-row dense>
+                          <v-col sm="12">
+                            <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
+                                      v-show="selected_client === 'local'"></v-switch>
+                          </v-col>
+                          <v-col sm="12" v-show="scheduleSwitch">
+                            <v-text-field label="Schedule Name" v-model="scheduleName"
+                                          style="width: 350px;"></v-text-field>
+                            <v-radio-group v-model="scheduleType" class="mt-0">
+                              <v-radio value="once" color="primary">
+                                <template v-slot:label>
+                                  <span><strong>Once:  </strong></span>
+                                  <v-row>
+                                    <v-col sm="4" class="ml-2">
+                                      <v-menu
+                                          v-model="dateMenu"
+                                          :close-on-content-click="false"
+                                          transition="scale-transition"
+                                          offset-y
+                                          min-width="290px"
+                                      >
+                                        <template v-slot:activator="{ on }">
+                                          <v-text-field
+                                              v-model="scheduleDate"
+                                              readonly
+                                              v-on="on"
+                                          ></v-text-field>
+                                        </template>
+                                        <v-date-picker :min="scheduleDate" v-model="scheduleDate"
+                                                       @input="dateMenu = false"></v-date-picker>
+                                      </v-menu>
+                                    </v-col>
+                                    <v-col sm="4">
+                                      <v-menu
+                                          ref="menu"
+                                          v-model="timeMenu"
+                                          :close-on-content-click="false"
+                                          :nudge-right="40"
+                                          transition="scale-transition"
+                                          offset-y
+                                          max-width="290px"
+                                          min-width="290px"
+                                      >
+                                        <template v-slot:activator="{ on }">
+                                          <v-text-field
+                                              v-model="scheduleTime"
+                                              readonly
+                                              v-on="on"
+                                          ></v-text-field>
+                                        </template>
+                                        <v-time-picker
+                                            v-if="timeMenu"
+                                            v-model="scheduleTime"
+                                            full-width
+                                        ></v-time-picker>
+                                      </v-menu>
+                                    </v-col>
+                                  </v-row>
+                                </template>
+                              </v-radio>
+                              <v-radio value="recurring" color="primary">
+                                <template v-slot:label>
+                                  <div><strong>Recurring: </strong> Every <span id="cron"></span></div>
+                                </template>
+                              </v-radio>
+                            </v-radio-group>
+                          </v-col>
+                        </v-row>
                       </v-col>
-                      <v-col sm="3">
-                        <v-switch v-model="pillarSwitch" label="Pillar" color="primary"
-                                  v-show="selected_client === 'local'"></v-switch>
+                      <v-col sm=12 lg="6">
+                        <v-row dense>
+                          <v-col sm="12">
+                            <v-switch v-model="pillarSwitch" label="Pillar" color="primary"
+                                      v-show="selected_client === 'local'"></v-switch>
+                          </v-col>
+                          <v-col sm="12" v-show="pillarSwitch">
+                            <codemirror v-model="code" :options="cmOptions"></codemirror>
+                          </v-col>
+                          <v-col sm="12" v-show="pillarSwitch">
+                            <span v-html="pillarRendered"></span>
+                          </v-col>
+                        </v-row>
                       </v-col>
-                      <v-col sm="3" offset-sm="3">
-                        <v-switch v-model="saveJobSwitch" label="Save as template" color="primary"></v-switch>
-                      </v-col>
-                      <v-col sm="12" v-show="saveJobSwitch">
-                        <v-text-field label="Job Template Name" v-model="jobTemplateName"
-                                      style="width: 350px;"></v-text-field>
-                      </v-col>
-                      <v-col sm="12" v-show="pillarSwitch">
-                        <codemirror v-model="code" :options="cmOptions"></codemirror>
-                      </v-col>
-                      <v-col sm="12" v-show="pillarSwitch">
-                        <span v-html="pillarRendered"></span>
-                      </v-col>
-                      <v-col sm="12" v-show="scheduleSwitch">
-                        <v-text-field label="Schedule name" v-model="scheduleName"
-                                      style="width: 350px;"></v-text-field>
-                        <v-radio-group v-model="scheduleType" class="mt-0">
-                          <v-radio value="once" color="primary">
-                            <template v-slot:label>
-                              <span><strong>Once:  </strong></span>
-                              <v-row>
-                                <v-col sm="4" class="ml-2">
-                                  <v-menu
-                                      v-model="dateMenu"
-                                      :close-on-content-click="false"
-                                      transition="scale-transition"
-                                      offset-y
-                                      min-width="290px"
-                                  >
-                                    <template v-slot:activator="{ on }">
-                                      <v-text-field
-                                          v-model="scheduleDate"
-                                          readonly
-                                          v-on="on"
-                                      ></v-text-field>
-                                    </template>
-                                    <v-date-picker :min="scheduleDate" v-model="scheduleDate"
-                                                   @input="dateMenu = false"></v-date-picker>
-                                  </v-menu>
-                                </v-col>
-                                <v-col sm="4">
-                                  <v-menu
-                                      ref="menu"
-                                      v-model="timeMenu"
-                                      :close-on-content-click="false"
-                                      :nudge-right="40"
-                                      transition="scale-transition"
-                                      offset-y
-                                      max-width="290px"
-                                      min-width="290px"
-                                  >
-                                    <template v-slot:activator="{ on }">
-                                      <v-text-field
-                                          v-model="scheduleTime"
-                                          readonly
-                                          v-on="on"
-                                      ></v-text-field>
-                                    </template>
-                                    <v-time-picker
-                                        v-if="timeMenu"
-                                        v-model="scheduleTime"
-                                        full-width
-                                    ></v-time-picker>
-                                  </v-menu>
-                                </v-col>
-                              </v-row>
-                            </template>
-                          </v-radio>
-                          <v-radio value="recurring" color="primary">
-                            <template v-slot:label>
-                              <div><strong>Recurring: </strong> Every <span id="cron"></span></div>
-                            </template>
-                          </v-radio>
-                        </v-radio-group>
+                      <v-col sm=12 lg="3">
+                        <v-row dense>
+                          <v-col sm="12">
+                            <v-switch v-model="saveJobSwitch" label="Save as template" color="primary"></v-switch>
+                          </v-col>
+                          <v-col sm="12" v-show="saveJobSwitch">
+                            <v-text-field label="Job Template Name" v-model="jobTemplateName"
+                                          style="width: 350px;"></v-text-field>
+                          </v-col>
+                        </v-row>
                       </v-col>
                     </v-row>
                   </v-container>
