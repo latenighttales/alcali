@@ -92,96 +92,116 @@
                         </v-combobox>
                       </v-col>
                       <v-col lg="3">
-                        <v-text-field label="Arguments" v-model="args"></v-text-field>
+                        <v-text-field label="Arguments" v-model="arg"></v-text-field>
                       </v-col>
                       <v-col lg="4">
-                        <v-text-field label="Keyword Arguments" v-model="kwargs"></v-text-field>
+                        <v-text-field label="Keyword Arguments" v-model="kwarg"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row dense>
-                      <v-col sm="3">
-                        <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
-                                  v-show="selected_client === 'local'"></v-switch>
+                      <v-col sm=12 lg="3">
+                        <v-row dense>
+                          <v-col sm="12">
+                            <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
+                                      v-show="selected_client === 'local'"></v-switch>
+                          </v-col>
+                          <v-col sm="12" v-show="scheduleSwitch">
+                            <v-text-field label="Schedule Name" v-model="scheduleName"
+                                          style="width: 350px;"></v-text-field>
+                            <v-radio-group v-model="scheduleType" class="mt-0">
+                              <v-radio value="once" color="primary">
+                                <template v-slot:label>
+                                  <span><strong>Once:  </strong></span>
+                                  <v-row>
+                                    <v-col sm="4" class="ml-2">
+                                      <v-menu
+                                          v-model="dateMenu"
+                                          :close-on-content-click="false"
+                                          transition="scale-transition"
+                                          offset-y
+                                          min-width="290px"
+                                      >
+                                        <template v-slot:activator="{ on }">
+                                          <v-text-field
+                                              v-model="scheduleDate"
+                                              readonly
+                                              v-on="on"
+                                          ></v-text-field>
+                                        </template>
+                                        <v-date-picker :min="scheduleDate" v-model="scheduleDate"
+                                                       @input="dateMenu = false"></v-date-picker>
+                                      </v-menu>
+                                    </v-col>
+                                    <v-col sm="4">
+                                      <v-menu
+                                          ref="menu"
+                                          v-model="timeMenu"
+                                          :close-on-content-click="false"
+                                          :nudge-right="40"
+                                          transition="scale-transition"
+                                          offset-y
+                                          max-width="290px"
+                                          min-width="290px"
+                                      >
+                                        <template v-slot:activator="{ on }">
+                                          <v-text-field
+                                              v-model="scheduleTime"
+                                              readonly
+                                              v-on="on"
+                                          ></v-text-field>
+                                        </template>
+                                        <v-time-picker
+                                            v-if="timeMenu"
+                                            v-model="scheduleTime"
+                                            full-width
+                                        ></v-time-picker>
+                                      </v-menu>
+                                    </v-col>
+                                  </v-row>
+                                </template>
+                              </v-radio>
+                              <v-radio value="recurring" color="primary">
+                                <template v-slot:label>
+                                  <div><strong>Recurring: </strong> Every <span id="cron"></span></div>
+                                </template>
+                              </v-radio>
+                            </v-radio-group>
+                          </v-col>
+                        </v-row>
                       </v-col>
-                      <v-col sm="3">
-                        <v-switch v-model="pillarSwitch" label="Pillar" color="primary"
-                                  v-show="selected_client === 'local'"></v-switch>
+                      <v-col sm=12 lg="6">
+                        <v-row dense>
+                          <v-col sm="12">
+                            <v-switch v-model="pillarSwitch" label="Pillar" color="primary"
+                                      v-show="selected_client === 'local'"></v-switch>
+                          </v-col>
+                          <v-col sm="12" v-show="pillarSwitch">
+                            <codemirror v-model="code" :options="cmOptions"></codemirror>
+                          </v-col>
+                          <v-col sm="12" v-show="pillarSwitch">
+                            <span v-html="pillarRendered"></span>
+                          </v-col>
+                        </v-row>
                       </v-col>
-                      <v-col sm="12" v-show="pillarSwitch">
-                        <codemirror v-model="code" :options="cmOptions"></codemirror>
-                      </v-col>
-                      <v-col sm="12" v-show="pillarSwitch">
-                        <span v-html="pillarRendered"></span>
-                      </v-col>
-                      <v-col sm="12" v-show="scheduleSwitch">
-                        <v-text-field label="Schedule name" v-model="scheduleName"
-                                      style="width: 350px;"></v-text-field>
-                        <v-radio-group v-model="scheduleType" class="mt-0">
-                          <v-radio value="once" color="primary">
-                            <template v-slot:label>
-                              <span><strong>Once:  </strong></span>
-                              <v-row>
-                                <v-col sm="4" class="ml-2">
-                                  <v-menu
-                                      v-model="dateMenu"
-                                      :close-on-content-click="false"
-                                      transition="scale-transition"
-                                      offset-y
-                                      min-width="290px"
-                                  >
-                                    <template v-slot:activator="{ on }">
-                                      <v-text-field
-                                          v-model="scheduleDate"
-                                          readonly
-                                          v-on="on"
-                                      ></v-text-field>
-                                    </template>
-                                    <v-date-picker :min="scheduleDate" v-model="scheduleDate"
-                                                   @input="dateMenu = false"></v-date-picker>
-                                  </v-menu>
-                                </v-col>
-                                <v-col sm="4">
-                                  <v-menu
-                                      ref="menu"
-                                      v-model="timeMenu"
-                                      :close-on-content-click="false"
-                                      :nudge-right="40"
-                                      transition="scale-transition"
-                                      offset-y
-                                      max-width="290px"
-                                      min-width="290px"
-                                  >
-                                    <template v-slot:activator="{ on }">
-                                      <v-text-field
-                                          v-model="scheduleTime"
-                                          readonly
-                                          v-on="on"
-                                      ></v-text-field>
-                                    </template>
-                                    <v-time-picker
-                                        v-if="timeMenu"
-                                        v-model="scheduleTime"
-                                        full-width
-                                    ></v-time-picker>
-                                  </v-menu>
-                                </v-col>
-                              </v-row>
-                            </template>
-                          </v-radio>
-                          <v-radio value="recurring" color="primary">
-                            <template v-slot:label>
-                              <div><strong>Recurring: </strong> Every <span id="cron"></span></div>
-                            </template>
-                          </v-radio>
-                        </v-radio-group>
+                      <v-col sm=12 lg="3">
+                        <v-row dense>
+                          <v-col sm="12">
+                            <v-switch v-model="saveJobSwitch" label="Save as template" color="primary"></v-switch>
+                          </v-col>
+                          <v-col sm="12" v-show="saveJobSwitch">
+                            <v-text-field label="Job Template Name" v-model="jobTemplateName"
+                                          style="width: 350px;"></v-text-field>
+                          </v-col>
+                        </v-row>
                       </v-col>
                     </v-row>
                   </v-container>
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="orange" large dark @click="runJob(test=true)">Test</v-btn>
-                  <v-btn color="info" large dark @click="runJob">Run</v-btn>
+                  <v-btn color="orange" large dark @click="runJob(test=true)" v-show="!saveJobSwitch">Test</v-btn>
+                  <v-btn color="info" large dark @click="runJob" v-show="!saveJobSwitch">Run</v-btn>
+                  <v-btn color="green" large dark @click="saveJob" v-show="saveJobSwitch">Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-tab-item>
@@ -234,6 +254,8 @@
       return {
         scheduleSwitch: false,
         pillarSwitch: false,
+        saveJobSwitch: false,
+        jobTemplateName: "",
         code: "# Type valid yaml to override pillars\n\n\n",
         cmOptions: {
           tabSize: 4,
@@ -274,8 +296,8 @@
         ],
         selected_target_type: "glob",
         target: "",
-        args: "",
-        kwargs: "",
+        arg: "",
+        kwarg: "",
         results: "",
         termKey: 0,
         cron: null,
@@ -296,18 +318,41 @@
           response.data.forEach(item => this.minions.push(item.minion_id))
         })
       },
-      runJob(test = false) {
-        let action = "Running"
+      createCommand(test = false) {
+        // Client, async options.
         let command = `salt --client=${this.client_batch ? "local_batch" : this.selected_client}${this.client_async && !this.client_batch ? "_async" : ""}`
+        // Targeting.
         if (this.selected_client === "local") {
           if (this.selected_target_type !== "glob") command += " " + this.selected_target_type + " " + this.target
           else command += " " + this.target
         }
-        command += ` ${this.selectedFunction.hasOwnProperty("name") ? this.selectedFunction.name : this.selectedFunction}`
-        command += `${this.args ? ` ${this.args}` : ""}${test === true ? " test=True" : ""}${this.kwargs ? ` ${this.kwargs}` : ""}`
+        // Functions.
+        if (this.selectedFunction && this.selectedFunction.hasOwnProperty("name")) {
+          command += ` ${this.selectedFunction.name}`
+        } else {
+          command += ` ${this.selectedFunction}`
+        }
+        // Args and Kwargs.
+        command += `${this.arg ? ` ${this.arg}` : ""}${test === true ? " test=True" : ""}${this.kwarg ? ` ${this.kwarg}` : ""}`
+        // Pillar override.
         command += `${this.pillarSwitch ? ` pillar='${this.pillarRendered}'` : ""}`
+        // Batch and timeout options.
         command += `${this.client_batch && this.batch ? ` -b ${this.batch}` : ""}${this.timeout ? ` -t ${this.timeout}` : ""}`
+        return command
+      },
+      saveJob() {
         let formData = new FormData
+        let command = this.createCommand(false)
+        formData.set("name", this.jobTemplateName)
+        formData.set("job", command)
+        this.$http.post("api/job_templates/", formData).then(response => {
+          this.$toast("Template "+this.jobTemplateName+" saved")
+        })
+      },
+      runJob(test = false) {
+        let action = "Running"
+        let formData = new FormData
+        let command = this.createCommand(test)
         formData.set("raw", true)
         formData.set("command", command)
         if (this.scheduleSwitch && this.scheduleType) {
@@ -324,7 +369,7 @@
         this.$http.post("api/run/", formData).then(response => {
           let result = response.data
           // If we're expecting an async result, display a link to the minion's result.
-          if (this.client_async && this.selected_client === 'local') {
+          if (this.client_async && this.selected_client === "local") {
             let parser = new DOMParser()
             let htmlRes = parser.parseFromString(result, "text/html")
             let resultChild = htmlRes.getElementsByClassName("ansi2html-content")[0].children
@@ -364,10 +409,41 @@
         initial: "* * * * *",
       })
       this.loadData()
-      this.target = this.$route.query.target
-      this.selectedFunction = this.$route.query.hasOwnProperty("function") === true ? { name: this.$route.query.function } : this.selectedFunction
-      this.args = this.$route.query.args
-
+      if (this.$route.query.client) {
+        this.selected_client = this.$route.query.client.split("_")[0]
+        if (this.$route.query.client.split("_").length > 1) {
+          this['client_'+this.$route.query.client.split("_")[1]] = true
+        }
+      }
+      if (this.$route.query.tgt_type) {
+        this.target_type.forEach(tgt_type => {
+          if (tgt_type.text === this.$route.query.tgt_type) {
+            this.selected_target_type = tgt_type.value
+          }
+        })
+      }
+      this.batch = this.$route.query.batch ? this.$route.query.batch: null
+      this.target = this.$route.query.tgt
+      this.selectedFunction = this.$route.query.hasOwnProperty("fun") === true ? { name: this.$route.query.fun } : this.selectedFunction
+      this.arg = this.$route.query.arg
+      if (this.$route.query.kwarg) {
+        let pillar = this.$route.query.kwarg.split(" ").filter(item => {
+          return item.startsWith("pillar")
+        }).join()
+        if (pillar) {
+          this.pillarSwitch = true
+          this.code = yaml.dump(JSON.parse(pillar.split("=")[1]))
+          this.kwarg = this.$route.query.kwarg.split(" ").filter(item => {
+            return !item.startsWith("pillar")
+          }).join(" ")
+        } else {
+          this.kwarg = this.$route.query.kwarg
+        }
+      }
+      if (this.$route.query.name) {
+        this.saveJobSwitch = true
+        this.jobTemplateName = this.$route.query.name
+      }
     },
 
   }

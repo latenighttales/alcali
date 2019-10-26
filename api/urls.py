@@ -30,6 +30,7 @@ from api.views.alcali import (
     search,
     verify,
     version,
+    JobTemplateViewSet,
 )
 from rest_framework import routers
 
@@ -43,6 +44,7 @@ router.register(r"userssettings", UserSettingsViewSet)
 router.register(r"minionsfields", MinionsCustomFieldsViewSet)
 router.register(r"functions", FunctionsViewSet)
 router.register(r"schedules", ScheduleViewSet)
+router.register(r"job_templates", JobTemplateViewSet)
 
 urlpatterns = [
     path("", index_view, name="index"),

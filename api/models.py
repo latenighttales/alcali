@@ -53,7 +53,13 @@ class SaltReturns(models.Model):
     def arguments(self):
         ret = self.loaded_ret()
         if "fun_args" in ret and ret["fun_args"]:
-            return " ".join(str(i) for i in ret["fun_args"])
+            return " ".join(str(i) for i in ret["fun_args"] if "=" not in str(i))
+        return ""
+
+    def keyword_arguments(self):
+        ret = self.loaded_ret()
+        if "fun_args" in ret and ret["fun_args"]:
+            return " ".join(str(i) for i in ret["fun_args"] if "=" in str(i))
         return ""
 
     def success_bool(self):
@@ -101,6 +107,18 @@ class Functions(models.Model):
 
     class Meta:
         db_table = "salt_functions"
+        app_label = "api"
+
+
+class JobTemplate(models.Model):
+    name = models.CharField(max_length=255)
+    job = models.TextField()
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+    class Meta:
+        db_table = "salt_job_template"
         app_label = "api"
 
 
