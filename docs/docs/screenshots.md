@@ -23,6 +23,9 @@ Jobs              | Jobs Dark
 #### Run 
 ![](images/screenshots/run.png)
 
+#### Job Templates 
+![](images/job_templates.png)
+
 Keys              | Keys Dark 
 :-------------------------:|:-------------------------:
 ![](images/screenshots/keys.png)  |  ![](images/screenshots/keys-dark.png)

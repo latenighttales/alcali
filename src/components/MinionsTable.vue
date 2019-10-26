@@ -51,7 +51,7 @@
                 color="blue-grey"
                 tile
                 dark
-                :to="'/run?target='+item.minion_id"
+                :to="'/run?tgt='+item.minion_id"
             >
               run job
             </v-btn>

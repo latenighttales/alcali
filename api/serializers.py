@@ -1,7 +1,10 @@
+import json
+
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from api.utils import RawCommand
 from .models import (
     SaltReturns,
     SaltEvents,
@@ -12,12 +15,14 @@ from .models import (
     UserSettings,
     Functions,
     Schedule,
+    JobTemplate,
 )
 
 
 class SaltReturnsSerializer(serializers.ModelSerializer):
     user = serializers.CharField()
     arguments = serializers.CharField()
+    keyword_arguments = serializers.CharField()
     success = serializers.BooleanField(source="success_bool")
 
     class Meta:
@@ -74,11 +79,26 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class JobTemplateSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        name = validated_data["name"]
+        job = validated_data["job"]
+        command = RawCommand(job)
+        parsed_command = command.parse()
+        obj, created = JobTemplate.objects.update_or_create(
+            name=name, defaults={"job": json.dumps(parsed_command[0])}
+        )
+        return obj
+
+    class Meta:
+        model = JobTemplate
+        fields = "__all__"
+
+
 class UsersSerializer(serializers.ModelSerializer):
     user_settings = UserSettingsSerializer(read_only=True)
 
     def create(self, validated_data):
-        print(validated_data)
         for param in ["is_active", "groups", "user_permissions"]:
             del validated_data[param]
         user = User(**validated_data)

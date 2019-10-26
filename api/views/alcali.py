@@ -36,7 +36,7 @@ from api.backend.netapi import (
     manage_schedules,
 )
 from api.models import SaltReturns, Keys, Minions, SaltEvents, Schedule, Conformity
-from api.models import UserSettings, MinionsCustomFields, Functions
+from api.models import UserSettings, MinionsCustomFields, Functions, JobTemplate
 from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from api.renderer import StreamingRenderer
 from api.serializers import (
@@ -48,6 +48,7 @@ from api.serializers import (
     ScheduleSerializer,
     MyTokenObtainPairSerializer,
     SaltReturnsSerializer,
+    JobTemplateSerializer,
 )
 from api.serializers import KeysSerializer, MinionsSerializer
 from api.utils import graph_data, render_conformity, RawCommand
@@ -329,6 +330,11 @@ class UserSettingsViewSet(viewsets.ModelViewSet):
     serializer_class = UserSettingsSerializer
 
 
+class JobTemplateViewSet(viewsets.ModelViewSet):
+    queryset = JobTemplate.objects.all()
+    serializer_class = JobTemplateSerializer
+
+
 @api_view(["GET"])
 def jobs_graph(request):
     id = request.query_params.get("id", None)
@@ -387,7 +393,6 @@ def stats(request):
 
 @api_view(["GET"])
 def version(request):
-
     return Response({"version": settings.VERSION})
 
 

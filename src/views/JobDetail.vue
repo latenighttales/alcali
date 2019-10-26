@@ -7,7 +7,7 @@
             <v-list-item two-line>
               <v-list-item-content>
                 <v-list-item-title class="headline">{{ job.fun }}</v-list-item-title>
-                <v-list-item-subtitle>Run {{ formatDate(job.alter_time) }}</v-list-item-subtitle>
+                <v-list-item-subtitle>Run on {{ formatDate(job.alter_time) }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
@@ -24,6 +24,10 @@
               <tr v-if="job.arguments">
                 <td>ARGUMENTS:</td>
                 <td class="text-right">{{ job.arguments }}</td>
+              </tr>
+              <tr v-if="job.keyword_arguments">
+                <td>KEYWORD ARGUMENTS:</td>
+                <td class="text-right">{{ job.keyword_arguments }}</td>
               </tr>
               <tr>
                 <td>MINION ID:</td>

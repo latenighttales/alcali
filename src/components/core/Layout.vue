@@ -232,6 +232,11 @@
           icon: "play_arrow",
         },
         {
+          name: "Job Templates",
+          path: "/job_templates",
+          icon: "playlist_add_check",
+        },
+        {
           name: "Schedules",
           path: "/schedules",
           icon: "schedule",
