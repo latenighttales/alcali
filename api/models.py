@@ -69,7 +69,7 @@ class SaltReturns(models.Model):
         if "return" in ret:
             # It shouldn't happened unless you have a custom module
             # so let's assume we can trust retcode
-            if isinstance(ret["return"], str):
+            if isinstance(ret["return"], str) or isinstance(ret["return"], bool):
                 return True if "retcode" in ret and ret["retcode"] == 0 else False
             if "success" in ret["return"]:
                 return ret["return"]["success"]
