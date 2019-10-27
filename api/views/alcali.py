@@ -446,22 +446,36 @@ def run(request):
             html = conv.convert(formatted, ensure_trailing_newline=True)
             return HttpResponse(html)
 
+        cli_ret = request.POST.get("cli")
+        conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
         ret = run_raw(parsed_command)
         formatted = "\n"
-        if (
+
+        # Error.
+        if isinstance(ret, str):
+            item_ret = nested_output.output(ret)
+            formatted += item_ret + "\n\n"
+        # runner or wheel client.
+        elif isinstance(ret, list):
+            for item in ret:
+                item_ret = nested_output.output(item)
+                formatted += item_ret + "\n\n"
+        # Highstate.
+        elif (
             parsed_command[0]["fun"] in ["state.apply", "state.highstate"]
             and parsed_command[0]["client"] != "local_async"
         ):
             for state, out in ret.items():
                 minion_ret = highstate_output.output({state: out})
                 formatted += minion_ret + "\n\n"
+        # Everything else.
         else:
             for state, out in ret.items():
                 minion_ret = nested_output.output({state: out})
                 formatted += minion_ret + "\n\n"
-        if request.POST.get("cli"):
+
+        if cli_ret:
             return JsonResponse({"results": formatted})
-        conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
         html = conv.convert(formatted, ensure_trailing_newline=True)
         return HttpResponse(html)
 

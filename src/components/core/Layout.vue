@@ -24,8 +24,8 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-list dense v-for="route in routes" :key="route.name">
-        <v-list-item :to="`${route.path}`">
+      <v-list dense>
+        <v-list-item v-for="route in routes" :key="route.name" :to="`${route.path}`">
           <v-list-item-action v-if="mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
@@ -181,13 +181,9 @@
       </v-menu>
     </v-app-bar>
     <v-content>
-      <v-container>
         <v-fade-transition mode="out-in">
-
           <router-view></router-view>
-
         </v-fade-transition>
-      </v-container>
     </v-content>
   </v-app>
 </template>

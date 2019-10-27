@@ -35,6 +35,7 @@ def graph_data(period=7, **kwargs):
     Retrieve graph data, count nb of jobs per days.
     :param period: nb of days
     :return: (days, count): list of days, nb of jobs.
+    # FIXME: use retcode instead of success
     """
     period_frame = timezone.now().date() - timedelta(days=period)
 
