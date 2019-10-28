@@ -1,4 +1,3 @@
-import '@mdi/font/css/materialdesignicons.css';
 import Vue from 'vue';
 import Vuetify, {VSnackbar, VBtn, VIcon} from 'vuetify/lib'
 
