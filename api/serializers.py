@@ -66,6 +66,13 @@ class MinionsSerializer(serializers.ModelSerializer):
         model = Minions
         fields = "__all__"
 
+    def to_representation(self, instance):
+        data = super(MinionsSerializer, self).to_representation(instance)
+        data["conformity"] = (
+            "Unknown" if data["conformity"] is None else str(data["conformity"])
+        )
+        return data
+
 
 class ConformitySerializer(serializers.ModelSerializer):
     class Meta:

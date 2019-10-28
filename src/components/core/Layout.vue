@@ -111,7 +111,7 @@
         ></v-text-field>
       </v-expand-transition>
       <v-btn icon @click="expand_search = !expand_search" class="mr-2">
-        <v-icon>mdi-magnify</v-icon>
+        <v-icon>search</v-icon>
       </v-btn>
       <v-menu
           v-model="notif_menu"
@@ -162,7 +162,7 @@
       <v-menu bottom left offset-y offset-x close-on-click>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon>
-            <v-icon>mdi-dots-vertical</v-icon>
+            <v-icon>more_vert</v-icon>
           </v-btn>
         </template>
         <v-list>

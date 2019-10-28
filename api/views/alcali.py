@@ -246,7 +246,9 @@ class ConformityViewSet(viewsets.ModelViewSet):
             default_conformity = {
                 "minion_id": minion.minion_id,
                 "last_highstate": last_highstate_date,
-                "conformity": minion.conformity(),
+                "conformity": "Unknown"
+                if minion.conformity() is None
+                else str(minion.conformity()),
                 "succeeded": succeeded,
                 "unchanged": unchanged,
                 "failed": failed,
