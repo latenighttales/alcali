@@ -24,7 +24,6 @@
     "xterm-addon-fit": "^0.2.1"
   },
   "devDependencies": {
-    "@mdi/font": "^4.0.96",
     "@vue/cli-plugin-babel": "^3.12.1",
     "@vue/cli-plugin-eslint": "^3.12.1",
     "@vue/cli-service": "^3.12.1",

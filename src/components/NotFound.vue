@@ -11,7 +11,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn text class="primary darken-3 white--text" to="/">
-              <v-icon left v-text="'mdi-arrow-left'"/>
+              <v-icon left>arrow_back</v-icon>
               Back
             </v-btn>
           </v-card-actions>

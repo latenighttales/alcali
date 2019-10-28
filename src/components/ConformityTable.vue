@@ -28,7 +28,7 @@
           {{item.last_highstate === null ? "": new Date(item.last_highstate).toLocaleString("en-GB")}}
         </template>
         <template v-slot:item.conformity="{ item }">
-          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity == null ? "unknown": item.conformity.toString() }}
+          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity }}
           </v-chip>
         </template>
         <template v-slot:item.succeeded="{ item }">
@@ -121,9 +121,9 @@
         })
       },
       boolRepr(bool) {
-        if (bool === true) {
+        if (bool === "True") {
           return "green"
-        } else if (bool === false) {
+        } else if (bool === "False") {
           return "red"
         } else return "primary"
       },
