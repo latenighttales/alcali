@@ -93,9 +93,9 @@
     props: ["minion"],
     methods: {
       boolRepr(bool) {
-        if (bool === true) {
+        if (bool === "True") {
           return "green"
-        } else if (bool === false) {
+        } else if (bool === "False") {
           return "red"
         } else return "primary"
       },
