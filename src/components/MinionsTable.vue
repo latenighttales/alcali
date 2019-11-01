@@ -169,6 +169,8 @@
         formData.set("minion_id", minion_id)
         this.$http.post("/api/minions/refresh_minions/", formData).then(response => {
           this.$toast(response.data.result)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       deleteMinion(minion_id) {
@@ -176,6 +178,8 @@
         this.$http.delete("/api/minions/" + minion_id).then(() => {
           this.minions.splice(this.minions.indexOf(minion_id), 1)
           this.$toast(minion_id + " deleted")
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       showDialog(minion_id) {

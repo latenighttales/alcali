@@ -14,7 +14,7 @@ Vue.prototype.$http.defaults.xsrfCookieName = "csrftoken"
 Vue.prototype.$http.defaults.xsrfHeaderName = "X-CSRFToken"
 Vue.prototype.$http.defaults.headers.common["Content-Type"] = "application/json"
 
-const accessToken = localStorage.getItem("token")
+const accessToken = localStorage.getItem("access")
 if (accessToken) {
   Vue.prototype.$http.defaults.headers.common.Authorization = `Bearer ${accessToken}`
   Vue.prototype.$http.defaults.withCredentials = true
@@ -53,26 +53,30 @@ Vue.prototype.$http.interceptors.request.use((config) => {
 })
 
 
-Vue.prototype.$http.interceptors.response.use(function(response) {
-  return response
-}, function(error) {
-
-  const originalRequest = error.config
-
-  if (error.response.status === 401 && !originalRequest._retry) {
-
+Vue.prototype.$http.interceptors.request.use((config) => {
+  const originalRequest = config
+  // before request is sent check if access token is expired.
+  const access = window.localStorage.getItem("access")
+  if (access && jwtDecode(access).exp > Math.floor(Date.now() / 1000) ) {
+    return originalRequest
+    // Do not intercept on token refresh.
+  } else if (config.url.includes('login') || config.url.includes('token')){
+    return originalRequest
+  } else {
+    // While we are refreshing, store other requests.
+    // Add the token on resolve.
     if (isRefreshing) {
       return new Promise(function(resolve, reject) {
         failedQueue.push({ resolve, reject })
       }).then(token => {
         originalRequest.headers["Authorization"] = "Bearer " + token
-        return Vue.prototype.$http(originalRequest)
+        return originalRequest
       }).catch(err => {
         return err
       })
     }
 
-    originalRequest._retry = true
+    //originalRequest._retry = true
     isRefreshing = true
 
     const refreshToken = window.localStorage.getItem("refresh")
@@ -83,7 +87,7 @@ Vue.prototype.$http.interceptors.response.use(function(response) {
           Vue.prototype.$http.defaults.headers.common["Authorization"] = "Bearer " + data.access
           originalRequest.headers["Authorization"] = "Bearer " + data.access
           processQueue(null, data.access)
-          resolve(Vue.prototype.$http(originalRequest))
+          resolve(originalRequest)
         })
         .catch((err) => {
           processQueue(err, null)
@@ -94,7 +98,8 @@ Vue.prototype.$http.interceptors.response.use(function(response) {
         })
     })
   }
-
+}, (error) => {
+  // Do something with request error
   return Promise.reject(error)
 })
 

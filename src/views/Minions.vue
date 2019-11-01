@@ -43,8 +43,8 @@
           this.$toast("minions refreshed")
         }).then(() => {
           this.refreshKey += 1
-        }).catch(function(error) {
-          alert(error)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       runAll() {

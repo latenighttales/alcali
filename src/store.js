@@ -11,6 +11,7 @@ export default new Vuex.Store({
     id: localStorage.getItem("id") || "",
     access: localStorage.getItem("access") || "",
     refresh: localStorage.getItem("refresh") || "",
+    is_staff: localStorage.getItem("is_staff") || "false",
     ws_status: false,
     theme: localStorage.getItem("theme") || false,
   },
@@ -35,6 +36,7 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.access,
     theme: state => state.theme,
     user_id: state => state.id,
+    isStaff: state => state.is_staff
   },
   actions: {
     updateWs({ commit }) {

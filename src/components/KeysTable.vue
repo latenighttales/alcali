@@ -107,6 +107,8 @@
         formData.set("target", key)
         this.$http.post("api/keys/manage_keys/", formData).then(response => {
           this.$toast(response.data.result)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
         this.sleep(2000).then(() => {
           this.loadData()

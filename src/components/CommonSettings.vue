@@ -157,6 +157,8 @@
           this.$toast(response.data.result)
         }).then(() => {
           this.loadData()
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       deleteConformity(id) {

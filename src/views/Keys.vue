@@ -46,12 +46,12 @@
       },
       refreshKeys() {
         this.$toast("refreshing keys")
-        this.$http.post("/api/keys/refresh/").then(() => {
+        this.$http.post("/api/keys/refresh/").then((response) => {
           this.$toast("keys refreshed")
         }).then(() => {
           this.refreshKey += 1
-        }).catch(function(error) {
-          alert(error)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
 
       },
@@ -63,6 +63,8 @@
           this.$toast(response.data.result)
         }).then(() => {
           this.refreshKey += 1
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       rejectAll() {
@@ -73,6 +75,8 @@
           this.$toast(response.data.result)
         }).then(() => {
           this.refreshKey += 1
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
     },

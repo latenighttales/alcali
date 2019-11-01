@@ -72,8 +72,8 @@
         formData.set('minion_id', this.minion_id)
         this.$http.post("/api/minions/refresh_minions/", formData).then(() => {
           this.$toast("minion refreshed")
-        }).catch(function(error) {
-          alert(error)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       runMinion() {
