@@ -388,6 +388,8 @@
             result = new XMLSerializer().serializeToString(htmlRes)
           }
           this.results = result + this.results
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
     },
