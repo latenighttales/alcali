@@ -97,6 +97,8 @@
           this.headers = []
           this.schedules = []
           this.loadData()
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       boolRepr(bool) {

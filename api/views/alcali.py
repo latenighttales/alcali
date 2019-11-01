@@ -64,8 +64,10 @@ class KeysViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(methods=["POST"], detail=False)
     def refresh(self, request):
-        get_keys(refresh=True)
-        return Response({"result": "refreshed"})
+        ret = get_keys(refresh=True)
+        if "error" in ret:
+            return Response(ret["error"], status=401)
+        return Response(ret)
 
     @action(detail=False)
     def keys_status(self, request):
@@ -88,7 +90,9 @@ class KeysViewSet(viewsets.ReadOnlyModelViewSet):
             kwargs = {"include_rejected": True, "include_denied": True}
         elif key_action == "reject":
             kwargs = {"include_accepted": True, "include_denied": True}
-        manage_key(key_action, key, kwargs)
+        ret = manage_key(key_action, key, kwargs)
+        if "error" in ret:
+            return Response(ret["error"], status=401)
         return Response({"result": "{} on {}: done".format(key_action, key)})
 
 
@@ -102,14 +106,19 @@ class MinionsViewSet(viewsets.ModelViewSet):
     def refresh_minions(self, request):
         if request.POST.get("minion_id"):
             minion_id = request.POST.get("minion_id")
-            refresh_minion(minion_id)
+            ret = refresh_minion(minion_id)
+            if "error" in ret:
+                return Response(ret["error"], status=401)
+
             return Response({"result": "refreshed {}".format(minion_id)})
 
         accepted_minions = Keys.objects.filter(status="accepted").values_list(
             "minion_id", flat=True
         )
         for minion in accepted_minions:
-            refresh_minion(minion)
+            ret = refresh_minion(minion)
+            if "error" in ret:
+                return Response(ret["error"], status=401)
         return Response({"refreshed": [i for i in accepted_minions]})
 
     @action(detail=False)
@@ -282,7 +291,9 @@ class ScheduleViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(methods=["POST"], detail=False)
     def refresh(self, request):
-        refresh_schedules()
+        ret = refresh_schedules()
+        if "error" in ret:
+            return Response(ret["error"], status=401)
         return Response({"result": "refreshed"})
 
     @action(methods=["POST"], detail=False)
@@ -290,7 +301,11 @@ class ScheduleViewSet(viewsets.ReadOnlyModelViewSet):
         action = request.data.get("action")
         minion = request.data.get("minion")
         name = request.data.get("name")
-        manage_schedules(action, name, minion)
+        ret = manage_schedules(action, name, minion)
+        if not ret:
+            return Response({"result": "not good"})
+        if "error" in ret:
+            return Response(ret["error"], status=401)
         return Response(
             {"result": "schedule " + name + " on " + minion + " " + action + "d"}
         )
@@ -353,8 +368,10 @@ def jobs_graph(request):
 @api_view(["POST"])
 def parse_modules(request):
     if request.data.get("target"):
-        init_db(request.data.get("target"))
-        return Response({"result": "modules updated"})
+        ret = init_db(request.data.get("target"))
+        if "error" in ret:
+            return Response(ret["error"], status=401)
+        return Response(ret)
 
 
 @api_view(["GET"])
@@ -443,6 +460,8 @@ def run(request):
                 cron = request.POST.get("cron")
                 schedule_parsed[0]["arg"].append("cron={}".format(cron))
             ret = run_raw(schedule_parsed)
+            if "error" in ret:
+                return Response(ret["error"], status=401)
             formatted = nested_output.output(ret)
             conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
             html = conv.convert(formatted, ensure_trailing_newline=True)
@@ -451,6 +470,8 @@ def run(request):
         cli_ret = request.POST.get("cli")
         conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
         ret = run_raw(parsed_command)
+        if "error" in ret:
+            return Response(ret["error"], status=401)
         formatted = "\n"
 
         # Error.
