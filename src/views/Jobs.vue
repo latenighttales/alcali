@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col sm="12" cols="12">
-        <JobsTable></JobsTable>
+        <JobsTable :jid="jid"></JobsTable>
       </v-col>
     </v-row>
   </v-container>
@@ -13,6 +13,7 @@
 
   export default {
     name: "Jobs",
+    props: ["jid"],
     components: {
       JobsTable,
     },

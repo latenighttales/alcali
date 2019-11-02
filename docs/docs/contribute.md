@@ -19,20 +19,6 @@ cd alcali
 Alcali use Vuejs for the frontend and Django for the backend.
 
 ### Frontend dev
-Add a pre-commit hook to build the project:
-```commandline
-cat <<-EOF>.git/hooks/pre-commit
-#!/bin/sh
-
-echo "building frontend ..."
-npm run build
-git add dist/*
-EOF
-```
-Make it executable:
-```commandline
-chmod +x .git/hooks/pre-commit
-```
 
 Install the Vue CLI:
 

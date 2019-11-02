@@ -101,7 +101,7 @@
       <v-expand-transition>
         <v-text-field
             v-show="expand_search"
-            class="mx-auto"
+            class="mx-auto search"
             flat
             hide-details
             label="Search jids, minions, states..."
@@ -181,9 +181,9 @@
       </v-menu>
     </v-app-bar>
     <v-content>
-        <v-fade-transition mode="out-in">
-          <router-view></router-view>
-        </v-fade-transition>
+      <v-fade-transition mode="out-in">
+        <router-view :key="$route.fullPath"></router-view>
+      </v-fade-transition>
     </v-content>
   </v-app>
 </template>
@@ -390,5 +390,10 @@
   .v-list {
     border-radius: 0px !important;
   }
+
+  .search {
+    max-width: 300px !important;
+  }
+
 
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>Infos</v-card-title>
+      <v-card-title>{{minion.id}}</v-card-title>
       <v-tabs
           v-model="tab"
       >

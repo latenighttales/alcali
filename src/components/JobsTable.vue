@@ -102,6 +102,7 @@
             Jobs
             <v-spacer></v-spacer>
             <v-text-field
+                class="search"
                 v-model="search"
                 append-icon="search"
                 label="Search"
@@ -172,7 +173,7 @@
 
   export default {
     name: "JobsTable",
-    props: ["filter"],
+    props: ["filter", "jid"],
     data() {
       return {
         menu: false,
@@ -225,10 +226,17 @@
           this.minions = response.data.minions
           this.users = response.data.users
         })
-        this.$http.get("api/jobs/", { params: this.filter }).then(response => {
-          this.jobs = response.data
-          this.loading = false
-        })
+        if (this.jid) {
+          this.$http.get(`api/jobs/${this.jid}`).then(response => {
+            this.jobs = response.data
+            this.loading = false
+          })
+        } else {
+          this.$http.get("api/jobs/", { params: this.filter }).then(response => {
+            this.jobs = response.data
+            this.loading = false
+          })
+        }
       },
       filterJobs() {
         this.loading = true

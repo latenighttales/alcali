@@ -52,6 +52,15 @@ class SaltReturnsList(generics.ListAPIView):
         return queryset
 
 
+class SaltReturnsListJid(generics.ListAPIView):
+    serializer_class = SaltReturnsSerializer
+
+    def get_queryset(self):
+        jid = self.kwargs["jid"]
+        queryset = SaltReturns.objects.all()
+        return queryset.filter(jid=jid).order_by("-alter_time")
+
+
 @api_view(["GET"])
 def jobs_filters(request):
     # Filter options.

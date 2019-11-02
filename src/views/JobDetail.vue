@@ -14,12 +14,20 @@
             <v-simple-table>
               <tbody>
               <tr>
-                <td>FUNCTION:</td>
-                <td class="text-right">{{ job.fun }}</td>
+                <td>MINION ID:</td>
+                <td class="text-right">
+                  <v-btn text small class="pr-0 text-none" :to="'/minions/'+job.id">{{ job.id }}</v-btn>
+                </td>
               </tr>
               <tr>
-                <td>JID:</td>
-                <td class="text-right">{{ job.jid }}</td>
+                <td>JOB ID:</td>
+                <td class="text-right">
+                  <v-btn text small class="pr-0" :to="'/jobs/'+job.jid">{{ job.jid }}</v-btn>
+                </td>
+              </tr>
+              <tr>
+                <td>FUNCTION:</td>
+                <td class="text-right">{{ job.fun }}</td>
               </tr>
               <tr v-if="job.arguments">
                 <td>ARGUMENTS:</td>
@@ -28,10 +36,6 @@
               <tr v-if="job.keyword_arguments">
                 <td>KEYWORD ARGUMENTS:</td>
                 <td class="text-right">{{ job.keyword_arguments }}</td>
-              </tr>
-              <tr>
-                <td>MINION ID:</td>
-                <td class="text-right">{{ job.id }}</td>
               </tr>
               <tr>
                 <td>STATUS:</td>
@@ -102,6 +106,9 @@
   .ansiStyle {
     background-color: black;
     padding: 10px;
+  }
+  .theme--light.v-btn--active:hover::before, .theme--light.v-btn--active::before {
+    opacity: 0;
   }
 
 </style>
