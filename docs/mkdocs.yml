@@ -22,6 +22,7 @@ nav:
       - 'Events': views/events.md
       - 'Users': views/users.md
       - 'Settings': views/settings.md
+  - Upgrade: upgrade.md
   - Troubleshooting: troubleshooting.md
   - Screenshots: screenshots.md
   - Contribute: contribute.md

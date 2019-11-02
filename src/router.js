@@ -45,6 +45,12 @@ const router = new Router({
       component: Jobs,
     },
     {
+      path: "/jobs/:jid",
+      name: "job_jid",
+      component: Jobs,
+      props: true,
+    },
+    {
       path: "/jobs/:jid/:minion_id",
       name: "job_detail",
       component: JobDetail,

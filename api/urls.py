@@ -9,6 +9,7 @@ from api.views.salt import (
     EventsViewSet,
     jobs_filters,
     job_rendered,
+    SaltReturnsListJid,
 )
 
 from api.views.alcali import (
@@ -64,6 +65,7 @@ urlpatterns = [
         SaltReturnsRetrieve.as_view(),
         name="jobs-detail",
     ),
+    path("api/jobs/<str:jid>/", SaltReturnsListJid.as_view(), name="jobs-list-jid"),
     path(
         "api/jobs/<str:jid>/<str:minion_id>/rendered_state/",
         job_rendered,
