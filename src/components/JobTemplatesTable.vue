@@ -7,6 +7,7 @@
             Job Templates
             <v-spacer></v-spacer>
             <v-text-field
+                class="search"
                 v-model="search"
                 append-icon="search"
                 label="Search"
