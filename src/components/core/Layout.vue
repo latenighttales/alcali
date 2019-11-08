@@ -104,13 +104,14 @@
             class="mx-auto search"
             flat
             hide-details
-            label="Search jids, minions, states..."
+            label="Search jids, minions, states... [ / ]"
             solo-inverted
             v-model="searchInput"
             @keyup.native.enter="searchBar"
+            ref="searchBox"
         ></v-text-field>
       </v-expand-transition>
-      <v-btn icon @click="expand_search = !expand_search" class="mr-2">
+      <v-btn icon @click="expand_search = !expand_search" class="mr-2" ref="searchBtn">
         <v-icon>search</v-icon>
       </v-btn>
       <v-menu
@@ -295,7 +296,7 @@
             data.type = "new"
             data.color = "green"
             data.icon = "keyboard_tab"
-            data.link = ""
+            data.link = "/jobs/" + data.data.jid
             let target = ""
             if (data.data.hasOwnProperty("tgt")) {
               target = data.data.tgt
@@ -334,8 +335,8 @@
             data.type = "created"
             data.color = "secondary"
             data.icon = "add"
-            data.text = "New Job Created"
-            data.link = ""
+            data.text = `New Job Created for ${data.data.minions.length} Minions`
+            data.link = "/jobs/" + data.tag
             this.messages.unshift(data)
             if (this.messages.length > this.settings.max_notifs) {
               this.messages.pop()
@@ -349,6 +350,13 @@
       this.getPrefs()
       this.saltStatus()
       this.$vuetify.theme.dark = JSON.parse(this.$store.getters.theme)
+      document.onkeyup = (e) => {
+        if (e.key === "/") {
+          e.preventDefault()
+          this.$refs["searchBtn"].$el.click()
+          this.$nextTick(this.$refs.searchBox.focus)
+        }
+      }
     },
     computed: {
       username() {
