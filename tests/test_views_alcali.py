@@ -210,7 +210,7 @@ def test_graph_other_filter(admin_client, highstate, dummy_state, jwt):
     highstate()
     response = admin_client.get("/api/jobs/graph?period=0&fun=other", **jwt)
     assert response.status_code == 200
-    assert response.json()["series"][0][0] > 1
+    assert response.json()["series"][0][0] >= 1
 
 
 def test_stats(admin_client, jwt):
