@@ -189,6 +189,7 @@
 </template>
 
 <script>
+  import { EventSourcePolyfill } from 'event-source-polyfill'
   import helpersMixin from "../mixins/helpersMixin"
 
   export default {
@@ -283,7 +284,12 @@
         let isJobEvent = helpersMixin.methods.fnmatch("salt/job/*")
         let isJobNew = helpersMixin.methods.fnmatch("salt/job/*/new")
         let isJobReturn = helpersMixin.methods.fnmatch("salt/job/*/ret/*")
-        let es = new EventSource("/api/event_stream/")
+        const accessToken = localStorage.getItem("access")
+        let es = new EventSourcePolyfill("/api/event_stream/", {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+          },
+        })
         es.addEventListener("open", () => {
           this.$store.dispatch("updateWs")
 

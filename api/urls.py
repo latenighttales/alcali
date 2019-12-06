@@ -2,6 +2,7 @@ import os
 
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
+from rest_social_auth.views import SocialJWTPairUserAuthView
 
 from api.views.salt import (
     SaltReturnsList,
@@ -32,6 +33,7 @@ from api.views.alcali import (
     verify,
     version,
     JobTemplateViewSet,
+    social,
 )
 from rest_framework import routers
 
@@ -76,3 +78,13 @@ urlpatterns = [
 
 if os.environ.get("SALT_AUTH") == "rest":
     urlpatterns += [path("api/token/verify/", verify, name="token_verify")]
+
+if os.environ.get("AUTH_BACKEND") and os.environ["AUTH_BACKEND"].lower() == "social":
+    urlpatterns += [
+        path("api/social/", social, name="social"),
+        path(
+            "api/social/login/",
+            SocialJWTPairUserAuthView.as_view(),
+            name="social_login",
+        ),
+    ]

@@ -32,7 +32,7 @@ WORKDIR /opt/alcali/code
 RUN pip install --user -U setuptools
 
 # Install project
-RUN pip install --user .[ldap] mysqlclient psycopg2
+RUN pip install --user .[ldap,social] mysqlclient psycopg2
 
 EXPOSE 8000
 

@@ -60,7 +60,7 @@ Vue.prototype.$http.interceptors.request.use((config) => {
   if (access && jwtDecode(access).exp > Math.floor(Date.now() / 1000) ) {
     return originalRequest
     // Do not intercept on token refresh.
-  } else if (config.url.includes('login') || config.url.includes('token')){
+  } else if (config.url.includes("login") || config.url.includes("token") || config.url.includes("social")) {
     return originalRequest
   } else {
     // While we are refreshing, store other requests.

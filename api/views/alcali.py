@@ -416,7 +416,6 @@ def version(request):
 
 
 @api_view(["GET"])
-@permission_classes([AllowAny])
 @renderer_classes([StreamingRenderer])
 def event_stream(request):
     # Web socket.
@@ -518,3 +517,15 @@ def verify(request):
         if request.POST.get("password") == user.user_settings.token:
             return Response({request.POST.get("username"): None})
         return HttpResponse("Unauthorized", status=401)
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def social(request):
+    return Response(
+        {
+            "client_id": settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
+            "provider": "google-oauth2",
+            "redirect_uri": settings.SOCIAL_AUTH_REDIRECT_URI,
+        }
+    )
