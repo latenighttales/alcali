@@ -1,6 +1,7 @@
 [run]
 omit =
     config/ldap_config.py
+    config/social_config.py
     config/settings.py
     config/wsgi.py
     api/apps.py

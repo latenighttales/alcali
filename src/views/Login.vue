@@ -91,7 +91,7 @@
 
         this.$store.dispatch("login", { username, password })
           .then(() => this.$router.push("/"))
-          .catch((err) => {
+          .catch(() => {
             this.$toast.error("Invalid Login / Password")
           })
       },
@@ -109,7 +109,7 @@
                 this.$toast.error("Unauthorized")
               })
           })
-          .catch(error => {
+          .catch(() => {
             this.$toast.error("Unauthorized")
           })
       },

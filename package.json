@@ -11,7 +11,7 @@
     "axios": "^0.19.0",
     "chart.js": "^2.8.0",
     "chartjs-plugin-stacked100": "^0.7.1",
-    "core-js": "^2.6.10",
+    "core-js": "^3.4.3",
     "event-source-polyfill": "^1.0.9",
     "js-yaml": "^3.13.1",
     "jwt-decode": "^2.2.0",
@@ -26,17 +26,17 @@
     "xterm-addon-fit": "^0.2.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-plugin-eslint": "^3.12.1",
-    "@vue/cli-service": "^3.12.1",
+    "@vue/cli-plugin-babel": "^4.1.1",
+    "@vue/cli-plugin-eslint": "^4.1.1",
+    "@vue/cli-service": "^4.1.1",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "sass": "^1.23.1",
+    "sass": "^1.23.7",
     "sass-loader": "^7.3.1",
-    "vue-cli-plugin-vuetify": "^0.6.3",
+    "vue-cli-plugin-vuetify": "^2.0.2",
     "vue-template-compiler": "^2.6.10",
-    "vuetify-loader": "^1.2.2"
+    "vuetify-loader": "^1.4.3"
   },
   "eslintConfig": {
     "root": true,
@@ -47,7 +47,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-unused-vars": ["warn", { "args": "none" }]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
