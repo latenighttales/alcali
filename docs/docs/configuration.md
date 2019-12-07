@@ -96,6 +96,28 @@ AUTH_LDAP_USER_ATTR_MAP = {
 }
 ```
 
+## Google OAuth2 configuration
+
+These environment variable must be set:
+
+```bash
+AUTH_BACKEND=social
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=XXXXX.apps.googleusercontent.com
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=XXX
+SOCIAL_AUTH_REDIRECT_URI=<FULL URI> ex: https://foo.bar:9000
+```
+To limit access to certain emails:
+
+```bash
+SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_EMAILS=<COMMA SEP EMAILS>
+```
+and/or certain domains:
+
+```bash
+SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS=<COMMA SEP DOMAINS>
+```
+
+
 
 ## `.env` file example:
 
