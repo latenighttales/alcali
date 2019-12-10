@@ -183,68 +183,6 @@
         
       
       
-        
-
-<nav class="md-tabs" data-md-component="tabs">
-  <div class="md-tabs__inner md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  <li class="md-tabs__item">
-    
-      <a href=".." class="md-tabs__link md-tabs__link--active">
-        Home
-      </a>
-    
-  </li>
-
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../views/overview/" class="md-tabs__link">
-          Views
-        </a>
-      
-    </li>
-  
-
-      
-        
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../screenshots/" class="md-tabs__link">
-          Screenshots
-        </a>
-      
-    </li>
-  
-
-      
-        
-      
-        
-      
-    </ul>
-  </div>
-</nav>
-      
       <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
@@ -455,6 +393,40 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ldap-configuration" class="md-nav__link">
+    LDAP configuration
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#searchbind-and-direct-bind" class="md-nav__link">
+    search/bind and direct bind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attribute-mapping" class="md-nav__link">
+    Attribute mapping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-oauth2-configuration" class="md-nav__link">
+    Google OAuth2 configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#env-file-example" class="md-nav__link">
     .env file example:
   </a>
@@ -595,6 +567,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../views/job_templates/" title="Job Templates" class="md-nav__link">
+      Job Templates
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../views/schedule/" title="Schedule" class="md-nav__link">
       Schedule
     </a>
@@ -684,6 +668,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../upgrade/" title="Upgrade" class="md-nav__link">
+      Upgrade
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../troubleshooting/" title="Troubleshooting" class="md-nav__link">
       Troubleshooting
     </a>
@@ -695,34 +691,10 @@
       
 
 
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
-    
-    <label class="md-nav__link" for="nav-9">
-      Screenshots
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
-        Screenshots
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
   <li class="md-nav__item">
-    <a href="../screenshots/" title="" class="md-nav__link">
-      
+    <a href="../screenshots/" title="Screenshots" class="md-nav__link">
+      Screenshots
     </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
     
@@ -861,6 +833,40 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ldap-configuration" class="md-nav__link">
+    LDAP configuration
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#searchbind-and-direct-bind" class="md-nav__link">
+    search/bind and direct bind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attribute-mapping" class="md-nav__link">
+    Attribute mapping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-oauth2-configuration" class="md-nav__link">
+    Google OAuth2 configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#env-file-example" class="md-nav__link">
     .env file example:
   </a>
@@ -925,7 +931,57 @@
 <p>Must be formed with protocol, host and port (e.g. 'https://localhost:8080')</p>
 <h3 id="salt_auth"><code>SALT_AUTH</code><a class="headerlink" href="#salt_auth" title="Permanent link">&para;</a></h3>
 <p>How you choose to <a href="../installation/#authentication">authenticate</a> to the salt-api.</p>
-<p>Must either be rest or alcali.</p>
+<p>Must be set to  <code>rest</code> or <code>alcali</code>.</p>
+<h2 id="ldap-configuration">LDAP configuration<a class="headerlink" href="#ldap-configuration" title="Permanent link">&para;</a></h2>
+<p>Please refer to django-auth-ldap <a href="https://django-auth-ldap.readthedocs.io/en/latest/reference.html">documentation reference</a>.</p>
+<p>Here is a list of the supported settings:</p>
+<ul>
+<li>AUTH_LDAP_SERVER_URI</li>
+<li>AUTH_LDAP_BIND_DN</li>
+<li>AUTH_LDAP_BIND_PASSWORD</li>
+<li>AUTH_LDAP_USER_DN_TEMPLATE</li>
+<li>AUTH_LDAP_REQUIRE_GROUP</li>
+<li>AUTH_LDAP_DENY_GROUP</li>
+<li>AUTH_LDAP_START_TLS</li>
+</ul>
+<h3 id="searchbind-and-direct-bind">search/bind and direct bind<a class="headerlink" href="#searchbind-and-direct-bind" title="Permanent link">&para;</a></h3>
+<p>If you set <code>AUTH_LDAP_USER_DN_TEMPLATE</code> the search phase will be skipped.</p>
+<p>Otherwise, you can set the search base cn with:</p>
+<p><code>AUTH_LDAP_USER_BASE_CN</code> </p>
+<p>and the search filter with:</p>
+<p><code>AUTH_LDAP_USER_SEARCH_FILTER</code> default: <code>"(objectClass=*)"</code></p>
+<p>see next for an example.</p>
+<h3 id="attribute-mapping">Attribute mapping<a class="headerlink" href="#attribute-mapping" title="Permanent link">&para;</a></h3>
+<p>Here is the default attribute mapping and the env var to use to override them:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Populate the Django user from the LDAP directory.</span>
+<span class="n">AUTH_LDAP_USER_ATTR_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AUTH_LDAP_USER_ATTR_MAP_USERNAME&quot;</span><span class="p">,</span> <span class="s2">&quot;sAMAccountName&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AUTH_LDAP_USER_ATTR_MAP_FIRST_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;givenName&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AUTH_LDAP_USER_ATTR_MAP_LAST_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;sn&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AUTH_LDAP_USER_ATTR_MAP_EMAIL&quot;</span><span class="p">,</span> <span class="s2">&quot;mail&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2 id="google-oauth2-configuration">Google OAuth2 configuration<a class="headerlink" href="#google-oauth2-configuration" title="Permanent link">&para;</a></h2>
+<p>These environment variable must be set:</p>
+<div class="codehilite"><pre><span></span><span class="nv">AUTH_BACKEND</span><span class="o">=</span>social
+<span class="nv">SOCIAL_AUTH_GOOGLE_OAUTH2_KEY</span><span class="o">=</span>XXXXX.apps.googleusercontent.com
+<span class="nv">SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET</span><span class="o">=</span>XXX
+<span class="nv">SOCIAL_AUTH_REDIRECT_URI</span><span class="o">=</span>&lt;FULL URI&gt; ex: https://foo.bar:9000
+</pre></div>
+
+
+<p>To limit access to certain emails:</p>
+<div class="codehilite"><pre><span></span><span class="nv">SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_EMAILS</span><span class="o">=</span>&lt;COMMA SEP EMAILS&gt;
+</pre></div>
+
+
+<p>and/or certain domains:</p>
+<div class="codehilite"><pre><span></span><span class="nv">SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS</span><span class="o">=</span>&lt;COMMA SEP DOMAINS&gt;
+</pre></div>
+
+
 <h2 id="env-file-example"><code>.env</code> file example:<a class="headerlink" href="#env-file-example" title="Permanent link">&para;</a></h2>
 <div class="codehilite"><pre><span></span><span class="nv">DB_BACKEND</span><span class="o">=</span>mysql
 <span class="nv">DB_NAME</span><span class="o">=</span>salt
@@ -940,6 +996,16 @@
 
 <span class="nv">SALT_URL</span><span class="o">=</span>https://localhost:8080
 <span class="nv">SALT_AUTH</span><span class="o">=</span>alcali
+</pre></div>
+
+
+<p>If you want to use LDAP authentication, you'll also need:</p>
+<div class="codehilite"><pre><span></span><span class="nv">AUTH_BACKEND</span><span class="o">=</span>ldap
+<span class="nv">AUTH_LDAP_SERVER_URI</span><span class="o">=</span>ldap://ldap-server
+<span class="nv">AUTH_LDAP_BIND_DN</span><span class="o">=</span><span class="nv">cn</span><span class="o">=</span>admin,dc<span class="o">=</span>example,dc<span class="o">=</span>org
+<span class="nv">AUTH_LDAP_BIND_PASSWORD</span><span class="o">=</span>admin
+<span class="nv">AUTH_LDAP_USER_BASE_CN</span><span class="o">=</span><span class="nv">dc</span><span class="o">=</span>example,dc<span class="o">=</span>org
+<span class="nv">AUTH_LDAP_USER_SEARCH_FILTER</span><span class="o">=(</span><span class="nv">uid</span><span class="o">=</span>%<span class="o">(</span>user<span class="o">)</span>s<span class="o">)</span>
 </pre></div>
 
 

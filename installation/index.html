@@ -183,68 +183,6 @@
         
       
       
-        
-
-<nav class="md-tabs" data-md-component="tabs">
-  <div class="md-tabs__inner md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  <li class="md-tabs__item">
-    
-      <a href=".." class="md-tabs__link md-tabs__link--active">
-        Home
-      </a>
-    
-  </li>
-
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../views/overview/" class="md-tabs__link">
-          Views
-        </a>
-      
-    </li>
-  
-
-      
-        
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../screenshots/" class="md-tabs__link">
-          Screenshots
-        </a>
-      
-    </li>
-  
-
-      
-        
-      
-        
-      
-    </ul>
-  </div>
-</nav>
-      
       <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
@@ -437,15 +375,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-pip" class="md-nav__link">
-    Using pip
+  <a href="#install-from-pypi" class="md-nav__link">
+    Install from PyPI
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#from-sources" class="md-nav__link">
-    From Sources
+  <a href="#install-from-sources" class="md-nav__link">
+    Install from Sources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-with-ldap-support" class="md-nav__link">
+    Installation with LDAP support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-with-google-oauth2-support" class="md-nav__link">
+    Installation with Google OAuth2 support
   </a>
   
 </li>
@@ -592,6 +544,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../views/job_templates/" title="Job Templates" class="md-nav__link">
+      Job Templates
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../views/schedule/" title="Schedule" class="md-nav__link">
       Schedule
     </a>
@@ -681,6 +645,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../upgrade/" title="Upgrade" class="md-nav__link">
+      Upgrade
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../troubleshooting/" title="Troubleshooting" class="md-nav__link">
       Troubleshooting
     </a>
@@ -692,34 +668,10 @@
       
 
 
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
-    
-    <label class="md-nav__link" for="nav-9">
-      Screenshots
-    </label>
-    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
-        Screenshots
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
   <li class="md-nav__item">
-    <a href="../screenshots/" title="" class="md-nav__link">
-      
+    <a href="../screenshots/" title="Screenshots" class="md-nav__link">
+      Screenshots
     </a>
-  </li>
-
-        
-      </ul>
-    </nav>
   </li>
 
     
@@ -852,15 +804,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-pip" class="md-nav__link">
-    Using pip
+  <a href="#install-from-pypi" class="md-nav__link">
+    Install from PyPI
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#from-sources" class="md-nav__link">
-    From Sources
+  <a href="#install-from-sources" class="md-nav__link">
+    Install from Sources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-with-ldap-support" class="md-nav__link">
+    Installation with LDAP support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-with-google-oauth2-support" class="md-nav__link">
+    Installation with Google OAuth2 support
   </a>
   
 </li>
@@ -1161,7 +1127,7 @@ yum install mysql-devel gcc
 </pre></div>
 
 
-<h4 id="using-pip">Using pip<a class="headerlink" href="#using-pip" title="Permanent link">&para;</a></h4>
+<h4 id="install-from-pypi">Install from PyPI<a class="headerlink" href="#install-from-pypi" title="Permanent link">&para;</a></h4>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>We strongly recommend installing Alcali in a <a href="https://docs.python.org/3/library/venv.html">virtualenv</a>.</p>
@@ -1184,7 +1150,7 @@ yum install mysql-devel gcc
 </pre></div>
 
 
-<h4 id="from-sources">From Sources<a class="headerlink" href="#from-sources" title="Permanent link">&para;</a></h4>
+<h4 id="install-from-sources">Install from Sources<a class="headerlink" href="#install-from-sources" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span>git clone https://github.com/latenighttales/alcali.git
 git checkout 2019.2 # or 2018.3
 pip install --user . 
@@ -1198,6 +1164,37 @@ pip install --user .
 
 <p>or for postgres:</p>
 <div class="codehilite"><pre><span></span>pip install --user psycopg2
+</pre></div>
+
+
+<h4 id="installation-with-ldap-support">Installation with LDAP support<a class="headerlink" href="#installation-with-ldap-support" title="Permanent link">&para;</a></h4>
+<p>if you want to use LDAP to authenticate users, you'll need these system dependencies:</p>
+<p>For Debian based distribution:</p>
+<div class="codehilite"><pre><span></span>apt install libldap2-dev libsasl2-dev ldap-utils
+</pre></div>
+
+
+<p>For Red-Hat based distribution:</p>
+<div class="codehilite"><pre><span></span>yum install openldap-devel
+</pre></div>
+
+
+<p>To add LDAP support to alcali, just append <code>[ldap]</code> to the chosen install method i.e:</p>
+<div class="codehilite"><pre><span></span># Install from PyPI
+pip install --user alcali[ldap]
+
+# Install from Source
+pip install --user .[ldap]
+</pre></div>
+
+
+<h4 id="installation-with-google-oauth2-support">Installation with Google OAuth2 support<a class="headerlink" href="#installation-with-google-oauth2-support" title="Permanent link">&para;</a></h4>
+<p>To add Google OAuth2 support to alcali, just append <code>[social]</code> to the chosen install method i.e:</p>
+<div class="codehilite"><pre><span></span># Install from PyPI
+pip install --user alcali[social]
+
+# Install from Source
+pip install --user .[social]
 </pre></div>
                 
                   

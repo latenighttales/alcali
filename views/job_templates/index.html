@@ -40,7 +40,7 @@
     
     
       
-        <title>Events - ALCALI</title>
+        <title>Job Templates - ALCALI</title>
       
     
     
@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#events" tabindex="1" class="md-skip">
+      <a href="#job-templates" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -117,7 +117,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Events
+                Job Templates
               
             </span>
           
@@ -391,11 +391,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../job_templates/" title="Job Templates" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Job Templates" class="md-nav__link md-nav__link--active">
       Job Templates
     </a>
+    
   </li>
 
         
@@ -451,20 +460,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="Events" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../events/" title="Events" class="md-nav__link">
       Events
     </a>
-    
   </li>
 
         
@@ -585,14 +585,11 @@
               
                 
                 
-                <h1 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h1>
-<p><img alt="events" src="../../images/events.png" /></p>
-<p>By default, display only the last 100 Events.</p>
-<div class="admonition danger">
-<p class="admonition-title">Danger</p>
-<p>It's up to you to monitor <code>salt</code> database. The <code>salt_events</code> table can grow very rapidely.</p>
-<p>Returners have method to <a href="https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.mysql.html">clean jobs</a> regularly.</p>
-</div>
+                <h1 id="job-templates">Job Templates<a class="headerlink" href="#job-templates" title="Permanent link">&para;</a></h1>
+<p><img alt="job_templates" src="../../images/job_templates.png" /></p>
+<p>To create a job template, fill some fields in the <a href="../run/">run</a> view, switch on "Save as Template", 
+and choose a name.</p>
+<p><img alt="job_templates_save" src="../../images/job_templates_save.png" /></p>
                 
                   
                 
@@ -641,8 +638,8 @@
 
         <!-- Link to previous page -->
         
-          <a href="../keys/"
-              title="Keys"
+          <a href="../run/"
+              title="Run"
               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
               rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -655,7 +652,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Keys
+                Run
               </span>
             </div>
           </a>
@@ -663,8 +660,8 @@
 
         <!-- Link to next page -->
         
-          <a href="../users/"
-              title="Users"
+          <a href="../schedule/"
+              title="Schedule"
               class="md-flex md-footer-nav__link md-footer-nav__link--next"
               rel="next">
             <div class="md-flex__cell md-flex__cell--stretch
@@ -673,7 +670,7 @@
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Users
+                Schedule
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
