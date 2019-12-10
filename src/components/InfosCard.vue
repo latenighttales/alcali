@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>Infos</v-card-title>
+      <v-card-title>{{minion.id}}</v-card-title>
       <v-tabs
           v-model="tab"
       >
@@ -93,9 +93,9 @@
     props: ["minion"],
     methods: {
       boolRepr(bool) {
-        if (bool === true) {
+        if (bool === "True") {
           return "green"
-        } else if (bool === false) {
+        } else if (bool === "False") {
           return "red"
         } else return "primary"
       },

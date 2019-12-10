@@ -1,13 +1,19 @@
 [run]
 omit =
+    config/ldap_config.py
+    config/social_config.py
     config/settings.py
+    config/wsgi.py
     api/apps.py
     api/permissions.py
     api/migrations/*
-    tests/*
     api/pyapi.py
-    config/wsgi.py
-    manage.py
     api/utils/output/*
+    tests/*
+    manage.py
     setup.py
     bin/__init__.py
+[report]
+exclude_lines =
+    pragma: no cover
+    except PepperException as e:

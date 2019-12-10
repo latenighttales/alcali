@@ -5,6 +5,7 @@
         Events
         <v-spacer></v-spacer>
         <v-text-field
+            class="search"
             v-model="search"
             append-icon="search"
             label="Search"
@@ -27,7 +28,7 @@
         </template>
         <template v-slot:expanded-item="{ headers,item }">
           <td :colspan="headers.length">
-            <pre>{{JSON.stringify(JSON.parse(item.data), null, 2)}}</pre>
+            <pre>{{JSON.stringify(safeParse(item.data), null, 2)}}</pre>
           </td>
         </template>
       </v-data-table>
@@ -77,6 +78,15 @@
           this.loading = false
         })
       },
+      safeParse(json) {
+        let parsed
+        try {
+          parsed = JSON.parse(json)
+        } catch (e) {
+          return {}
+        }
+        return parsed
+      }
     },
   }
 </script>

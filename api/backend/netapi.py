@@ -1,9 +1,11 @@
 import os
 import json
+from urllib.error import URLError
+
 import urllib3
 
 from django.contrib.auth.models import User
-from pepper import Pepper
+from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
 
 from ..utils.input import RawCommand
@@ -15,20 +17,19 @@ url = os.environ.get("SALT_URL", "https://127.0.0.1:8080")
 
 
 def api_connect():
-    # TODO fix this!
     user = get_current_user()
     api = Pepper(url, ignore_ssl_errors=True)
-    login_ret = api.login(
-        str(user.username),
-        user.user_settings.token,
-        os.environ.get("SALT_AUTH", "alcali"),
-    )
+    try:
+        login_ret = api.login(
+            str(user.username),
+            user.user_settings.token,
+            os.environ.get("SALT_AUTH", "alcali"),
+        )
+    except URLError:
+        raise PepperException("URL Error")
     user.user_settings.salt_permissions = json.dumps(login_ret["perms"])
     user.save()
     return api
-
-    # except (PepperException, ConnectionRefusedError, URLError) as e:
-    #     print("Can't connect to {url}: {e}".format(url=url, e=e))
 
 
 def get_keys(refresh=False):
@@ -41,8 +42,11 @@ def get_keys(refresh=False):
             "minions": "accepted",
         }
 
-        api = api_connect()
-        api_ret = api.wheel("key.list_all")["return"][0]["data"]["return"]
+        try:
+            api = api_connect()
+            api_ret = api.wheel("key.list_all")["return"][0]["data"]["return"]
+        except PepperException as e:
+            return {"error": str(e)}
 
         Keys.objects.all().delete()
         for key, value in minion_status.items():
@@ -58,12 +62,15 @@ def get_keys(refresh=False):
                     pass
                     # LOG CREATED
 
-    return Keys.objects.all()
+    return {"result": "refreshed"}
 
 
 def refresh_minion(minion_id):
-    api = api_connect()
-    grain = api.local(minion_id, "grains.items")
+    try:
+        api = api_connect()
+        grain = api.local(minion_id, "grains.items")
+    except PepperException as e:
+        return {"error": str(e)}
     grain = grain["return"][0]
     # TODO: return smt useful, better error mgmt.
     if grain.get(minion_id):
@@ -82,17 +89,23 @@ def refresh_minion(minion_id):
         for field in minion_fields:
             command = RawCommand("salt {} {}".format(minion_id, field["function"]))
             custom_field_return = run_raw(command.parse())
+            if "error" in custom_field_return:
+                return custom_field_return
             MinionsCustomFields.objects.update_or_create(
                 name=field["name"],
                 function=field["function"],
                 minion=Minions.objects.get(minion_id=minion_id),
                 defaults={"value": json.dumps(custom_field_return[minion_id])},
             )
+    return {"result": "{} refreshed".format(minion_id)}
 
 
 def run_raw(load):
-    api = api_connect()
-    api_ret = api.low(load)
+    try:
+        api = api_connect()
+        api_ret = api.low(load)
+    except PepperException as e:
+        return {"error": str(e)}
     api_ret = api_ret["return"][0]
     return api_ret
 
@@ -111,51 +124,60 @@ def get_events():
 
 
 def init_db(target):
-    api = api_connect()
-    # Modules.
-    modules_func = api.local(target, "sys.list_functions")
-    modules_func = modules_func["return"][0][target]
+    try:
+        api = api_connect()
+        # Modules.
+        modules_func = api.local(target, "sys.list_functions")
+        modules_func = modules_func["return"][0][target]
 
-    modules_doc = api.local(target, "sys.doc")
+        modules_doc = api.local(target, "sys.doc")
 
-    for func in modules_func:
-        desc = modules_doc["return"][0][target][func]
+        for func in modules_func:
+            desc = modules_doc["return"][0][target][func]
 
-        Functions.objects.update_or_create(
-            name=func, type="local", description=desc or ""
-        )
-    # Runner.
-    # TODO: Factorize.
-    runner_func = api.local(target, "sys.list_runner_functions")
-    runner_func = runner_func["return"][0][target]
+            Functions.objects.update_or_create(
+                name=func, type="local", description=desc or ""
+            )
+        # Runner.
+        # TODO: Factorize.
+        runner_func = api.local(target, "sys.list_runner_functions")
+        runner_func = runner_func["return"][0][target]
 
-    runner_doc = api.local(target, "sys.runner_doc")
+        runner_doc = api.local(target, "sys.runner_doc")
 
-    for func in runner_func:
-        desc = runner_doc["return"][0][target][func]
+        for func in runner_func:
+            desc = runner_doc["return"][0][target][func]
 
-        Functions.objects.update_or_create(
-            name=func, type="runner", description=desc or ""
-        )
-    wheel_docs = api.runner("doc.wheel")
-    wheel_docs = wheel_docs["return"][0]
-    for fun, doc in wheel_docs.items():
-        Functions.objects.update_or_create(
-            name=fun, type="wheel", description=doc or ""
-        )
-    return {"something": "useful"}
+            Functions.objects.update_or_create(
+                name=func, type="runner", description=desc or ""
+            )
+        wheel_docs = api.runner("doc.wheel")
+        wheel_docs = wheel_docs["return"][0]
+        for fun, doc in wheel_docs.items():
+            Functions.objects.update_or_create(
+                name=fun, type="wheel", description=doc or ""
+            )
+    except PepperException as e:
+        return {"error": str(e)}
+    return {"result": "refreshed modules using {}".format(target)}
 
 
 def manage_key(action, target, kwargs):
-    api = api_connect()
-    response = api.wheel("key.{}".format(action), match=target, **kwargs)
+    try:
+        api = api_connect()
+        response = api.wheel("key.{}".format(action), match=target, **kwargs)
+    except PepperException as e:
+        return {"error": str(e)}
     return response
 
 
 def refresh_schedules(minion=None):
     minion = minion or "*"
-    api = api_connect()
-    api_ret = api.local(minion, "schedule.list", kwarg={"return_yaml": False})
+    try:
+        api = api_connect()
+        api_ret = api.local(minion, "schedule.list", kwarg={"return_yaml": False})
+    except PepperException as e:
+        return {"error": str(e)}
     for minion_id in api_ret["return"][0]:
         # TODO: error mgmt
         minion_jobs = api_ret["return"][0][minion_id]
@@ -171,8 +193,11 @@ def refresh_schedules(minion=None):
 
 
 def manage_schedules(action, name, minion):
-    api = api_connect()
-    api_ret = api.local(minion, "schedule.{}".format(action), arg=name)
+    try:
+        api = api_connect()
+        api_ret = api.local(minion, "schedule.{}".format(action), arg=name)
+    except PepperException as e:
+        return {"error": str(e)}
     for target in api_ret["return"][0]:
         # If action was successful.
         if api_ret["return"][0][target]["result"]:
@@ -183,7 +208,9 @@ def manage_schedules(action, name, minion):
                     schedule = Schedule.objects.filter(minion=minion, name=name).get()
                 except Schedule.DoesNotExist:
                     # Retry after refreshing schedules for this minion.
-                    refresh_schedules(minion)
+                    ret = refresh_schedules(minion)
+                    if "error" in ret:
+                        return ret
                     try:
                         schedule = Schedule.objects.filter(
                             minion=minion, name=name
@@ -197,3 +224,4 @@ def manage_schedules(action, name, minion):
                     loaded_job["enabled"] = False
                 schedule.job = json.dumps(loaded_job)
                 schedule.save()
+    return {"result": "ok"}

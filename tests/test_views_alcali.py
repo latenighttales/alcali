@@ -210,7 +210,7 @@ def test_graph_other_filter(admin_client, highstate, dummy_state, jwt):
     highstate()
     response = admin_client.get("/api/jobs/graph?period=0&fun=other", **jwt)
     assert response.status_code == 200
-    assert response.json()["series"][0][0] > 1
+    assert response.json()["series"][0][0] >= 1
 
 
 def test_stats(admin_client, jwt):
@@ -220,8 +220,8 @@ def test_stats(admin_client, jwt):
     assert response.status_code == 200
 
 
-def test_get_events(admin_client):
-    response = admin_client.get("/api/event_stream/")
+def test_get_events(admin_client, jwt):
+    response = admin_client.get("/api/event_stream/", **jwt)
     assert response.status_code == 200
 
 

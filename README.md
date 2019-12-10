@@ -25,6 +25,8 @@ Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 
 - Use custom auth module to login into both Alcali and the Salt-api using JWT.
 
+- **LDAP** and **Google OAuth2** authentication.
+
 ## Try it!
 
 If you just want to have a look, just clone the [repository](https://github.com/latenighttales/alcali.git) and use [docker-compose](https://docs.docker.com/compose/):
@@ -62,7 +64,16 @@ Make sure to check the [installation](https://alcali.dev/installation/) docs fir
 
 ## Screenshots
 
-See what it looks like [here](https://github.com/latenighttales/alcali/blob/2019.2/docs/docs/screenshots.md).
+#### Dashboard
+![](docs/docs/images/screenshots/dashboard-dark.png)
+
+#### Minion Details
+![](docs/docs/images/screenshots/minion-detail-dark.png)
+
+#### Job Details
+![](docs/docs/images/screenshots/job-detail.png)
+
+More [here](https://github.com/latenighttales/alcali/blob/2019.2/docs/docs/screenshots.md).
 
 ## License
 

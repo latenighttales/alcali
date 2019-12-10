@@ -4,17 +4,50 @@
       <v-card-title>
         Minions
         <v-spacer></v-spacer>
+        <v-menu
+            v-model="menu"
+            :close-on-content-click="false"
+            offset-y
+            offset-x
+            left
+        >
+          <template v-slot:activator="{ on }">
+            <v-btn
+                color="primary"
+                dark
+                v-on="on"
+                class="mr-5"
+            >
+              Columns
+            </v-btn>
+          </template>
+
+          <v-card flat max-width="700">
+            <v-card-text>
+              <v-container fluid>
+                <v-row no-gutters>
+                  <template v-for="(item, index) in available_headers">
+                    <v-col :key="index" cols="4">
+                      <v-checkbox :label="item" :value="item" v-model="default_headers" hide-details></v-checkbox>
+                    </v-col>
+                  </template>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-menu>
         <v-text-field
             v-model="search"
             append-icon="search"
             label="Search"
             single-line
             hide-details
+            class="search"
         ></v-text-field>
       </v-card-title>
       <v-data-table
           sort-by="minion_id"
-          :headers="headers"
+          :headers="customHeaders"
           :items="minions"
           :search="search"
           class="elevation-1"
@@ -24,7 +57,7 @@
           <v-btn text small class="text-none" :to="'/minions/'+item.minion_id">{{ item.minion_id }}</v-btn>
         </template>
         <template v-slot:item.conformity="{ item }">
-          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity == null ? "unknown": item.conformity.toString() }}
+          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity }}
           </v-chip>
         </template>
         <template v-slot:item.last_job="{ item }">
@@ -51,7 +84,7 @@
                 color="blue-grey"
                 tile
                 dark
-                :to="'/run?target='+item.minion_id"
+                :to="'/run?tgt='+item.minion_id"
             >
               run job
             </v-btn>
@@ -120,21 +153,25 @@
       return {
         search: "",
         dialog: false,
-        headers: [
-          { text: "Minion Id", value: "minion_id" },
-          { text: "Highstate Conformity", value: "conformity" },
-          { text: "F.Q.D.N", value: "fqdn" },
-          { text: "O.S", value: "os" },
-          { text: "O.S Version", value: "oscodename" },
-          { text: "Kernel", value: "kernelrelease" },
-          { text: "Last Job", value: "last_job" },
-          { text: "Last Highstate", value: "last_highstate" },
-          { text: "Actions", value: "action", sortable: false },
-        ],
+        default_headers: ["minion_id", "conformity", "fqdn", "os", "oscodename", "kernelrelease", "last_job", "last_highstate"],
+        unwanted_headers: ["pillar", "grain", "id"],
+        available_headers: [],
         minions: [],
+        menu: false,
         target: null,
         loading: true,
       }
+    },
+    computed: {
+      customHeaders() {
+        let custom = []
+        this.default_headers.forEach(header => {
+          let titled = header.split("_").map(title => title.replace(/^\w/, c => c.toUpperCase())).join(" ")
+          custom.push({ text: titled, value: header })
+        })
+        custom.push({ text: "Actions", value: "action", sortable: false })
+        return custom
+      },
     },
     mounted() {
       this.loadData()
@@ -154,12 +191,21 @@
 
           this.minions = addedGrains(response.data)
           this.loading = false
+          // Compute available headers
+          this.available_headers = this.available_headers.concat(this.default_headers)
+          if (this.minions.length > 0) {
+            Object.keys(this.minions[0]).forEach(key => {
+              if (typeof this.minions[0][key] === "string" && !this.default_headers.includes(key) && !this.unwanted_headers.includes(key) && !key.startsWith("lsb")) {
+                this.available_headers.push(key)
+              }
+            })
+          }
         })
       },
       boolRepr(bool) {
-        if (bool === true) {
+        if (bool === "True") {
           return "green"
-        } else if (bool === false) {
+        } else if (bool === "False") {
           return "red"
         } else return "primary"
       },
@@ -169,6 +215,8 @@
         formData.set("minion_id", minion_id)
         this.$http.post("/api/minions/refresh_minions/", formData).then(response => {
           this.$toast(response.data.result)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       deleteMinion(minion_id) {
@@ -176,6 +224,8 @@
         this.$http.delete("/api/minions/" + minion_id).then(() => {
           this.minions.splice(this.minions.indexOf(minion_id), 1)
           this.$toast(minion_id + " deleted")
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       showDialog(minion_id) {

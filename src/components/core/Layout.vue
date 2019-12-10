@@ -24,8 +24,8 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-list dense v-for="route in routes" :key="route.name">
-        <v-list-item :to="`${route.path}`">
+      <v-list dense>
+        <v-list-item v-for="route in routes" :key="route.name" :to="`${route.path}`">
           <v-list-item-action v-if="mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
@@ -101,7 +101,7 @@
       <v-expand-transition>
         <v-text-field
             v-show="expand_search"
-            class="mx-auto"
+            class="mx-auto search"
             flat
             hide-details
             label="Search jids, minions, states..."
@@ -111,7 +111,7 @@
         ></v-text-field>
       </v-expand-transition>
       <v-btn icon @click="expand_search = !expand_search" class="mr-2">
-        <v-icon>mdi-magnify</v-icon>
+        <v-icon>search</v-icon>
       </v-btn>
       <v-menu
           v-model="notif_menu"
@@ -162,7 +162,7 @@
       <v-menu bottom left offset-y offset-x close-on-click>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon>
-            <v-icon>mdi-dots-vertical</v-icon>
+            <v-icon>more_vert</v-icon>
           </v-btn>
         </template>
         <v-list>
@@ -181,18 +181,15 @@
       </v-menu>
     </v-app-bar>
     <v-content>
-      <v-container>
-        <v-fade-transition mode="out-in">
-
-          <router-view></router-view>
-
-        </v-fade-transition>
-      </v-container>
+      <v-fade-transition mode="out-in">
+        <router-view :key="$route.fullPath"></router-view>
+      </v-fade-transition>
     </v-content>
   </v-app>
 </template>
 
 <script>
+  import { EventSourcePolyfill } from 'event-source-polyfill'
   import helpersMixin from "../mixins/helpersMixin"
 
   export default {
@@ -230,6 +227,11 @@
           name: "Run",
           path: "/run",
           icon: "play_arrow",
+        },
+        {
+          name: "Job Templates",
+          path: "/job_templates",
+          icon: "playlist_add_check",
         },
         {
           name: "Schedules",
@@ -282,7 +284,12 @@
         let isJobEvent = helpersMixin.methods.fnmatch("salt/job/*")
         let isJobNew = helpersMixin.methods.fnmatch("salt/job/*/new")
         let isJobReturn = helpersMixin.methods.fnmatch("salt/job/*/ret/*")
-        let es = new EventSource("/api/event_stream/")
+        const accessToken = localStorage.getItem("access")
+        let es = new EventSourcePolyfill("/api/event_stream/", {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+          },
+        })
         es.addEventListener("open", () => {
           this.$store.dispatch("updateWs")
 
@@ -389,5 +396,10 @@
   .v-list {
     border-radius: 0px !important;
   }
+
+  .search {
+    max-width: 300px !important;
+  }
+
 
 </style>

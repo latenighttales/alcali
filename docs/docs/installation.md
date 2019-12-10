@@ -358,3 +358,15 @@ pip install --user alcali[ldap]
 # Install from Source
 pip install --user .[ldap]
 ```
+
+#### Installation with Google OAuth2 support
+
+To add Google OAuth2 support to alcali, just append `[social]` to the chosen install method i.e:
+
+```commandline
+# Install from PyPI
+pip install --user alcali[social]
+
+# Install from Source
+pip install --user .[social]
+```

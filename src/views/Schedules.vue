@@ -36,8 +36,8 @@
         this.$http.post("/api/schedules/refresh/").then(() => {
           this.refreshKey += 1
           this.$toast("schedules refreshed")
-        }).catch(function(error) {
-          alert(error)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
 
       },

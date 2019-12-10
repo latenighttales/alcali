@@ -166,3 +166,8 @@ except FileNotFoundError:
 # LDAP Authentication.
 if os.environ.get("AUTH_BACKEND") and os.environ["AUTH_BACKEND"].lower() == "ldap":
     from .ldap_config import *
+
+# Social Authentication.
+if os.environ.get("AUTH_BACKEND") and os.environ["AUTH_BACKEND"].lower() == "social":
+    INSTALLED_APPS += ["social_django", "rest_social_auth"]
+    from .social_config import *

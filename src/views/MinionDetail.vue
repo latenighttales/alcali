@@ -72,15 +72,15 @@
         formData.set('minion_id', this.minion_id)
         this.$http.post("/api/minions/refresh_minions/", formData).then(() => {
           this.$toast("minion refreshed")
-        }).catch(function(error) {
-          alert(error)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       runMinion() {
-        this.$router.push("/run/?target=" + this.minion_id)
+        this.$router.push("/run?tgt=" + this.minion_id)
       },
       highstateMinion() {
-        this.$router.push("/run/?target=" + this.minion_id + "&function=state.apply")
+        this.$router.push("/run?tgt=" + this.minion_id + "&fun=state.apply")
       },
     },
     props: [

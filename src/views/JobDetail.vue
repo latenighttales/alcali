@@ -7,27 +7,35 @@
             <v-list-item two-line>
               <v-list-item-content>
                 <v-list-item-title class="headline">{{ job.fun }}</v-list-item-title>
-                <v-list-item-subtitle>Run {{ formatDate(job.alter_time) }}</v-list-item-subtitle>
+                <v-list-item-subtitle>Run on {{ formatDate(job.alter_time) }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
             <v-simple-table>
               <tbody>
               <tr>
-                <td>FUNCTION:</td>
-                <td class="text-right">{{ job.fun }}</td>
+                <td>MINION ID:</td>
+                <td class="text-right">
+                  <v-btn text small class="pr-0 text-none" :to="'/minions/'+job.id">{{ job.id }}</v-btn>
+                </td>
               </tr>
               <tr>
-                <td>JID:</td>
-                <td class="text-right">{{ job.jid }}</td>
+                <td>JOB ID:</td>
+                <td class="text-right">
+                  <v-btn text small class="pr-0" :to="'/jobs/'+job.jid">{{ job.jid }}</v-btn>
+                </td>
+              </tr>
+              <tr>
+                <td>FUNCTION:</td>
+                <td class="text-right">{{ job.fun }}</td>
               </tr>
               <tr v-if="job.arguments">
                 <td>ARGUMENTS:</td>
                 <td class="text-right">{{ job.arguments }}</td>
               </tr>
-              <tr>
-                <td>MINION ID:</td>
-                <td class="text-right">{{ job.id }}</td>
+              <tr v-if="job.keyword_arguments">
+                <td>KEYWORD ARGUMENTS:</td>
+                <td class="text-right">{{ job.keyword_arguments }}</td>
               </tr>
               <tr>
                 <td>STATUS:</td>
@@ -98,6 +106,9 @@
   .ansiStyle {
     background-color: black;
     padding: 10px;
+  }
+  .theme--light.v-btn--active:hover::before, .theme--light.v-btn--active::before {
+    opacity: 0;
   }
 
 </style>

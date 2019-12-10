@@ -57,4 +57,5 @@ def test_custom_conformity(minion_master, alcali_version_state, version_conformi
 
 @pytest.mark.django_db
 def test_salt_return_job_args(jobs_arguments):
-    assert jobs_arguments.arguments() == "foo 1 bar=baz"
+    assert jobs_arguments.arguments() == "foo 1"
+    assert jobs_arguments.keyword_arguments() == "bar=baz"

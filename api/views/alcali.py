@@ -36,7 +36,7 @@ from api.backend.netapi import (
     manage_schedules,
 )
 from api.models import SaltReturns, Keys, Minions, SaltEvents, Schedule, Conformity
-from api.models import UserSettings, MinionsCustomFields, Functions
+from api.models import UserSettings, MinionsCustomFields, Functions, JobTemplate
 from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from api.renderer import StreamingRenderer
 from api.serializers import (
@@ -48,6 +48,7 @@ from api.serializers import (
     ScheduleSerializer,
     MyTokenObtainPairSerializer,
     SaltReturnsSerializer,
+    JobTemplateSerializer,
 )
 from api.serializers import KeysSerializer, MinionsSerializer
 from api.utils import graph_data, render_conformity, RawCommand
@@ -63,8 +64,10 @@ class KeysViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(methods=["POST"], detail=False)
     def refresh(self, request):
-        get_keys(refresh=True)
-        return Response({"result": "refreshed"})
+        ret = get_keys(refresh=True)
+        if "error" in ret:
+            return Response(ret["error"], status=401)
+        return Response(ret)
 
     @action(detail=False)
     def keys_status(self, request):
@@ -87,7 +90,9 @@ class KeysViewSet(viewsets.ReadOnlyModelViewSet):
             kwargs = {"include_rejected": True, "include_denied": True}
         elif key_action == "reject":
             kwargs = {"include_accepted": True, "include_denied": True}
-        manage_key(key_action, key, kwargs)
+        ret = manage_key(key_action, key, kwargs)
+        if "error" in ret:
+            return Response(ret["error"], status=401)
         return Response({"result": "{} on {}: done".format(key_action, key)})
 
 
@@ -101,14 +106,19 @@ class MinionsViewSet(viewsets.ModelViewSet):
     def refresh_minions(self, request):
         if request.POST.get("minion_id"):
             minion_id = request.POST.get("minion_id")
-            refresh_minion(minion_id)
+            ret = refresh_minion(minion_id)
+            if "error" in ret:
+                return Response(ret["error"], status=401)
+
             return Response({"result": "refreshed {}".format(minion_id)})
 
         accepted_minions = Keys.objects.filter(status="accepted").values_list(
             "minion_id", flat=True
         )
         for minion in accepted_minions:
-            refresh_minion(minion)
+            ret = refresh_minion(minion)
+            if "error" in ret:
+                return Response(ret["error"], status=401)
         return Response({"refreshed": [i for i in accepted_minions]})
 
     @action(detail=False)
@@ -245,7 +255,9 @@ class ConformityViewSet(viewsets.ModelViewSet):
             default_conformity = {
                 "minion_id": minion.minion_id,
                 "last_highstate": last_highstate_date,
-                "conformity": minion.conformity(),
+                "conformity": "Unknown"
+                if minion.conformity() is None
+                else str(minion.conformity()),
                 "succeeded": succeeded,
                 "unchanged": unchanged,
                 "failed": failed,
@@ -279,7 +291,9 @@ class ScheduleViewSet(viewsets.ReadOnlyModelViewSet):
 
     @action(methods=["POST"], detail=False)
     def refresh(self, request):
-        refresh_schedules()
+        ret = refresh_schedules()
+        if "error" in ret:
+            return Response(ret["error"], status=401)
         return Response({"result": "refreshed"})
 
     @action(methods=["POST"], detail=False)
@@ -287,7 +301,11 @@ class ScheduleViewSet(viewsets.ReadOnlyModelViewSet):
         action = request.data.get("action")
         minion = request.data.get("minion")
         name = request.data.get("name")
-        manage_schedules(action, name, minion)
+        ret = manage_schedules(action, name, minion)
+        if not ret:
+            return Response({"result": "not good"})
+        if "error" in ret:
+            return Response(ret["error"], status=401)
         return Response(
             {"result": "schedule " + name + " on " + minion + " " + action + "d"}
         )
@@ -329,6 +347,11 @@ class UserSettingsViewSet(viewsets.ModelViewSet):
     serializer_class = UserSettingsSerializer
 
 
+class JobTemplateViewSet(viewsets.ModelViewSet):
+    queryset = JobTemplate.objects.all()
+    serializer_class = JobTemplateSerializer
+
+
 @api_view(["GET"])
 def jobs_graph(request):
     id = request.query_params.get("id", None)
@@ -345,8 +368,10 @@ def jobs_graph(request):
 @api_view(["POST"])
 def parse_modules(request):
     if request.data.get("target"):
-        init_db(request.data.get("target"))
-        return Response({"result": "modules updated"})
+        ret = init_db(request.data.get("target"))
+        if "error" in ret:
+            return Response(ret["error"], status=401)
+        return Response(ret)
 
 
 @api_view(["GET"])
@@ -387,12 +412,10 @@ def stats(request):
 
 @api_view(["GET"])
 def version(request):
-
     return Response({"version": settings.VERSION})
 
 
 @api_view(["GET"])
-@permission_classes([AllowAny])
 @renderer_classes([StreamingRenderer])
 def event_stream(request):
     # Web socket.
@@ -436,27 +459,45 @@ def run(request):
                 cron = request.POST.get("cron")
                 schedule_parsed[0]["arg"].append("cron={}".format(cron))
             ret = run_raw(schedule_parsed)
+            if "error" in ret:
+                return Response(ret["error"], status=401)
             formatted = nested_output.output(ret)
             conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
             html = conv.convert(formatted, ensure_trailing_newline=True)
             return HttpResponse(html)
 
+        cli_ret = request.POST.get("cli")
+        conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
         ret = run_raw(parsed_command)
+        if "error" in ret:
+            return Response(ret["error"], status=401)
         formatted = "\n"
-        if (
+
+        # Error.
+        if isinstance(ret, str):
+            item_ret = nested_output.output(ret)
+            formatted += item_ret + "\n\n"
+        # runner or wheel client.
+        elif isinstance(ret, list):
+            for item in ret:
+                item_ret = nested_output.output(item)
+                formatted += item_ret + "\n\n"
+        # Highstate.
+        elif (
             parsed_command[0]["fun"] in ["state.apply", "state.highstate"]
             and parsed_command[0]["client"] != "local_async"
         ):
             for state, out in ret.items():
                 minion_ret = highstate_output.output({state: out})
                 formatted += minion_ret + "\n\n"
+        # Everything else.
         else:
             for state, out in ret.items():
                 minion_ret = nested_output.output({state: out})
                 formatted += minion_ret + "\n\n"
-        if request.POST.get("cli"):
+
+        if cli_ret:
             return JsonResponse({"results": formatted})
-        conv = Ansi2HTMLConverter(inline=False, scheme="xterm")
         html = conv.convert(formatted, ensure_trailing_newline=True)
         return HttpResponse(html)
 
@@ -476,3 +517,15 @@ def verify(request):
         if request.POST.get("password") == user.user_settings.token:
             return Response({request.POST.get("username"): None})
         return HttpResponse("Unauthorized", status=401)
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def social(request):
+    return Response(
+        {
+            "client_id": settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
+            "provider": "google-oauth2",
+            "redirect_uri": settings.SOCIAL_AUTH_REDIRECT_URI,
+        }
+    )

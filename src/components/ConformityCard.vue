@@ -7,7 +7,7 @@
         <tr>
           <td>Highstate</td>
           <td class="text-right">
-            <v-chip :color="boolRepr(conformity)" dark>{{ valRepr(conformity) }}</v-chip>
+            <v-chip :color="boolRepr(conformity)" dark>{{ valRepr(conformity)|capitalize }}</v-chip>
           </td>
         </tr>
         </tbody>
@@ -19,7 +19,8 @@
                 v-if="isBool(val)"
                 :color="boolRepr(conformity)"
                 dark
-            >{{ valRepr(conformity) }}</v-chip>
+            >{{ valRepr(conformity)|capitalize }}
+            </v-chip>
             <span v-else>{{ valRepr(val) }}</span>
           </td>
         </tr>
@@ -47,10 +48,16 @@
         }
       },
       isBool(val) {
-        return typeof val === 'boolean'
+        return typeof val === "boolean"
       },
       valRepr(val) {
         return val === null ? "unknown" : val
+      },
+    },
+    filters: {
+      capitalize: function(value) {
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
       },
     },
   }

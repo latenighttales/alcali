@@ -5,6 +5,7 @@
         Schedules
         <v-spacer></v-spacer>
         <v-text-field
+            class="search"
             v-model="search"
             append-icon="search"
             label="Search"
@@ -97,6 +98,8 @@
           this.headers = []
           this.schedules = []
           this.loadData()
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       boolRepr(bool) {

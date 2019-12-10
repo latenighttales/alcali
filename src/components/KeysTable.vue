@@ -5,6 +5,7 @@
         Keys
         <v-spacer></v-spacer>
         <v-text-field
+            class="search"
             v-model="search"
             append-icon="search"
             label="Search"
@@ -107,6 +108,8 @@
         formData.set("target", key)
         this.$http.post("api/keys/manage_keys/", formData).then(response => {
           this.$toast(response.data.result)
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
         this.sleep(2000).then(() => {
           this.loadData()

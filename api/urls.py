@@ -9,6 +9,7 @@ from api.views.salt import (
     EventsViewSet,
     jobs_filters,
     job_rendered,
+    SaltReturnsListJid,
 )
 
 from api.views.alcali import (
@@ -30,6 +31,8 @@ from api.views.alcali import (
     search,
     verify,
     version,
+    JobTemplateViewSet,
+    social,
 )
 from rest_framework import routers
 
@@ -43,6 +46,7 @@ router.register(r"userssettings", UserSettingsViewSet)
 router.register(r"minionsfields", MinionsCustomFieldsViewSet)
 router.register(r"functions", FunctionsViewSet)
 router.register(r"schedules", ScheduleViewSet)
+router.register(r"job_templates", JobTemplateViewSet)
 
 urlpatterns = [
     path("", index_view, name="index"),
@@ -62,6 +66,7 @@ urlpatterns = [
         SaltReturnsRetrieve.as_view(),
         name="jobs-detail",
     ),
+    path("api/jobs/<str:jid>/", SaltReturnsListJid.as_view(), name="jobs-list-jid"),
     path(
         "api/jobs/<str:jid>/<str:minion_id>/rendered_state/",
         job_rendered,
@@ -72,3 +77,15 @@ urlpatterns = [
 
 if os.environ.get("SALT_AUTH") == "rest":
     urlpatterns += [path("api/token/verify/", verify, name="token_verify")]
+
+if os.environ.get("AUTH_BACKEND") and os.environ["AUTH_BACKEND"].lower() == "social":
+    from rest_social_auth.views import SocialJWTPairUserAuthView
+
+    urlpatterns += [
+        path("api/social/", social, name="social"),
+        path(
+            "api/social/login/",
+            SocialJWTPairUserAuthView.as_view(),
+            name="social_login",
+        ),
+    ]

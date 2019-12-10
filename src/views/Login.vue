@@ -12,9 +12,16 @@
           <v-col
               cols="12"
               sm="8"
-              md="4"
+              lg="4"
           >
-            <h1 class="text-center font-weight-bold display-4 mb-8">ALCALI</h1>
+            <v-img
+                class="elevation-0"
+                :src="require('../assets/img/logo.png')"
+                width="100"
+                aspect-ratio="1"
+                style="float: right"
+            ></v-img>
+            <h2 class="text-center font-weight-black display-4 mb-8">ALCALI</h2>
             <v-card class="elevation-12">
               <v-toolbar
                   color="black"
@@ -24,8 +31,8 @@
                 <v-toolbar-title>Login</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
-              <v-card-text>
-                <v-form>
+              <v-form @keyup.native.enter="authenticate">
+                <v-card-text>
                   <v-text-field
                       label="Login"
                       name="login"
@@ -41,13 +48,19 @@
                       prepend-icon="lock"
                       type="password"
                   ></v-text-field>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" dark @click.prevent="authenticate">Login</v-btn>
-              </v-card-actions>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" dark @click.prevent="authenticate">Login</v-btn>
+                </v-card-actions>
+              </v-form>
             </v-card>
+          </v-col>
+          <v-col sm="12" align="center">
+            <v-btn @click="handleClickGetAuth" :disabled="!isInit">sign in
+              <span class="ml-2"><GoogleLogo></GoogleLogo></span>
+            </v-btn>
+
           </v-col>
         </v-row>
       </v-container>
@@ -55,11 +68,21 @@
   </v-app>
 </template>
 <script>
+  import GoogleLogo from "../components/GoogleLogo"
+  import Vue from "vue"
+  import GAuth from "vue-google-oauth2"
+
   export default {
     name: "Login",
+    components: { GoogleLogo },
     data: () => ({
       username: null,
       password: null,
+      isInit: false,
+      isSignIn: false,
+      provider: null,
+      clientId: null,
+      redirectUri: null,
     }),
     methods: {
       authenticate() {
@@ -68,10 +91,46 @@
 
         this.$store.dispatch("login", { username, password })
           .then(() => this.$router.push("/"))
-          .catch((err) => {
+          .catch(() => {
             this.$toast.error("Invalid Login / Password")
           })
       },
+      handleClickGetAuth() {
+        this.$gAuth.getAuthCode()
+          .then(authCode => {
+            // On success
+            let formData = new FormData()
+            formData.set("provider", this.provider)
+            formData.set("code", authCode)
+            formData.set("redirect_uri", this.redirectUri)
+            this.$store.dispatch("oauthlogin", formData)
+              .then(() => this.$router.push("/"))
+              .catch(() => {
+                this.$toast.error("Unauthorized")
+              })
+          })
+          .catch(() => {
+            this.$toast.error("Unauthorized")
+          })
+      },
+    },
+    mounted() {
+      this.$http.get("api/social/").then(response => {
+        this.provider = response.data.provider
+        this.clientId = response.data.client_id
+        this.redirectUri = response.data.redirect_uri
+        const gauthOption = {
+          clientId: this.clientId,
+          scope: "profile email",
+          prompt: "select_account",
+        }
+        Vue.use(GAuth, gauthOption)
+        let checkGauthLoad = setInterval(() => {
+          this.isInit = this.$gAuth.isInit
+          this.isSignIn = this.$gAuth.isAuthorized
+          if (this.isInit) clearInterval(checkGauthLoad)
+        }, 1000)
+      })
     },
   }
 </script>

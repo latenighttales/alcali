@@ -11,6 +11,7 @@ export default new Vuex.Store({
     id: localStorage.getItem("id") || "",
     access: localStorage.getItem("access") || "",
     refresh: localStorage.getItem("refresh") || "",
+    is_staff: localStorage.getItem("is_staff") || "false",
     ws_status: false,
     theme: localStorage.getItem("theme") || false,
   },
@@ -35,6 +36,7 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.access,
     theme: state => state.theme,
     user_id: state => state.id,
+    isStaff: state => state.is_staff
   },
   actions: {
     updateWs({ commit }) {
@@ -47,6 +49,25 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({ url: "/api/token/", data: user_data, method: "POST" })
           .then(resp => {
+            Object.keys(resp.data).forEach(key => {
+              localStorage.setItem(key, resp.data[key])
+            })
+            axios.defaults.headers.common.Authorization = `Bearer ${resp.data.access}`
+            commit("auth_success", resp.data)
+            resolve(resp)
+          })
+          .catch(err => {
+            localStorage.clear()
+            reject(err)
+          })
+      })
+    },
+    oauthlogin({ commit }, user_data) {
+      return new Promise((resolve, reject) => {
+        axios({ url: "/api/social/login/", data: user_data, method: "POST" })
+          .then(resp => {
+            // rename token to access
+            delete Object.assign(resp.data, {["access"]: resp.data["token"] })["token"]
             Object.keys(resp.data).forEach(key => {
               localStorage.setItem(key, resp.data[key])
             })

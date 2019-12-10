@@ -17,6 +17,7 @@ import Users from "./views/Users"
 import Schedules from "./views/Schedules"
 import NotFound from "./components/NotFound"
 import Search from "./views/Search"
+import JobTemplates from "./views/JobTemplates"
 
 Vue.use(Router)
 
@@ -44,6 +45,12 @@ const router = new Router({
       component: Jobs,
     },
     {
+      path: "/jobs/:jid",
+      name: "job_jid",
+      component: Jobs,
+      props: true,
+    },
+    {
       path: "/jobs/:jid/:minion_id",
       name: "job_detail",
       component: JobDetail,
@@ -53,6 +60,11 @@ const router = new Router({
       path: "/run",
       name: "run",
       component: Run,
+    },
+    {
+      path: "/job_templates",
+      name: "job_templates",
+      component: JobTemplates,
     },
     {
       path: "/keys",

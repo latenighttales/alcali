@@ -40,7 +40,6 @@
     },
     methods: {
       loadData() {
-        // TODO: user?
         this.$http.get("api/userssettings/" + this.$store.getters.user_id + "/").then(response => {
           this.settings = response.data
           this.max_notifs = response.data.max_notifs

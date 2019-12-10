@@ -5,6 +5,7 @@
         Conformity
         <v-spacer></v-spacer>
         <v-text-field
+            class="search"
             v-model="search"
             append-icon="search"
             label="Search"
@@ -28,7 +29,7 @@
           {{item.last_highstate === null ? "": new Date(item.last_highstate).toLocaleString("en-GB")}}
         </template>
         <template v-slot:item.conformity="{ item }">
-          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity == null ? "unknown": item.conformity.toString() }}
+          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity }}
           </v-chip>
         </template>
         <template v-slot:item.succeeded="{ item }">
@@ -85,7 +86,7 @@
                 color="orange"
                 tile
                 dark
-                :to="'/run/?target='+item.minion_id+'&function=state.apply'"
+                :to="'/run?tgt='+item.minion_id+'&fun=state.apply'"
             >
               highstate
             </v-btn>
@@ -121,9 +122,9 @@
         })
       },
       boolRepr(bool) {
-        if (bool === true) {
+        if (bool === "True") {
           return "green"
-        } else if (bool === false) {
+        } else if (bool === "False") {
           return "red"
         } else return "primary"
       },
