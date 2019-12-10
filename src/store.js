@@ -62,6 +62,25 @@ export default new Vuex.Store({
           })
       })
     },
+    oauthlogin({ commit }, user_data) {
+      return new Promise((resolve, reject) => {
+        axios({ url: "/api/social/login/", data: user_data, method: "POST" })
+          .then(resp => {
+            // rename token to access
+            delete Object.assign(resp.data, {["access"]: resp.data["token"] })["token"]
+            Object.keys(resp.data).forEach(key => {
+              localStorage.setItem(key, resp.data[key])
+            })
+            axios.defaults.headers.common.Authorization = `Bearer ${resp.data.access}`
+            commit("auth_success", resp.data)
+            resolve(resp)
+          })
+          .catch(err => {
+            localStorage.clear()
+            reject(err)
+          })
+      })
+    },
     logout({ commit }) {
       return new Promise((resolve) => {
         commit("logout")

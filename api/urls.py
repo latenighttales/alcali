@@ -32,6 +32,7 @@ from api.views.alcali import (
     verify,
     version,
     JobTemplateViewSet,
+    social,
 )
 from rest_framework import routers
 
@@ -76,3 +77,15 @@ urlpatterns = [
 
 if os.environ.get("SALT_AUTH") == "rest":
     urlpatterns += [path("api/token/verify/", verify, name="token_verify")]
+
+if os.environ.get("AUTH_BACKEND") and os.environ["AUTH_BACKEND"].lower() == "social":
+    from rest_social_auth.views import SocialJWTPairUserAuthView
+
+    urlpatterns += [
+        path("api/social/", social, name="social"),
+        path(
+            "api/social/login/",
+            SocialJWTPairUserAuthView.as_view(),
+            name="social_login",
+        ),
+    ]

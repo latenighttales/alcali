@@ -1,24 +1,24 @@
-import Vue from 'vue';
-import Vuetify, {VSnackbar, VBtn, VIcon} from 'vuetify/lib'
+import Vue from "vue"
+import Vuetify, { VSnackbar, VBtn, VIcon } from "vuetify/lib"
 
-import VuetifyToast from 'vuetify-toast-snackbar';
+import VuetifyToast from "vuetify-toast-snackbar"
 
 Vue.use(Vuetify, {
   components: {
     VSnackbar,
     VBtn,
-    VIcon
-  }
-});
+    VIcon,
+  },
+})
 
 Vue.use(VuetifyToast, {
-  x: 'center', // default
-  y: 'bottom', // default
-  color: 'black', // default
-  icon: 'info',
-  iconColor: '', // default
+  x: "center", // default
+  y: "bottom", // default
+  color: "black", // default
+  icon: "info",
+  iconColor: "", // default
   classes: [
-    'body-2'
+    "body-2",
   ],
   timeout: 3000, // default
   dismissable: true, // default
@@ -26,30 +26,30 @@ Vue.use(VuetifyToast, {
   vertical: false, // default
   queueable: false, // default
   showClose: true, // default
-  closeText: '', // default
-  closeColor: '', // default
+  closeText: "", // default
+  closeColor: "", // default
   shorts: {
     custom: {
-      color: 'purple'
-    }
+      color: "purple",
+    },
   },
-  property: '$toast' // default
-});
+  property: "$toast", // default
+})
 
 export default new Vuetify({
   icons: {
-    iconfont: 'md',
+    iconfont: "md",
   },
   theme: {
     themes: {
       light: {
-        primary: '#6200EE',
-        secondary: '#03DAC6',
+        primary: "#6200EE",
+        secondary: "#03DAC6",
       },
       dark: {
-        secondary: '#BB86FC',
-        primary: '#03DAC6',
+        secondary: "#BB86FC",
+        primary: "#03DAC6",
       },
     },
   },
-});
+})
