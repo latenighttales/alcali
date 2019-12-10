@@ -32,6 +32,6 @@ WORKDIR /opt/alcali/code
 RUN pip install --user -U setuptools
 
 # Install project
-RUN pip install --user -e .[dev,ldap] mysqlclient
+RUN pip install --user -e .[dev,ldap,social] mysqlclient
 
 ENTRYPOINT ["/opt/alcali/code/docker/utils/entrypoint-dev.sh"]

@@ -25,7 +25,7 @@ Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 
 - Use custom auth module to login into both Alcali and the Salt-api using JWT.
 
-- LDAP authentication.
+- **LDAP** and **Google OAuth2** authentication.
 
 ## Try it!
 

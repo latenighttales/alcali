@@ -15,7 +15,12 @@ Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 
 - Check your minions conformity to their highstate or **any state**.
 
+- Keep track of custom state at a glance.
+
 - Use custom auth module to login into both Alcali and the Salt-api using JWT.
+
+- **LDAP** and **Google OAuth2** authentication.
+
 
 [![Build Status](https://travis-ci.org/latenighttales/alcali.svg?branch=2019.2)](https://travis-ci.org/latenighttales/alcali)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
