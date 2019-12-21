@@ -100,7 +100,7 @@ class MinionsViewSet(viewsets.ModelViewSet):
     queryset = Minions.objects.all()
     serializer_class = MinionsSerializer
     lookup_field = "minion_id"
-    lookup_value_regex = "[0-9a-zA-Z.]+"
+    lookup_value_regex = "[^/]+"
 
     @action(detail=False, methods=["post"])
     def refresh_minions(self, request):
