@@ -122,7 +122,7 @@
       >
         <template v-slot:activator="{ on }">
           <v-badge
-              color="primary"
+              :color="notif_nb > 0 ? 'primary': 'transparent'"
               overlap
           >
             <template v-slot:badge>
