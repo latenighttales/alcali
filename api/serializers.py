@@ -113,6 +113,15 @@ class UsersSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+    def update(self, instance, validated_data):
+        password = validated_data.pop("password", None)
+        for k, v in validated_data.items():
+            setattr(instance, k, v)
+        if password:
+            instance.set_password(password)
+        instance.save()
+        return instance
+
     class Meta:
         model = User
         fields = "__all__"
