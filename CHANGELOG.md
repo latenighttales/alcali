@@ -1,5 +1,16 @@
 # Changelog
 
+
+## [2018.3.4] - 2020-02-14
+
+- fix: password update (#164)
+
+- update deps 20200207 (#155)
+
+- fix: Less restrictive minion_id regex and error mgmt (#140)
+
+[2018.3.4]: https://github.com/latenighttales/alcali/compare/v2018.3.4...HEAD
+
 ## [2018.3.3] - 2019-12-10
 
 - feat: Google OAuth2 (#130)
