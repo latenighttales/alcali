@@ -1,5 +1,15 @@
 # Changelog
 
+## [2019.2.4] - 2020-02-14
+
+- fix: password update (#164)
+
+- update deps 20200207 (#155)
+
+- fix: Less restrictive minion_id regex and error mgmt (#140)
+
+[2019.2.4]: https://github.com/latenighttales/alcali/compare/v2019.2.4...HEAD
+
 ## [2019.2.3] - 2019-12-10
 
 - feat: Google OAuth2 (#130)
@@ -38,7 +48,7 @@
 
 - int: updated docs, added contribute section, screenshots (#62)
 
-[2019.2.3]: https://github.com/latenighttales/alcali/compare/v2019.2.3...HEAD
+[2019.2.3]: https://github.com/latenighttales/alcali/compare/v2019.2.3...v2019.2.4
 
 ## [2019.2.2] - 2019-09-21
 
