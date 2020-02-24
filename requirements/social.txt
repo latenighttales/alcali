@@ -1,1 +1,1 @@
-rest-social-auth==3.0.0
+rest-social-auth==4.1.0
