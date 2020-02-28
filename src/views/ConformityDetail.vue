@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12" lg="4">
         <ConformityCard :minion_id="minion_id" :conformity="conformity"

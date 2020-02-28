@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row no-gutters v-if="filter == null">
       <v-col sm="12">
         <v-card class="mb-8">

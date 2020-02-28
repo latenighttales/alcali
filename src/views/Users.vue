@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <UserCard></UserCard>
   </v-container>
 </template>
