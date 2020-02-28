@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12" lg="3">
         <InfosCard v-if="minion !== null" :minion="minion"></InfosCard>

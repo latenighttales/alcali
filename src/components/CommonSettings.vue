@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <v-card-title>Common Settings</v-card-title>
       <v-card-text>
-        <v-container>
+        <v-container fluid>
           <v-row>
             <v-col sm="4" lg="2" align-self="center">
               Parse modules from:

@@ -1,13 +1,13 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12" v-if="jobs.length === 0 && minions.length === 0">
-        <v-container>
+        <v-container fluid>
           <p class="display-2 text-center">Sorry, no results...</p>
         </v-container>
       </v-col>
       <v-col sm="12" v-if="jobs.length > 0">
-        <v-container>
+        <v-container fluid>
           <v-card>
             <v-card-title>
               Jobs
@@ -52,7 +52,7 @@
         </v-container>
       </v-col>
       <v-col sm="12" v-if="minions.length > 0">
-        <v-container>
+        <v-container fluid>
           <v-card>
             <v-card-title>
               Minions

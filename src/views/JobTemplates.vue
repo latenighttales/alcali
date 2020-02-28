@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12" cols="12">
         <JobTemplatesTable></JobTemplatesTable>

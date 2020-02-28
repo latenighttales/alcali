@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <v-card-title>{{minion.id}}</v-card-title>
       <v-tabs

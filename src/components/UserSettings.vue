@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <v-card-title>User Settings</v-card-title>
       <v-card-text>
-        <v-container>
+        <v-container fluid>
           <v-row>
             <v-col lg="2">
               <span>Jobs Notifications</span>

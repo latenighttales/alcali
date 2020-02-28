@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12">
         <v-card>
@@ -20,7 +20,7 @@
                   <v-card>
                     <v-card-title>{{ editing === true ? "Update User" : "Create User"}}</v-card-title>
                     <v-card-text>
-                      <v-container>
+                      <v-container fluid>
                         <v-row>
                           <v-col lg="6">
                             <v-text-field v-model="user.username" label="Username" :rules="userRules"
