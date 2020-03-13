@@ -97,7 +97,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col sm="12">
-        <v-card :elevation="filter == null ? 2 : 0">
+        <v-card :elevation="filter == null||filter.hasOwnProperty('limit') ? 2 : 0">
           <v-card-title>
             Jobs
             <v-spacer></v-spacer>
@@ -124,7 +124,7 @@
               <v-btn text small class="text-none" :to="'/jobs/'+item.jid+'/'+item.id">{{ item.jid }}</v-btn>
             </template>
             <template v-slot:item.id="{ item }">
-              <v-btn text small class="text-none" :to="'/minions/'+item.id" v-show="!filter">{{ item.id }}</v-btn>
+              <v-btn text small class="text-none" :to="'/minions/'+item.id" v-show="!filter||filter.hasOwnProperty('limit')">{{ item.id }}</v-btn>
             </template>
             <template v-slot:item.arguments="{ item }">
               {{ item.arguments.length > 20 ? item.arguments.slice(0, 20)+"...": item.arguments }}
@@ -212,7 +212,8 @@
       },
       filteredHeaders() {
         if (this.filter && this.filter.hasOwnProperty('target[]')) {
-          this.headers.splice(1, 1)
+          let newHeaders = this.headers
+          return newHeaders.splice(1, 1)
         }
         return this.headers
       },

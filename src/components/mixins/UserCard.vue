@@ -331,7 +331,11 @@
         this.$http.delete("api/users/" + id).then(() => {
           this.dialogDelete = false
           this.$toast("User deleted")
-        }).then(() => this.getUsers())
+        }).then(() => {
+          this.getUsers()
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
+        })
       },
       editUser(user) {
         this.dialog = true
