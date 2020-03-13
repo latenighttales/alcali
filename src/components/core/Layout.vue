@@ -284,6 +284,7 @@
         let isJobEvent = helpersMixin.methods.fnmatch("salt/job/*")
         let isJobNew = helpersMixin.methods.fnmatch("salt/job/*/new")
         let isJobReturn = helpersMixin.methods.fnmatch("salt/job/*/ret/*")
+        let currentJid = {}
         const accessToken = localStorage.getItem("access")
         let es = new EventSourcePolyfill("/api/event_stream/", {
           headers: {
@@ -298,33 +299,42 @@
           let data = JSON.parse(event.data)
           // Display only activated notifs.
           if (isJobNew(data.tag) && this.notifs.published === true) {
+            currentJid[data.data.jid] = {returned: 0, total: data.data.minions.length}
+            data.jid = data.data.jid
             data.type = "new"
             data.color = "green"
             data.icon = "keyboard_tab"
             data.link = ""
-            let target = ""
-            if (data.data.hasOwnProperty("tgt")) {
-              target = data.data.tgt
-            } else {
-              target = data.data.minions.length + " minion(s)"
-            }
-            data.text = "Job " + data.data.fun + " published for " + target
+            let target = `${data.data.hasOwnProperty("tgt") ? data.data.tgt : ''}`
+            let targetNb = `${data.data.hasOwnProperty("minions") ? `${data.data.minions.length} minion(s)` :  ''}`
+            data.text = `Job ${data.data.fun} published for ${target} ${targetNb}`
             this.messages.unshift(data)
             if (this.messages.length > this.settings.max_notifs) {
               this.messages.pop()
             }
             this.notif_nb += 1
           } else if (isJobReturn(data.tag) && this.notifs.returned === true) {
+            currentJid[data.data.jid]["returned"] += 1
+            data.jid = data.data.jid
             data.type = "return"
             data.color = "primary"
             data.icon = "subdirectory_arrow_left"
-            data.text = "Job " + data.data.fun + " returned for " + data.data.id
-            data.link = "/jobs/" + data.data.jid + "/" + data.data.id
-            this.messages.unshift(data)
-            if (this.messages.length > this.settings.max_notifs) {
-              this.messages.pop()
+            data.text = `Job ${data.data.fun} returned for ${data.data.id} ${currentJid[data.data.jid]["returned"]}/${currentJid[data.data.jid]["total"]}`
+            data.link = `/jobs/${data.data.jid}/`
+            let changed = false
+            this.messages.forEach((message, idx) => {
+              if (message.type == "return" && message.jid == data.data.jid) {
+                this.messages[idx] = data
+                changed = true
+              }
+            })
+            if (changed === false ) {
+              this.messages.unshift(data)
+              if (this.messages.length > this.settings.max_notifs) {
+                this.messages.pop()
+              }
+              this.notif_nb += 1
             }
-            this.notif_nb += 1
           } else if (isJobEvent(data.tag) && this.notifs.event === true) {
             data.type = "event"
             data.color = "orange"
@@ -337,6 +347,7 @@
             }
             this.notif_nb += 1
           } else if (/^\w{20}$/.test(data.tag) && this.notifs.created === true) {
+            data.jid = data.data.jid
             data.type = "created"
             data.color = "secondary"
             data.icon = "add"
