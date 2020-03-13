@@ -4,3 +4,4 @@
 __pycache__
 node_modules/
 .coverage
+dist/__init__.py
