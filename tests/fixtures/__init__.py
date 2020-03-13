@@ -308,9 +308,30 @@ def schedule(minion_master):
 
 @pytest.fixture
 def dummy_user():
-    return User.objects.create_superuser(
+    user = User.objects.create_user(
         "dummy_user", "dummy_user@example.com", "dummy_userpassword"
     )
+    user.save()
+    return user
+
+
+@pytest.fixture()
+def dummy_client(db, dummy_user):
+    """A Django test client logged in as an admin user."""
+    from django.test.client import Client
+
+    client = Client()
+    client.login(username=dummy_user.username, password="dummy_userpassword")
+    return client
+
+
+@pytest.fixture
+def jwt_dummy_user(dummy_client):
+    res = dummy_client.post(
+        "/api/token/", data={"username": "dummy_user", "password": "dummy_userpassword"}
+    )
+    token = res.data["access"]
+    return {"HTTP_AUTHORIZATION": "Bearer {}".format(token)}
 
 
 @pytest.fixture
