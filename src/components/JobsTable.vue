@@ -213,7 +213,8 @@
       filteredHeaders() {
         if (this.filter && this.filter.hasOwnProperty('target[]')) {
           let newHeaders = this.headers
-          return newHeaders.splice(1, 1)
+          newHeaders.splice(1, 1)
+          return newHeaders
         }
         return this.headers
       },

@@ -221,7 +221,7 @@
       },
       deleteMinion(minion_id) {
         this.dialog = false
-        this.$http.delete("/api/minions/" + minion_id).then(() => {
+        this.$http.delete(`/api/minions/${minion_id}/`).then(() => {
           this.minions.splice(this.minions.indexOf(minion_id), 1)
           this.$toast(minion_id + " deleted")
         }).catch((error) => {
