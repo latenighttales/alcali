@@ -123,7 +123,7 @@
         })
       },
       deleteTemplate(id) {
-        this.$http.delete("api/job_templates/" + id).then(response => {
+        this.$http.delete(`api/job_templates/${id}/`).then(response => {
           this.$toast("Template deleted")
         }).then(() => {
           this.loadData()

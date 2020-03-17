@@ -296,7 +296,7 @@
         formData.set("last_name", this.user.last_name||'')
         formData.set("password", this.user.password||'')
         formData.set("is_staff", this.user.is_staff)
-        this.$http.patch("api/users/" + this.user.id + "/", formData).then(() => {
+        this.$http.patch(`api/users/${this.user.id}/`, formData).then(() => {
           this.$toast("User updated")
           this.dialog = false
           this.user = {}
@@ -315,7 +315,7 @@
       manageToken(action, user) {
         let formData = new FormData
         formData.set("action", action)
-        this.$http.post("api/users/" + user.id + "/manage_token/", formData).then((response) => {
+        this.$http.post(`api/users/${user.id}/manage_token/`, formData).then((response) => {
           this.$toast(response.data.result)
         }).then(() => {
           this.getUsers()
@@ -331,7 +331,11 @@
         this.$http.delete("api/users/" + id).then(() => {
           this.dialogDelete = false
           this.$toast("User deleted")
-        }).then(() => this.getUsers())
+        }).then(() => {
+          this.getUsers()
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
+        })
       },
       editUser(user) {
         this.dialog = true
