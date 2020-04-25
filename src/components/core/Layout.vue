@@ -267,10 +267,11 @@
         }
       },
       getPrefs() {
+        this.$store.dispatch('fetchUserSettings')
         this.$http.get(`api/userssettings/${this.$store.getters.user_id}/`).then(response => {
-          this.settings = response.data
+          this.settings = JSON.parse(response.data.site).settings
           Object.keys(this.notifs).forEach(notif => {
-            this.notifs[notif] = this.settings["notifs_" + notif]
+            this.notifs[notif] = this.settings.user_settings.notifs[notif]
           })
         })
       },
@@ -311,7 +312,7 @@
               }
               data.text = "Job " + data.data.fun + " published for " + target
               this.messages.unshift(data)
-              if (this.messages.length > this.settings.max_notifs) {
+              if (this.messages.length > this.settings.user_settings.max_notifs) {
                 this.messages.pop()
               }
               this.notif_nb += 1
@@ -332,7 +333,7 @@
               data.text = "Job " + data.data.fun + " returned for " + data.data.id
               data.link = "/jobs/" + data.data.jid + "/" + data.data.id
               this.messages.unshift(data)
-              if (this.messages.length > this.settings.max_notifs) {
+              if (this.messages.length > this.settings.user_settings.max_notifs) {
                 this.messages.pop()
               }
               this.notif_nb += 1

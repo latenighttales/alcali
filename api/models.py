@@ -265,11 +265,7 @@ class UserSettings(models.Model):
     )
     token = models.CharField(max_length=40)
     created = models.DateTimeField(auto_now_add=True)
-    max_notifs = models.PositiveIntegerField(default=10)
-    notifs_created = models.BooleanField(default=False)
-    notifs_published = models.BooleanField(default=False)
-    notifs_returned = models.BooleanField(default=True)
-    notifs_event = models.BooleanField(default=False)
+    site = models.TextField(default="{}")  # TODO: load json file
     salt_permissions = models.TextField()
 
     def generate_token(self):

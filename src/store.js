@@ -14,6 +14,7 @@ export default new Vuex.Store({
     is_staff: localStorage.getItem("is_staff") || "false",
     ws_status: false,
     theme: localStorage.getItem("theme") || false,
+    user_settings: {},
   },
   mutations: {
     auth_success(state, data) {
@@ -29,14 +30,18 @@ export default new Vuex.Store({
     },
     toggleTheme(state) {
       state.theme = !state.theme
-      localStorage.setItem('theme', JSON.stringify(state.theme))
+      localStorage.setItem("theme", JSON.stringify(state.theme))
+    },
+    setUserSettings(state, settings) {
+      state.user_settings = settings
     },
   },
   getters: {
     isLoggedIn: state => !!state.access,
     theme: state => state.theme,
     user_id: state => state.id,
-    isStaff: state => state.is_staff
+    isStaff: state => state.is_staff,
+    user_settings: state => state.user_settings,
   },
   actions: {
     updateWs({ commit }) {
@@ -44,6 +49,11 @@ export default new Vuex.Store({
     },
     toggleTheme({ commit }) {
       commit("toggleTheme")
+    },
+    fetchUserSettings(context) {
+      axios.get(`api/userssettings/${context.getters.user_id}/`).then(response => {
+        context.commit("setUserSettings", JSON.parse(response.data.site).settings)
+      })
     },
     login({ commit }, user_data) {
       return new Promise((resolve, reject) => {
@@ -67,7 +77,7 @@ export default new Vuex.Store({
         axios({ url: "/api/social/login/", data: user_data, method: "POST" })
           .then(resp => {
             // rename token to access
-            delete Object.assign(resp.data, {["access"]: resp.data["token"] })["token"]
+            delete Object.assign(resp.data, { ["access"]: resp.data["token"] })["token"]
             Object.keys(resp.data).forEach(key => {
               localStorage.setItem(key, resp.data[key])
             })

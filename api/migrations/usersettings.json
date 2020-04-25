@@ -1,0 +1,63 @@
+{
+  "settings": {
+    "general": {
+      "mini": true,
+      "collapsed": false,
+      "theme": "dark"
+    },
+    "views": {
+      "overview": {
+        "job_stats": {
+          "filter": "All",
+          "period": "1w"
+        }
+      },
+      "minions": {
+        "columns": [
+          "minion_id",
+          "conformity",
+          "fqdn",
+          "os",
+          "oscodename",
+          "kernelrelease",
+          "last_job",
+          "last_highstate"
+        ],
+        "table_row": 10
+      },
+      "jobs": {
+        "table_row": 10
+      },
+      "run": {
+        "tab": "formatted"
+      },
+      "job_templates": {
+        "table_row": 10
+      },
+      "schedules": {
+        "table_row": 10
+      },
+      "conformity": {
+        "table_row": 10
+      },
+      "keys": {
+        "table_row": 10
+      },
+      "events": {
+        "table_row": 10
+      },
+      "users": {
+        "table_row": 10
+      }
+    },
+    "user_settings": {
+      "notifs": {
+        "created": true,
+        "published": true,
+        "returned": true,
+        "event": false
+      },
+      "max_notifs": 15
+    }
+  }
+}
