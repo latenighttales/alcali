@@ -46,7 +46,8 @@ optional. The following ssl options are simply for illustration purposes:
 
 Should you wish the returner data to be cleaned out every so often, set
 `keep_jobs` to the number of hours for the jobs to live in the tables.
-Setting it to `0` or leaving it unset will cause the data to stay in the tables.
+Setting it to `0` will cause the data to stay in the tables. The default
+setting for `keep_jobs` is set to `24`.
 
 Should you wish to archive jobs in a different table for later processing,
 set `archive_jobs` to True.  Salt will create 3 archive tables
@@ -78,7 +79,6 @@ Use the following mysql database schema:
       `load` mediumtext NOT NULL,
       UNIQUE KEY `jid` (`jid`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-    CREATE INDEX jid ON jids(jid) USING BTREE;
 
     --
     -- Table structure for table `salt_returns`
@@ -140,30 +140,44 @@ To override individual configuration items, append --return_kwargs '{"key:": "va
 """
 from __future__ import absolute_import, print_function, unicode_literals
 
-# Let's not allow PyLint complain about string substitution
-# pylint: disable=W1321,E1321
+import logging
+import sys
 
 # Import python libs
 from contextlib import contextmanager
-import sys
-import logging
+
+import salt.exceptions
 
 # Import salt libs
 import salt.returners
 import salt.utils.jid
 import salt.utils.json
-import salt.exceptions
 
 # Import 3rd-party libs
 from salt.ext import six
 
+# Let's not allow PyLint complain about string substitution
+# pylint: disable=W1321,E1321
+
+
 try:
     # Trying to import MySQLdb
     import MySQLdb
-
-    HAS_MYSQL = True
+    import MySQLdb.cursors
+    import MySQLdb.converters
+    from MySQLdb.connections import OperationalError
 except ImportError:
-    HAS_MYSQL = False
+    try:
+        # MySQLdb import failed, try to import PyMySQL
+        import pymysql
+
+        pymysql.install_as_MySQLdb()
+        import MySQLdb
+        import MySQLdb.cursors
+        import MySQLdb.converters
+        from MySQLdb.err import OperationalError
+    except ImportError:
+        MySQLdb = None
 
 log = logging.getLogger(__name__)
 
@@ -172,13 +186,10 @@ __virtualname__ = "alcali"
 
 
 def __virtual__():
-    if not HAS_MYSQL:
-        return (
-            False,
-            "Could not import alcali returner; "
-            "mysql python client is not installed.",
-        )
-    return True
+    """
+    Confirm that a python mysql client is installed.
+    """
+    return bool(MySQLdb), "No python mysql client installed." if MySQLdb is None else ""
 
 
 def _get_options(ret=None):
@@ -236,8 +247,8 @@ def _get_serv(ret=None, commit=False):
             conn = __context__["mysql_returner_conn"]
             conn.ping()
             connect = False
-        except MySQLdb.connections.OperationalError as exc:
-            log.debug("OperationalError on ping: {0}".format(exc))
+        except OperationalError as exc:
+            log.debug("OperationalError on ping: %s", exc)
 
     if connect:
         log.debug("Generating new MySQL connection pool")
@@ -258,13 +269,15 @@ def _get_serv(ret=None, commit=False):
                 db=_options.get("db"),
                 port=_options.get("port"),
                 ssl=ssl_options,
+                charset="utf8",
+                use_unicode=True,
             )
 
             try:
                 __context__["mysql_returner_conn"] = conn
             except TypeError:
                 pass
-        except MySQLdb.connections.OperationalError as exc:
+        except OperationalError as exc:
             raise salt.exceptions.SaltMasterError(
                 "MySQL returner could not connect to database: {exc}".format(exc=exc)
             )
@@ -277,7 +290,7 @@ def _get_serv(ret=None, commit=False):
         error = err.args
         sys.stderr.write(six.text_type(error))
         cursor.execute("ROLLBACK")
-        raise err
+        six.reraise(*sys.exc_info())
     else:
         if commit:
             cursor.execute("COMMIT")
@@ -376,7 +389,6 @@ def save_minions(jid, minions, syndic_id=None):  # pylint: disable=unused-argume
     """
     Included for API consistency
     """
-    pass
 
 
 def get_load(jid):
@@ -587,7 +599,7 @@ def _archive_jobs(timestamp):
             )
             log.error(six.text_type(e))
             raise salt.exceptions.SaltRunnerError(six.text_type(e))
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-except
             log.error(e)
             raise
 

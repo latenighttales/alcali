@@ -7,8 +7,7 @@
             <v-col lg="2">
               <v-card-title>Search Jobs</v-card-title>
             </v-col>
-            <v-divider></v-divider>
-            <v-col lg="2" align-self="center">
+            <v-col lg="2" offset-lg="2">
               <v-menu
                   ref="menu"
                   v-model="menu"

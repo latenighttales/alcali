@@ -6,7 +6,7 @@ RUN apt-get update && \
   apt-get install -y -o DPkg::Options::=--force-confold curl python3-mysqldb netcat
 
 # Install Latest Salt from the stable Branch
-RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M -x python3 stable 2019.2.2
+RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M -x python3 stable latest
 
 # Set master and id
 RUN echo "master: master\nid: master">/etc/salt/minion
