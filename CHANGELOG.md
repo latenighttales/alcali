@@ -1,5 +1,19 @@
 # Changelog
 
+## [3000.1.0] - 2020-04-26
+
+- use salt 3000
+
+- updated deps (#185)
+
+- fix: UI errors (#187)
+
+- fix: users are able to reset their pw (#184)
+
+- fix: responsive layout (#178)
+
+[3000.1.0]: https://github.com/latenighttales/alcali/compare/v2019.2.5...HEAD
+
 ## [2019.2.4] - 2020-02-14
 
 - fix: password update (#164)
@@ -8,7 +22,7 @@
 
 - fix: Less restrictive minion_id regex and error mgmt (#140)
 
-[2019.2.4]: https://github.com/latenighttales/alcali/compare/v2019.2.4...HEAD
+[2019.2.4]: https://github.com/latenighttales/alcali/compare/v2019.2.4...v2019.2.5
 
 ## [2019.2.3] - 2019-12-10
 
