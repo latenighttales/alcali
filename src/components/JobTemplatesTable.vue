@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row no-gutters>
       <v-col sm="12">
         <v-card>
@@ -123,7 +123,7 @@
         })
       },
       deleteTemplate(id) {
-        this.$http.delete("api/job_templates/" + id).then(response => {
+        this.$http.delete(`api/job_templates/${id}/`).then(response => {
           this.$toast("Template deleted")
         }).then(() => {
           this.loadData()

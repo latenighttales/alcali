@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <v-card-title>User Settings</v-card-title>
       <v-card-text>
-        <v-container>
+        <v-container fluid>
           <v-row>
             <v-col lg="2">
               <span>Jobs Notifications</span>
@@ -40,7 +40,7 @@
     },
     methods: {
       loadData() {
-        this.$http.get("api/userssettings/" + this.$store.getters.user_id + "/").then(response => {
+        this.$http.get(`api/userssettings/${this.$store.getters.user_id}/`).then(response => {
           this.settings = response.data
           this.max_notifs = response.data.max_notifs
           Object.keys(this.notifs).forEach(notif => {
@@ -53,7 +53,7 @@
         Object.keys(this.notifs).forEach(notif => {
           params["notifs_" + notif] = this.notifs[notif]
         })
-        this.$http.patch("api/userssettings/" + this.$store.getters.user_id + "/", params).then(response => {
+        this.$http.patch(`api/userssettings/${this.$store.getters.user_id}/`, params).then(response => {
           this.$toast("user settings updated")
         })
       },

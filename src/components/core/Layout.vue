@@ -13,7 +13,7 @@
           color="#212121"
           class="py-0"
       >
-        <v-list-item two-line>
+        <v-list-item two-line :class="mini && 'px-0'">
           <v-list-item-avatar>
             <v-icon large>person</v-icon>
           </v-list-item-avatar>
@@ -267,7 +267,7 @@
         }
       },
       getPrefs() {
-        this.$http.get("api/userssettings/" + this.$store.getters.user_id + "/").then(response => {
+        this.$http.get(`api/userssettings/${this.$store.getters.user_id}/`).then(response => {
           this.settings = response.data
           Object.keys(this.notifs).forEach(notif => {
             this.notifs[notif] = this.settings["notifs_" + notif]
@@ -298,33 +298,45 @@
           let data = JSON.parse(event.data)
           // Display only activated notifs.
           if (isJobNew(data.tag) && this.notifs.published === true) {
-            data.type = "new"
-            data.color = "green"
-            data.icon = "keyboard_tab"
-            data.link = ""
-            let target = ""
-            if (data.data.hasOwnProperty("tgt")) {
-              target = data.data.tgt
+            if (data.data.fun !== 'saltutil.find_job') {
+              data.type = "new"
+              data.color = "green"
+              data.icon = "keyboard_tab"
+              data.link = ""
+              let target = ""
+              if (data.data.hasOwnProperty("tgt")) {
+                target = data.data.tgt
+              } else {
+                target = data.data.minions.length + " minion(s)"
+              }
+              data.text = "Job " + data.data.fun + " published for " + target
+              this.messages.unshift(data)
+              if (this.messages.length > this.settings.max_notifs) {
+                this.messages.pop()
+              }
+              this.notif_nb += 1
             } else {
-              target = data.data.minions.length + " minion(s)"
+              let findJobJid = data.data.jid
+              this.messages.forEach((message, index) => {
+                if (message.tag === findJobJid) {
+                  this.messages.splice(index, 1)
+                  this.notif_nb -= 1
+                }
+              })
             }
-            data.text = "Job " + data.data.fun + " published for " + target
-            this.messages.unshift(data)
-            if (this.messages.length > this.settings.max_notifs) {
-              this.messages.pop()
-            }
-            this.notif_nb += 1
           } else if (isJobReturn(data.tag) && this.notifs.returned === true) {
-            data.type = "return"
-            data.color = "primary"
-            data.icon = "subdirectory_arrow_left"
-            data.text = "Job " + data.data.fun + " returned for " + data.data.id
-            data.link = "/jobs/" + data.data.jid + "/" + data.data.id
-            this.messages.unshift(data)
-            if (this.messages.length > this.settings.max_notifs) {
-              this.messages.pop()
+            if (data.data.fun !== 'saltutil.find_job') {
+              data.type = "return"
+              data.color = "primary"
+              data.icon = "subdirectory_arrow_left"
+              data.text = "Job " + data.data.fun + " returned for " + data.data.id
+              data.link = "/jobs/" + data.data.jid + "/" + data.data.id
+              this.messages.unshift(data)
+              if (this.messages.length > this.settings.max_notifs) {
+                this.messages.pop()
+              }
+              this.notif_nb += 1
             }
-            this.notif_nb += 1
           } else if (isJobEvent(data.tag) && this.notifs.event === true) {
             data.type = "event"
             data.color = "orange"

@@ -36,7 +36,7 @@ repo_url: 'https://github.com/latenighttales/alcali'
 edit_uri: ''
 
 # Copyright
-copyright: 'Copyright &copy; 2019 All rights reserved'
+copyright: 'Copyright &copy; 2020 All rights reserved'
 
 theme:
   name: 'material'

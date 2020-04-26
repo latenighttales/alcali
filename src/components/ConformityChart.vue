@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <v-card-title>Conformity</v-card-title>
       <v-card-text>
-        <v-container>
+        <v-container fluid>
           <template v-for="name in conformitynames">
             <v-row no-gutters :key="name" align="center" justify="center">
               <v-col sm="2">{{name}}</v-col>

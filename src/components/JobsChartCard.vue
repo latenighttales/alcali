@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card :elevation="minion == null ? 2 : 0">
       <v-list-item three-line dense>
         <v-list-item-content>

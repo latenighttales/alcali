@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12">
         <v-card>
@@ -15,12 +15,12 @@
                 <div class="flex-grow-1"></div>
                 <v-dialog v-model="dialog" max-width="500px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}">Create</v-btn>
+                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}" :disabled="!isStaff">Create</v-btn>
                   </template>
                   <v-card>
                     <v-card-title>{{ editing === true ? "Update User" : "Create User"}}</v-card-title>
                     <v-card-text>
-                      <v-container>
+                      <v-container fluid>
                         <v-row>
                           <v-col lg="6">
                             <v-text-field v-model="user.username" label="Username" :rules="userRules"
@@ -55,6 +55,7 @@
                             <v-checkbox
                                 v-model="user.is_staff"
                                 label="Staff User"
+                                :disabled="!isStaff"
                             ></v-checkbox>
                           </v-col>
                         </v-row>
@@ -258,12 +259,17 @@
       currentUserId() {
         return this.$store.state.id
       },
+      isStaff() {
+        return JSON.parse(this.$store.getters.isStaff) || false
+      }
 
     },
     methods: {
       getUsers() {
         this.$http.get("api/users/").then(response => {
           this.users = response.data
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       createUser() {
@@ -275,23 +281,31 @@
         }).then(() => {
           this.user = {}
           this.getUsers()
+        }).catch((error) => {
+          this.dialog = false
+          this.user = {}
+          this.$toast.error(error.response.data)
         })
       },
       updateUser() {
         this.editing = false
         let formData = new FormData
-        formData.set("username", this.user.username)
-        formData.set("email", this.user.email)
-        formData.set("first_name", this.user.first_name)
-        formData.set("last_name", this.user.last_name)
-        formData.set("password", this.user.password)
+        formData.set("username", this.user.username||'')
+        formData.set("email", this.user.email||'')
+        formData.set("first_name", this.user.first_name||'')
+        formData.set("last_name", this.user.last_name||'')
+        formData.set("password", this.user.password||'')
         formData.set("is_staff", this.user.is_staff)
-        this.$http.patch("api/users/" + this.user.id + "/", formData).then(() => {
+        this.$http.patch(`api/users/${this.user.id}/`, formData).then(() => {
           this.$toast("User updated")
           this.dialog = false
           this.user = {}
         }).then(() => {
           this.getUsers()
+        }).catch((error) => {
+          this.dialog = false
+          this.user = {}
+          this.$toast.error(error.response.data)
         })
       },
       showToken(user) {
@@ -301,10 +315,12 @@
       manageToken(action, user) {
         let formData = new FormData
         formData.set("action", action)
-        this.$http.post("api/users/" + user.id + "/manage_token/", formData).then((response) => {
+        this.$http.post(`api/users/${user.id}/manage_token/`, formData).then((response) => {
           this.$toast(response.data.result)
         }).then(() => {
           this.getUsers()
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
         })
       },
       confirmDelete(user) {
@@ -315,7 +331,11 @@
         this.$http.delete("api/users/" + id).then(() => {
           this.dialogDelete = false
           this.$toast("User deleted")
-        }).then(() => this.getUsers())
+        }).then(() => {
+          this.getUsers()
+        }).catch((error) => {
+          this.$toast.error(error.response.data)
+        })
       },
       editUser(user) {
         this.dialog = true

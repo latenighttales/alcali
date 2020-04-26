@@ -1,8 +1,8 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12" lg="4">
-        <v-container>
+        <v-container fluid>
           <v-card>
             <v-list-item two-line>
               <v-list-item-content>
@@ -54,7 +54,7 @@
         </v-container>
       </v-col>
       <v-col sm="12" lg="8">
-        <v-container>
+        <v-container fluid>
           <v-card>
             <v-card-title>Results</v-card-title>
             <v-divider></v-divider>

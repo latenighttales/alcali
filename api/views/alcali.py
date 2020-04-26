@@ -315,18 +315,20 @@ class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UsersSerializer
 
+    def get_queryset(self):
+        if not self.request.user.is_staff:
+            return User.objects.filter(id=self.request.user.id)
+        else:
+            return User.objects.all()
+
     def get_permissions(self):
         permission_classes = []
         # Only Staff users are allowed to create users.
         if self.action == "create":
             permission_classes = [IsAdminUser]
-        elif (
-            self.action == "retrieve"
-            or self.action == "update"
-            or self.action == "partial_update"
-        ):
+        elif self.action in ["retrieve", "update", "partial_update", "list"]:
             permission_classes = [IsLoggedInUserOrAdmin]
-        elif self.action == "list" or self.action == "destroy":
+        elif self.action == "destroy":
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 

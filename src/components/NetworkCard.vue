@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-card>
       <v-card-title>Network</v-card-title>
       <v-tabs
@@ -25,7 +25,7 @@
             <tbody>
             <tr v-for="(val, key) in minion.ip_interfaces" :key="key">
               <td>{{key}}</td>
-              <td class="text-right" v-for="iface in val">{{ iface }}</td>
+              <td class="text-right" v-for="(iface,k) in val" :key="k">{{ iface }}</td>
             </tr>
             <tr>
               <td>IPv4 GATEWAY</td>
