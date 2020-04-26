@@ -1,5 +1,9 @@
 # Alcali
 
+# DEPRECATED:
+
+## This version of Saltstack is Deprecated. Alcali is not maintained for this version.
+
 [![Build Status](https://travis-ci.org/latenighttales/alcali.svg?branch=2019.2)](https://travis-ci.org/latenighttales/alcali)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=latenighttales/alcali)](https://dependabot.com)
