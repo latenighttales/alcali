@@ -54,7 +54,8 @@
           "args": "none"
         }
       ],
-      "no-console": "off"
+      "no-console": "off",
+      "vue/no-use-v-if-with-v-for": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"
