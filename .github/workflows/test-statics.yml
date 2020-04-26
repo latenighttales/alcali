@@ -1,6 +1,9 @@
-name: Node.js Build
+name: Node.js Test
 
-on: push
+on:
+  push:
+    branches-ignore:
+      - develop
 
 jobs:
   build:
