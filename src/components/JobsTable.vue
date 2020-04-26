@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row no-gutters v-if="filter == null">
       <v-col sm="12">
         <v-card class="mb-8">
@@ -7,8 +7,7 @@
             <v-col lg="2">
               <v-card-title>Search Jobs</v-card-title>
             </v-col>
-            <v-divider></v-divider>
-            <v-col lg="2" align-self="center">
+            <v-col lg="2" offset-lg="2">
               <v-menu
                   ref="menu"
                   v-model="menu"
@@ -97,7 +96,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col sm="12">
-        <v-card :elevation="filter == null ? 2 : 0">
+        <v-card :elevation="filter == null||filter.hasOwnProperty('limit') ? 2 : 0">
           <v-card-title>
             Jobs
             <v-spacer></v-spacer>
@@ -124,7 +123,7 @@
               <v-btn text small class="text-none" :to="'/jobs/'+item.jid+'/'+item.id">{{ item.jid }}</v-btn>
             </template>
             <template v-slot:item.id="{ item }">
-              <v-btn text small class="text-none" :to="'/minions/'+item.id" v-show="!filter">{{ item.id }}</v-btn>
+              <v-btn text small class="text-none" :to="'/minions/'+item.id" v-show="!filter||filter.hasOwnProperty('limit')">{{ item.id }}</v-btn>
             </template>
             <template v-slot:item.arguments="{ item }">
               {{ item.arguments.length > 20 ? item.arguments.slice(0, 20)+"...": item.arguments }}
@@ -212,7 +211,9 @@
       },
       filteredHeaders() {
         if (this.filter && this.filter.hasOwnProperty('target[]')) {
-          this.headers.splice(1, 1)
+          let newHeaders = this.headers
+          newHeaders.splice(1, 1)
+          return newHeaders
         }
         return this.headers
       },

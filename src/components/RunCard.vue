@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row no-gutters>
       <v-col sm="12">
         <v-card class="mb-8">
@@ -23,7 +23,7 @@
               <v-card>
                 <v-spacer></v-spacer>
                 <v-card-text>
-                  <v-container>
+                  <v-container fluid>
                     <v-row>
                       <v-col sm="3" lg="1" align-self="center" class="text-right">
                         <span>Client Type:</span>

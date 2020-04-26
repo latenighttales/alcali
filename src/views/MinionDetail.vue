@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12" lg="3">
         <InfosCard v-if="minion !== null" :minion="minion"></InfosCard>
@@ -61,7 +61,7 @@
     },
     methods: {
       loadData() {
-        this.$http.get("api/minions/" + this.minion_id + "/").then(response => this.minion = addedGrains(response.data)).catch((error) => {
+        this.$http.get(`api/minions/${this.minion_id}/`).then(response => this.minion = addedGrains(response.data)).catch((error) => {
           this.$toast.error(`${this.minion_id} is not present in database. Try refreshing minions`)
           this.$router.push("/minions")
         })

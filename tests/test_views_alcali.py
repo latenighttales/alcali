@@ -171,9 +171,42 @@ def test_schedules_manage(admin_client, jwt):
     assert response.status_code == 200
 
 
-def test_users_list(admin_client, admin_user, jwt):
+def test_users_create(admin_client, admin_user, dummy_user, jwt):
+    # Should successfully create user.
+    user = {"username": "foo", "email": "foo@example.com", "password": "not_so_good"}
+    response = admin_client.post("/api/users/", user, **jwt)
+    assert response.status_code == 201
+
+
+def test_users_update(admin_client, admin_user, dummy_user, jwt):
+    # Should successfully update user.
+    user = {"username": "foo", "email": "foo@example.com", "password": "not_so_good"}
+    response = admin_client.post("/api/users/", user, **jwt)
+    user_id = response.json()["id"]
+    assert response.status_code == 201
+    user = {"username": "foo", "email": "foo@example.com", "first_name": "bar"}
+    response = admin_client.patch(
+        "/api/users/{id}/".format(id=user_id),
+        user,
+        content_type="application/json",
+        **jwt
+    )
+    assert response.status_code == 200
+
+
+def test_users_list(admin_client, admin_user, dummy_user, jwt):
+    # Should return all users.
     response = admin_client.get("/api/users/", **jwt)
     assert response.json()[0]["id"] == admin_user.id
+    assert len(response.json()) > 1
+    assert response.status_code == 200
+
+
+def test_dummy_users_list(dummy_client, admin_user, dummy_user, jwt_dummy_user):
+    # Should only return current user.
+    response = dummy_client.get("/api/users/", **jwt_dummy_user)
+    assert response.json()[0]["id"] == dummy_user.id
+    assert len(response.json()) == 1
     assert response.status_code == 200
 
 

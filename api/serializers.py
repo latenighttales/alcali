@@ -106,6 +106,7 @@ class UsersSerializer(serializers.ModelSerializer):
     user_settings = UserSettingsSerializer(read_only=True)
 
     def create(self, validated_data):
+        # Remove useless fields.
         for param in ["is_active", "groups", "user_permissions"]:
             del validated_data[param]
         user = User(**validated_data)
@@ -114,6 +115,10 @@ class UsersSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
+        # Prevent an unprivileged user to escalate status.
+        current_user = self.context["request"].user
+        if not current_user.is_staff:
+            validated_data.pop("is_staff", None)
         password = validated_data.pop("password", None)
         for k, v in validated_data.items():
             setattr(instance, k, v)
@@ -121,6 +126,14 @@ class UsersSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+    def get_extra_kwargs(self):
+        # Override password validation on update.
+        extra_kwargs = super(UsersSerializer, self).get_extra_kwargs()
+        action = self.context["view"].action
+        if action in ["update", "partial_update"]:
+            extra_kwargs["password"] = {"write_only": True, "required": False}
+        return extra_kwargs
 
     class Meta:
         model = User

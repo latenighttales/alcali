@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col sm="12" lg="4">
         <ConformityCard :minion_id="minion_id" :conformity="conformity"
@@ -38,7 +38,7 @@
     },
     methods: {
       loadConformity() {
-        this.$http.get("api/minions/" + this.minion_id + "/conformity_detail/").then(response => {
+        this.$http.get(`api/minions/${this.minion_id}/conformity_detail/`).then(response => {
           this.conformity = response.data.conformity
           this.custom_conformity = response.data.custom_conformity
           this.succeeded = response.data.succeeded
