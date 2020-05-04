@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Install project
+pip install --user .[ldap,social] mysqlclient psycopg2
+
 # Wait for database
 echo "Waiting for $DB_HOST"
 ./docker/utils/wait-for -t 60 $DB_HOST:$DB_PORT
