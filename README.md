@@ -85,6 +85,13 @@ More [here](https://github.com/latenighttales/alcali/blob/2019.2/docs/docs/scree
 
 If you'd like to contribute, check the [contribute](https://alcali.dev/contribute/) documentation on how to install a dev environment and submit PR!
 
+And if you like this project, consider donating:
+
+via GitHub Sponsors, or
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J3173F6)
+
+
 ## Changelog
 
 ## [3000.1.0] - 2020-04-26
