@@ -1,5 +1,5 @@
 ansi2html==1.5.2
-Django==3.0.5
+Django==3.0.7
 django-cors-headers==3.2.1
 django-currentuser==0.5.0
 djangorestframework==3.11.0
