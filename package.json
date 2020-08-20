@@ -15,6 +15,8 @@
     "event-source-polyfill": "^1.0.15",
     "js-yaml": "^3.14.0",
     "jwt-decode": "^2.2.0",
+    "material-design-icons-iconfont": "^5.0.1",
+    "typeface-roboto": "0.0.75",
     "vue": "^2.6.11",
     "vue-codemirror": "^4.0.6",
     "vue-google-oauth2": "^1.5.4",
