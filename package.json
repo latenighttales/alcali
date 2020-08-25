@@ -12,7 +12,7 @@
     "chart.js": "^2.9.3",
     "chartjs-plugin-stacked100": "^0.7.1",
     "core-js": "^3.6.5",
-    "event-source-polyfill": "^1.0.16",
+    "event-source-polyfill": "^1.0.17",
     "js-yaml": "^3.14.0",
     "jwt-decode": "^2.2.0",
     "material-design-icons-iconfont": "^5.0.1",
@@ -22,7 +22,7 @@
     "vue-google-oauth2": "^1.5.5",
     "vue-router": "^3.4.3",
     "vuetify": "^2.3.9",
-    "vuetify-toast-snackbar-ng": "^0.7.2",
+    "vuetify-toast-snackbar-ng": "^0.7.3",
     "vuex": "^3.5.1",
     "xterm": "^4.8.1",
     "xterm-addon-fit": "^0.4.0"
