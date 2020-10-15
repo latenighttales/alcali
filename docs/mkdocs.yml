@@ -51,7 +51,7 @@ extra_css:
   - stylesheets/extra.css
 extra:
   social:
-    - type: 'github'
+    - icon: fontawesome/brands/github
       link: 'https://github.com/latenighttales/alcali'
 markdown_extensions:
   - pymdownx.inlinehilite
