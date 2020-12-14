@@ -167,7 +167,7 @@ class Minions(models.Model):
         highstate_ret = last_highstate.loaded_ret()
 
         # Flat out error(return is a string)
-        if isinstance(highstate_ret["return"], list):
+        if not highstate_ret.get("return") or isinstance(highstate_ret.get("return"), list):
             return False
 
         for state in highstate_ret["return"]:
