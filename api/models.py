@@ -1,5 +1,4 @@
 import binascii
-import logging
 import json
 import os
 
@@ -7,8 +6,6 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from django.db import models
-
-logger = logging.getLogger(__name__)
 
 
 class FindJobManager(models.Manager):
@@ -175,8 +172,7 @@ class Minions(models.Model):
                 # One of the state is not ok
                 if not highstate_ret["return"][state]["result"]:
                     return False
-            except Exception as e:
-                logger.error(f"Invalid response from minion: {e}")
+            except KeyError:
                 return False
         return True
 
