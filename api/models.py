@@ -164,16 +164,14 @@ class Minions(models.Model):
         highstate_ret = last_highstate.loaded_ret()
 
         # Flat out error(return is a string)
-        if not highstate_ret.get("return") or isinstance(highstate_ret.get("return"), list):
+        return_item = highstate_ret.get("return")
+        if not return_item or isinstance(return_item, list):
             return False
 
-        for state in highstate_ret["return"]:
-            try:
-                # One of the state is not ok
-                if not highstate_ret["return"][state]["result"]:
-                    return False
-            except KeyError:
-                return False
+        for state in return_item:
+             # One of the state is not ok
+             if not return_item.get(state, {}).get("result"):
+                 return False
         return True
 
     def custom_conformity(self, fun, *args):
