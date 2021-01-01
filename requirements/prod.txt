@@ -1,4 +1,4 @@
-ansi2html==1.5.2
+ansi2html==1.6.0
 Django==3.1.2
 django-cors-headers==3.5.0
 django-currentuser==0.5.1
