@@ -169,9 +169,9 @@ class Minions(models.Model):
             return False
 
         for state in return_item:
-             # One of the state is not ok
-             if not return_item.get(state, {}).get("result"):
-                 return False
+            # One of the state is not ok
+            if not return_item.get(state, {}).get("result"):
+                return False
         return True
 
     def custom_conformity(self, fun, *args):

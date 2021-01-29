@@ -1,9 +1,9 @@
-ansi2html==1.5.2
-Django==3.1.2
-django-cors-headers==3.5.0
-django-currentuser==0.5.1
+ansi2html==1.6.0
+Django==3.1.4
+django-cors-headers==3.6.0
+django-currentuser==0.5.2
 djangorestframework==3.12.1
-djangorestframework-simplejwt==4.4.0
+djangorestframework-simplejwt==4.6.0
 gunicorn==20.0.4
 python-dotenv==0.14.0
 pytz
