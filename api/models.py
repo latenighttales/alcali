@@ -162,13 +162,16 @@ class Minions(models.Model):
         if not last_highstate:
             return None
         highstate_ret = last_highstate.loaded_ret()
-        for state in highstate_ret["return"]:
-            # Flat out error(return is a string)
-            if isinstance(highstate_ret["return"], list):
-                return False
-            # One of the state is not ok
-            if not highstate_ret["return"][state]["result"]:
-                return False
+
+        # Flat out error(return is a string)
+        return_item = highstate_ret.get("return")
+        if not return_item or isinstance(return_item, list):
+            return False
+
+        for state in return_item:
+             # One of the state is not ok
+             if not return_item.get(state, {}).get("result"):
+                 return False
         return True
 
     def custom_conformity(self, fun, *args):
