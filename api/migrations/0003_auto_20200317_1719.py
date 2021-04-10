@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.RemoveField(model_name="usersettings", name="notifs_returned"),
         migrations.AddField(
             model_name="usersettings",
-            name="site",
+            name="_settings",
             field=models.TextField(default=json.dumps(data)),
         ),
     ]

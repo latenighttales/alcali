@@ -81,9 +81,11 @@ class ConformitySerializer(serializers.ModelSerializer):
 
 
 class UserSettingsSerializer(serializers.ModelSerializer):
+    settings = serializers.JSONField()
+
     class Meta:
         model = UserSettings
-        fields = "__all__"
+        fields = ("user", "token", "created", "salt_permissions", "settings")
 
 
 class JobTemplateSerializer(serializers.ModelSerializer):

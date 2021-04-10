@@ -204,9 +204,7 @@
       drawer: true,
       mini: true,
       messages: [],
-      settings: null,
       notif_nb: 0,
-      notifs: { created: false, published: false, returned: false, event: false },
       routes: [
         {
           name: "Overview",
@@ -267,13 +265,7 @@
         }
       },
       getPrefs() {
-        this.$store.dispatch('fetchUserSettings')
-        this.$http.get(`api/userssettings/${this.$store.getters.user_id}/`).then(response => {
-          this.settings = JSON.parse(response.data.site).settings
-          Object.keys(this.notifs).forEach(notif => {
-            this.notifs[notif] = this.settings.user_settings.notifs[notif]
-          })
-        })
+        this.$store.dispatch('fetchSettings')
       },
       toggleTheme() {
         this.$store.dispatch("toggleTheme").then(() => {
@@ -312,7 +304,7 @@
               }
               data.text = "Job " + data.data.fun + " published for " + target
               this.messages.unshift(data)
-              if (this.messages.length > this.settings.user_settings.max_notifs) {
+              if (this.messages.length > this.max_notifs) {
                 this.messages.pop()
               }
               this.notif_nb += 1
@@ -333,7 +325,7 @@
               data.text = "Job " + data.data.fun + " returned for " + data.data.id
               data.link = "/jobs/" + data.data.jid + "/" + data.data.id
               this.messages.unshift(data)
-              if (this.messages.length > this.settings.user_settings.max_notifs) {
+              if (this.messages.length > this.max_notifs) {
                 this.messages.pop()
               }
               this.notif_nb += 1
@@ -345,7 +337,7 @@
             data.text = "Job Event"
             data.link = ""
             this.messages.unshift(data)
-            if (this.messages.length > this.settings.max_notifs) {
+            if (this.messages.length > this.max_notifs) {
               this.messages.pop()
             }
             this.notif_nb += 1
@@ -356,7 +348,7 @@
             data.text = "New Job Created"
             data.link = ""
             this.messages.unshift(data)
-            if (this.messages.length > this.settings.max_notifs) {
+            if (this.messages.length > this.max_notifs) {
               this.messages.pop()
             }
             this.notif_nb += 1
@@ -379,6 +371,12 @@
       theme() {
         return this.$store.state.theme
       },
+      notifs() {
+        return this.$store.state.settings.views.UserSettings.notifs
+      },
+      max_notifs() {
+        return this.$store.state.settings.views.UserSettings.max_notifs
+      }
     },
 
   }

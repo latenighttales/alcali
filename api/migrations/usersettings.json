@@ -1,18 +1,18 @@
 {
-  "settings": {
-    "general": {
+  "views": {
+    "Layout": {
       "mini": true,
       "collapsed": false,
       "theme": "dark"
     },
-    "views": {
-      "overview": {
-        "job_stats": {
-          "filter": "All",
-          "period": "1w"
-        }
-      },
-      "minions": {
+    "Home": {
+      "JobsChartCard": {
+        "filter": "all",
+        "period": 7
+      }
+    },
+    "MinionsTable": {
+      "table": {
         "columns": [
           "minion_id",
           "conformity",
@@ -23,34 +23,64 @@
           "last_job",
           "last_highstate"
         ],
-        "table_row": 10
-      },
-      "jobs": {
-        "table_row": 10
-      },
-      "run": {
-        "tab": "formatted"
-      },
-      "job_templates": {
-        "table_row": 10
-      },
-      "schedules": {
-        "table_row": 10
-      },
-      "conformity": {
-        "table_row": 10
-      },
-      "keys": {
-        "table_row": 10
-      },
-      "events": {
-        "table_row": 10
-      },
-      "users": {
-        "table_row": 10
+        "itemsPerPage": 10,
+        "sortBy": "minion_id",
+        "sortDesc": false
       }
     },
-    "user_settings": {
+    "JobsTable": {
+      "table": {
+        "itemsPerPage": 10,
+        "sortBy": "Jid",
+        "sortDesc": false
+      }
+    },
+    "RunCard": {
+      "tab": "formatted"
+    },
+    "JobTemplatesTable": {
+      "table": {
+        "itemsPerPage": 10,
+        "sortBy": "Name",
+        "sortDesc": false
+      }
+    },
+    "ScheduleTable": {
+      "table": {
+        "itemsPerPage": 10,
+        "sortBy": "Jid",
+        "sortDesc": false
+      }
+    },
+    "ConformityTable": {
+      "table": {
+        "itemsPerPage": 10,
+        "sortBy": "minion_id",
+        "sortDesc": false
+      }
+    },
+    "KeysTable": {
+      "table": {
+        "itemsPerPage": 10,
+        "sortBy": "minion_id",
+        "sortDesc": false
+      }
+    },
+    "EventsTable": {
+      "table": {
+        "itemsPerPage": 10,
+        "sortBy": "Date",
+        "sortDesc": false
+      }
+    },
+    "UserCard": {
+      "table": {
+        "itemsPerPage": 10,
+        "sortBy": "Username",
+        "sortDesc": false
+      }
+    },
+    "UserSettings": {
       "notifs": {
         "created": true,
         "published": true,

@@ -1,6 +1,7 @@
 import binascii
 import json
 import os
+from pathlib import Path
 
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -260,13 +261,21 @@ class UserSettings(models.Model):
     The default authorization token model.
     """
 
+    with open(
+        os.path.join(Path(__file__).parent.absolute(), "migrations/usersettings.json"),
+        "r",
+    ) as fh:
+        data = json.load(fh)
     user = models.OneToOneField(
         User, primary_key=True, related_name="user_settings", on_delete=models.CASCADE
     )
     token = models.CharField(max_length=40)
     created = models.DateTimeField(auto_now_add=True)
-    site = models.TextField(default="{}")  # TODO: load json file
+    _settings = models.TextField(default=json.dumps(data))
     salt_permissions = models.TextField()
+
+    def settings(self):
+        return json.loads(self._settings)
 
     def generate_token(self):
         self.token = generate_key()

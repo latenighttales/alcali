@@ -7,8 +7,8 @@
           <v-row>
             <v-col lg="2">
               <span>Jobs Notifications</span>
-              <div v-for="(val, name) in settings.user_settings.notifs" :key="name">
-                <v-switch v-model="settings.user_settings.notifs[name]" :label="name" color="primary" hide-details></v-switch>
+              <div v-for="(val, name) in notifs" :key="name">
+                <v-switch v-model="notifs[name]" :label="name" color="primary" hide-details></v-switch>
               </div>
             </v-col>
             <v-col lg="2">
@@ -33,15 +33,15 @@
       return {
         switch1: true,
         switch2: false,
-        settings: null,
         max_notifs: null,
+        notifs: this.$storestate.site.settings.user_settings.notifs
       }
     },
     methods: {
       loadData() {
         this.$http.get(`api/userssettings/${this.$store.getters.user_id}/`).then(response => {
           this.settings = JSON.parse(response.data.site).settings
-          this.max_notifs = this.settings.user_settings.max_notifs
+          this.max_notifs = this.$store.state.site.settings.user_settings.max_notifs
         })
       },
       updateUserSettings() {

@@ -14,7 +14,7 @@ export default new Vuex.Store({
     is_staff: localStorage.getItem("is_staff") || "false",
     ws_status: false,
     theme: localStorage.getItem("theme") || false,
-    user_settings: {},
+    settings: {},
   },
   mutations: {
     auth_success(state, data) {
@@ -32,8 +32,8 @@ export default new Vuex.Store({
       state.theme = !state.theme
       localStorage.setItem("theme", JSON.stringify(state.theme))
     },
-    setUserSettings(state, settings) {
-      state.user_settings = settings
+    setSettings(state, settings) {
+      state.settings = settings
     },
   },
   getters: {
@@ -41,7 +41,7 @@ export default new Vuex.Store({
     theme: state => state.theme,
     user_id: state => state.id,
     isStaff: state => state.is_staff,
-    user_settings: state => state.user_settings,
+    settings: state => state.settings,
   },
   actions: {
     updateWs({ commit }) {
@@ -50,9 +50,12 @@ export default new Vuex.Store({
     toggleTheme({ commit }) {
       commit("toggleTheme")
     },
-    fetchUserSettings(context) {
+    fetchSettings(context) {
       axios.get(`api/userssettings/${context.getters.user_id}/`).then(response => {
-        context.commit("setUserSettings", JSON.parse(response.data.site).settings)
+        console.log("commiting")
+        context.commit("setSettings", response.data.site)
+      }).catch(err => {
+        console.log(err)
       })
     },
     login({ commit }, user_data) {
