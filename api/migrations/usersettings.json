@@ -1,93 +1,102 @@
 {
-  "views": {
-    "Layout": {
-      "mini": true,
-      "collapsed": false,
-      "theme": "dark"
-    },
-    "Home": {
-      "JobsChartCard": {
-        "filter": "all",
-        "period": 7
-      }
-    },
-    "MinionsTable": {
-      "table": {
-        "columns": [
-          "minion_id",
-          "conformity",
-          "fqdn",
-          "os",
-          "oscodename",
-          "kernelrelease",
-          "last_job",
-          "last_highstate"
-        ],
-        "itemsPerPage": 10,
-        "sortBy": "minion_id",
-        "sortDesc": false
-      }
-    },
-    "JobsTable": {
-      "table": {
-        "itemsPerPage": 10,
-        "sortBy": "Jid",
-        "sortDesc": false
-      }
-    },
-    "RunCard": {
-      "tab": "formatted"
-    },
-    "JobTemplatesTable": {
-      "table": {
-        "itemsPerPage": 10,
-        "sortBy": "Name",
-        "sortDesc": false
-      }
-    },
-    "ScheduleTable": {
-      "table": {
-        "itemsPerPage": 10,
-        "sortBy": "Jid",
-        "sortDesc": false
-      }
-    },
-    "ConformityTable": {
-      "table": {
-        "itemsPerPage": 10,
-        "sortBy": "minion_id",
-        "sortDesc": false
-      }
-    },
-    "KeysTable": {
-      "table": {
-        "itemsPerPage": 10,
-        "sortBy": "minion_id",
-        "sortDesc": false
-      }
-    },
-    "EventsTable": {
-      "table": {
-        "itemsPerPage": 10,
-        "sortBy": "Date",
-        "sortDesc": false
-      }
-    },
-    "UserCard": {
-      "table": {
-        "itemsPerPage": 10,
-        "sortBy": "Username",
-        "sortDesc": false
-      }
-    },
-    "UserSettings": {
-      "notifs": {
-        "created": true,
-        "published": true,
-        "returned": true,
-        "event": false
-      },
-      "max_notifs": 15
+  "Layout": {
+    "mini": false,
+    "drawer": true,
+    "dark": false
+  },
+  "Home": {
+    "JobsChartCard": {
+      "filter": "all",
+      "period": 7
     }
+  },
+  "MinionsTable": {
+    "table": {
+      "columns": [
+        "minion_id",
+        "conformity",
+        "fqdn",
+        "os",
+        "oscodename",
+        "kernelrelease",
+        "last_job",
+        "last_highstate"
+      ],
+      "itemsPerPage": 10,
+      "sortBy": "minion_id",
+      "sortDesc": false
+    }
+  },
+  "MinionDetail": {
+    "InfosCard": {
+      "tab": "common"
+    },
+    "NetworkCard": {
+      "tab": "interface"
+    },
+    "MinionDetailCard" : {
+      "tab" : "grain"
+    }
+  },
+  "JobsTable": {
+    "table": {
+      "itemsPerPage": 10,
+      "sortBy": "jid",
+      "sortDesc": true
+    }
+  },
+  "RunCard": {
+    "tab": "formatted"
+  },
+  "JobTemplatesTable": {
+    "table": {
+      "itemsPerPage": 10,
+      "sortBy": "name",
+      "sortDesc": false
+    }
+  },
+  "ScheduleTable": {
+    "table": {
+      "itemsPerPage": 10,
+      "sortBy": "name",
+      "sortDesc": false
+    }
+  },
+  "ConformityTable": {
+    "table": {
+      "itemsPerPage": 10,
+      "sortBy": "minion_id",
+      "sortDesc": false
+    }
+  },
+  "KeysTable": {
+    "table": {
+      "itemsPerPage": 10,
+      "sortBy": "minion_id",
+      "sortDesc": false
+    }
+  },
+  "EventsTable": {
+    "table": {
+      "itemsPerPage": 10,
+      "sortBy": "alter_time",
+      "sortDesc": true
+    }
+  },
+  "UserCard": {
+    "table": {
+      "itemsPerPage": 10,
+      "sortBy": "username",
+      "sortDesc": false
+    }
+  },
+  "UserSettings": {
+    "notifs": {
+      "created": true,
+      "published": true,
+      "returned": true,
+      "event": false
+    },
+    "max_notifs": 15
   }
 }

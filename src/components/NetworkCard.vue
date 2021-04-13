@@ -3,7 +3,8 @@
     <v-card>
       <v-card-title>Network</v-card-title>
       <v-tabs
-          v-model="tab"
+          v-model="settings.MinionDetail.NetworkCard.tab"
+          @change="updateSettings"
       >
         <v-tabs-slider></v-tabs-slider>
 
@@ -19,12 +20,12 @@
           Dns
         </v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="settings.MinionDetail.NetworkCard.tab">
         <v-tab-item id="interface">
           <v-simple-table>
             <tbody>
             <tr v-for="(val, key) in minion.ip_interfaces" :key="key">
-              <td>{{key}}</td>
+              <td>{{ key }}</td>
               <td class="text-right" v-for="(iface,k) in val" :key="k">{{ iface }}</td>
             </tr>
             <tr>
@@ -42,7 +43,7 @@
           <v-simple-table>
             <tbody>
             <tr v-for="(val, key) in minion.hwaddr_interfaces" :key="key">
-              <td>{{key}}</td>
+              <td>{{ key }}</td>
               <td class="text-right">{{ val }}</td>
             </tr>
             </tbody>
@@ -52,8 +53,8 @@
           <v-simple-table>
             <tbody>
             <tr v-for="(val, key) in minion.dns" :key="key">
-              <td>{{key}}</td>
-              <td class="text-right">{{ val.length >= 1 ? val: "" }}</td>
+              <td>{{ key }}</td>
+              <td class="text-right">{{ val.length >= 1 ? val : "" }}</td>
             </tr>
             </tbody>
           </v-simple-table>
@@ -64,16 +65,28 @@
 </template>
 
 <script>
-  export default {
-    name: "NetworkCard",
-    data() {
-      return {
-        tab: null,
-        tabs: 3,
-      }
+import { mapState } from "vuex"
+
+export default {
+  name: "NetworkCard",
+  data() {
+    return {
+      tab: null,
+      tabs: 3,
+    }
+  },
+  props: ["minion"],
+  methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
     },
-    props: ["minion"],
-  }
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
+  },
+}
 </script>
 
 <style scoped>

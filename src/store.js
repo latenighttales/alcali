@@ -1,19 +1,20 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import createPersistedState from "vuex-persistedstate"
 import axios from "axios"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
-    username: localStorage.getItem("username") || "",
-    email: localStorage.getItem("email") || "",
-    id: localStorage.getItem("id") || "",
-    access: localStorage.getItem("access") || "",
-    refresh: localStorage.getItem("refresh") || "",
-    is_staff: localStorage.getItem("is_staff") || "false",
+    username: "",
+    email: "",
+    id: "",
+    access: "",
+    refresh: "",
+    is_staff: false,
     ws_status: false,
-    theme: localStorage.getItem("theme") || false,
     settings: {},
   },
   mutations: {
@@ -28,17 +29,18 @@ export default new Vuex.Store({
     updateWs(state) {
       state.ws_status = true
     },
-    toggleTheme(state) {
-      state.theme = !state.theme
-      localStorage.setItem("theme", JSON.stringify(state.theme))
-    },
     setSettings(state, settings) {
       state.settings = settings
+    },
+    updateSettings(state) {
+      axios.patch(`api/userssettings/${state.id}/`, { settings: state.settings }).then(() => {
+      }).catch((err) => {
+        console.log("update settings failed:", err)
+      })
     },
   },
   getters: {
     isLoggedIn: state => !!state.access,
-    theme: state => state.theme,
     user_id: state => state.id,
     isStaff: state => state.is_staff,
     settings: state => state.settings,
@@ -52,8 +54,7 @@ export default new Vuex.Store({
     },
     fetchSettings(context) {
       axios.get(`api/userssettings/${context.getters.user_id}/`).then(response => {
-        console.log("commiting")
-        context.commit("setSettings", response.data.site)
+        context.commit("setSettings", response.data.settings)
       }).catch(err => {
         console.log(err)
       })

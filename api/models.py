@@ -271,11 +271,8 @@ class UserSettings(models.Model):
     )
     token = models.CharField(max_length=40)
     created = models.DateTimeField(auto_now_add=True)
-    _settings = models.TextField(default=json.dumps(data))
+    settings = models.JSONField(default=data)
     salt_permissions = models.TextField()
-
-    def settings(self):
-        return json.loads(self._settings)
 
     def generate_token(self):
         self.token = generate_key()

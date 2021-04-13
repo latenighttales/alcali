@@ -110,8 +110,12 @@
             ></v-text-field>
           </v-card-title>
           <v-data-table
-              sort-by="jid"
-              sort-desc
+              :sort-by.sync="settings.JobsTable.table.sortBy"
+              @update:sort-by="updateSettings"
+              :sort-desc.sync="settings.JobsTable.table.sortDesc"
+              @update:sort-desc="updateSettings"
+              :items-per-page.sync="settings.JobsTable.table.itemsPerPage"
+              @update:items-per-page="updateSettings"
               item-key="uniqueid"
               :headers="filteredHeaders"
               :items="indexedItems"
@@ -123,19 +127,23 @@
               <v-btn text small class="text-none" :to="'/jobs/'+item.jid+'/'+item.id">{{ item.jid }}</v-btn>
             </template>
             <template v-slot:item.id="{ item }">
-              <v-btn text small class="text-none" :to="'/minions/'+item.id" v-show="!filter||filter.hasOwnProperty('limit')">{{ item.id }}</v-btn>
+              <v-btn text small class="text-none" :to="'/minions/'+item.id"
+                     v-show="!filter||filter.hasOwnProperty('limit')">{{ item.id }}
+              </v-btn>
             </template>
             <template v-slot:item.arguments="{ item }">
-              {{ item.arguments.length > 20 ? item.arguments.slice(0, 20)+"...": item.arguments }}
+              {{ item.arguments.length > 20 ? item.arguments.slice(0, 20) + "..." : item.arguments }}
             </template>
             <template v-slot:item.keyword_arguments="{ item }">
-              {{ item.keyword_arguments.length > 20 ? item.keyword_arguments.slice(0, 20)+"...": item.keyword_arguments }}
+              {{
+                item.keyword_arguments.length > 20 ? item.keyword_arguments.slice(0, 20) + "..." : item.keyword_arguments
+              }}
             </template>
             <template v-slot:item.success="{ item }">
               <v-chip :color="boolRepr(item.success)" dark>{{ boolText(item.success) }}</v-chip>
             </template>
             <template v-slot:item.alter_time="{ item }">
-              {{new Date(item.alter_time).toLocaleString("en-GB")}}
+              {{ new Date(item.alter_time).toLocaleString("en-GB") }}
             </template>
             <template v-slot:item.action="{ item }">
               <div class="text-center">
@@ -170,105 +178,113 @@
 
 <script>
 
-  export default {
-    name: "JobsTable",
-    props: ["filter", "jid"],
-    data() {
-      return {
-        menu: false,
-        limit: [50, 100, 200, 500, 1000],
-        selectedDate: [],
-        selectedLimit: null,
-        selectedUsers: null,
-        selectedTarget: null,
-        minions: [],
-        users: [],
-        search: "",
-        headers: [
-          { text: "Jid", value: "jid" },
-          { text: "Target", value: "id" },
-          { text: "Function", value: "fun" },
-          { text: "Arguments", value: "arguments" },
-          { text: "Keyword Arguments", value: "keyword_arguments" },
-          { text: "User", value: "user" },
-          { text: "Status", value: "success" },
-          { text: "Date", value: "alter_time" },
-          { text: "Actions", value: "action", sortable: false },
-        ],
-        jobs: [],
-        loading: true,
+import { mapState } from "vuex"
+
+export default {
+  name: "JobsTable",
+  props: ["filter", "jid"],
+  data() {
+    return {
+      menu: false,
+      limit: [50, 100, 200, 500, 1000],
+      selectedDate: [],
+      selectedLimit: null,
+      selectedUsers: null,
+      selectedTarget: null,
+      minions: [],
+      users: [],
+      search: "",
+      headers: [
+        { text: "Jid", value: "jid" },
+        { text: "Target", value: "id" },
+        { text: "Function", value: "fun" },
+        { text: "Arguments", value: "arguments" },
+        { text: "Keyword Arguments", value: "keyword_arguments" },
+        { text: "User", value: "user" },
+        { text: "Status", value: "success" },
+        { text: "Date", value: "alter_time" },
+        { text: "Actions", value: "action", sortable: false },
+      ],
+      jobs: [],
+      loading: true,
+    }
+  },
+  computed: {
+    indexedItems() {
+      return this.jobs.map((item, index) => ({
+        uniqueid: index,
+        ...item,
+      }))
+    },
+    dateRangeText() {
+      return this.selectedDate.join(" ~ ")
+    },
+    filteredHeaders() {
+      if (this.filter && this.filter.hasOwnProperty("target[]")) {
+        let newHeaders = this.headers
+        newHeaders.splice(1, 1)
+        return newHeaders
       }
+      return this.headers
     },
-    computed: {
-      indexedItems() {
-        return this.jobs.map((item, index) => ({
-          uniqueid: index,
-          ...item,
-        }))
-      },
-      dateRangeText() {
-        return this.selectedDate.join(" ~ ")
-      },
-      filteredHeaders() {
-        if (this.filter && this.filter.hasOwnProperty('target[]')) {
-          let newHeaders = this.headers
-          newHeaders.splice(1, 1)
-          return newHeaders
-        }
-        return this.headers
-      },
+    ...mapState({
+      settings: state => state.settings,
+    }),
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
     },
-    mounted() {
-      this.loadData()
-    },
-    methods: {
-      loadData() {
-        this.$http.get("api/jobs/filters/").then(response => {
-          this.minions = response.data.minions
-          this.users = response.data.users
-        })
-        if (this.jid) {
-          this.$http.get(`api/jobs/${this.jid}`).then(response => {
-            this.jobs = response.data
-            this.loading = false
-          })
-        } else {
-          this.$http.get("api/jobs/", { params: this.filter }).then(response => {
-            this.jobs = response.data
-            this.loading = false
-          })
-        }
-      },
-      filterJobs() {
-        this.loading = true
-        let params = {
-          limit: this.selectedLimit,
-          target: this.selectedTarget,
-          users: this.selectedUsers,
-        }
-        if (this.selectedDate.length > 0) {
-          params.start = this.selectedDate[0]
-          params.end = this.selectedDate[1] || this.selectedDate[0]
-        }
-        this.$http.get("api/jobs/", {
-          params: params,
-        }).then(response => {
+    loadData() {
+      this.$http.get("api/jobs/filters/").then(response => {
+        this.minions = response.data.minions
+        this.users = response.data.users
+      })
+      if (this.jid) {
+        this.$http.get(`api/jobs/${this.jid}`).then(response => {
           this.jobs = response.data
           this.loading = false
-          this.selectedUsers = this.selectedTarget = this.selectedLimit = this.selectedDate = null
-          this.selectedDate = []
         })
-      },
-      boolRepr(bool) {
-        if (bool === true) return "green"
-        else return "red"
-      },
-      boolText(bool) {
-        if (bool === true) return "success"
-        else return "failed"
-      },
+      } else {
+        this.$http.get("api/jobs/", { params: this.filter }).then(response => {
+          this.jobs = response.data
+          this.loading = false
+        })
+      }
     },
-  }
+    filterJobs() {
+      this.loading = true
+      let params = {
+        limit: this.selectedLimit,
+        target: this.selectedTarget,
+        users: this.selectedUsers,
+      }
+      if (this.selectedDate.length > 0) {
+        params.start = this.selectedDate[0]
+        params.end = this.selectedDate[1] || this.selectedDate[0]
+      }
+      this.$http.get("api/jobs/", {
+        params: params,
+      }).then(response => {
+        this.jobs = response.data
+        this.loading = false
+        this.selectedUsers = this.selectedTarget = this.selectedLimit = this.selectedDate = null
+        this.selectedDate = []
+      })
+    },
+    boolRepr(bool) {
+      if (bool === true) return "green"
+      else return "red"
+    },
+    boolText(bool) {
+      if (bool === true) return "success"
+      else return "failed"
+    },
+  },
+}
 </script>
 
 <style scoped>
