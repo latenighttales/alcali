@@ -69,12 +69,6 @@ import { mapState } from "vuex"
 
 export default {
   name: "NetworkCard",
-  data() {
-    return {
-      tab: null,
-      tabs: 3,
-    }
-  },
   props: ["minion"],
   methods: {
     updateSettings() {

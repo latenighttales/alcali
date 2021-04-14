@@ -325,7 +325,7 @@ export default {
             data.text = "Job " + data.data.fun + " returned for " + data.data.id
             data.link = "/jobs/" + data.data.jid + "/" + data.data.id
             this.messages.unshift(data)
-            if (this.messages.length > this.max_notifs) {
+            if (this.messages.length > this.settings.UserSettings.max_notifs) {
               this.messages.pop()
             }
             this.notif_nb += 1
@@ -337,7 +337,7 @@ export default {
           data.text = "Job Event"
           data.link = ""
           this.messages.unshift(data)
-          if (this.messages.length > this.max_notifs) {
+          if (this.messages.length > this.settings.UserSettings.max_notifs) {
             this.messages.pop()
           }
           this.notif_nb += 1
