@@ -16,6 +16,7 @@ export default new Vuex.Store({
     is_staff: false,
     ws_status: false,
     settings: {},
+    masters: [],
   },
   mutations: {
     auth_success(state, data) {

@@ -16,6 +16,12 @@
 
   export default {
     name: "Keys",
+    props: ["master"],
+    watch: {
+      master: function() {
+        this.refreshKey += 1
+      }
+    },
     components: { Fab, KeysTable },
     data: () => ({
       fabs: [

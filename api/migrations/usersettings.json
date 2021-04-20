@@ -99,7 +99,6 @@
     },
     "max_notifs": 15
   },
-  "selected_master": "",
+  "selected_master": "master1",
   "language": "en"
 }
-

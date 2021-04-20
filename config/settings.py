@@ -24,6 +24,21 @@ if not DB_BACKEND:
         raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), env_file)
     load_dotenv(dotenv_path)
 
+# Multi master config
+MULTI_MASTER = (
+    True if len(os.environ.get("MASTER_MINION_ID", "").split(",")) > 1 else False
+)
+
+MASTERS = os.environ.get("MASTER_MINION_ID", "master").split(",")
+SALT_URL = os.environ.get("SALT_URL", "https://127.0.0.1:8080").split(",")
+
+if len(MASTERS) != len(SALT_URL):
+    raise Exception("Invalid config: MASTERS length does not match SALT_URL length")
+
+SALT = {}
+for idx, master in enumerate(MASTERS):
+    SALT[master] = SALT_URL[idx]
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -103,6 +118,20 @@ DATABASES = {
         "PORT": os.environ.get("DB_PORT"),
     }
 }
+if MULTI_MASTER:
+    for idx, master in enumerate(MASTERS):
+        DATABASES[master] = {
+            "ENGINE": "django.db.backends.{}".format(
+                os.environ["DB_BACKEND_{}".format(idx)]
+            ),
+            "NAME": os.environ.get("DB_NAME_{}".format(idx)),
+            "USER": os.environ.get("DB_USER_{}".format(idx)),
+            "PASSWORD": os.environ.get("DB_PASS_{}".format(idx)),
+            "HOST": os.environ.get("DB_HOST_{}".format(idx)),
+            "PORT": os.environ.get("DB_PORT_{}".format(idx)),
+        }
+    DATABASE_ROUTERS = ["api.database_router.AuthRouter"]
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -149,12 +178,12 @@ REST_FRAMEWORK = {
 #     'REFRESH_TOKEN_LIFETIME': timedelta(days=1)}
 
 # # TODO!
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "handlers": {"console": {"class": "logging.StreamHandler"}},
-#     "loggers": {"django_auth_ldap": {"level": "DEBUG", "handlers": ["console"]}},
-# }
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {"django_auth_ldap": {"level": "DEBUG", "handlers": ["console"]}},
+}
 #
 # Get version from file.
 try:

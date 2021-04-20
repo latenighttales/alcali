@@ -42,6 +42,7 @@ from api.models import (
     SaltEvents,
     Schedule,
     Conformity,
+    Masters,
     UserSettings,
     MinionsCustomFields,
     Functions,
@@ -73,16 +74,23 @@ class KeysViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Keys.objects.all()
     serializer_class = KeysSerializer
 
+    def get_queryset(self):
+        user = self.request.user
+        current_master = UserSettings.objects.get(user=user).settings["selected_master"]
+        return self.queryset.filter(
+            master=Masters.objects.get(master_id=current_master)
+        )
+
     @action(methods=["POST"], detail=False)
     def refresh(self, request):
-        ret = get_keys(refresh=True)
+        ret = get_keys(request, refresh=True)
         if "error" in ret:
             return Response(ret["error"], status=401)
         return Response(ret)
 
     @action(detail=False)
     def keys_status(self, request):
-        keys_status = list(Keys.objects.values_list("status", flat=True))
+        keys_status = list(self.get_queryset().values_list("status", flat=True))
         keys_status = dict(Counter(keys_status))
         od = OrderedDict()
         for status in ["accepted", "rejected", "denied", "unaccepted"]:
@@ -112,6 +120,13 @@ class MinionsViewSet(viewsets.ModelViewSet):
     serializer_class = MinionsSerializer
     lookup_field = "minion_id"
     lookup_value_regex = "[^/]+"
+
+    def get_queryset(self):
+        user = self.request.user
+        current_master = UserSettings.objects.get(user=user).settings["selected_master"]
+        return self.queryset.filter(
+            master=Masters.objects.get(master_id=current_master)
+        )
 
     @action(detail=False, methods=["post"])
     def refresh_minions(self, request):
@@ -145,7 +160,7 @@ class MinionsViewSet(viewsets.ModelViewSet):
     @action(detail=False)
     def conformity(self, request):
         highstate_conformity = {"conform": 0, "conflict": 0, "unknown": 0}
-        for minion in Minions.objects.all():
+        for minion in self.get_queryset():
             if minion.conformity() is True:
                 highstate_conformity["conform"] += 1
             elif minion.conformity() is False:
@@ -231,6 +246,8 @@ class ConformityViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def render(self, request):
+        user = request.user
+        current_master = UserSettings.objects.get(user=user).settings["selected_master"]
         conformity_name = [i.name for i in Conformity.objects.all()]
         default_columns = [
             {"text": "Minion id", "value": "minion_id"},
@@ -247,7 +264,9 @@ class ConformityViewSet(viewsets.ModelViewSet):
         _, _, rendered_conformity = render_conformity()
         # Compute number of succeeded, unchanged and failed states.
         conformity_data = []
-        minions = Minions.objects.all()
+        minions = Minions.objects.filter(
+            master=Masters.objects.get(master_id=current_master)
+        )
         for minion in minions:
             succeeded, unchanged, failed = 0, 0, 0
             last_highstate = minion.last_highstate()

@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col sm="12">
-        <EventsTable></EventsTable>
+        <EventsTable :key="master"></EventsTable>
       </v-col>
     </v-row>
   </v-container>
@@ -13,6 +13,7 @@
 
   export default {
     name: "Events",
+    props: ["master"],
     components: { EventsTable },
   }
 </script>

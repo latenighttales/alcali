@@ -97,6 +97,7 @@
     >
       <v-app-bar-nav-icon @click.stop="updateDomAndSettings('drawer')"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-bold">ALCALI</v-toolbar-title>
+      <v-select v-if="masters.length > 1" class="mb-0 ml-6 fit" :items="masters" label="master" v-model="settings.selected_master" @change="updateSettings" hide-details dense></v-select>
       <v-spacer></v-spacer>
       <v-expand-transition>
         <v-text-field
@@ -182,7 +183,7 @@
     </v-app-bar>
     <v-main>
       <v-fade-transition mode="out-in">
-        <router-view :key="$route.fullPath"></router-view>
+        <router-view :master="reload" :key="$route.fullPath"></router-view>
       </v-fade-transition>
     </v-main>
   </v-app>
@@ -204,6 +205,7 @@ export default {
     searchInput: "",
     messages: [],
     notif_nb: 0,
+    reload: 0,
     routes: [
       {
         name: "Overview",
@@ -253,6 +255,13 @@ export default {
     ],
   }),
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+      // TODO:
+      helpersMixin.methods.sleep(100).then(() => {
+        return this.reload += 1
+      })
+    },
     updateDomAndSettings(val) {
       this.settings.Layout[val] = !this.settings.Layout[val]
       if (val === 'dark') {
@@ -364,6 +373,7 @@ export default {
   computed: {
     ...mapState({
       username: state => state.username,
+      masters: state => state.masters,
       email: state => state.email,
       settings: state => state.settings,
     }),
@@ -399,6 +409,13 @@ span .v-chip__content {
 
 .search {
   max-width: 300px !important;
+}
+
+.v-select.fit {
+  max-width: min-content !important;
+}
+.v-select.fit  .v-select__selection--comma {
+    text-overflow: unset;
 }
 
 

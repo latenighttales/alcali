@@ -4,19 +4,27 @@ from urllib.error import URLError
 
 import urllib3
 
+from django.conf import settings
 from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
 
 from ..utils.input import RawCommand
-from ..models import Minions, Functions, MinionsCustomFields, Keys, Schedule
+from ..models import (
+    Minions,
+    Functions,
+    MinionsCustomFields,
+    Keys,
+    Schedule,
+    UserSettings,
+    Masters,
+)
 
 urllib3.disable_warnings()
-
-url = os.environ.get("SALT_URL", "https://127.0.0.1:8080")
 
 
 def api_connect():
     user = get_current_user()
+    url = settings.SALT[UserSettings.objects.get(user=user).settings["selected_master"]]
     api = Pepper(url, ignore_ssl_errors=True)
     try:
         login_ret = api.login(
@@ -31,8 +39,12 @@ def api_connect():
     return api
 
 
-def get_keys(refresh=False):
+def get_keys(request, refresh=False):
     if refresh:
+        user = request.user
+        current_master = Masters.objects.get(
+            master_id=UserSettings.objects.get(user=user).settings["selected_master"]
+        )
         # Salt return to minion status.
         minion_status = {
             "minions_rejected": "rejected",
@@ -47,7 +59,7 @@ def get_keys(refresh=False):
         except PepperException as e:
             return {"error": str(e)}
 
-        Keys.objects.all().delete()
+        Keys.objects.filter(master=current_master).delete()
         for key, value in minion_status.items():
             for minion in api_ret[key]:
                 finger_ret = api.wheel("key.finger", match=minion, hash_type="sha256")[
@@ -55,6 +67,7 @@ def get_keys(refresh=False):
                 ][0]["data"]["return"][key]
                 Keys.objects.create(
                     minion_id=minion,
+                    master=current_master,
                     status=value,
                     pub=finger_ret[minion],
                 )
@@ -69,12 +82,18 @@ def refresh_minion(minion_id):
     except PepperException as e:
         return {"error": str(e)}
     grain = grain["return"][0]
+    current_master = Masters.objects.get(
+        master_id=UserSettings.objects.get(user=get_current_user()).settings[
+            "selected_master"
+        ]
+    )
     # TODO: return smt useful, better error mgmt.
     if grain.get(minion_id):
         pillar = api.local(minion_id, "pillar.items")
         pillar = pillar["return"][0]
         minion, _ = Minions.objects.update_or_create(
             minion_id=minion_id,
+            master=current_master,
             defaults={
                 "grain": json.dumps(grain[minion_id]),
                 "pillar": json.dumps(pillar[minion_id]),

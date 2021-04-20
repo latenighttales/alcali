@@ -2,23 +2,23 @@
   <v-container fluid>
     <v-row>
       <v-col sm="12" lg="7">
-        <ConformityChart></ConformityChart>
+        <ConformityChart :key="master"></ConformityChart>
       </v-col>
       <v-col sm="6" lg="2">
-        <KeysStatusCard></KeysStatusCard>
+        <KeysStatusCard :key="master"></KeysStatusCard>
       </v-col>
       <v-col sm="6" lg="3">
-        <AlcaliStatusCard></AlcaliStatusCard>
+        <AlcaliStatusCard :key="master"></AlcaliStatusCard>
       </v-col>
     </v-row>
     <v-row>
       <v-col lg="12">
-        <JobsChartCard></JobsChartCard>
+        <JobsChartCard :key="master"></JobsChartCard>
       </v-col>
     </v-row>
     <v-row>
       <v-col lg="12">
-        <JobsTable :filter="{limit: 10}"></JobsTable>
+        <JobsTable :key="master" :filter="{limit: 10}"></JobsTable>
       </v-col>
     </v-row>
 
@@ -36,6 +36,9 @@
 
   export default {
     name: "home",
+    props: {
+      master: Number,
+    },
     components: {
       JobsTable,
       ConformityChart,

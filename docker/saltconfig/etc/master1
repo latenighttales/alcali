@@ -1,0 +1,54 @@
+keep_jobs: 0
+event_return: [mysql]
+master_job_cache: mysql
+mysql.host: 'db1'
+mysql.user: 'alcali'
+mysql.pass: 'alcali'
+mysql.db: 'salt'
+mysql.port: 3306
+external_auth:
+  rest:
+    ^url: http://web:8000/api/token/verify/
+    apiuser:
+      - test.ping
+      - minion\*:
+          - network.*
+      - '@wheel':
+          - key.list_all
+      - minion2:
+          - network.*
+          - state.*
+      - 'G@os:RedHat':
+          - kmod.*
+    admin:
+      - .*
+      - '@runner'
+      - '@wheel'
+  alcali:
+    apiuser:
+      - test.ping
+      - minion\*:
+        - network.*
+      - '@wheel':
+        - key.list_all
+      - minion2:
+        - network.*
+        - state.*
+      - 'G@os:RedHat':
+        - kmod.*
+    admin:
+      - .*
+      - '@runner'
+      - '@wheel'
+auth_dirs: [/srv/salt/auth]
+file_roots:
+  base:
+    - /srv/salt
+log_level: debug
+log_level_logfile: debug
+rest_cherrypy:
+  port: 8081
+  host: 0.0.0.0
+  debug: True
+  ssl_crt: /etc/pki/tls/certs/localhost.crt
+  ssl_key: /etc/pki/tls/certs/localhost.key

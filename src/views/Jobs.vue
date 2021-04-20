@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col sm="12" cols="12">
-        <JobsTable :jid="jid"></JobsTable>
+        <JobsTable :key="master" :jid="jid"></JobsTable>
       </v-col>
     </v-row>
   </v-container>
@@ -13,7 +13,7 @@
 
   export default {
     name: "Jobs",
-    props: ["jid"],
+    props: ["jid", "master"],
     components: {
       JobsTable,
     },

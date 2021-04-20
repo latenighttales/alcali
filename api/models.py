@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import Q
 
@@ -123,10 +124,22 @@ class JobTemplate(models.Model):
         app_label = "api"
 
 
+class Masters(models.Model):
+    master_id = models.CharField(
+        max_length=128, default=settings.MASTERS[0], primary_key=True
+    )
+    url = models.URLField()
+
+    class Meta:
+        db_table = "master"
+        app_label = "api"
+
+
 class Minions(models.Model):
     minion_id = models.CharField(max_length=128, null=False, blank=False)
     grain = models.TextField()
     pillar = models.TextField()
+    master = models.ForeignKey(Masters, on_delete=models.CASCADE)
 
     def loaded_grain(self):
         return json.loads(self.grain)
@@ -214,6 +227,7 @@ class Keys(models.Model):
     minion_id = models.CharField(max_length=255)
     pub = models.TextField(blank=True)
     status = models.CharField(max_length=64, choices=KEY_STATUS)
+    master = models.ForeignKey(Masters, on_delete=models.CASCADE)
 
     def __str__(self):
         return "{}".format(self.minion_id)
