@@ -129,16 +129,17 @@ def test_change_notifs(admin_client, admin_user, jwt):
     Default permissions are added to salt, and stored in user_settings.
     """
     notifs_defaults = {
-        "notifs_created": False,
-        "notifs_published": False,
-        "notifs_returned": True,
-        "notifs_event": False,
+        "created": False,
+        "published": False,
+        "returned": True,
+        "event": False,
     }
     for status, value in notifs_defaults.items():
-        assert getattr(admin_user.user_settings, status) == value
+        assert status in admin_user.user_settings.settings["UserSettings"]["notifs"]
+    assert admin_user.user_settings.settings["UserSettings"]["notifs"]["event"] is False
     response = admin_client.patch(
         "/api/userssettings/{}/".format(admin_user.id),
-        {"notifs_created": "true"},
+        {"settings": {"event": "true"}},
         content_type="application/json",
         **jwt
     )

@@ -15,8 +15,8 @@ let gradientLinePlugin = {
             maxValue = dataset.data[i];
         }
         let yAxis = chartInstance.scales['y-axis-0'];
-        let minValueYPixel = yAxis.getPixelForValue(minValue);
-        let maxValueYPixel = yAxis.getPixelForValue(maxValue);
+        let minValueYPixel = yAxis.getPixelForValue(minValue) || 0;
+        let maxValueYPixel = yAxis.getPixelForValue(maxValue) || 0;
         // Create the gradient.
         let gradient = ctx.createLinearGradient(0, minValueYPixel, 0, maxValueYPixel);
         // A kind of red for min.

@@ -109,11 +109,11 @@
         version: "unknown",
         minions: [],
         target: null,
-        functions: null,
+        functions: [],
         minionsfields: [],
         minionsfields_name: null,
         minionsfields_value: null,
-        conformity: null,
+        conformity: [],
         conformity_name: null,
         conformity_value: null,
       }

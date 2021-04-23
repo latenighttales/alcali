@@ -16,8 +16,12 @@
             ></v-text-field>
           </v-card-title>
           <v-data-table
-              sort-by="jid"
-              sort-desc
+              :sort-by.sync="settings.JobTemplatesTable.table.sortBy"
+              @update:sort-by="updateSettings"
+              :sort-desc.sync="settings.JobTemplatesTable.table.sortDesc"
+              @update:sort-desc="updateSettings"
+              :items-per-page.sync="settings.JobTemplatesTable.table.itemsPerPage"
+              @update:items-per-page="updateSettings"
               :headers="headers"
               :items="job_templates"
               :search="search"
@@ -25,7 +29,7 @@
               :loading="loading"
           >
             <template v-slot:item.name="{ item }">
-              <b>{{item.name}}</b>
+              <b>{{ item.name }}</b>
             </template>
             <template v-slot:item.action="{ item }">
               <div class="text-center">
@@ -70,75 +74,85 @@
 </template>
 
 <script>
-  export default {
-    name: "JobTemplatesTable",
-    data() {
-      return {
-        search: "",
-        headers: [
-          { text: "Name", value: "name" },
-          { text: "Client", value: "client" },
-          { text: "Target Type", value: "tgt_type" },
-          { text: "Target", value: "tgt" },
-          { text: "Function", value: "fun" },
-          { text: "Arguments", value: "arg" },
-          { text: "Keyword Arguments", value: "kwarg" },
-          { text: "Batch", value: "batch" },
-          { text: "Actions", value: "action", sortable: false },
-        ],
-        loading: true,
-        job_templates: [],
-      }
+import { mapState } from "vuex"
+
+export default {
+  name: "JobTemplatesTable",
+  data() {
+    return {
+      search: "",
+      headers: [
+        { text: "Name", value: "name" },
+        { text: "Client", value: "client" },
+        { text: "Target Type", value: "tgt_type" },
+        { text: "Target", value: "tgt" },
+        { text: "Function", value: "fun" },
+        { text: "Arguments", value: "arg" },
+        { text: "Keyword Arguments", value: "kwarg" },
+        { text: "Batch", value: "batch" },
+        { text: "Actions", value: "action", sortable: false },
+      ],
+      loading: true,
+      job_templates: [],
+    }
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
     },
-    mounted() {
-      this.loadData()
-    },
-    methods: {
-      loadData() {
-        this.$http.get("api/job_templates/").then(response => {
-          let templates = response.data
-          // Load the job as json and augment the template with its attrs.
-          templates.forEach(template => {
-            let loadedJob = JSON.parse(template.job)
-            // distinction between args and kwargs.
-            Object.keys(loadedJob).forEach(key => {
-              if (key === "arg") {
-                let args = loadedJob[key]
-                let kwarg = args.filter(item => {
-                  return item.includes("=")
-                })
-                args = args.filter(item => {
-                  return !item.includes("=")
-                })
-                template[key] = args.join(" ")
-                template["kwarg"] = kwarg.join(" ")
-              } else {
-                template[key] = loadedJob[key]
-              }
-            })
-            delete template.job
+    loadData() {
+      this.$http.get("api/job_templates/").then(response => {
+        let templates = response.data
+        // Load the job as json and augment the template with its attrs.
+        templates.forEach(template => {
+          let loadedJob = JSON.parse(template.job)
+          // distinction between args and kwargs.
+          Object.keys(loadedJob).forEach(key => {
+            if (key === "arg") {
+              let args = loadedJob[key]
+              let kwarg = args.filter(item => {
+                return item.includes("=")
+              })
+              args = args.filter(item => {
+                return !item.includes("=")
+              })
+              template[key] = args.join(" ")
+              template["kwarg"] = kwarg.join(" ")
+            } else {
+              template[key] = loadedJob[key]
+            }
           })
-          this.job_templates = templates
-          this.loading = false
+          delete template.job
         })
-      },
-      deleteTemplate(id) {
-        this.$http.delete(`api/job_templates/${id}/`).then(response => {
-          this.$toast("Template deleted")
-        }).then(() => {
-          this.loadData()
-        })
-      },
-      computeUrl(item, edit = false) {
-        let searchParams = new URLSearchParams(item)
-        searchParams.delete("id")
-        if (!edit) {
-          searchParams.delete("name")
-        }
-        return '/run?' + searchParams.toString()
-      }
+        this.job_templates = templates
+        this.loading = false
+      })
     },
-  }
+    deleteTemplate(id) {
+      this.$http.delete(`api/job_templates/${id}/`).then(response => {
+        this.$toast("Template deleted")
+      }).then(() => {
+        this.loadData()
+      })
+    },
+    computeUrl(item, edit = false) {
+      let searchParams = new URLSearchParams(item)
+      searchParams.delete("id")
+      if (!edit) {
+        searchParams.delete("name")
+      }
+      return "/run?" + searchParams.toString()
+    },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
+  },
+}
 </script>
 
 <style scoped>

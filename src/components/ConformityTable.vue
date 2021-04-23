@@ -14,7 +14,12 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-          sort-by="minion_id"
+          :sort-by.sync="settings.ConformityTable.table.sortBy"
+          @update:sort-by="updateSettings"
+          :sort-desc.sync="settings.ConformityTable.table.sortDesc"
+          @update:sort-desc="updateSettings"
+          :items-per-page.sync="settings.ConformityTable.table.itemsPerPage"
+          @update:items-per-page="updateSettings"
           item-key="minion_id"
           :headers="headers"
           :items="conformity"
@@ -26,7 +31,7 @@
           <v-btn text small class="text-none" :to="'/conformity/'+item.minion_id">{{ item.minion_id }}</v-btn>
         </template>
         <template v-slot:item.last_highstate="{ item }">
-          {{item.last_highstate === null ? "": new Date(item.last_highstate).toLocaleString("en-GB")}}
+          {{ item.last_highstate === null ? "" : new Date(item.last_highstate).toLocaleString("en-GB") }}
         </template>
         <template v-slot:item.conformity="{ item }">
           <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity }}
@@ -41,7 +46,7 @@
               text-color="base"
               v-if="item.succeeded != null"
           >
-            {{item.succeeded}}
+            {{ item.succeeded }}
           </v-chip>
         </template>
         <template v-slot:item.unchanged="{ item }">
@@ -53,7 +58,7 @@
               text-color="base"
               v-if="item.unchanged != null"
           >
-            {{item.unchanged}}
+            {{ item.unchanged }}
           </v-chip>
         </template>
         <template v-slot:item.failed="{ item }">
@@ -65,7 +70,7 @@
               text-color="base"
               v-if="item.failed != null"
           >
-            {{item.failed}}
+            {{ item.failed }}
           </v-chip>
         </template>
         <template v-slot:item.action="{ item }">
@@ -99,37 +104,47 @@
 </template>
 
 <script>
-  export default {
-    name: "ConformityTable",
-    data() {
-      return {
-        search: "",
-        headers: [],
-        conformity: [],
-        loading: true,
-      }
+import { mapState } from "vuex"
+
+export default {
+  name: "ConformityTable",
+  data() {
+    return {
+      search: "",
+      headers: [],
+      conformity: [],
+      loading: true,
+    }
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
     },
-    mounted() {
-      this.loadData()
+    loadData() {
+      this.$http.get("api/conformity/render/").then(response => {
+        this.headers = response.data.name
+        this.headers.push({ text: "Actions", value: "action", sortable: false })
+        this.conformity = response.data.data
+        this.loading = false
+      })
     },
-    methods: {
-      loadData() {
-        this.$http.get("api/conformity/render/").then(response => {
-          this.headers = response.data.name
-          this.headers.push({ text: "Actions", value: "action", sortable: false })
-          this.conformity = response.data.data
-          this.loading = false
-        })
-      },
-      boolRepr(bool) {
-        if (bool === "True") {
-          return "green"
-        } else if (bool === "False") {
-          return "red"
-        } else return "primary"
-      },
+    boolRepr(bool) {
+      if (bool === "True") {
+        return "green"
+      } else if (bool === "False") {
+        return "red"
+      } else return "primary"
     },
-  }
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
+  },
+}
 </script>
 
 <style scoped>

@@ -4,7 +4,12 @@
       <v-col sm="12">
         <v-card>
           <v-data-table
-              sort-by="username"
+              :sort-by.sync="settings.UserCard.table.sortBy"
+              @update:sort-by="updateSettings"
+              :sort-desc.sync="settings.UserCard.table.sortDesc"
+              @update:sort-desc="updateSettings"
+              :items-per-page.sync="settings.UserCard.table.itemsPerPage"
+              @update:items-per-page="updateSettings"
               :headers="headers"
               :items="users"
               class="elevation-1"
@@ -15,10 +20,11 @@
                 <div class="flex-grow-1"></div>
                 <v-dialog v-model="dialog" max-width="500px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}" :disabled="!isStaff">Create</v-btn>
+                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}" :disabled="!isStaff">Create
+                    </v-btn>
                   </template>
                   <v-card>
-                    <v-card-title>{{ editing === true ? "Update User" : "Create User"}}</v-card-title>
+                    <v-card-title>{{ editing === true ? "Update User" : "Create User" }}</v-card-title>
                     <v-card-text>
                       <v-container fluid>
                         <v-row>
@@ -114,7 +120,7 @@
               </div>
             </template>
             <template v-slot:item.date_joined="{ item }">
-              {{new Date(item.date_joined).toLocaleString("en-GB")}}
+              {{ new Date(item.date_joined).toLocaleString("en-GB") }}
             </template>
             <template v-slot:item.action="{ item }">
               <div class="text-center">
@@ -199,7 +205,7 @@
 
           <v-card-text v-if="user.user_settings">
             <br>
-            {{user.user_settings.token}}
+            {{ user.user_settings.token }}
           </v-card-text>
 
           <v-divider></v-divider>
@@ -221,134 +227,141 @@
 </template>
 
 <script>
-  export default {
-    name: "UserCard",
-    data() {
-      return {
-        search: "",
-        headers: [
-          { text: "Username", value: "username" },
-          { text: "First Name", value: "first_name" },
-          { text: "Last Name", value: "last_name" },
-          { text: "Email", value: "email" },
-          { text: "Staff", value: "is_staff" },
-          { text: "Token", value: "token", sortable: false },
-          { text: "Date Joined", value: "date_joined" },
-          { text: "Actions", value: "action", sortable: false },
-        ],
-        userRules: [
-          v => !!v || "Username is required",
-        ],
-        emailRules: [
-          v => !!v || "E-mail is required",
-          v => /.+@.+/.test(v) || "E-mail must be valid",
-        ],
-        users: [],
-        user: {},
-        editing: false,
-        show: false,
-        dialog: false,
-        dialogDelete: false,
-        dialogToken: false,
-      }
-    },
-    mounted() {
-      this.getUsers()
-    },
-    computed: {
-      currentUserId() {
-        return this.$store.state.id
-      },
-      isStaff() {
-        return JSON.parse(this.$store.getters.isStaff) || false
-      }
+import { mapState } from "vuex"
 
+export default {
+  name: "UserCard",
+  data() {
+    return {
+      search: "",
+      headers: [
+        { text: "Username", value: "username" },
+        { text: "First Name", value: "first_name" },
+        { text: "Last Name", value: "last_name" },
+        { text: "Email", value: "email" },
+        { text: "Staff", value: "is_staff" },
+        { text: "Token", value: "token", sortable: false },
+        { text: "Date Joined", value: "date_joined" },
+        { text: "Actions", value: "action", sortable: false },
+      ],
+      userRules: [
+        v => !!v || "Username is required",
+      ],
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+/.test(v) || "E-mail must be valid",
+      ],
+      users: [],
+      user: {},
+      editing: false,
+      show: false,
+      dialog: false,
+      dialogDelete: false,
+      dialogToken: false,
+    }
+  },
+  mounted() {
+    this.getUsers()
+  },
+  computed: {
+    currentUserId() {
+      return this.$store.state.id
     },
-    methods: {
-      getUsers() {
-        this.$http.get("api/users/").then(response => {
-          this.users = response.data
-        }).catch((error) => {
-          this.$toast.error(error.response.data)
-        })
-      },
-      createUser() {
-        let formData = new FormData
-        Object.keys(this.user).forEach(key => formData.append(key, this.user[key]))
-        this.$http.post("api/users/", formData).then(() => {
-          this.$toast("User created")
-          this.dialog = false
-        }).then(() => {
-          this.user = {}
-          this.getUsers()
-        }).catch((error) => {
-          this.dialog = false
-          this.user = {}
-          this.$toast.error(error.response.data)
-        })
-      },
-      updateUser() {
-        this.editing = false
-        let formData = new FormData
-        formData.set("username", this.user.username||'')
-        formData.set("email", this.user.email||'')
-        formData.set("first_name", this.user.first_name||'')
-        formData.set("last_name", this.user.last_name||'')
-        formData.set("password", this.user.password||'')
-        formData.set("is_staff", this.user.is_staff)
-        this.$http.patch(`api/users/${this.user.id}/`, formData).then(() => {
-          this.$toast("User updated")
-          this.dialog = false
-          this.user = {}
-        }).then(() => {
-          this.getUsers()
-        }).catch((error) => {
-          this.dialog = false
-          this.user = {}
-          this.$toast.error(error.response.data)
-        })
-      },
-      showToken(user) {
-        this.dialogToken = true
-        this.user = user
-      },
-      manageToken(action, user) {
-        let formData = new FormData
-        formData.set("action", action)
-        this.$http.post(`api/users/${user.id}/manage_token/`, formData).then((response) => {
-          this.$toast(response.data.result)
-        }).then(() => {
-          this.getUsers()
-        }).catch((error) => {
-          this.$toast.error(error.response.data)
-        })
-      },
-      confirmDelete(user) {
-        this.dialogDelete = true
-        this.user = user
-      },
-      deleteUser(id) {
-        this.$http.delete("api/users/" + id).then(() => {
-          this.dialogDelete = false
-          this.$toast("User deleted")
-        }).then(() => {
-          this.getUsers()
-        }).catch((error) => {
-          this.$toast.error(error.response.data)
-        })
-      },
-      editUser(user) {
-        this.dialog = true
-        this.editing = true
-        this.user = user
-      },
-      resetUser() {
+    isStaff() {
+      return JSON.parse(this.$store.getters.isStaff) || false
+    },
+    ...mapState({
+      settings: state => state.settings,
+    }),
+  },
+  methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
+    getUsers() {
+      this.$http.get("api/users/").then(response => {
+        this.users = response.data
+      }).catch((error) => {
+        this.$toast.error(error.response.data)
+      })
+    },
+    createUser() {
+      let formData = new FormData
+      Object.keys(this.user).forEach(key => formData.append(key, this.user[key]))
+      this.$http.post("api/users/", formData).then(() => {
+        this.$toast("User created")
         this.dialog = false
-        this.editing = false
+      }).then(() => {
         this.user = {}
-      },
+        this.getUsers()
+      }).catch((error) => {
+        this.dialog = false
+        this.user = {}
+        this.$toast.error(error.response.data)
+      })
     },
-  }
+    updateUser() {
+      this.editing = false
+      let formData = new FormData
+      formData.set("username", this.user.username || "")
+      formData.set("email", this.user.email || "")
+      formData.set("first_name", this.user.first_name || "")
+      formData.set("last_name", this.user.last_name || "")
+      formData.set("password", this.user.password || "")
+      formData.set("is_staff", this.user.is_staff)
+      this.$http.patch(`api/users/${this.user.id}/`, formData).then(() => {
+        this.$toast("User updated")
+        this.dialog = false
+        this.user = {}
+      }).then(() => {
+        this.getUsers()
+      }).catch((error) => {
+        this.dialog = false
+        this.user = {}
+        this.$toast.error(error.response.data)
+      })
+    },
+    showToken(user) {
+      this.dialogToken = true
+      this.user = user
+    },
+    manageToken(action, user) {
+      let formData = new FormData
+      formData.set("action", action)
+      this.$http.post(`api/users/${user.id}/manage_token/`, formData).then((response) => {
+        this.$toast(response.data.result)
+      }).then(() => {
+        this.getUsers()
+      }).catch((error) => {
+        this.$toast.error(error.response.data)
+      })
+    },
+    confirmDelete(user) {
+      this.dialogDelete = true
+      this.user = user
+    },
+    deleteUser(id) {
+      this.$http.delete("api/users/" + id).then(() => {
+        this.dialogDelete = false
+        this.$toast("User deleted")
+      }).then(() => {
+        this.getUsers()
+      }).catch((error) => {
+        this.$toast.error(error.response.data)
+      })
+    },
+    editUser(user) {
+      this.dialog = true
+      this.editing = true
+      this.user = user
+    },
+    resetUser() {
+      this.dialog = false
+      this.editing = false
+      this.user = {}
+    },
+  },
+}
 </script>
 
 <style scoped>

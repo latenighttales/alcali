@@ -2,7 +2,8 @@
   <v-container fluid>
     <v-card>
       <v-tabs
-          v-model="tab"
+          v-model="settings.MinionDetail.MinionDetailCard.tab"
+          @change="updateSettings"
       >
         <v-tabs-slider></v-tabs-slider>
 
@@ -20,10 +21,10 @@
           Graph
         </v-tab>
         <v-tab v-for="field in minion.custom_fields" v-bind:key="field.name">
-          {{field.name}}
+          {{ field.name }}
         </v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="settings.MinionDetail.MinionDetailCard.tab">
         <v-tab-item id="grain">
           <div class="text-right">
             <v-btn @click="fold('grainCm')" class="overlayedBtn">{{ grainCmFolded ? "unfold" : "fold" }}</v-btn>
@@ -52,80 +53,88 @@
 
 <script>
 
-  // require component
-  import CodeMirror from "codemirror"
-  import { codemirror } from "vue-codemirror"
+// require component
+import CodeMirror from "codemirror"
+import { codemirror } from "vue-codemirror"
 
-  import "codemirror/addon/display/autorefresh.js"
-  import "codemirror/addon/fold/foldcode.js"
-  import "codemirror/addon/fold/brace-fold.js"
-  import "codemirror/addon/fold/foldgutter.js"
-  import "codemirror/addon/fold/indent-fold.js"
-  import "codemirror/mode/javascript/javascript.js"
+import "codemirror/addon/display/autorefresh.js"
+import "codemirror/addon/fold/foldcode.js"
+import "codemirror/addon/fold/brace-fold.js"
+import "codemirror/addon/fold/foldgutter.js"
+import "codemirror/addon/fold/indent-fold.js"
+import "codemirror/mode/javascript/javascript.js"
 
-  // require styles
-  import "codemirror/lib/codemirror.css"
-  // language js
-  import "codemirror/mode/yaml/yaml.js"
-  // theme css
-  import "../assets/css/made-of-code.css"
+// require styles
+import "codemirror/lib/codemirror.css"
+// language js
+import "codemirror/mode/yaml/yaml.js"
+// theme css
+import "../assets/css/made-of-code.css"
 
-  import yaml from "js-yaml"
-  import JobsChartCard from "./JobsChartCard"
-  import JobsTable from "./JobsTable"
+import yaml from "js-yaml"
+import JobsChartCard from "./JobsChartCard"
+import JobsTable from "./JobsTable"
+import { mapState } from "vuex"
 
-  export default {
-    name: "MinionDetailCard",
-    components: {
-      JobsTable,
-      JobsChartCard,
-      codemirror,
+export default {
+  name: "MinionDetailCard",
+  components: {
+    JobsTable,
+    JobsChartCard,
+    codemirror,
+  },
+  data() {
+    return {
+      code: yaml.safeDump(JSON.parse(this.minion.grain)),
+      codepillar: yaml.safeDump(JSON.parse(this.minion.pillar)),
+      grainCmFolded: false,
+      pillarCmFolded: false,
+      cmOptions: {
+        tabSize: 4,
+        mode: "yaml",
+        theme: "made-of-code",
+        line: true,
+        autoRefresh: true,
+        lineNumbers: false,
+        readOnly: true,
+        cursorBlinkRate: 0,
+        //viewportMargin: Infinity,
+        foldGutter: true,
+        gutters: ["CodeMirror-foldgutter"],
+      },
+    }
+  },
+  methods: {
+    yamlRepr(data) {
+      return yaml.safeDump(JSON.parse(data))
     },
-    data() {
-      return {
-        tab: null,
-        code: yaml.safeDump(JSON.parse(this.minion.grain)),
-        codepillar: yaml.safeDump(JSON.parse(this.minion.pillar)),
-        grainCmFolded: false,
-        pillarCmFolded: false,
-        cmOptions: {
-          tabSize: 4,
-          mode: "yaml",
-          theme: "made-of-code",
-          line: true,
-          autoRefresh: true,
-          lineNumbers: false,
-          readOnly: true,
-          cursorBlinkRate: 0,
-          //viewportMargin: Infinity,
-          foldGutter: true,
-          gutters: ["CodeMirror-foldgutter"],
-        },
+    fold(ref) {
+      if (this[ref + "Folded"] === true) {
+        CodeMirror.commands.unfoldAll(this.$refs[ref].codemirror)
+        this[ref + "Folded"] = false
+      } else {
+        CodeMirror.commands.foldAll(this.$refs[ref].codemirror)
+        this[ref + "Folded"] = true
       }
     },
-    methods: {
-      yamlRepr(data) {
-        return yaml.safeDump(JSON.parse(data))
-      },
-      fold(ref) {
-        if (this[ref+'Folded'] === true) {
-          CodeMirror.commands.unfoldAll(this.$refs[ref].codemirror)
-          this[ref+'Folded'] = false
-        } else {
-          CodeMirror.commands.foldAll(this.$refs[ref].codemirror)
-          this[ref+'Folded'] = true
-        }
-      },
+    updateSettings() {
+      this.$store.commit("updateSettings")
     },
-    props: ["minion"],
-  }
+  },
+  props: ["minion"],
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
+  },
+}
 </script>
 
 <style scoped>
-  .overlayedBtn {
-    position: absolute;
-    right: 0;
-    z-index: 1;
-  }
+.overlayedBtn {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
 
 </style>
