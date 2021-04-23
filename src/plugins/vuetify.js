@@ -1,7 +1,9 @@
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import 'typeface-roboto/index.css'
 import Vue from "vue"
 import Vuetify, { VSnackbar, VBtn, VIcon } from "vuetify/lib"
 
-import VuetifyToast from "vuetify-toast-snackbar"
+import VuetifyToast from "vuetify-toast-snackbar-ng"
 
 Vue.use(Vuetify, {
   components: {

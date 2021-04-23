@@ -8,7 +8,7 @@ password: password
 ```
 
 You should land on the Dashboard view.
-<img align="right" height="200" src="../../images/keys-dashboard.png">
+<img align="right" width="200" src="../../images/keys-dashboard.png"></img>
 
 For now it's empty, but you can already see that some **keys** are `UNACCEPTED`.
 
@@ -19,13 +19,13 @@ So let's go to the Keys view: [http://localhost:8000/#/keys](http://localhost:80
 
 ![keys](images/screenshots/keys.png)
 
-You can either accept keys one by one using the `ACCEPT` button, or use the action button <img height="30" src="../../images/fab.png"> to accept all keys.
+You can either accept keys one by one using the `ACCEPT` button, or use the action button <img width="30" src="../../images/fab.png"> to accept all keys.
 
 ## Add minions
 
 To store infos on connected minions, we need to add them to the database.
 
-Go to [http://localhost:8000/#/minions](http://localhost:8000/#/minions) and use the action button <img height="30" src="../../images/fab.png"> to refresh minions.
+Go to [http://localhost:8000/#/minions](http://localhost:8000/#/minions) and use the action button <img width="30" src="../../images/fab.png"> to refresh minions.
 
 ![minions](images/screenshots/minions.png)
 

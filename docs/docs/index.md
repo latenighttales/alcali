@@ -28,5 +28,15 @@ Alcali is a web based tool for monitoring and administrating **Saltstack** Salt.
 [![codecov](https://codecov.io/gh/latenighttales/alcali/branch/2019.2.0/graph/badge.svg)](https://codecov.io/gh/latenighttales/alcali)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
 
+## Contributing
+
+If you'd like to contribute, check the [contribute](https://alcali.dev/contribute/) documentation on how to install a dev environment and submit PR!
+
+And if you like this project, consider donating:
+
+via GitHub Sponsors, or
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J3173F6)
+
 
 <sub><sub>Image: Jean-Philippe WMFr, derivative work : User:Benoit Rochon [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)</sub></sub>
