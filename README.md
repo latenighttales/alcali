@@ -94,6 +94,19 @@ via GitHub Sponsors, or
 
 ## Changelog
 
+## [3003.1.0] - 2021-04-23
+
+- int: updated deps (#317)
+
+- fix: py36 compatible (#306)
+
+- fix: non-standard-minion-response (#281)
+
+- int: offline version (#225)
+
+[3003.1.0]: https://github.com/latenighttales/alcali/compare/v3003.1.0...HEAD
+
+
 ## [3000.1.0] - 2020-04-26
 
 - use salt 3000
