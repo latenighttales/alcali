@@ -1,0 +1,46 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: monthly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: mkdocs-material
+    versions:
+    - 6.2.7
+    - 7.0.3
+    - 7.1.1
+  - dependency-name: django-auth-ldap
+    versions:
+    - 2.3.0
+    - 2.4.0
+  - dependency-name: pytest
+    versions:
+    - 6.2.2
+    - 6.2.3
+  - dependency-name: django
+    versions:
+    - 3.1.5
+    - 3.1.7
+    - "3.2"
+  - dependency-name: djangorestframework
+    versions:
+    - 3.12.2
+    - 3.12.4
+  - dependency-name: pyjwt
+    versions:
+    - 2.0.1
+  - dependency-name: rest-social-auth
+    versions:
+    - 5.0.1
+    - 6.0.0
+  - dependency-name: django-cors-headers
+    versions:
+    - 3.7.0
+  - dependency-name: pytest-cov
+    versions:
+    - 2.11.1
+  - dependency-name: pymdown-extensions
+    versions:
+    - 8.1.1
