@@ -4,7 +4,7 @@ django-cors-headers==3.7.0
 django-currentuser==0.5.2
 djangorestframework==3.12.2
 djangorestframework-simplejwt==4.4.0
-gunicorn==20.0.4
+gunicorn==20.1.0
 PyJWT==1.7.1
 python-dotenv==0.14.0
 pytz
