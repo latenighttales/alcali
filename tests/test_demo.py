@@ -44,7 +44,7 @@ def test_add_minions(admin_client, jwt):
     assert Minions.objects.count() == 0
     response = admin_client.post("/api/minions/refresh_minions/", **jwt)
     assert response.status_code == 200
-    assert Minions.objects.count() > 0
+    assert len(Minions.objects.all()) > 0
 
 
 @pytest.mark.django_db()
