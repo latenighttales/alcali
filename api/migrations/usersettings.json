@@ -98,5 +98,8 @@
       "event": false
     },
     "max_notifs": 15
-  }
+  },
+  "selected_master": "",
+  "language": "en"
 }
+
