@@ -9,16 +9,17 @@ RUN apt-get update && \
 RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M -x python3 stable latest
 
 # Set master and id
-RUN echo "master: master\nid: master">/etc/salt/minion
+RUN echo "master:\n  - master1\n  - master2\nid: master1">/etc/salt/minion
 
 # Install python dependencies
 RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api python3-openssl
 RUN pip install honcho
 
 # Copy needed files
-COPY saltconfig/etc/master /etc/salt/master
+COPY saltconfig/etc/master1 /etc/salt/master
 COPY saltconfig/salt /srv/salt
 COPY saltconfig/pillar /srv/pillar
+COPY saltconfig/etc/pki/master.p* /etc/salt/pki/master/
 COPY utils/wait-for .
 COPY utils/Procfile .
 COPY utils/entrypoint-master.sh .

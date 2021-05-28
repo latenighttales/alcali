@@ -16,6 +16,14 @@
   export default {
     name: "Minions",
     components: { Fab, MinionsTable },
+    props: {
+      master: Number,
+    },
+    watch: {
+      master: function() {
+        this.refreshKey += 1
+      }
+    },
     data: () => ({
       refreshKey: 0,
       fabs: [

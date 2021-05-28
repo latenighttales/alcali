@@ -5,14 +5,36 @@ services:
     image: mariadb
     restart: always
     environment:
+      MYSQL_DATABASE: alcali
+      MYSQL_ROOT_PASSWORD: superdupersecretpassword
+      MYSQL_USER: alcali
+      MYSQL_PASSWORD: alcali
+    ports:
+      - "3306"
+  db1:
+    image: mariadb
+    restart: always
+    environment:
       MYSQL_DATABASE: salt
       MYSQL_ROOT_PASSWORD: superdupersecretpassword
       MYSQL_USER: alcali
       MYSQL_PASSWORD: alcali
     volumes:
-      - ./docker/sql/mysql:/docker-entrypoint-initdb.d
+      - dbdata:/docker-entrypoint-initdb.d
     ports:
-      - "3306:3306"
+      - "3306"
+  db2:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: salt
+      MYSQL_ROOT_PASSWORD: superdupersecretpassword
+      MYSQL_USER: alcali
+      MYSQL_PASSWORD: alcali
+    volumes:
+      - dbdata:/docker-entrypoint-initdb.d
+    ports:
+      - "3306"
   web:
     build:
       context: .
@@ -28,27 +50,45 @@ services:
       - db
     env_file:
       - env.sample
-  master:
+  master1:
     build:
       context: ./docker
-      dockerfile: Dockerfile-master
+      dockerfile: Dockerfile-master1
     command: honcho start
     depends_on:
       - web
     environment:
       - PYTHONUNBUFFERED=true
     ports:
-      - "8080:8080"
+      - "8081:8081"
+  master2:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-master2
+    command: honcho start
+    depends_on:
+      - web
+    environment:
+      - PYTHONUNBUFFERED=true
+    ports:
+      - "8082:8082"
   minion:
     build:
       context: ./docker
       dockerfile: Dockerfile-minion
     command: salt-minion -l info
     depends_on:
-      - master
+      - master1
 #  ldap-server:
 #    image: osixia/openldap:1.3.0
 #    restart: always
 #    ports:
 #      - "389:389"
 #      - "636:636"
+volumes:
+  dbdata:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './docker/sql/mysql'

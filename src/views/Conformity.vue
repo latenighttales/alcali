@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col sm="12">
-        <ConformityTable></ConformityTable>
+        <ConformityTable :key="master"></ConformityTable>
       </v-col>
     </v-row>
   </v-container>
@@ -13,6 +13,7 @@
 
   export default {
     name: "Conformity",
+    props: ["master"],
     components: { ConformityTable },
   }
 </script>
