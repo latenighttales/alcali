@@ -568,10 +568,10 @@
                 <h1 id="minions">Minions<a class="headerlink" href="#minions" title="Permanent link">&para;</a></h1>
 <p><img alt="minions" src="../../images/screenshots/minions.png" /></p>
 <p>List all minions currently in Alcali database.</p>
-<p>To add more minions, use the action button and refresh all minions. Only currently accepted keys will be added.</p>
+<p>To add more minions, use the action button and refresh all minions.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>By default, refreshing minions will run <code>grains.items</code> and <code>pillar.items</code> on all minions.</p>
+<p>By default, refreshing minions will run <code>test.ping</code> <code>grains.items</code> and <code>pillar.items</code> on all minions responding to <code>test.ping</code>.</p>
 <p>If you add <a href="../settings/">custom minions fields</a>, the states you add will be run too.</p>
 </div>
 <p>To access <a href="../minion_details/">minion details</a>, click on the minion id.</p>
