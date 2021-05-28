@@ -41,10 +41,15 @@ def test_add_keys(admin_client, jwt):
 
 @pytest.mark.django_db()
 def test_add_minions(admin_client, jwt):
-    assert Minions.objects.count() == 0
+    admin_client.post(
+        "/api/keys/manage_keys/", {"action": "accept", "target": "*"}, **jwt
+    )
+    minions = Minions.objects.all()
+    assert minions.count() == 0
     response = admin_client.post("/api/minions/refresh_minions/", **jwt)
     assert response.status_code == 200
-    assert Minions.objects.count() > 0
+    resp = response.json()
+    assert "refreshed" in resp
 
 
 @pytest.mark.django_db()

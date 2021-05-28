@@ -4,7 +4,6 @@ from urllib.error import URLError
 
 import urllib3
 
-from django.contrib.auth.models import User
 from pepper import Pepper, PepperException
 from django_currentuser.middleware import get_current_user
 
@@ -54,13 +53,11 @@ def get_keys(refresh=False):
                 finger_ret = api.wheel("key.finger", match=minion, hash_type="sha256")[
                     "return"
                 ][0]["data"]["return"][key]
-                obj, created = Keys.objects.update_or_create(
+                Keys.objects.create(
                     minion_id=minion,
-                    defaults={"status": value, "pub": finger_ret[minion]},
+                    status=value,
+                    pub=finger_ret[minion],
                 )
-                if created:
-                    pass
-                    # LOG CREATED
 
     return {"result": "refreshed"}
 
@@ -76,7 +73,7 @@ def refresh_minion(minion_id):
     if grain.get(minion_id):
         pillar = api.local(minion_id, "pillar.items")
         pillar = pillar["return"][0]
-        Minions.objects.update_or_create(
+        minion, _ = Minions.objects.update_or_create(
             minion_id=minion_id,
             defaults={
                 "grain": json.dumps(grain[minion_id]),
@@ -94,7 +91,7 @@ def refresh_minion(minion_id):
             MinionsCustomFields.objects.update_or_create(
                 name=field["name"],
                 function=field["function"],
-                minion=Minions.objects.get(minion_id=minion_id),
+                minion=minion,
                 defaults={"value": json.dumps(custom_field_return[minion_id])},
             )
     return {"result": "{} refreshed".format(minion_id)}
@@ -111,16 +108,11 @@ def run_raw(load):
 
 
 def get_events():
-    api = Pepper(url, ignore_ssl_errors=True)
-    # TODO: find a way.
-    user = User.objects.first()
-    api.login(
-        str(user.username),
-        user.user_settings.token,
-        os.environ.get("SALT_AUTH", "alcali"),
-    )
-    response = api.req_stream("/events")
-    return response
+    try:
+        api = api_connect()
+    except PepperException as e:
+        return {"error": str(e)}
+    return api.req_stream("/events")
 
 
 def init_db(target):

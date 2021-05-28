@@ -39,8 +39,8 @@
       },
       refreshMinions() {
         this.$toast("refreshing minions")
-        this.$http.post("/api/minions/refresh_minions/").then(() => {
-          this.$toast("minions refreshed")
+        this.$http.post("/api/minions/refresh_minions/").then((response) => {
+          this.$toast(`${response.data.refreshed.length} minions refreshed`)
         }).then(() => {
           this.refreshKey += 1
         }).catch((error) => {

@@ -32,6 +32,7 @@ Go to [http://localhost:8000/#/minions](http://localhost:8000/#/minions) and use
 !!! info
     **By default**, refreshing minions will run:
 
+    - `test.ping`
     - `grains.items`
     - `pillar.items`
 

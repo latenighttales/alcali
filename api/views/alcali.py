@@ -35,8 +35,18 @@ from api.backend.netapi import (
     get_keys,
     manage_schedules,
 )
-from api.models import SaltReturns, Keys, Minions, SaltEvents, Schedule, Conformity
-from api.models import UserSettings, MinionsCustomFields, Functions, JobTemplate
+from api.models import (
+    SaltReturns,
+    Keys,
+    Minions,
+    SaltEvents,
+    Schedule,
+    Conformity,
+    UserSettings,
+    MinionsCustomFields,
+    Functions,
+    JobTemplate,
+)
 from api.permissions import IsLoggedInUserOrAdmin, IsAdminUser
 from api.renderer import StreamingRenderer
 from api.serializers import (
@@ -49,8 +59,9 @@ from api.serializers import (
     MyTokenObtainPairSerializer,
     SaltReturnsSerializer,
     JobTemplateSerializer,
+    KeysSerializer,
+    MinionsSerializer,
 )
-from api.serializers import KeysSerializer, MinionsSerializer
 from api.utils import graph_data, render_conformity, RawCommand
 from api.utils.output import highstate_output, nested_output
 
@@ -112,14 +123,24 @@ class MinionsViewSet(viewsets.ModelViewSet):
 
             return Response({"result": "refreshed {}".format(minion_id)})
 
-        accepted_minions = Keys.objects.filter(status="accepted").values_list(
-            "minion_id", flat=True
+        # Run test.ping to list currently connected minions
+        connected = run_raw(
+            [
+                {
+                    "client": "local",
+                    "batch": None,
+                    "tgt_type": "glob",
+                    "tgt": "*",
+                    "fun": "test.ping",
+                }
+            ]
         )
+        accepted_minions = [i for i in connected if connected.get(i) is True]
         for minion in accepted_minions:
             ret = refresh_minion(minion)
             if "error" in ret:
                 return Response(ret["error"], status=401)
-        return Response({"refreshed": [i for i in accepted_minions]})
+        return Response({"refreshed": accepted_minions})
 
     @action(detail=False)
     def conformity(self, request):
