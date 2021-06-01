@@ -1,54 +1,67 @@
 {
-    "components": {
-        "ConformityCard": {
-            "Highstate": "HighState",
-            "true": "oui",
-            "false": "non",
-            "unknown": "inconnu"
-        },
-        "ConformityChart": {
-            "conformity": "Conformité",
-            "conform":"conforme",
-            "conflict":"conflit",
-            "unknown":"inconnu"
-        },
-        "ConformityDetailCard": {
-            "HighstateConformity": "Conformité Highstate"
-        },
-        "ConformityTable": {
-            "Conformity": "Conformité",
-            "Search": "Chercher",
-            "detail": "détail",
-            "highstate": "highstate",
-            "rowsPerPage": "Entrées par page",
-            "Unknown": "Unknow",
-            "True": "Oui",
-            "False": "Non",
-            "Minion id": "Id du minion",
-            "Last Highstate":"Dernier Highstate",
-            "Highstate Conformity": "Conformité Highstate",
-            "Succeeded": "Réussi",
-            "Unchanged": "Inchangé",
-            "Failed": "En échec",
-            "Actions": "Actions"
-        },
-        "KeysStatusCard": {
-            "keys": "Clés"
-        }
+  "components": {
+    "ConformityCard": {
+      "Highstate": "HighState",
+      "true": "oui",
+      "false": "non",
+      "unknown": "inconnu"
     },
-    "views": {
-        "ConformityDetail": {
-            "Succeeded": "Succeeded",
-            "Unchanged": "Unchanged",
-            "Failed": "Failed"
-        },
-        "Login": {
-            "LoginTitle": "Connexion",
-            "Login": "Identifiant",
-            "Password": "Mot de passe",
-            "InvalidCredentials": "Identifiant ou mot de passe invalides",
-            "Unauthorized": "Non autorisé",
-            "SignIn": "Se connecter"
-        }
+    "ConformityChart": {
+      "conformity": "Conformité",
+      "conform": "conforme",
+      "conflict": "conflit",
+      "unknown": "inconnu"
+    },
+    "ConformityDetailCard": {
+      "HighstateConformity": "Conformité Highstate"
+    },
+    "ConformityTable": {
+      "Conformity": "Conformité",
+      "Search": "Chercher",
+      "detail": "détail",
+      "highstate": "highstate",
+      "rowsPerPage": "Entrées par page",
+      "Unknown": "Unknow",
+      "True": "Oui",
+      "False": "Non",
+      "Minion id": "Id du minion",
+      "Last Highstate": "Dernier Highstate",
+      "Highstate Conformity": "Conformité Highstate",
+      "Succeeded": "Réussi",
+      "Unchanged": "Inchangé",
+      "Failed": "En échec",
+      "Actions": "Actions"
+    },
+    "EventsTable": {
+      "Events": "Événements",
+      "Search": "Chercher",
+      "Tag": "Tag",
+      "Jid": "Jid",
+      "Target": "Cible",
+      "Function": "Fonction",
+      "Arguments": "Arguments",
+      "Date": "Date",
+      "LoadingText": "Chargement des événements...",
+      "NoDataText": "Aucun événement trouvé",
+      "NoResultText": "Aucun événement trouvé pour cette recherche"
+    },
+    "KeysStatusCard": {
+      "keys": "Clés"
     }
+  },
+  "views": {
+    "ConformityDetail": {
+      "Succeeded": "Succeeded",
+      "Unchanged": "Unchanged",
+      "Failed": "Failed"
+    },
+    "Login": {
+      "LoginTitle": "Connexion",
+      "Login": "Identifiant",
+      "Password": "Mot de passe",
+      "InvalidCredentials": "Identifiant ou mot de passe invalides",
+      "Unauthorized": "Non autorisé",
+      "SignIn": "Se connecter"
+    }
+  }
 }

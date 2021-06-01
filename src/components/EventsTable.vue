@@ -2,13 +2,13 @@
   <v-container fluid>
     <v-card>
       <v-card-title>
-        Events
+        {{ $t('components.EventsTable.Events') }}
         <v-spacer></v-spacer>
         <v-text-field
             class="search"
             v-model="search"
             append-icon="search"
-            label="Search"
+            :label="$t('components.EventsTable.Search')"
             single-line
             hide-details
         ></v-text-field>
@@ -22,6 +22,9 @@
           class="elevation-1"
           show-expand
           :loading="loading"
+          :loading-text="$t('components.EventsTable.LoadingText')"
+          :no-data-text="$t('components.EventsTable.NoDataText')"
+          :no-results-text="$t('components.EventsTable.NoResultText')"
       >
         <template v-slot:item.alter_time="{ item }">
           {{new Date(item.alter_time).toLocaleString("en-GB")}}
@@ -57,12 +60,12 @@
       return {
         search: "",
         headers: [
-          { text: "Tag", value: "tag" },
-          { text: "Jid", value: "jid" },
-          { text: "Target", value: "minion_id" },
-          { text: "Function", value: "fun" },
-          { text: "Arguments", value: "fun_args" },
-          { text: "Date", value: "alter_time" },
+          { text: this.$i18n.t('components.EventsTable.Tag'), value: "tag" },
+          { text: this.$i18n.t('components.EventsTable.Jid'), value: "jid" },
+          { text: this.$i18n.t('components.EventsTable.Target'), value: "minion_id" },
+          { text: this.$i18n.t('components.EventsTable.Function'), value: "fun" },
+          { text: this.$i18n.t('components.EventsTable.Arguments'), value: "fun_args" },
+          { text: this.$i18n.t('components.EventsTable.Date'), value: "alter_time" },
         ],
         events: [],
         loading: true,
