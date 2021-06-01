@@ -1,0 +1,20 @@
+{
+    "components": {
+        "ConformityChart": {
+            "conformity": "Conformity"
+        },
+        "KeysStatusCard": {
+            "keys": "keys"
+        }
+    },
+    "views": {
+        "Login": {
+            "LoginTitle": "Login",
+            "Login": "Login",
+            "Password": "Password",
+            "InvalidCredentials": "Invalid Login / Password",
+            "Unauthorized": "Unauthorized",
+            "SignIn": "sign in"
+        }
+    }
+}

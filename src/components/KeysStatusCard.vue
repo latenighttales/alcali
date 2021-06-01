@@ -1,19 +1,7 @@
-<i18n>
-{
-  "en": {
-    "keys": "Keys"
-  },
-  "fr": {
-    "keys": "Clés"
-  }
-}
-</i18n>
-
-
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>{{ $t('keys') }}</v-card-title>
+      <v-card-title>{{ $t('components.KeysStatusCard.keys') }}</v-card-title>
       <v-simple-table>
         <tbody>
         <tr v-for="(count, status) in keys_status" :key="status">
