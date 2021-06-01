@@ -5,21 +5,21 @@
       <v-simple-table>
         <tbody>
         <tr>
-          <td>Highstate</td>
+          <td>{{ $t('components.ConformityCard.Highstate') }}</td>
           <td class="text-right">
-            <v-chip :color="boolRepr(conformity)" dark>{{ valRepr(conformity)|capitalize }}</v-chip>
+            <v-chip :color="boolRepr(conformity)" dark>{{ $t(`components.ConformityCard.${valRepr(conformity)}`)|capitalize }}</v-chip>
           </td>
         </tr>
         </tbody>
         <tbody v-for="conf in custom_conformity" :key="conf.key">
         <tr v-for="(val, key) in conf" :key="key">
-          <td>{{ key }}</td>
+          <td>{{ $t(key) }}</td>
           <td class="text-right">
             <v-chip
                 v-if="isBool(val)"
                 :color="boolRepr(conformity)"
                 dark
-            >{{ valRepr(conformity)|capitalize }}
+            >{{ valRepr($t(conformity))|capitalize }}
             </v-chip>
             <span v-else>{{ valRepr(val) }}</span>
           </td>

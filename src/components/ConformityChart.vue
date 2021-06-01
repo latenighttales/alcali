@@ -77,7 +77,7 @@
                 color = colors[keys[keys.length * Math.random() << 0]].darken2
               }
               chart_data.datasets.push({
-                label: value,
+                label: this.$i18n.t(`components.ConformityChart.${value}`),
                 data: [conformity[value]],
                 backgroundColor: color,
               })

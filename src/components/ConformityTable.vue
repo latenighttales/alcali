@@ -2,13 +2,13 @@
   <v-container fluid>
     <v-card>
       <v-card-title>
-        Conformity
+        {{$t('components.ConformityTable.Conformity')}}
         <v-spacer></v-spacer>
         <v-text-field
             class="search"
             v-model="search"
             append-icon="search"
-            label="Search"
+            :label="$t('components.ConformityTable.Search')"
             single-line
             hide-details
         ></v-text-field>
@@ -21,6 +21,7 @@
           :search="search"
           class="elevation-1"
           :loading="loading"
+          :footer-props="{'items-per-page-text':$t('components.ConformityTable.rowsPerPage')}"
       >
         <template v-slot:item.minion_id="{ item }">
           <v-btn text small class="text-none" :to="'/conformity/'+item.minion_id">{{ item.minion_id }}</v-btn>
@@ -29,7 +30,7 @@
           {{item.last_highstate === null ? "": new Date(item.last_highstate).toLocaleString("en-GB")}}
         </template>
         <template v-slot:item.conformity="{ item }">
-          <v-chip :color="boolRepr(item.conformity)" dark>{{ item.conformity }}
+          <v-chip :color="boolRepr(item.conformity)" dark>{{ $t(`components.ConformityTable.${item.conformity}`) }}
           </v-chip>
         </template>
         <template v-slot:item.succeeded="{ item }">
@@ -78,7 +79,7 @@
                 dark
                 :to="'/conformity/'+item.minion_id"
             >
-              detail
+              {{$t('components.ConformityTable.detail')}}
             </v-btn>
             <v-btn
                 small
@@ -88,7 +89,7 @@
                 dark
                 :to="'/run?tgt='+item.minion_id+'&fun=state.apply'"
             >
-              highstate
+              {{$t('components.ConformityTable.highstate')}}
             </v-btn>
           </div>
         </template>
@@ -115,8 +116,8 @@
     methods: {
       loadData() {
         this.$http.get("api/conformity/render/").then(response => {
-          this.headers = response.data.name
-          this.headers.push({ text: "Actions", value: "action", sortable: false })
+          this.headers = response.data.name.map(dataItem => {return { ...dataItem, text: this.$i18n.t(`components.ConformityTable.${dataItem.text}`)}})
+          this.headers.push({ text: this.$i18n.t('components.ConformityTable.Actions'), value: "action", sortable: false })
           this.conformity = response.data.data
           this.loading = false
         })
