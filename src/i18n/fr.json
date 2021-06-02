@@ -1,5 +1,40 @@
 {
   "components": {
+    "mixins":{
+      "UserCard":{
+        "Users": "Utilisateurs",
+        "Create": "Créer",
+        "CreateUser": "Créer l'utilisateur",
+        "UpdateUser": "Mettre à jour l'utilisateur",
+        "Update": "Mettre à jour",
+        "Discard": "Jeter",
+        "View": "Vue",
+        "Renew": "Renouveller",
+        "Revoke": "Révoquer",
+        "Delete": "Supprimer",
+        "ActionMsg": "cette action est irréversible.",
+        "Close": "Fermer",
+        "Token": "Token"
+      }
+    },
+    "core":{
+      "Fab":{
+        "Close": "close",
+        "Menu": "menu"
+      },
+      "Layout":{
+        "Person": "person",
+        "Group": "Group",
+        "Users": "Users",
+        "Settings": "Settings",
+        "Collapse": "COLLAPSE",
+        "Notifications": "Notifications",
+        "NoNotifications": "no new notifications",
+        "Clear": "Clear",
+        "ToggleTheme": "Toggle Theme",
+        "Logout": "Logout"
+      }
+    },
     "CommonSettings":{
       "Title": "Paramètres Généraux",
       "Parse": "Parser les modules depuis:",

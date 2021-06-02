@@ -15,7 +15,7 @@
       >
         <v-list-item two-line :class="mini && 'px-0'">
           <v-list-item-avatar>
-            <v-icon large>person</v-icon>
+            <v-icon large>{{$t('components.core.Layout.Person')}}</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{username}}</v-list-item-title>
@@ -48,32 +48,32 @@
           <v-list-item-action v-if="mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
-                <v-icon v-on="on">group</v-icon>
+                <v-icon v-on="on">{{$t('components.core.Layout.Group')}}</v-icon>
               </template>
-              <span>Users</span>
+              <span>{{$t('components.core.Layout.Users')}}</span>
             </v-tooltip>
           </v-list-item-action>
           <v-list-item-action v-else>
-            <v-icon>group</v-icon>
+            <v-icon>{{$t('components.core.Layout.Group')}}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Users</v-list-item-title>
+            <v-list-item-title>{{$t('components.core.Layout.Users')}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/settings">
           <v-list-item-action v-if="mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
-                <v-icon v-on="on">settings</v-icon>
+                <v-icon v-on="on">{{$t('components.core.Layout.Settings')}}</v-icon>
               </template>
-              <span>Settings</span>
+              <span>{{$t('components.core.Layout.Settings')}}</span>
             </v-tooltip>
           </v-list-item-action>
           <v-list-item-action v-else>
-            <v-icon>settings</v-icon>
+            <v-icon>{{$t('components.core.Layout.Settings')}}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>{{$t('components.core.Layout.Settings')}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -84,7 +84,7 @@
             <v-icon v-else>arrow_back</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>COLLAPSE</v-list-item-title>
+            <v-list-item-title>{{$t('components.core.Layout.Collapse')}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -111,7 +111,7 @@
         ></v-text-field>
       </v-expand-transition>
       <v-btn icon @click="expand_search = !expand_search" class="mr-2">
-        <v-icon>search</v-icon>
+        <v-icon>{{$t('components.core.Layout.Search')}}</v-icon>
       </v-btn>
       <v-menu
           v-model="notif_menu"
@@ -128,14 +128,14 @@
             <template v-slot:badge>
               <span v-if="notif_nb > 0">{{ notif_nb }}</span>
             </template>
-            <v-icon v-on="on" @click="notif_nb = 0">notifications</v-icon>
+            <v-icon v-on="on" @click="notif_nb = 0">{{$t('components.core.Layout.Notifications')}}</v-icon>
           </v-badge>
         </template>
         <v-card min-width="500px" max-width="500px">
           <v-list max-height="700px">
             <v-list-item v-if="messages.length === 0">
               <v-list-item-content>
-                <v-list-item-subtitle>No new notifications</v-list-item-subtitle>
+                <v-list-item-subtitle>{{$t('components.core.Layout.NoNotifications')}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-list-item
@@ -155,7 +155,7 @@
           </v-list>
           <v-card-actions v-show="messages.length > 0">
             <v-spacer></v-spacer>
-            <v-btn text @click="messages = []">Clear</v-btn>
+            <v-btn text @click="messages = []">{{$t('components.core.Layout.Clear')}}</v-btn>
           </v-card-actions>
         </v-card>
       </v-menu>
@@ -169,13 +169,13 @@
           <v-list-item
               @click="toggleTheme"
           >
-            <v-list-item-title>Toggle Theme</v-list-item-title>
+            <v-list-item-title>{{$t('components.core.Layout.ToggleTheme')}}</v-list-item-title>
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item
               @click="logout"
           >
-            <v-list-item-title>Logout</v-list-item-title>
+            <v-list-item-title>{{$t('components.core.Layout.Logout')}}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>

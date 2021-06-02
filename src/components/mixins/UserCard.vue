@@ -11,14 +11,14 @@
           >
             <template v-slot:top>
               <v-toolbar flat>
-                <v-toolbar-title class="headline">Users</v-toolbar-title>
+                <v-toolbar-title class="headline">{{$t('components.mixins.UserCard.Users')}}</v-toolbar-title>
                 <div class="flex-grow-1"></div>
                 <v-dialog v-model="dialog" max-width="500px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}" :disabled="!isStaff">Create</v-btn>
+                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}" :disabled="!isStaff">{{$t('components.mixins.UserCard.Create')}}</v-btn>
                   </template>
                   <v-card>
-                    <v-card-title>{{ editing === true ? "Update User" : "Create User"}}</v-card-title>
+                    <v-card-title>{{ editing === true ? `${$t('components.mixins.UserCard.UpdateUser')}` : `${$t('components.mixins.UserCard.CreateUser')}` }}</v-card-title>
                     <v-card-text>
                       <v-container fluid>
                         <v-row>
@@ -64,10 +64,10 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="primary" v-if="editing" @click="resetUser">Discard</v-btn>
-                      <v-btn color="warning" v-if="editing" @click="updateUser">Update</v-btn>
+                      <v-btn color="primary" v-if="editing" @click="resetUser">{{$t('components.mixins.UserCard.Discard')}}</v-btn>
+                      <v-btn color="warning" v-if="editing" @click="updateUser">{{$t('components.mixins.UserCard.Update')}}</v-btn>
                       <v-btn color="warning" v-if="!editing" :disabled="user.username == null || user.email == ''"
-                             @click="createUser">Create
+                             @click="createUser">{{$t('components.mixins.UserCard.Create')}}
                       </v-btn>
                     </v-card-actions>
                   </v-card>
@@ -89,7 +89,7 @@
                     dark
                     @click="showToken(item)"
                 >
-                  view
+                  {{$t('components.mixins.UserCard.View')}}
                 </v-btn>
                 <v-btn
                     small
@@ -99,7 +99,7 @@
                     dark
                     @click="manageToken('renew', item)"
                 >
-                  renew
+                  {{$t('components.mixins.UserCard.Renew')}}
                 </v-btn>
                 <v-btn
                     small
@@ -109,7 +109,7 @@
                     :disabled="String(item.id) === currentUserId"
                     @click="manageToken('revoke', item)"
                 >
-                  revoke
+                  {{$t('components.mixins.UserCard.Revoke')}}
                 </v-btn>
               </div>
             </template>
@@ -126,7 +126,7 @@
                     dark
                     @click="editUser(item)"
                 >
-                  update
+                  {{$t('components.mixins.UserCard.Update')}}
                 </v-btn>
                 <v-btn
                     small
@@ -136,7 +136,7 @@
                     :disabled="String(item.id) === currentUserId"
                     @click="confirmDelete(item)"
                 >
-                  delete
+                  {{$t('components.mixins.UserCard.Delete')}}
                 </v-btn>
               </div>
             </template>
@@ -154,12 +154,12 @@
               class="headline red"
               primary-title
           >
-            Delete {{ user.username }} ?
+            {{$t('components.mixins.UserCard.Delete')}} {{ user.username }} ?
           </v-card-title>
 
           <v-card-text>
             <br>
-            this action is irreversible.
+            {{$t('components.mixins.UserCard.ActionMsg')}}
           </v-card-text>
 
           <v-divider></v-divider>
@@ -171,14 +171,14 @@
                 text
                 @click="dialogDelete = false"
             >
-              close
+              {{$t('components.mixins.UserCard.Close')}}
             </v-btn>
             <v-btn
                 color="red"
                 text
                 @click="deleteUser(user.id)"
             >
-              delete
+              {{$t('components.mixins.UserCard.Delete')}}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -194,7 +194,7 @@
               class="headline primary"
               primary-title
           >
-            {{ user.username }} Token
+            {{ user.username }} {{$t('components.mixins.UserCard.Token')}}
           </v-card-title>
 
           <v-card-text v-if="user.user_settings">
@@ -211,7 +211,7 @@
                 text
                 @click="dialogToken = false"
             >
-              close
+              {{$t('components.mixins.UserCard.Close')}}
             </v-btn>
           </v-card-actions>
         </v-card>
