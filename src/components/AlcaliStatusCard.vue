@@ -1,11 +1,11 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>Status</v-card-title>
+      <v-card-title>{{ $t('components.AlcalliStatusCard.Status') }}</v-card-title>
       <v-simple-table>
         <tbody>
         <tr>
-          <td>Salt WebSocket</td>
+          <td>{{ $t('components.KeysStatusCard.saltWebsocket') }}</td>
           <td class="text-right">
             <v-chip
                 :color="wsStatus ? 'green': 'red'"
