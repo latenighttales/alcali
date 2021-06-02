@@ -171,6 +171,12 @@
       "JobsNotifications": "Jobs Notifications",
       "MaxNotifications": "Max Notifications",
       "Submit": "Submit"
+    },
+    "AlcaliStatusCard":{
+      "Status" : "Status",
+      "saltWebsocket" : "Salt Websocket",
+      "green": "vert",
+      "red": "rouge"
     }
   },
   "views": {
