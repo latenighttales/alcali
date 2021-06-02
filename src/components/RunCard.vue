@@ -3,19 +3,19 @@
     <v-row no-gutters>
       <v-col sm="12">
         <v-card class="mb-8">
-          <v-card-title>Run</v-card-title>
+          <v-card-title>{{$t('components.RunCard.Run')}}</v-card-title>
           <v-tabs
               v-model="tab"
           >
             <v-tabs-slider></v-tabs-slider>
 
             <v-tab href="#formatted">
-              Formatted
+              {{$t('components.RunCard.Formatted')}}
             </v-tab>
             <v-tab
                 href="#cli"
             >
-              Cli
+              {{$t('components.RunCard.Cli')}}
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tab">
@@ -26,7 +26,7 @@
                   <v-container fluid>
                     <v-row>
                       <v-col sm="3" lg="1" align-self="center" class="text-right">
-                        <span>Client Type:</span>
+                        <span>{{$t('components.RunCard.ClientType')}}</span>
                       </v-col>
                       <v-col sm="3" lg="1">
                         <v-select
@@ -81,7 +81,7 @@
                                 <v-icon
                                     color="black"
                                     v-on="on"
-                                >info
+                                >{{$t('components.RunCard.info')}}
                                 </v-icon>
                               </template>
                               <div class="desc">
@@ -162,7 +162,7 @@
                               </v-radio>
                               <v-radio value="recurring" color="primary">
                                 <template v-slot:label>
-                                  <div><strong>Recurring: </strong> Every <span id="cron"></span></div>
+                                  <div><strong>{{$t('components.RunCard.Recurring')}} </strong> {{$t('components.RunCard.Every')}} <span id="cron"></span></div>
                                 </template>
                               </v-radio>
                             </v-radio-group>
@@ -199,9 +199,9 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="orange" large dark @click="runJob(test=true)" v-show="!saveJobSwitch">Test</v-btn>
-                  <v-btn color="info" large dark @click="runJob" v-show="!saveJobSwitch">Run</v-btn>
-                  <v-btn color="green" large dark @click="saveJob" v-show="saveJobSwitch">Save</v-btn>
+                  <v-btn color="orange" large dark @click="runJob(test=true)" v-show="!saveJobSwitch">{{$t('components.RunCard.Test')}}</v-btn>
+                  <v-btn color="info" large dark @click="runJob" v-show="!saveJobSwitch">{{$t('components.RunCard.Run')}}</v-btn>
+                  <v-btn color="green" large dark @click="saveJob" v-show="saveJobSwitch">{{$t('components.RunCard.Save')}}</v-btn>
                 </v-card-actions>
               </v-card>
             </v-tab-item>
@@ -216,7 +216,7 @@
     <v-row>
       <v-col sm="12">
         <v-card v-if="results">
-          <v-card-title>Results</v-card-title>
+          <v-card-title>{{$t('components.RunCard.Results')}}</v-card-title>
           <v-card-text v-html="results" class="ansiStyle"></v-card-text>
         </v-card>
       </v-col>

@@ -7,17 +7,17 @@
         <v-tabs-slider></v-tabs-slider>
 
         <v-tab href="#grain">
-          Grains
+          {{$t('components.MinionDetailCard.Grains')}}
         </v-tab>
 
         <v-tab href="#pillar">
-          Pillar
+          {{$t('components.MinionDetailCard.Pillar')}}
         </v-tab>
         <v-tab href="#history">
-          History
+          {{$t('components.MinionDetailCard.History')}}
         </v-tab>
         <v-tab href="#graph">
-          Graph
+          {{$t('components.MinionDetailCard.Graph')}}
         </v-tab>
         <v-tab v-for="field in minion.custom_fields" v-bind:key="field.name">
           {{field.name}}
@@ -26,13 +26,13 @@
       <v-tabs-items v-model="tab">
         <v-tab-item id="grain">
           <div class="text-right">
-            <v-btn @click="fold('grainCm')" class="overlayedBtn">{{ grainCmFolded ? "unfold" : "fold" }}</v-btn>
+            <v-btn @click="fold('grainCm')" class="overlayedBtn">{{ grainCmFolded ? `${$t('components.MinionDetailCard.unfold')}` : `${$t('components.MinionDetailCard.fold')}`}}</v-btn>
           </div>
           <codemirror v-model="code" ref="grainCm" :options="cmOptions"></codemirror>
         </v-tab-item>
         <v-tab-item id="pillar">
           <div class="text-right">
-            <v-btn @click="fold('pillarCm')" class="overlayedBtn">{{ pillarCmFolded ? "unfold" : "fold" }}</v-btn>
+            <v-btn @click="fold('pillarCm')" class="overlayedBtn">{{ pillarCmFolded ? `${$t('components.MinionDetailCard.unfold')}` : `${$t('components.MinionDetailCard.fold')}`}}</v-btn>
           </div>
           <codemirror v-model="codepillar" ref="pillarCm" :options="cmOptions"></codemirror>
         </v-tab-item>

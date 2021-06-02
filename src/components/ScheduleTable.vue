@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-card>
       <v-card-title>
-        Schedules
+        {{$t('components.ScheduleTable.Schedules')}}
         <v-spacer></v-spacer>
         <v-text-field
             class="search"
@@ -34,7 +34,7 @@
                 dark
                 @click="manageSchedule(item.enabled ? 'disable_job': 'enable_job', item.name, item.minion)"
             >
-              {{ item.enabled ? "disable":"enable"}}
+              {{ item.enabled ? `${$t('components.ScheduleTable.Disable')}` : `${$t('components.ScheduleTable.Enable')}` }}
             </v-btn>
             <v-btn
                 small
@@ -44,7 +44,7 @@
                 dark
                 @click="manageSchedule('delete', item.name, item.minion)"
             >
-              delete
+              {{$t('components.ScheduleTable.Delete')}}
             </v-btn>
           </div>
         </template>

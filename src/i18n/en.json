@@ -72,8 +72,70 @@
       "Search": "Search",
       "Job": "Job"
     },
+    "JobTemplatesTable":{
+      "JobTemplate": "Job Templates",
+      "Run": "run",
+      "Edit": "edit",
+      "Delete": "delete"
+    },
     "KeysStatusCard": {
       "keys": "keys"
+    },
+    "KeysTable":{
+      "Keys": "Keys"
+    },
+    "MinionDetailCard":{
+      "Grains": "Grains",
+      "Pillar": "Pillar",
+      "History": "History",
+      "Graph": "Graph",
+      "Fold": "fold",
+      "Unfold": "unfold"
+    },
+    "MinionsTable":{
+      "Minion": "Minion",
+      "Column": "Column",
+      "Run": "run job",
+      "Delete": "Delete",
+      "Msg1": "If you delete ",
+      "Msg2": " from the database, you will need to refresh all minions."
+    },
+    "NetworkCard":{
+      "Network": "Network",
+      "Interface": "Interface",
+      "MAC": "Mac",
+      "DNS": "Dns",
+      "IPV4Gateway": "IP V4 Gateway",
+      "IPV6Gateway": "IP V6 Gateway"
+    },
+    "NotFound":{
+      "Title": "Oops",
+      "404": "404. there is nos page here",
+      "Back": "Back"
+    },
+    "RunCard":{
+      "Run": "Run",
+      "Formatted": "Formatted",
+      "Cli": "Cli",
+      "ClientType": "Client Type:",
+      "Info": "info",
+      "Recurring": "Recurring:",
+      "Every": "Every",
+      "Results": "Results",
+      "Save": "Save",
+      "Test": "Test"
+    },
+    "ScheduleTable":{
+      "Schedule": "Schedule",
+      "Disable": "disable",
+      "Enable": "enable",
+      "Delete": "Delete"
+    },
+    "UserSettings":{
+      "UserSettings": "User Settings",
+      "JobsNotifications": "Jobs Notifications",
+      "MaxNotifications": "Max Notifications",
+      "Submit": "Submit"
     }
   },
   "views": {

@@ -4,7 +4,7 @@
       <v-col sm="12">
         <v-card>
           <v-card-title>
-            Job Templates
+            {{$t('components.JobTemplatesTable.JobTemplate')}}
             <v-spacer></v-spacer>
             <v-text-field
                 class="search"
@@ -37,7 +37,7 @@
                     dark
                     :to="computeUrl(item, false)"
                 >
-                  run
+                  {{$t('components.JobTemplatesTable.Run')}}
                 </v-btn>
                 <v-btn
                     small
@@ -47,7 +47,7 @@
                     dark
                     :to="computeUrl(item, true)"
                 >
-                  edit
+                  {{$t('components.JobTemplatesTable.Edit')}}
                 </v-btn>
                 <v-btn
                     small
@@ -57,7 +57,7 @@
                     dark
                     @click="deleteTemplate(item.id)"
                 >
-                  delete
+                  {{$t('components.JobTemplatesTable.Delete')}}
                 </v-btn>
               </div>
             </template>

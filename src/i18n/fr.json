@@ -74,6 +74,62 @@
     },
     "KeysStatusCard": {
       "keys": "Clés"
+    },
+    "KeysTable":{
+      "Keys": "Clés"
+    },
+    "MinionDetailCard":{
+      "Grains": "Grains",
+      "Pillar": "Pillar",
+      "History": "Historique",
+      "Graph": "Graph",
+      "Fold": "Cacher",
+      "Unfold": "Montrer"
+    },
+    "MinionsTable":{
+      "Minion": "Minion",
+      "Column": "Colonne",
+      "Run": "Exécuter tâche",
+      "Delete": "Supprimer",
+      "Msg1": "Si vous supprimez ",
+      "Msg2": " de la base de données, vous devrez rafraîchir tous les minions."
+    },
+    "NetworkCard":{
+      "Network": "Réseau",
+      "Interface": "Interface",
+      "MAC": "Mac",
+      "DNS": "Dns",
+      "IPV4Gateway": "Passerelle IP V4",
+      "IPV6Gateway": "Passerelle IP V6"
+    },
+    "NotFound":{
+      "Title": "Oops",
+      "404": "404. Cette page n'existe pas.",
+      "Back": "Retour"
+    },
+    "RunCard":{
+      "Run": "Exécuter",
+      "Formatted": "Formaté",
+      "Cli": "Client",
+      "ClientType": "Type du client:",
+      "Info": "info",
+      "Recurring": "Récurrence:",
+      "Every": "Intervalle",
+      "Results": "Résultats",
+      "Save": "Sauvegarder",
+      "Test": "Tester"
+    },
+    "ScheduleTable":{
+      "Schedule": "Planning",
+      "Disable": "désactiver",
+      "Enable": "activer",
+      "Delete": "Supprimer"
+    },
+    "UserSettings":{
+      "UserSettings": "Options utilisateur",
+      "JobsNotifications": "Notifications de tâches",
+      "MaxNotifications": "Notifications maximum",
+      "Submit": "Envoyer"
     }
   },
   "views": {

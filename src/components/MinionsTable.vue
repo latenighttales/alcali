@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-card>
       <v-card-title>
-        Minions
+        {{$t('components.MinionsTable.Minion')}}
         <v-spacer></v-spacer>
         <v-menu
             v-model="menu"
@@ -18,7 +18,7 @@
                 v-on="on"
                 class="mr-5"
             >
-              Columns
+              {{$t('components.MinionsTable.Column')}}
             </v-btn>
           </template>
 
@@ -86,7 +86,7 @@
                 dark
                 :to="'/run?tgt='+item.minion_id"
             >
-              run job
+               {{$t('components.MinionsTable.Run')}}
             </v-btn>
             <v-btn
                 small
@@ -96,7 +96,7 @@
                 dark
                 @click.stop="showDialog(item.minion_id)"
             >
-              delete
+               {{$t('components.MinionsTable.Delete')}}
             </v-btn>
           </div>
         </template>
@@ -112,12 +112,12 @@
               class="headline red"
               primary-title
           >
-            Delete {{ target }} ?
+             {{$t('components.MinionsTable.Delete')}} {{ target }} ?
           </v-card-title>
 
           <v-card-text>
             <br>
-            If you delete {{ target }} from the database, you will need to refresh all minions.
+            {{$t('components.MinionsTable.Msg1')}}{{target}}{{$t('components.MinionsTable.Msg2')}}
           </v-card-text>
 
           <v-divider></v-divider>
@@ -129,14 +129,14 @@
                 text
                 @click="dialog = false"
             >
-              close
+               {{$t('components.MinionsTable.Close')}}
             </v-btn>
             <v-btn
                 color="red"
                 text
                 @click="deleteMinion(target)"
             >
-              delete
+               {{$t('components.MinionsTable.Delete')}}
             </v-btn>
           </v-card-actions>
         </v-card>

@@ -1,22 +1,22 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>Network</v-card-title>
+      <v-card-title>{{$t('components.NetworkCard.Network')}}</v-card-title>
       <v-tabs
           v-model="tab"
       >
         <v-tabs-slider></v-tabs-slider>
 
         <v-tab href="#interface">
-          Interfaces
+          {{$t('components.NetworkCard.Interfaces')}}
         </v-tab>
 
         <v-tab href="#mac">
-          Mac
+          {{$t('components.NetworkCard.MAC')}}
         </v-tab>
 
         <v-tab href="#dns">
-          Dns
+          {{$t('components.NetworkCard.DNS')}}
         </v-tab>
       </v-tabs>
       <v-tabs-items v-model="tab">
@@ -28,11 +28,11 @@
               <td class="text-right" v-for="(iface,k) in val" :key="k">{{ iface }}</td>
             </tr>
             <tr>
-              <td>IPv4 GATEWAY</td>
+              <td>{{$t('components.NetworkCard.IPV4Gateway')}}</td>
               <td class="text-right">{{ minion.ip4_gw }}</td>
             </tr>
             <tr>
-              <td>IPv6 GATEWAY</td>
+              <td>{{$t('components.NetworkCard.IPV6Gateway')}}</td>
               <td class="text-right">{{ minion.ip6_gw }}</td>
             </tr>
             </tbody>

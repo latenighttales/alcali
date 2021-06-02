@@ -1,18 +1,18 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>User Settings</v-card-title>
+      <v-card-title>{{$t('components.UserSettings.UserSettings')}}</v-card-title>
       <v-card-text>
         <v-container fluid>
           <v-row>
             <v-col lg="2">
-              <span>Jobs Notifications</span>
+              <span>{{$t('components.UserSettings.JobsNotifications')}}</span>
               <div v-for="(val, name) in notifs" :key="name">
                 <v-switch v-model="notifs[name]" :label="name" color="primary" hide-details></v-switch>
               </div>
             </v-col>
             <v-col lg="2">
-              <span>Max Notifications</span>
+              <span>{{$t('components.UserSettings.MaxNotifications')}}</span>
               <v-text-field v-model="max_notifs" type="number"></v-text-field>
             </v-col>
           </v-row>
@@ -20,7 +20,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click="updateUserSettings">Submit</v-btn>
+        <v-btn color="primary" @click="updateUserSettings">{{$t('components.UserSettings.Submit')}}</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>

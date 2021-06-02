@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-card>
       <v-card-title>
-        Keys
+        {{$t('components.KeysTable.Keys')}}
         <v-spacer></v-spacer>
         <v-text-field
             class="search"
