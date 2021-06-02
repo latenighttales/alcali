@@ -3,14 +3,14 @@
     <v-row>
       <v-col sm="12" v-if="jobs.length === 0 && minions.length === 0">
         <v-container fluid>
-          <p class="display-2 text-center">Sorry, no results...</p>
+          <p class="display-2 text-center">{{$t("views.Search.NoResult")}}</p>
         </v-container>
       </v-col>
       <v-col sm="12" v-if="jobs.length > 0">
         <v-container fluid>
           <v-card>
             <v-card-title>
-              Jobs
+              {{$t("views.Search.Jobs")}}
               <v-spacer></v-spacer>
               <v-text-field
                   v-model="job_search"
@@ -154,8 +154,8 @@
         else return "red"
       },
       boolText(bool) {
-        if (bool === true) return "success"
-        else return "failed"
+        if (bool === true) return this.$t("views.Search.Success")
+        else return this.$t("views.Search.Failed")
       },
     },
   }

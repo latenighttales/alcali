@@ -144,6 +144,18 @@
       "Unchanged": "Unchanged",
       "Failed": "Failed"
     },
+    "JobDetail":{
+      "Success": "Success",
+      "Failed": "Failed",
+      "MinionID": "MINION ID:",
+      "Arguments": "ARGUMENTS:",
+      "KeywordArguments": "KEYWORD ARGUMENTS:",
+      "JobID": "JOB ID:",
+      "Function": "FUNCTION:",
+      "Status": "STATUS:",
+      "StartTime": "START TIME:",
+      "Results": "Results"
+    },
     "Login": {
       "LoginTitle": "Login",
       "Login": "Login",
@@ -151,6 +163,11 @@
       "InvalidCredentials": "Invalid Login / Password",
       "Unauthorized": "Unauthorized",
       "SignIn": "sign in"
+    },
+    "Search":{
+      "NoResult": "Sorry... No results.",
+      "Success": "Success",
+      "Failed": "Failed"
     }
   }
 }

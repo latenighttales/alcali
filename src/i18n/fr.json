@@ -138,6 +138,18 @@
       "Unchanged": "Inchangé",
       "Failed": "Echoué"
     },
+    "JobDetail":{
+      "Success": "Réussi",
+      "Failed": "Echoué",
+      "MinionID": "ID MINION:",
+      "Arguments": "ARGUMENTS:",
+      "KeywordArguments": "MOT CLES ARGUMENTS:",
+      "JobID": "ID TACHE:",
+      "Function": "FONCTION:",
+      "Status": "ETAT:",
+      "StartTime": "START TIME:",
+      "Results": "Résultats"
+    },
     "Login": {
       "LoginTitle": "Connexion",
       "Login": "Identifiant",
@@ -145,6 +157,11 @@
       "InvalidCredentials": "Identifiant ou mot de passe invalides",
       "Unauthorized": "Non autorisé",
       "SignIn": "Se connecter"
+    },
+    "Search":{
+      "NoResult": "Désolé... Aucun résultat.",
+      "Success": "Réussi",
+      "Failed": "Echoué"
     }
   }
 }
