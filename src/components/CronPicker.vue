@@ -97,8 +97,8 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
 
-          <v-btn text @click="menu = false">Cancel</v-btn>
-          <v-btn color="primary" text @click="menu = false">Save</v-btn>
+          <v-btn text @click="menu = false">{{$t('components.CronPicker.Cancel')}}</v-btn>
+          <v-btn color="primary" text @click="menu = false">{{$t('components.CronPicker.Save')}}</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>

@@ -8,15 +8,15 @@
         <v-tabs-slider></v-tabs-slider>
 
         <v-tab href="#common">
-          Common
+          {{$t('components.InfosCard.Common')}}
         </v-tab>
 
         <v-tab href="#salt">
-          Salt
+          {{$t('components.InfosCard.Salt')}}
         </v-tab>
 
         <v-tab href="#hardware">
-          Hardware
+          {{$t('components.InfosCard.Hardware')}}
         </v-tab>
       </v-tabs>
       <v-tabs-items v-model="tab">

@@ -1,12 +1,12 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>Common Settings</v-card-title>
+      <v-card-title>{{$t('components.CommonSettings.Title')}}</v-card-title>
       <v-card-text>
         <v-container fluid>
           <v-row>
             <v-col sm="4" lg="2" align-self="center">
-              Parse modules from:
+              {{$t('components.CommonSettings.Parse')}}
             </v-col>
             <v-col sm="4" lg="2">
               <v-select
@@ -18,7 +18,7 @@
               ></v-select>
             </v-col>
             <v-col align-self="center">
-              <v-btn :disabled="target == null" @click="parseModules" color="primary">Submit</v-btn>
+              <v-btn :disabled="target == null" @click="parseModules" color="primary">{{$t('components.CommonSettings.Submit')}}</v-btn>
             </v-col>
             <v-col sm="4" lg="1" align-self="center">
               Alcali Version:
@@ -29,12 +29,12 @@
           </v-row>
           <v-row>
             <v-col sm="12" lg="6">
-              <v-row>Minions Fields</v-row>
+              <v-row>{{$t('components.CommonSettings.Fields')}}</v-row>
               <v-row v-for="item in uniqueMinionField" :key="item.name">
                 <v-col lg="4"><b>{{item.name}}</b></v-col>
                 <v-col lg="4">{{item["function"]}}</v-col>
                 <v-col align-self="center">
-                  <v-btn color="red" dark @click="deleteMinionsFields(item.name)">Delete</v-btn>
+                  <v-btn color="red" dark @click="deleteMinionsFields(item.name)">{{$t('components.CommonSettings.Delete')}}</v-btn>
                 </v-col>
               </v-row>
               <v-row>
@@ -57,19 +57,19 @@
                 </v-col>
                 <v-col align-self="center">
                   <v-btn :disabled="minionsfields_name == null || minionsfields_value == null" color="primary"
-                         @click="createMinionsFields">Create
+                         @click="createMinionsFields">{{$t('components.CommonSettings.Create')}}
                   </v-btn>
                 </v-col>
               </v-row>
 
             </v-col>
             <v-col sm="12" lg="6">
-              <v-row>Custom Conformity</v-row>
+              <v-row>{{$t('components.CommonSettings.Conformity')}}</v-row>
               <v-row v-for="item in conformity" v-bind:key="item.id">
                 <v-col lg="4"><b>{{item.name}}</b></v-col>
                 <v-col lg="4">{{item.function}}</v-col>
                 <v-col align-self="center">
-                  <v-btn color="red" @click="deleteConformity(item.id)" dark>Delete</v-btn>
+                  <v-btn color="red" @click="deleteConformity(item.id)" dark>{{$t('components.CommonSettings.Delete')}}</v-btn>
                 </v-col>
               </v-row>
               <v-row>
@@ -89,7 +89,7 @@
                 </v-col>
                 <v-col align-self="center">
                   <v-btn :disabled="conformity_name == null || conformity_value === null" color="primary"
-                         @click="createConformity">Create
+                         @click="createConformity">{{$t('components.CommonSettings.Create')}}
                   </v-btn>
                 </v-col>
               </v-row>

@@ -1,5 +1,14 @@
 {
   "components": {
+    "CommonSettings":{
+      "Title": "Paramètres Généraux",
+      "Parse": "Parser les modules depuis:",
+      "Submit": "Envoyer",
+      "Fields": "Minions fields",
+      "Delete": "Supprimer",
+      "Create": "Créer",
+      "Conformity": "Conformité personnalisée"
+    },
     "ConformityCard": {
       "Highstate": "HighState",
       "true": "oui",
@@ -32,6 +41,10 @@
       "Failed": "En échec",
       "Actions": "Actions"
     },
+    "CronPicker":{
+      "Cancel": "Annuler",
+      "Save": "Sauvegarder"
+    },
     "EventsTable": {
       "Events": "Événements",
       "Search": "Chercher",
@@ -45,15 +58,29 @@
       "NoDataText": "Aucun événement trouvé",
       "NoResultText": "Aucun événement trouvé pour cette recherche"
     },
+    "InfosCard":{
+      "Common": "Général",
+      "Salt": "Salt",
+      "Hardware": "Appareil"
+    },
+    "JobsChartCard":{
+      "Stats": "Statistiques des tâches"
+    },
+    "JobsTable":{
+      "SearchJobs": "Chercher Tâches",
+      "Cancel": "Annuler",
+      "Search": "Chercher",
+      "Job": "Tâche"
+    },
     "KeysStatusCard": {
       "keys": "Clés"
     }
   },
   "views": {
     "ConformityDetail": {
-      "Succeeded": "Succeeded",
-      "Unchanged": "Unchanged",
-      "Failed": "Failed"
+      "Succeeded": "Réussi",
+      "Unchanged": "Inchangé",
+      "Failed": "Echoué"
     },
     "Login": {
       "LoginTitle": "Connexion",

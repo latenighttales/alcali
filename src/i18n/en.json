@@ -1,5 +1,14 @@
 {
   "components": {
+    "CommonSettings":{
+      "Title": "Common Settings",
+      "Parse": "Parse modules from:",
+      "Submit": "Submit",
+      "Fields": "Minions fields",
+      "Delete": "Delete",
+      "Create": "Create",
+      "Conformity": "Custom conformity"
+    },
     "ConformityCard": {
       "Highstate": "Highstate",
       "true": "true",
@@ -32,6 +41,10 @@
       "Failed": "Failed",
       "Actions": "Actions"
     },
+    "CronPicker":{
+      "Cancel": "Cancel",
+      "Save": "Save"
+    },
     "EventsTable": {
       "Events": "Events",
       "Search": "Search",
@@ -44,6 +57,20 @@
       "LoadingText": "Loading events...",
       "NoDataText": "No event found",
       "NoResultText": "No event found for this search"
+    },
+    "InfosCard":{
+      "Common": "Common",
+      "Salt": "Salt",
+      "Hardware": "Hardware"
+    },
+    "JobsChartCard":{
+      "Stats": "Jobs Stats"
+    },
+    "JobsTable":{
+      "SearchJobs": "Search Jobs",
+      "Cancel": "Cancel",
+      "Search": "Search",
+      "Job": "Job"
     },
     "KeysStatusCard": {
       "keys": "keys"

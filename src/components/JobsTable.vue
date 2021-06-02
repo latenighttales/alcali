@@ -5,7 +5,7 @@
         <v-card class="mb-8">
           <v-row>
             <v-col lg="2">
-              <v-card-title>Search Jobs</v-card-title>
+              <v-card-title>{{$t('components.JobsTable.SearchJobs')}}</v-card-title>
             </v-col>
             <v-col lg="2" offset-lg="2">
               <v-menu
@@ -33,7 +33,7 @@
                     range
                 >
                   <div class="flex-grow-1"></div>
-                  <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                  <v-btn text color="primary" @click="menu = false">{{$t('components.JobsTable.Cancel')}}</v-btn>
                   <v-btn text color="primary" @click="$refs.menu.save(selectedDate)">OK</v-btn>
                 </v-date-picker>
               </v-menu>
@@ -86,7 +86,7 @@
                 <v-btn
                     color="primary"
                     @click="filterJobs"
-                >Search
+                >{{$t('components.JobsTable.Search')}}
                 </v-btn>
               </div>
             </v-col>
@@ -98,7 +98,7 @@
       <v-col sm="12">
         <v-card :elevation="filter == null||filter.hasOwnProperty('limit') ? 2 : 0">
           <v-card-title>
-            Jobs
+            {{$t('components.JobsTable.Job')}}
             <v-spacer></v-spacer>
             <v-text-field
                 class="search"
