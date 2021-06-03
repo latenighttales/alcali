@@ -105,7 +105,24 @@
     "InfosCard":{
       "Common": "Common",
       "Salt": "Salt",
-      "Hardware": "Hardware"
+      "Hardware": "Hardware",
+      "FQDN": "F.Q.D.N",
+      "OS": "O.S",
+      "OSVersion": "O.S Version",
+      "Kernel": "Kernel",
+      "LastJob": "Last Job",
+      "LastHighstate": "Last Highstate",
+      "HighstateConformity": "Highstate Conformity",
+      "Master": "Master",
+      "SaltVersion": "Salt Version",
+      "SaltPath": "Salt Path",
+      "PythonVersion": "Python Version",
+      "CPUModel": "C.P.U Model",
+      "CPUNumber": "Number of C.P.U",
+      "TotalMemory": "Total Memory",
+      "TotalSwap": "Total Swap",
+      "Virtual": "Virtual"
+    
     },
     "JobsChartCard":{
       "Stats": "Jobs Stats"
@@ -123,7 +140,8 @@
       "Delete": "delete"
     },
     "KeysStatusCard": {
-      "keys": "keys"
+      "keys": "keys",
+      "saltWebsocket": "Salt Websocket"
     },
     "KeysTable":{
       "Keys": "Keys"
@@ -170,7 +188,7 @@
       "Test": "Test"
     },
     "ScheduleTable":{
-      "Schedule": "Schedule",
+      "Schedules": "Schedules",
       "Disable": "disable",
       "Enable": "enable",
       "Delete": "Delete"

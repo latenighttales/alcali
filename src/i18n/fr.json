@@ -105,7 +105,23 @@
     "InfosCard":{
       "Common": "Général",
       "Salt": "Salt",
-      "Hardware": "Appareil"
+      "Hardware": "Appareil",
+      "FQDN": "F.Q.D.N",
+      "OS": "O.S",
+      "OSVersion": "Version O.S",
+      "Kernel": "Noyau",
+      "LastJob": "Dernière tâche",
+      "LastHighstate": "Dernier Highstate",
+      "HighstateConformity": "Conformité Highstate",
+      "Master": "Master",
+      "SaltVersion": "Version de Salt",
+      "SaltPath": "Chemin Salt",
+      "PythonVersion": "Version de Python",
+      "CPUModel": "Modèle processeur",
+      "CPUNumber": "Nombre de processeurs",
+      "TotalMemory": "Mémoire totale",
+      "TotalSwap": "Echanges totaux",
+      "Virtual": "Virtuel"    
     },
     "JobsChartCard":{
       "Stats": "Statistiques des tâches"
@@ -117,7 +133,8 @@
       "Job": "Tâche"
     },
     "KeysStatusCard": {
-      "keys": "Clés"
+      "keys": "Clés",
+      "saltWebsocket": "Websocket Salt"
     },
     "KeysTable":{
       "Keys": "Clés"
@@ -164,7 +181,7 @@
       "Test": "Tester"
     },
     "ScheduleTable":{
-      "Schedule": "Planning",
+      "Schedules": "Plannings",
       "Disable": "désactiver",
       "Enable": "activer",
       "Delete": "Supprimer"
