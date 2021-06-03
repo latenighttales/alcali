@@ -128,7 +128,16 @@
       "Virtual": "Virtual"
     },
     "JobsChartCard": {
-      "Stats": "Jobs Stats"
+      "Stats": "Jobs Stats",
+      "Filter": "Filter",
+      "Period": "Period",
+      "All": "All",
+      "Highstate": "Highstate",
+      "Other": "Other",
+      "Week": "Week",
+      "TwoWeeks": "Two Weeks",
+      "Month": "Month",
+      "Year": "Year"
     },
     "JobsTable": {
       "SearchJobs": "Search Jobs",

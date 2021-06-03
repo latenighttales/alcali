@@ -128,7 +128,16 @@
       "Virtual": "Virtuel"
     },
     "JobsChartCard": {
-      "Stats": "Statistiques des tâches"
+      "Stats": "Statistiques des tâches",
+      "Filter": "Filtre",
+      "Period": "Periode",
+      "All": "Tout",
+      "Highstate": "Highstate",
+      "Other": "Autre",
+      "Week": "Semaine",
+      "TwoWeeks": "2 Semaines",
+      "Month": "Mois",
+      "Year": "Année"
     },
     "JobsTable": {
       "SearchJobs": "Chercher Tâches",
