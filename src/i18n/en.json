@@ -51,7 +51,11 @@
       "Fields": "Minions fields",
       "Delete": "Delete",
       "Create": "Create",
-      "Conformity": "Custom conformity"
+      "Conformity": "Custom conformity",
+      "Target":"Target",
+      "Name":"Name",
+      "Function": "Function",
+      "Functions":"Functions"
     },
     "ConformityCard": {
       "Highstate": "Highstate",
@@ -159,7 +163,11 @@
     },
     "KeysStatusCard": {
       "keys": "keys",
-      "saltWebsocket": "Salt Websocket"
+      "saltWebsocket": "Salt Websocket",
+      "accepted":"accepted",
+      "rejected":"rejected",
+      "denied":"denied",
+      "unaccepted":"unaccepted"
     },
     "KeysTable":{
       "Keys": "Keys",
@@ -219,7 +227,11 @@
       "UserSettings": "User Settings",
       "JobsNotifications": "Jobs Notifications",
       "MaxNotifications": "Max Notifications",
-      "Submit": "Submit"
+      "Submit": "Submit",
+      "created": "created",
+      "published": "published",
+      "returned": "returned",
+      "event": "event"
     },
     "AlcaliStatusCard":{
       "Status" : "Status",

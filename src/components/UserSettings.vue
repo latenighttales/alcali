@@ -8,7 +8,7 @@
             <v-col lg="2">
               <span>{{$t('components.UserSettings.JobsNotifications')}}</span>
               <div v-for="(val, name) in notifs" :key="name">
-                <v-switch v-model="notifs[name]" :label="name" color="primary" hide-details></v-switch>
+                <v-switch v-model="notifs[name]" :label="$t(`components.UserSettings.${name}`)" color="primary" hide-details></v-switch>
               </div>
             </v-col>
             <v-col lg="2">

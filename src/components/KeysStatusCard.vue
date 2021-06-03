@@ -8,7 +8,7 @@
           <td class="pr-0">
             <v-icon>{{statusIcon(status)}}</v-icon>
           </td>
-          <td class="pl-0">{{ status }}</td>
+          <td class="pl-0">{{ $t(`components.KeysStatusCard.${status}`) }}</td>
           <td class="text-right">{{ count }} / {{keys_total}}</td>
         </tr>
         </tbody>

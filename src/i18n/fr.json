@@ -48,10 +48,14 @@
       "Title": "Paramètres Généraux",
       "Parse": "Parser les modules depuis:",
       "Submit": "Envoyer",
-      "Fields": "Minions fields",
+      "Fields": "Champs des Minions",
       "Delete": "Supprimer",
       "Create": "Créer",
-      "Conformity": "Conformité personnalisée"
+      "Conformity": "Conformité personnalisée",
+      "Target":"Cible",
+      "Name":"Nom",
+      "Function":"Fonction",
+      "Functions":"Fonctions"
     },
     "ConformityCard": {
       "Highstate": "HighState",
@@ -158,7 +162,11 @@
     },
     "KeysStatusCard": {
       "keys": "Clés",
-      "saltWebsocket": "Websocket Salt"
+      "saltWebsocket": "Websocket Salt",
+      "accepted":"acceptées",
+      "rejected":"rejetées",
+      "denied":"interdites",
+      "unaccepted":"non acceptées"
     },
     "KeysTable":{
       "Keys": "Clés",
@@ -218,7 +226,11 @@
       "UserSettings": "Options utilisateur",
       "JobsNotifications": "Notifications de tâches",
       "MaxNotifications": "Notifications maximum",
-      "Submit": "Envoyer"
+      "Submit": "Envoyer",
+      "created": "créées",
+      "published": "publiées",
+      "returned": "résultat reçu",
+      "event": "évènement"
     },
     "AlcaliStatusCard":{
       "Status" : "Statut",

@@ -14,7 +14,7 @@
                   item-text="minion_id"
                   item-value="minion_id"
                   v-model="target"
-                  label="Target"
+                  :label="$t('components.CommonSettings.Target')"
               ></v-select>
             </v-col>
             <v-col align-self="center">
@@ -40,7 +40,7 @@
               <v-row>
                 <v-col lg="4">
                   <v-text-field
-                      label="Name"
+                      :label="$t('components.CommonSettings.Name')"
                       single-line
                       v-model="minionsfields_name"
                   ></v-text-field>
@@ -51,7 +51,7 @@
                       :items="functions"
                       item-value="name"
                       item-text="name"
-                      label="Functions"
+                      :label="$t('components.CommonSettings.Functions')"
                       v-model="minionsfields_value"
                   ></v-combobox>
                 </v-col>
@@ -75,14 +75,14 @@
               <v-row>
                 <v-col lg="4">
                   <v-text-field
-                      label="Name"
+                      :label="$t('components.CommonSettings.Name')"
                       single-line
                       v-model="conformity_name"
                   ></v-text-field>
                 </v-col>
                 <v-col lg="4">
                   <v-text-field
-                      label="Function"
+                      :label="$t('components.CommonSettings.Function')"
                       single-line
                       v-model="conformity_value"
                   ></v-text-field>
