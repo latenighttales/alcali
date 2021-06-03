@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>{{ $t('components.AlcalliStatusCard.Status') }}</v-card-title>
+      <v-card-title>{{ $t('components.AlcaliStatusCard.Status') }}</v-card-title>
       <v-simple-table>
         <tbody>
         <tr>
@@ -16,7 +16,7 @@
           </td>
         </tr>
         <tr v-for="(count, status) in stats" :key="status">
-          <td>{{ status }}</td>
+          <td>{{ $t(`components.AlcaliStatusCard.${status}`) }}</td>
           <td class="text-right">{{ count }}</td>
         </tr>
         </tbody>

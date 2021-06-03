@@ -235,8 +235,9 @@
     "AlcaliStatusCard":{
       "Status" : "Statut",
       "saltWebsocket" : "Salt Websocket",
-      "green": "vert",
-      "red": "rouge"
+      "jobs":"tâches",
+      "events":"évènements",
+      "schedules":"planifiés"
     }
   },
   "views": {
