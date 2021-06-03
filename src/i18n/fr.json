@@ -170,12 +170,26 @@
       "denied":"interdites",
       "unaccepted":"non acceptées"
     },
+    "Keys": {
+      "Refresh":"Rafraîchir les clés",
+      "AcceptAll":"Accepter toutes les clés",
+      "RejectAll":"Rejeter toutes les clés"
+    },
     "KeysTable":{
       "Keys": "Clés",
       "MinionId": "ID Minion",
       "Status": "Status",
       "PublicKey": "clés publiques",
       "Actions": "Actions"
+    },
+    "Minions": {
+      "RefreshAll": "Rafraîchir tous les minions",
+      "JobAll": "Lancer une tâche sur tous les minions"
+    },
+    "MinionDetail": {
+      "RefreshMinion": "Rafraîchir ",
+      "JobMinion": "Lancer une tâche sur ",
+      "HighstateMinion": "Appliquer Highstate sur "
     },
     "MinionDetailCard":{
       "Grains": "Grains",
@@ -217,6 +231,9 @@
       "Results": "Résultats",
       "Save": "Sauvegarder",
       "Test": "Tester"
+    },
+    "Schedules": {
+      "Refresh": "Rafraîchir les tâches"
     },
     "ScheduleTable":{
       "Schedules": "Plannings",

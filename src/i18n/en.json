@@ -171,12 +171,26 @@
       "denied":"denied",
       "unaccepted":"unaccepted"
     },
+    "Keys": {
+      "Refresh":"Refresh keys",
+      "AcceptAll":"Accept all keys",
+      "RejectAll":"Reject all keys"
+    },
     "KeysTable":{
       "Keys": "Keys",
       "MinionId": "Minion ID",
       "Status": "Status",
       "PublicKey": "Public keys",
       "Actions": "Actions"
+    },
+    "Minions": {
+      "RefreshAll": "Refresh all minions",
+      "JobAll": "Run job on all minions"
+    },
+    "MinionDetail": {
+      "RefreshMinion": "Refresh ",
+      "JobMinion": "Run job on ",
+      "HighstateMinion": "Run highstate on "
     },
     "MinionDetailCard":{
       "Grains": "Grains",
@@ -218,6 +232,9 @@
       "Results": "Results",
       "Save": "Save",
       "Test": "Test"
+    },
+    "Schedules": {
+      "Refresh": "Refresh schedules"
     },
     "ScheduleTable":{
       "Schedules": "Schedules",

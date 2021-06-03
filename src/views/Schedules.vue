@@ -22,7 +22,7 @@
           color: "pink",
           action: "refreshSchedules",
           icon: "refresh",
-          tooltip: "Refresh schedules",
+          tooltip: this.$i18n.t("Refresh"),
         },
       ],
       refreshKey: 0,
