@@ -15,7 +15,7 @@
       >
         <v-list-item two-line :class="mini && 'px-0'">
           <v-list-item-avatar>
-            <v-icon large>{{$t('components.core.Layout.Person')}}</v-icon>
+            <v-icon large>person</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{username}}</v-list-item-title>
@@ -54,7 +54,7 @@
             </v-tooltip>
           </v-list-item-action>
           <v-list-item-action v-else>
-            <v-icon>{{$t('components.core.Layout.Group')}}</v-icon>
+            <v-icon>group</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>users</v-list-item-title>
