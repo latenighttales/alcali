@@ -59,7 +59,7 @@
               <v-autocomplete
                   :items="minions"
                   v-model="selectedTarget"
-                  label="$t('components.JobsTable.Target')"
+                  :label="$t('components.JobsTable.Target')"
                   multiple
                   single-line
               >
