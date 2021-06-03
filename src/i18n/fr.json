@@ -19,20 +19,29 @@
     },
     "core":{
       "Fab":{
-        "Close": "close",
+        "Close": "fermer",
         "Menu": "menu"
       },
       "Layout":{
-        "Person": "person",
-        "Group": "Group",
-        "Users": "Users",
-        "Settings": "Settings",
+        "Person": "Personnes",
+        "Group": "Groupe",
+        "Users": "Utilisateurs",
+        "Settings": "Option",
         "Collapse": "COLLAPSE",
         "Notifications": "Notifications",
-        "NoNotifications": "no new notifications",
-        "Clear": "Clear",
-        "ToggleTheme": "Toggle Theme",
-        "Logout": "Logout"
+        "NoNotifications": "pas de nouvelles notifications",
+        "Clear": "Nettoyer",
+        "ToggleTheme": "Activer Theme",
+        "Logout": "Déconnexion",
+        "Overview": "Aperçu",
+        "Minions": "Minions",
+        "Jobs": "Tâches",
+        "Run": "Exécuter",
+        "JobTemplates": "Templates de tâches",
+        "Conformity": "Conformité",
+        "Schedules": "Planning",
+        "Events": "Evénements",
+        "Keys": "Clés"
       }
     },
     "CommonSettings":{

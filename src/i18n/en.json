@@ -32,7 +32,16 @@
         "NoNotifications": "no new notifications",
         "Clear": "Clear",
         "ToggleTheme": "Toggle Theme",
-        "Logout": "Logout"
+        "Logout": "Logout",
+        "Overview": "Overview",
+        "Minions": "Minions",
+        "Jobs": "Jobs",
+        "Run": "Run",
+        "JobTemplates": "Job Templates",
+        "Conformity": "Conformity",
+        "Schedules": "Schedules",
+        "Events": "Events",
+        "Keys": "Keys"
       }
     },
     "CommonSettings":{

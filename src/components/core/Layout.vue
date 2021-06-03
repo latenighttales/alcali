@@ -31,7 +31,7 @@
               <template v-slot:activator="{ on }">
                 <v-icon v-on="on">{{ route.icon }}</v-icon>
               </template>
-              <span>{{route.name}}</span>
+              <span>{{$t(route.name)}}</span>
             </v-tooltip>
           </v-list-item-action>
           <v-list-item-action v-else>
@@ -209,47 +209,47 @@
       notifs: { created: false, published: false, returned: false, event: false },
       routes: [
         {
-          name: "Overview",
+          name: 'components.core.Layout.Overview',
           path: "/",
           icon: "dashboard",
         },
         {
-          name: "Minions",
+          name: 'components.core.Layout.Minions',
           path: "/minions",
           icon: "device_hub",
         },
         {
-          name: "Jobs",
+          name: 'components.core.Layout.Jobs',
           path: "/jobs",
           icon: "playlist_play",
         },
         {
-          name: "Run",
+          name: 'components.core.Layout.Run',
           path: "/run",
           icon: "play_arrow",
         },
         {
-          name: "Job Templates",
+          name: 'components.core.Layout.JobTemplates',
           path: "/job_templates",
           icon: "playlist_add_check",
         },
         {
-          name: "Schedules",
+          name: 'components.core.Layout.Schedules',
           path: "/schedules",
           icon: "schedule",
         },
         {
-          name: "Conformity",
+          name: 'components.core.Layout.Conformity',
           path: "/conformity",
           icon: "done_all",
         },
         {
-          name: "Keys",
+          name: 'components.core.Layout.Keys',
           path: "/keys",
           icon: "compare_arrows",
         },
         {
-          name: "Events",
+          name: 'components.core.Layout.Events',
           path: "/events",
           icon: "playlist_add",
         },
