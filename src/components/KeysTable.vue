@@ -58,10 +58,10 @@
       return {
         search: "",
         headers: [
-          { text: "Minion Id", value: "minion_id" },
-          { text: "Status", value: "status" },
-          { text: "Public Key", value: "pub" },
-          { text: "Actions", value: "action", sortable: false },
+          { text: this.$t('components.KeysTable.MinionId'), value: "minion_id" },
+          { text: this.$t('components.KeysTable.Status'), value: "status" },
+          { text: this.$t('components.KeysTable.PublicKey'), value: "pub" },
+          { text: this.$t('components.KeysTable.Actions'), value: "action", sortable: false },
         ],
         keys: [],
         loading: true,

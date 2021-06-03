@@ -161,7 +161,11 @@
       "saltWebsocket": "Websocket Salt"
     },
     "KeysTable":{
-      "Keys": "Clés"
+      "Keys": "Clés",
+      "MinionId": "ID Minion",
+      "Status": "Status",
+      "PublicKey": "clés publiques",
+      "Actions": "Actions"
     },
     "MinionDetailCard":{
       "Grains": "Grains",
