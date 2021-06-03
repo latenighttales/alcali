@@ -13,8 +13,8 @@
           color="primary"
           fab
       >
-        <v-icon v-if="fab">{{$t('components.core.Fab.Close')}}</v-icon>
-        <v-icon v-else>{{$t('components.core.Fab.Menu')}}</v-icon>
+        <v-icon v-if="fab">close</v-icon>
+        <v-icon v-else>menu</v-icon>
       </v-btn>
     </template>
     <template v-for="f in fabs">
