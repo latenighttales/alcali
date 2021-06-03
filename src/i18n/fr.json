@@ -237,7 +237,9 @@
       "saltWebsocket" : "Salt Websocket",
       "jobs":"tâches",
       "events":"évènements",
-      "schedules":"planifiés"
+      "schedules":"planifiés",
+      "OK":"OK",
+      "NOT_OK":"ERREUR"
     }
   },
   "views": {

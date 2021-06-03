@@ -11,7 +11,7 @@
                 :color="wsStatus ? 'green': 'red'"
                 text-color="white"
             >
-              {{ wsStatus ? "OK": "NOT OK" }}
+              {{ wsStatus ? $t("components.AlcaliStatusCard.OK") : $("components.AlcaliStatusCard.NOT_OK") }}
             </v-chip>
           </td>
         </tr>
