@@ -124,7 +124,7 @@
       },
       deleteTemplate(id) {
         this.$http.delete(`api/job_templates/${id}/`).then(response => {
-          this.$toast("Template deleted")
+          this.$toast(this.$i18n.t("components.JobTemplatesTable.TemplateDeleted"))
         }).then(() => {
           this.loadData()
         })

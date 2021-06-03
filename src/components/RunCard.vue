@@ -346,7 +346,7 @@
         formData.set("name", this.jobTemplateName)
         formData.set("job", command)
         this.$http.post("api/job_templates/", formData).then(response => {
-          this.$toast("Template "+this.jobTemplateName+" saved")
+          this.$toast(this.$i18n.t("components.RunCard.TemplateSaved", [this.jobTemplateName]))
         })
       },
       runJob(test = false) {

@@ -150,7 +150,7 @@
         })
       },
       parseModules() {
-        this.$toast("Parse module started")
+        this.$toast(this.$i18n.t("components.CommonSettings.ParseModulesStart"))
         let formData = new FormData()
         formData.set("target", this.target)
         this.$http.post("api/settings/initdb", formData).then(response => {
@@ -165,7 +165,7 @@
         let formData = new FormData
         formData.set("id", id)
         this.$http.delete("/api/conformity/" + id).then(() => {
-          this.$toast("conformity deleted")
+          this.$toast(this.$i18n.t("components.CommonSettings.ConformityDeleted"))
           this.conformity.splice(this.conformity.indexOf(id), 1)
         })
       },
@@ -179,7 +179,7 @@
             "function": this.conformity_value,
             "id": this.conformity.length + 2,
           })
-          this.$toast("conformity created")
+          this.$toast(this.$i18n.t("components.CommonSettings.ConformityCreated"))
           this.conformity_name = null
           this.conformity_value = null
         })
@@ -191,7 +191,7 @@
         formData.set("value", "{}")
         this.$http.post("/api/minionsfields/", formData).then(() => {
           this.minionsfields.push({ "name": this.minionsfields_name, "function": this.minionsfields_value.name })
-          this.$toast("minions fields created")
+          this.$toast(this.$i18n.t("components.CommonSettings.MinionsFieldsCreated"))
           this.minionsfields_name = null
           this.minionsfields_value = null
         })

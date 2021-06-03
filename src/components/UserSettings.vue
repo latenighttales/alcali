@@ -54,7 +54,7 @@
           params["notifs_" + notif] = this.notifs[notif]
         })
         this.$http.patch(`api/userssettings/${this.$store.getters.user_id}/`, params).then(response => {
-          this.$toast("user settings updated")
+          this.$toast(this.$i18n.t("components.UserSettings.UserSettingsUpdated"))
         })
       },
     },

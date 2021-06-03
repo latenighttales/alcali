@@ -37,7 +37,7 @@
         "Minions": "Minions",
         "Jobs": "Tâches",
         "Run": "Exécuter",
-        "JobTemplates": "Templates de tâches",
+        "JobTemplates": "Modèles de tâches",
         "Conformity": "Conformité",
         "Schedules": "Plannings",
         "Events": "Événements",
@@ -55,7 +55,11 @@
       "Target": "Cible",
       "Name": "Nom",
       "Function": "Fonction",
-      "Functions": "Fonctions"
+      "Functions": "Fonctions",
+      "ParseModulesStart": "Début de l'inventaire des modules",
+      "ConformityDeleted": "Conformité supprimée",
+      "ConformityCreated": "conformity created",
+      "MinionsFieldsCreated": "minions fields created"
     },
     "ConformityCard": {
       "Highstate": "HighState",
@@ -144,7 +148,7 @@
       "SelectDate": "Sélection de date(s)"
     },
     "JobTemplatesTable": {
-      "JobTemplate": "Templates de tâches",
+      "JobTemplate": "Modèles de tâches",
       "Run": "Exécuter",
       "Edit": "Editer",
       "Delete": "Supprimer",
@@ -156,7 +160,8 @@
       "Arguments": "Arguments",
       "KeywordArguments": "Mots clés Arguments",
       "Batch": "Batch",
-      "Actions": "Actions"
+      "Actions": "Actions",
+      "TemplateDeleted": "Modèle supprimé"
     },
     "KeysStatusCard": {
       "keys": "Clés",
@@ -202,7 +207,9 @@
       "Run": "Exécuter tâche",
       "Delete": "Supprimer",
       "Msg1": "Si vous supprimez ",
-      "Msg2": " de la base de données, vous devrez actualiser tous les minions."
+      "Msg2": " de la base de données, vous devrez actualiser tous les minions.",
+      "Refreshing": "Raffraîchissement de ",
+      "Deleted": " supprimé"
     },
     "NetworkCard": {
       "Network": "Réseau",
@@ -227,7 +234,8 @@
       "Every": "Intervalle",
       "Results": "Résultats",
       "Save": "Sauvegarder",
-      "Test": "Tester"
+      "Test": "Tester",
+      "TemplateSaved": "Modèle {0} sauvegardé"
     },
     "Schedules": {
       "Refresh": "Actualiser les tâches"
@@ -236,7 +244,9 @@
       "Schedules": "Plannings",
       "Disable": "désactiver",
       "Enable": "activer",
-      "Delete": "Supprimer"
+      "Delete": "Supprimer",
+      "MinionJobAction": "${action} sur ${minion} pour la tâche ${name}",
+      "MinionJobActionDone": "${action} sur ${minion} pour la tâche ${name}: terminé"
     },
     "UserSettings": {
       "UserSettings": "Options utilisateur",
@@ -246,7 +256,8 @@
       "created": "créées",
       "published": "publiées",
       "returned": "résultat reçu",
-      "event": "évènement"
+      "event": "évènement",
+      "UserSettingsUpdated": "Préférences utilisateur mises à jour"
     },
     "AlcaliStatusCard": {
       "Status": "Statut",
@@ -256,6 +267,9 @@
       "schedules": "planifiés",
       "OK": "OK",
       "NOT_OK": "ERREUR"
+    },
+    "TerminalCard": {
+      "Running": "Lancement de "
     }
   },
   "views": {

@@ -55,7 +55,11 @@
       "Target": "Target",
       "Name": "Name",
       "Function": "Function",
-      "Functions": "Functions"
+      "Functions": "Functions",
+      "ParseModulesStart": "Parse module started",
+      "ConformityDeleted": "Conformity deleted",
+      "ConformityCreated": "conformity created",
+      "MinionsFieldsCreated": "minions fields created"
     },
     "ConformityCard": {
       "Highstate": "Highstate",
@@ -156,7 +160,8 @@
       "Arguments": "Arguments",
       "KeywordArguments": "Keyword Arguments",
       "Batch": "Batch",
-      "Actions": "Actions"
+      "Actions": "Actions",
+      "TemplateDeleted": "Template deleted"
     },
     "KeysStatusCard": {
       "keys": "keys",
@@ -202,7 +207,9 @@
       "Run": "run job",
       "Delete": "Delete",
       "Msg1": "If you delete ",
-      "Msg2": " from the database, you will need to refresh all minions."
+      "Msg2": " from the database, you will need to refresh all minions.",
+      "Refreshing": "Refreshing ",
+      "Deleted": " deleted"
     },
     "NetworkCard": {
       "Network": "Network",
@@ -227,7 +234,8 @@
       "Every": "Every",
       "Results": "Results",
       "Save": "Save",
-      "Test": "Test"
+      "Test": "Test",
+      "TemplateSaved": "Template {0} saved"
     },
     "Schedules": {
       "Refresh": "Refresh schedules"
@@ -236,7 +244,9 @@
       "Schedules": "Schedules",
       "Disable": "disable",
       "Enable": "enable",
-      "Delete": "Delete"
+      "Delete": "Delete",
+      "MinionJobAction": "${action} on ${minion} for job ${name}",
+      "MinionJobActionDone": "${action} on ${minion} for job ${name}: done"
     },
     "UserSettings": {
       "UserSettings": "User Settings",
@@ -246,7 +256,8 @@
       "created": "created",
       "published": "published",
       "returned": "returned",
-      "event": "event"
+      "event": "event",
+      "UserSettingsUpdated": "user settings updated"
     },
     "AlcaliStatusCard": {
       "Status": "Status",
@@ -256,6 +267,9 @@
       "schedules": "schedules",
       "OK": "OK",
       "NOT_OK": "NOT OK"
+    },
+    "TerminalCard": {
+      "Running": "Running "
     }
   },
   "views": {

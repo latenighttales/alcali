@@ -87,13 +87,13 @@
         })
       },
       manageSchedule(action, name, minion) {
-        this.$toast(`${action} on ${minion} for job ${name}`)
+        this.$toast(this.$i18n.t("components.ScheduleTable.MinionJobAction", [action, minion, name]))
         let formData = new FormData
         formData.set("action", action)
         formData.set("name", name)
         formData.set("minion", minion)
         this.$http.post("api/schedules/manage/", formData).then(() => {
-          this.$toast(`${action} on ${minion} for job ${name}: done`)
+          this.$toast(this.$i18n.t("components.ScheduleTable.MinionJobActionDone", [action, minion, name]))
         }).then(() => {
           this.headers = []
           this.schedules = []
