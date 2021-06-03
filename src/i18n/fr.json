@@ -130,7 +130,16 @@
       "SearchJobs": "Chercher Tâches",
       "Cancel": "Annuler",
       "Search": "Chercher",
-      "Job": "Tâche"
+      "Job": "Tâche",
+      "JID": "Jid",
+      "Target": "Cible",
+      "Function": "Fonction",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Mots clés Arguments",
+      "User": "Utilisateur",
+      "Status": "Etat",
+      "Date": "Date",
+      "Action": "Action"
     },
     "KeysStatusCard": {
       "keys": "Clés",

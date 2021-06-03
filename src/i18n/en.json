@@ -131,7 +131,16 @@
       "SearchJobs": "Search Jobs",
       "Cancel": "Cancel",
       "Search": "Search",
-      "Job": "Job"
+      "Job": "Job",
+      "JID": "Jid",
+      "Target": "Target",
+      "Function": "Function",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Keyword Arguments",
+      "User": "User",
+      "Status": "Status",
+      "Date": "Date",
+      "Action": "Action"
     },
     "JobTemplatesTable":{
       "JobTemplate": "Job Templates",
