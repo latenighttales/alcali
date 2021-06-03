@@ -1,7 +1,7 @@
 {
   "components": {
-    "mixins":{
-      "UserCard":{
+    "mixins": {
+      "UserCard": {
         "Users": "Utilisateurs",
         "Create": "Créer",
         "CreateUser": "Créer l'utilisateur",
@@ -17,12 +17,12 @@
         "Token": "Token"
       }
     },
-    "core":{
-      "Fab":{
+    "core": {
+      "Fab": {
         "Close": "fermer",
         "Menu": "menu"
       },
-      "Layout":{
+      "Layout": {
         "Person": "Personnes",
         "Group": "Groupe",
         "Users": "Utilisateurs",
@@ -44,7 +44,7 @@
         "Keys": "Clés"
       }
     },
-    "CommonSettings":{
+    "CommonSettings": {
       "Title": "Paramètres Généraux",
       "Parse": "Parser les modules depuis:",
       "Submit": "Envoyer",
@@ -52,10 +52,10 @@
       "Delete": "Supprimer",
       "Create": "Créer",
       "Conformity": "Conformité personnalisée",
-      "Target":"Cible",
-      "Name":"Nom",
-      "Function":"Fonction",
-      "Functions":"Fonctions"
+      "Target": "Cible",
+      "Name": "Nom",
+      "Function": "Fonction",
+      "Functions": "Fonctions"
     },
     "ConformityCard": {
       "Highstate": "HighState",
@@ -77,7 +77,6 @@
       "Search": "Chercher",
       "detail": "détail",
       "highstate": "highstate",
-      "rowsPerPage": "Entrées par page",
       "Unknown": "Inconnu",
       "True": "Oui",
       "False": "Non",
@@ -89,7 +88,7 @@
       "Failed": "En échec",
       "Actions": "Actions"
     },
-    "CronPicker":{
+    "CronPicker": {
       "Cancel": "Annuler",
       "Save": "Sauvegarder"
     },
@@ -101,12 +100,9 @@
       "Target": "Cible",
       "Function": "Fonction",
       "Arguments": "Arguments",
-      "Date": "Date",
-      "LoadingText": "Chargement des événements...",
-      "NoDataText": "Aucun événement trouvé",
-      "NoResultText": "Aucun événement trouvé pour cette recherche"
+      "Date": "Date"
     },
-    "InfosCard":{
+    "InfosCard": {
       "Common": "Général",
       "Salt": "Salt",
       "Hardware": "Appareil",
@@ -125,12 +121,12 @@
       "CPUNumber": "Nombre de processeurs",
       "TotalMemory": "Mémoire totale",
       "TotalSwap": "Echanges totaux",
-      "Virtual": "Virtuel"    
+      "Virtual": "Virtuel"
     },
-    "JobsChartCard":{
+    "JobsChartCard": {
       "Stats": "Statistiques des tâches"
     },
-    "JobsTable":{
+    "JobsTable": {
       "SearchJobs": "Chercher Tâches",
       "Cancel": "Annuler",
       "Search": "Chercher",
@@ -147,7 +143,7 @@
       "Limit": "Limit",
       "SelectDate": "Sélection de date(s)"
     },
-    "JobTemplatesTable":{
+    "JobTemplatesTable": {
       "JobTemplate": "Templates de tâches",
       "Run": "Exécuter",
       "Edit": "Editer",
@@ -165,17 +161,17 @@
     "KeysStatusCard": {
       "keys": "Clés",
       "saltWebsocket": "Websocket Salt",
-      "accepted":"acceptées",
-      "rejected":"rejetées",
-      "denied":"interdites",
-      "unaccepted":"non acceptées"
+      "accepted": "acceptées",
+      "rejected": "rejetées",
+      "denied": "interdites",
+      "unaccepted": "non acceptées"
     },
     "Keys": {
-      "Refresh":"Rafraîchir les clés",
-      "AcceptAll":"Accepter toutes les clés",
-      "RejectAll":"Rejeter toutes les clés"
+      "Refresh": "Rafraîchir les clés",
+      "AcceptAll": "Accepter toutes les clés",
+      "RejectAll": "Rejeter toutes les clés"
     },
-    "KeysTable":{
+    "KeysTable": {
       "Keys": "Clés",
       "MinionId": "ID Minion",
       "Status": "Status",
@@ -191,7 +187,7 @@
       "JobMinion": "Lancer une tâche sur ",
       "HighstateMinion": "Appliquer Highstate sur "
     },
-    "MinionDetailCard":{
+    "MinionDetailCard": {
       "Grains": "Grains",
       "Pillar": "Pillar",
       "History": "Historique",
@@ -199,7 +195,7 @@
       "Fold": "Cacher",
       "Unfold": "Montrer"
     },
-    "MinionsTable":{
+    "MinionsTable": {
       "Minion": "Minion",
       "Column": "Colonne",
       "Run": "Exécuter tâche",
@@ -207,7 +203,7 @@
       "Msg1": "Si vous supprimez ",
       "Msg2": " de la base de données, vous devrez rafraîchir tous les minions."
     },
-    "NetworkCard":{
+    "NetworkCard": {
       "Network": "Réseau",
       "Interface": "Interface",
       "MAC": "Mac",
@@ -215,12 +211,12 @@
       "IPV4Gateway": "Passerelle IP V4",
       "IPV6Gateway": "Passerelle IP V6"
     },
-    "NotFound":{
+    "NotFound": {
       "Title": "Oops",
       "404": "404. Cette page n'existe pas.",
       "Back": "Retour"
     },
-    "RunCard":{
+    "RunCard": {
       "Run": "Exécuter",
       "Formatted": "Formaté",
       "Cli": "Client",
@@ -235,13 +231,13 @@
     "Schedules": {
       "Refresh": "Rafraîchir les tâches"
     },
-    "ScheduleTable":{
+    "ScheduleTable": {
       "Schedules": "Plannings",
       "Disable": "désactiver",
       "Enable": "activer",
       "Delete": "Supprimer"
     },
-    "UserSettings":{
+    "UserSettings": {
       "UserSettings": "Options utilisateur",
       "JobsNotifications": "Notifications de tâches",
       "MaxNotifications": "Notifications maximum",
@@ -251,14 +247,14 @@
       "returned": "résultat reçu",
       "event": "évènement"
     },
-    "AlcaliStatusCard":{
-      "Status" : "Statut",
-      "saltWebsocket" : "Salt Websocket",
-      "jobs":"tâches",
-      "events":"évènements",
-      "schedules":"planifiés",
-      "OK":"OK",
-      "NOT_OK":"ERREUR"
+    "AlcaliStatusCard": {
+      "Status": "Statut",
+      "saltWebsocket": "Salt Websocket",
+      "jobs": "tâches",
+      "events": "évènements",
+      "schedules": "planifiés",
+      "OK": "OK",
+      "NOT_OK": "ERREUR"
     }
   },
   "views": {
@@ -267,7 +263,7 @@
       "Unchanged": "Inchangé",
       "Failed": "Echoué"
     },
-    "JobDetail":{
+    "JobDetail": {
       "Success": "Réussi",
       "Failed": "Echoué",
       "MinionID": "ID MINION:",
@@ -287,7 +283,7 @@
       "Unauthorized": "Non autorisé",
       "SignIn": "Se connecter"
     },
-    "Search":{
+    "Search": {
       "NoResult": "Désolé... Aucun résultat.",
       "Success": "Réussi",
       "Failed": "Echoué"

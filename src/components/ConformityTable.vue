@@ -21,7 +21,6 @@
           :search="search"
           class="elevation-1"
           :loading="loading"
-          :footer-props="{'items-per-page-text':$t('components.ConformityTable.rowsPerPage')}"
       >
         <template v-slot:item.minion_id="{ item }">
           <v-btn text small class="text-none" :to="'/conformity/'+item.minion_id">{{ item.minion_id }}</v-btn>

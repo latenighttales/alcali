@@ -6,17 +6,18 @@ import axios from "axios";
 import store from "./store";
 import jwtDecode from "jwt-decode";
 import VueI18n from "vue-i18n";
-import { languages, defaultLocale } from './i18n/index.js';
+import { languages, defaultLocale } from "./i18n/index.js";
 
 Vue.config.productionTip = false;
 
 Vue.use(VueI18n);
-const messages = Object.assign(languages)
+const messages = Object.assign(languages);
 const i18n = new VueI18n({
   // modify $i18n.locale in App component to switch locale
   // see https://tutorialedge.net/javascript/vuejs/vuejs-i18n-basics-tutorial/#changing-locale-dynamically
+  // change the localization in vuetify plugin too : $vuetify.lang.current
   locale: defaultLocale,
-  messages
+  messages,
 });
 
 Vue.prototype.$http = axios;

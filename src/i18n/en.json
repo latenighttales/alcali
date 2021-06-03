@@ -1,7 +1,7 @@
 {
   "components": {
-    "mixins":{
-      "UserCard":{
+    "mixins": {
+      "UserCard": {
         "Users": "Users",
         "Create": "Create",
         "CreateUser": "Create user",
@@ -17,12 +17,12 @@
         "Token": "Token"
       }
     },
-    "core":{
-      "Fab":{
+    "core": {
+      "Fab": {
         "Close": "close",
         "Menu": "menu"
       },
-      "Layout":{
+      "Layout": {
         "Person": "person",
         "Group": "Group",
         "Users": "Users",
@@ -44,7 +44,7 @@
         "Keys": "Keys"
       }
     },
-    "CommonSettings":{
+    "CommonSettings": {
       "Title": "Common Settings",
       "Parse": "Parse modules from:",
       "Submit": "Submit",
@@ -52,10 +52,10 @@
       "Delete": "Delete",
       "Create": "Create",
       "Conformity": "Custom conformity",
-      "Target":"Target",
-      "Name":"Name",
+      "Target": "Target",
+      "Name": "Name",
       "Function": "Function",
-      "Functions":"Functions"
+      "Functions": "Functions"
     },
     "ConformityCard": {
       "Highstate": "Highstate",
@@ -77,7 +77,6 @@
       "Search": "Search",
       "detail": "detail",
       "highstate": "highstate",
-      "rowsPerPage": "Rows per page",
       "Unknown": "Unknow",
       "True": "True",
       "False": "False",
@@ -89,7 +88,7 @@
       "Failed": "Failed",
       "Actions": "Actions"
     },
-    "CronPicker":{
+    "CronPicker": {
       "Cancel": "Cancel",
       "Save": "Save"
     },
@@ -101,12 +100,9 @@
       "Target": "Target",
       "Function": "Function",
       "Arguments": "Arguments",
-      "Date": "Date",
-      "LoadingText": "Loading events...",
-      "NoDataText": "No event found",
-      "NoResultText": "No event found for this search"
+      "Date": "Date"
     },
-    "InfosCard":{
+    "InfosCard": {
       "Common": "Common",
       "Salt": "Salt",
       "Hardware": "Hardware",
@@ -126,12 +122,11 @@
       "TotalMemory": "Total Memory",
       "TotalSwap": "Total Swap",
       "Virtual": "Virtual"
-    
     },
-    "JobsChartCard":{
+    "JobsChartCard": {
       "Stats": "Jobs Stats"
     },
-    "JobsTable":{
+    "JobsTable": {
       "SearchJobs": "Search Jobs",
       "Cancel": "Cancel",
       "Search": "Search",
@@ -148,7 +143,7 @@
       "Limit": "Limit",
       "SelectDate": "Select date(s)"
     },
-    "JobTemplatesTable":{
+    "JobTemplatesTable": {
       "JobTemplate": "Job Templates",
       "Run": "run",
       "Edit": "edit",
@@ -166,17 +161,17 @@
     "KeysStatusCard": {
       "keys": "keys",
       "saltWebsocket": "Salt Websocket",
-      "accepted":"accepted",
-      "rejected":"rejected",
-      "denied":"denied",
-      "unaccepted":"unaccepted"
+      "accepted": "accepted",
+      "rejected": "rejected",
+      "denied": "denied",
+      "unaccepted": "unaccepted"
     },
     "Keys": {
-      "Refresh":"Refresh keys",
-      "AcceptAll":"Accept all keys",
-      "RejectAll":"Reject all keys"
+      "Refresh": "Refresh keys",
+      "AcceptAll": "Accept all keys",
+      "RejectAll": "Reject all keys"
     },
-    "KeysTable":{
+    "KeysTable": {
       "Keys": "Keys",
       "MinionId": "Minion ID",
       "Status": "Status",
@@ -192,7 +187,7 @@
       "JobMinion": "Run job on ",
       "HighstateMinion": "Run highstate on "
     },
-    "MinionDetailCard":{
+    "MinionDetailCard": {
       "Grains": "Grains",
       "Pillar": "Pillar",
       "History": "History",
@@ -200,7 +195,7 @@
       "Fold": "fold",
       "Unfold": "unfold"
     },
-    "MinionsTable":{
+    "MinionsTable": {
       "Minion": "Minion",
       "Column": "Column",
       "Run": "run job",
@@ -208,7 +203,7 @@
       "Msg1": "If you delete ",
       "Msg2": " from the database, you will need to refresh all minions."
     },
-    "NetworkCard":{
+    "NetworkCard": {
       "Network": "Network",
       "Interface": "Interface",
       "MAC": "Mac",
@@ -216,12 +211,12 @@
       "IPV4Gateway": "IP V4 Gateway",
       "IPV6Gateway": "IP V6 Gateway"
     },
-    "NotFound":{
+    "NotFound": {
       "Title": "Oops",
       "404": "404. there is nos page here",
       "Back": "Back"
     },
-    "RunCard":{
+    "RunCard": {
       "Run": "Run",
       "Formatted": "Formatted",
       "Cli": "Cli",
@@ -236,13 +231,13 @@
     "Schedules": {
       "Refresh": "Refresh schedules"
     },
-    "ScheduleTable":{
+    "ScheduleTable": {
       "Schedules": "Schedules",
       "Disable": "disable",
       "Enable": "enable",
       "Delete": "Delete"
     },
-    "UserSettings":{
+    "UserSettings": {
       "UserSettings": "User Settings",
       "JobsNotifications": "Jobs Notifications",
       "MaxNotifications": "Max Notifications",
@@ -252,14 +247,14 @@
       "returned": "returned",
       "event": "event"
     },
-    "AlcaliStatusCard":{
-      "Status" : "Status",
-      "saltWebsocket" : "Salt Websocket",
-      "jobs":"jobs",
-      "events":"events",
-      "schedules":"schedules",
-      "OK":"OK",
-      "NOT_OK":"NOT OK"
+    "AlcaliStatusCard": {
+      "Status": "Status",
+      "saltWebsocket": "Salt Websocket",
+      "jobs": "jobs",
+      "events": "events",
+      "schedules": "schedules",
+      "OK": "OK",
+      "NOT_OK": "NOT OK"
     }
   },
   "views": {
@@ -268,7 +263,7 @@
       "Unchanged": "Unchanged",
       "Failed": "Failed"
     },
-    "JobDetail":{
+    "JobDetail": {
       "Success": "Success",
       "Failed": "Failed",
       "MinionID": "MINION ID:",
@@ -288,7 +283,7 @@
       "Unauthorized": "Unauthorized",
       "SignIn": "sign in"
     },
-    "Search":{
+    "Search": {
       "NoResult": "Sorry... No results.",
       "Success": "Success",
       "Failed": "Failed"

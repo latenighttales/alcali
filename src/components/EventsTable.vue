@@ -22,9 +22,6 @@
           class="elevation-1"
           show-expand
           :loading="loading"
-          :loading-text="$t('components.EventsTable.LoadingText')"
-          :no-data-text="$t('components.EventsTable.NoDataText')"
-          :no-results-text="$t('components.EventsTable.NoResultText')"
       >
         <template v-slot:item.alter_time="{ item }">
           {{new Date(item.alter_time).toLocaleString("en-GB")}}
