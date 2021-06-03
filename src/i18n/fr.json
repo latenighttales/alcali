@@ -39,8 +39,8 @@
         "Run": "Exécuter",
         "JobTemplates": "Templates de tâches",
         "Conformity": "Conformité",
-        "Schedules": "Planning",
-        "Events": "Evénements",
+        "Schedules": "Plannings",
+        "Events": "Événements",
         "Keys": "Clés"
       }
     },
@@ -167,7 +167,7 @@
       "unaccepted": "non acceptées"
     },
     "Keys": {
-      "Refresh": "Rafraîchir les clés",
+      "Refresh": "Actualiser les clés",
       "AcceptAll": "Accepter toutes les clés",
       "RejectAll": "Rejeter toutes les clés"
     },
@@ -179,11 +179,11 @@
       "Actions": "Actions"
     },
     "Minions": {
-      "RefreshAll": "Rafraîchir tous les minions",
+      "RefreshAll": "Actualiser tous les minions",
       "JobAll": "Lancer une tâche sur tous les minions"
     },
     "MinionDetail": {
-      "RefreshMinion": "Rafraîchir ",
+      "RefreshMinion": "Actualiser ",
       "JobMinion": "Lancer une tâche sur ",
       "HighstateMinion": "Appliquer Highstate sur "
     },
@@ -198,10 +198,11 @@
     "MinionsTable": {
       "Minion": "Minion",
       "Column": "Colonne",
+      "Refresh": "Actualiser",
       "Run": "Exécuter tâche",
       "Delete": "Supprimer",
       "Msg1": "Si vous supprimez ",
-      "Msg2": " de la base de données, vous devrez rafraîchir tous les minions."
+      "Msg2": " de la base de données, vous devrez actualiser tous les minions."
     },
     "NetworkCard": {
       "Network": "Réseau",
@@ -229,7 +230,7 @@
       "Test": "Tester"
     },
     "Schedules": {
-      "Refresh": "Rafraîchir les tâches"
+      "Refresh": "Actualiser les tâches"
     },
     "ScheduleTable": {
       "Schedules": "Plannings",

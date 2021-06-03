@@ -76,7 +76,7 @@
                 dark
                 @click="refreshMinion(item.minion_id)"
             >
-              refresh
+              {{$t('components.MinionsTable.Refresh')}}
             </v-btn>
             <v-btn
                 small

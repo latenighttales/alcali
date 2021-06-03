@@ -198,6 +198,7 @@
     "MinionsTable": {
       "Minion": "Minion",
       "Column": "Column",
+      "Refresh": "Refresh",
       "Run": "run job",
       "Delete": "Delete",
       "Msg1": "If you delete ",
