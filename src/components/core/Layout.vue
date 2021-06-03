@@ -48,7 +48,7 @@
           <v-list-item-action v-if="mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
-                <v-icon v-on="on">{{$t('components.core.Layout.Group')}}</v-icon>
+                <v-icon v-on="on">group</v-icon>
               </template>
               <span>{{$t('components.core.Layout.Users')}}</span>
             </v-tooltip>
@@ -57,23 +57,23 @@
             <v-icon>{{$t('components.core.Layout.Group')}}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{$t('components.core.Layout.Users')}}</v-list-item-title>
+            <v-list-item-title>users</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/settings">
           <v-list-item-action v-if="mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
-                <v-icon v-on="on">{{$t('components.core.Layout.Settings')}}</v-icon>
+                <v-icon v-on="on">settings</v-icon>
               </template>
               <span>{{$t('components.core.Layout.Settings')}}</span>
             </v-tooltip>
           </v-list-item-action>
           <v-list-item-action v-else>
-            <v-icon>{{$t('components.core.Layout.Settings')}}</v-icon>
+            <v-icon>settings</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{$t('components.core.Layout.Settings')}}</v-list-item-title>
+            <v-list-item-title>settings</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -84,7 +84,7 @@
             <v-icon v-else>arrow_back</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{$t('components.core.Layout.Collapse')}}</v-list-item-title>
+            <v-list-item-title>COLLAPSE</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -111,7 +111,7 @@
         ></v-text-field>
       </v-expand-transition>
       <v-btn icon @click="expand_search = !expand_search" class="mr-2">
-        <v-icon>{{$t('components.core.Layout.Search')}}</v-icon>
+        <v-icon>search</v-icon>
       </v-btn>
       <v-menu
           v-model="notif_menu"
@@ -128,7 +128,7 @@
             <template v-slot:badge>
               <span v-if="notif_nb > 0">{{ notif_nb }}</span>
             </template>
-            <v-icon v-on="on" @click="notif_nb = 0">{{$t('components.core.Layout.Notifications')}}</v-icon>
+            <v-icon v-on="on" @click="notif_nb = 0">notifications</v-icon>
           </v-badge>
         </template>
         <v-card min-width="500px" max-width="500px">
@@ -155,7 +155,7 @@
           </v-list>
           <v-card-actions v-show="messages.length > 0">
             <v-spacer></v-spacer>
-            <v-btn text @click="messages = []">{{$t('components.core.Layout.Clear')}}</v-btn>
+            <v-btn text @click="messages = []">clear</v-btn>
           </v-card-actions>
         </v-card>
       </v-menu>
