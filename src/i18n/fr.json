@@ -141,6 +141,21 @@
       "Date": "Date",
       "Action": "Action"
     },
+    "JobTemplatesTable":{
+      "JobTemplate": "Templates de tâches",
+      "Run": "Exécuter",
+      "Edit": "Editer",
+      "Delete": "Supprimer",
+      "Name": "Nom",
+      "Client": "Client",
+      "TargetType": "Type de cible",
+      "Target": "Cible",
+      "Function": "Fonction",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Mots clés Arguments",
+      "Batch": "Batch",
+      "Actions": "Actions"
+    },
     "KeysStatusCard": {
       "keys": "Clés",
       "saltWebsocket": "Websocket Salt"

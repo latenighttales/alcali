@@ -146,7 +146,16 @@
       "JobTemplate": "Job Templates",
       "Run": "run",
       "Edit": "edit",
-      "Delete": "delete"
+      "Delete": "delete",
+      "Name": "Name",
+      "Client": "Client",
+      "TargetType": "Target Type",
+      "Target": "Target",
+      "Function": "Function",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Keyword Arguments",
+      "Batch": "Batch",
+      "Actions": "Actions"
     },
     "KeysStatusCard": {
       "keys": "keys",
