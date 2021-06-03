@@ -144,7 +144,9 @@
       "User": "User",
       "Status": "Status",
       "Date": "Date",
-      "Action": "Action"
+      "Action": "Action",
+      "Limit": "Limit",
+      "SelectDate": "Select date(s)"
     },
     "JobTemplatesTable":{
       "JobTemplate": "Job Templates",

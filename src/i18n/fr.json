@@ -143,7 +143,9 @@
       "User": "Utilisateur",
       "Status": "Etat",
       "Date": "Date",
-      "Action": "Action"
+      "Action": "Action",
+      "Limit": "Limit",
+      "SelectDate": "Sélection de date(s)"
     },
     "JobTemplatesTable":{
       "JobTemplate": "Templates de tâches",

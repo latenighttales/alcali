@@ -20,7 +20,7 @@
                 <template v-slot:activator="{ on }">
                   <v-text-field
                       v-model="dateRangeText"
-                      label="Select date(s)"
+                      :label="$t('components.JobsTable.SelectDate')"
                       readonly
                       v-on="on"
                   ></v-text-field>
@@ -42,7 +42,7 @@
               <v-autocomplete
                   :items="users"
                   v-model="selectedUsers"
-                  label="User(s)"
+                  :label="$t('components.JobsTable.User')"
                   multiple
                   single-line
               >
@@ -59,7 +59,7 @@
               <v-autocomplete
                   :items="minions"
                   v-model="selectedTarget"
-                  label="Target(s)"
+                  label="$t('components.JobsTable.Target')"
                   multiple
                   single-line
               >
@@ -76,7 +76,7 @@
               <v-select
                   :items="limit"
                   v-model="selectedLimit"
-                  label="Limit"
+                  :label="$t('components.JobsTable.Limit')"
                   single-line
               >
               </v-select>
@@ -104,7 +104,7 @@
                 class="search"
                 v-model="search"
                 append-icon="search"
-                label="Search"
+                :label="$t('components.JobsTable.Search')"
                 single-line
                 hide-details
             ></v-text-field>
