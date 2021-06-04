@@ -16,17 +16,19 @@
   export default {
     name: "Schedules",
     components: { Fab, ScheduleTable },
-    data: () => ({
-      fabs: [
-        {
-          color: "pink",
-          action: "refreshSchedules",
-          icon: "refresh",
-          tooltip: this.$i18n.t("components.Schedules.Refresh"),
-        },
-      ],
-      refreshKey: 0,
-    }),
+    data() {
+      return {
+        fabs: [
+          {
+            color: "pink",
+            action: "refreshSchedules",
+            icon: "refresh",
+            tooltip: this.$i18n.t("components.Schedules.Refresh"),
+          },
+        ],
+        refreshKey: 0,
+      }
+    },
     methods: {
       fabAction(action) {
         this[action]()

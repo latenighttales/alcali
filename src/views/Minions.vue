@@ -16,23 +16,25 @@
   export default {
     name: "Minions",
     components: { Fab, MinionsTable },
-    data: () => ({
-      refreshKey: 0,
-      fabs: [
-        {
-          color: "pink",
-          action: "refreshMinions",
-          icon: "refresh",
-          tooltip: this.$i18n.t("components.Keys.RefreshAll"),
-        },
-        {
-          color: "orange",
-          action: "runAll",
-          icon: "playlist_play",
-          tooltip: this.$i18n.t("components.Keys.JobAll"),
-        },
-      ],
-    }),
+    data() {
+      return {
+        refreshKey: 0,
+        fabs: [
+          {
+            color: "pink",
+            action: "refreshMinions",
+            icon: "refresh",
+            tooltip: this.$i18n.t("components.Minions.RefreshAll")
+          },
+          {
+            color: "orange",
+            action: "runAll",
+            icon: "playlist_play",
+            tooltip: this.$i18n.t("components.Minions.JobAll"),
+          },
+        ],
+      }
+    }  ,
     methods: {
       fabAction(action) {
         this[action]()

@@ -17,29 +17,31 @@
   export default {
     name: "Keys",
     components: { Fab, KeysTable },
-    data: () => ({
-      fabs: [
-        {
-          color: "blue",
-          action: "refreshKeys",
-          icon: "compare_arrows",
-          tooltip: this.$i18n.t("components.Keys.Refresh"),
-        },
-        {
-          color: "orange",
-          action: "rejectAll",
-          icon: "close",
-          tooltip: this.$i18n.t("components.Keys.RejectAll"),
-        },
-        {
-          color: "green",
-          action: "acceptAll",
-          icon: "done",
-          tooltip: this.$i18n.t("components.Keys.AcceptAll"),
-        },
-      ],
-      refreshKey: 0,
-    }),
+    data() {
+      return {
+        fabs: [
+          {
+            color: "blue",
+            action: "refreshKeys",
+            icon: "compare_arrows",
+            tooltip: this.$i18n.t("components.Keys.Refresh"),
+          },
+          {
+            color: "orange",
+            action: "rejectAll",
+            icon: "close",
+            tooltip: this.$i18n.t("components.Keys.RejectAll"),
+          },
+          {
+            color: "green",
+            action: "acceptAll",
+            icon: "done",
+            tooltip: this.$i18n.t("components.Keys.AcceptAll"),
+          }
+        ],
+        refreshKey: 0,
+      }
+    },
     methods: {
       fabAction(action) {
         this[action]()
