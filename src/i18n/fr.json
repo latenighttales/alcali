@@ -22,7 +22,8 @@
         "Email": "Email",
         "FirstName": "Prénom",
         "LastName": "Nom",
-        "Password": "Mot de passe"
+        "Password": "Mot de passe",
+        "StaffUser": "Administrateur"
       }
     },
     "core": {
