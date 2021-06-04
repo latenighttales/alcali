@@ -35,25 +35,25 @@
                         ></v-select>
                       </v-col>
                       <v-col sm="3" lg="1" offset-lg="1" v-if="!client_batch && !scheduleSwitch">
-                        <v-checkbox v-model="client_async" label="Async" color="primary"></v-checkbox>
+                        <v-checkbox v-model="client_async" :label="$t('components.RunCard.Async')" color="primary"></v-checkbox>
                       </v-col>
                       <v-col sm="3" lg="1" :offset-lg="client_batch ? 3: 1"
                              v-if="selected_client === 'local' && !scheduleSwitch">
-                        <v-checkbox v-model="client_batch" label="Batch" color="primary"></v-checkbox>
+                        <v-checkbox v-model="client_batch" :label="$t('components.RunCard.Batch')" color="primary"></v-checkbox>
                       </v-col>
                       <v-col sm="3" lg="1" v-if="selected_client === 'local' && client_batch && !scheduleSwitch">
-                        <v-text-field label="Batch" v-model="batch"></v-text-field>
+                        <v-text-field :label="$t('components.RunCard.Batch')" v-model="batch"></v-text-field>
                       </v-col>
                       <v-col sm="3" lg="1" :offset-lg="client_batch ? 0: 1"
                              v-if="selected_client === 'local' && !scheduleSwitch">
-                        <v-text-field label="Timeout" v-model="timeout" type="number"></v-text-field>
+                        <v-text-field :label="$t('components.RunCard.Timeout')" v-model="timeout" type="number"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
                       <v-col lg="1">
                         <v-select
                             :items="target_type"
-                            label="Target Type"
+                            :label="$t('components.RunCard.TargetType')"
                             v-model="selected_target_type"
                             v-if="selected_client === 'local'"
                             @change="target = null"
@@ -61,7 +61,7 @@
                       </v-col>
                       <v-col lg="2">
                         <v-text-field
-                            label="Target"
+                            :label="$t('components.RunCard.Target')"
                             v-model="target"
                             v-if="selected_client === 'local'"
                         ></v-text-field>
@@ -72,7 +72,7 @@
                             item-value="name"
                             item-text="name"
                             :items="filteredFunction"
-                            label="Function"
+                            :label="$t('components.RunCard.Function')"
                             return-object
                         >
                           <template v-slot:append-outer v-if="selectedFunction">
@@ -92,21 +92,21 @@
                         </v-combobox>
                       </v-col>
                       <v-col lg="3">
-                        <v-text-field label="Arguments" v-model="arg"></v-text-field>
+                        <v-text-field :label="$t('components.RunCard.Arguments')" v-model="arg"></v-text-field>
                       </v-col>
                       <v-col lg="4">
-                        <v-text-field label="Keyword Arguments" v-model="kwarg"></v-text-field>
+                        <v-text-field :label="$t('components.RunCard.KeywordArguments')" v-model="kwarg"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row dense>
                       <v-col sm=12 lg="3">
                         <v-row dense>
                           <v-col sm="12">
-                            <v-switch v-model="scheduleSwitch" label="Schedule" color="primary"
+                            <v-switch v-model="scheduleSwitch" :label="$t('components.RunCard.Schedule')" color="primary"
                                       v-show="selected_client === 'local'"></v-switch>
                           </v-col>
                           <v-col sm="12" v-show="scheduleSwitch">
-                            <v-text-field label="Schedule Name" v-model="scheduleName"
+                            <v-text-field :label="$t('components.RunCard.ScheduleName')" v-model="scheduleName"
                                           style="width: 350px;"></v-text-field>
                             <v-radio-group v-model="scheduleType" class="mt-0">
                               <v-radio value="once" color="primary">
@@ -172,7 +172,7 @@
                       <v-col sm=12 lg="6">
                         <v-row dense>
                           <v-col sm="12">
-                            <v-switch v-model="pillarSwitch" label="Pillar" color="primary"
+                            <v-switch v-model="pillarSwitch" :label="$t('components.RunCard.Pillar')" color="primary"
                                       v-show="selected_client === 'local'"></v-switch>
                           </v-col>
                           <v-col sm="12" v-show="pillarSwitch">
@@ -186,10 +186,10 @@
                       <v-col sm=12 lg="3">
                         <v-row dense>
                           <v-col sm="12">
-                            <v-switch v-model="saveJobSwitch" label="Save as template" color="primary"></v-switch>
+                            <v-switch v-model="saveJobSwitch" :label="$t('components.RunCard.SaveAsTemplate')" color="primary"></v-switch>
                           </v-col>
                           <v-col sm="12" v-show="saveJobSwitch">
-                            <v-text-field label="Job Template Name" v-model="jobTemplateName"
+                            <v-text-field :label="$t('components.RunCard.JobTemplateName')" v-model="jobTemplateName"
                                           style="width: 350px;"></v-text-field>
                           </v-col>
                         </v-row>

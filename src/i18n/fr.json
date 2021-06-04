@@ -175,7 +175,7 @@
       "Function": "Fonction",
       "Arguments": "Arguments",
       "KeywordArguments": "Mots clés Arguments",
-      "Batch": "Batch",
+      "Batch": "Groupe",
       "Actions": "Actions",
       "TemplateDeleted": "Modèle supprimé"
     },
@@ -210,7 +210,7 @@
     },
     "MinionDetailCard": {
       "Grains": "Grains",
-      "Pillar": "Pillar",
+      "Pillar": "Pilier",
       "History": "Historique",
       "Graph": "Graph",
       "Fold": "Cacher",
@@ -251,7 +251,20 @@
       "Results": "Résultats",
       "Save": "Sauvegarder",
       "Test": "Tester",
-      "TemplateSaved": "Modèle {0} sauvegardé"
+      "TemplateSaved": "Modèle {0} sauvegardé",
+      "SaveAsTemplate": "Sauvegardé en tant que modèle",
+      "JobTemplateName": "Nom du modèle de tâche",
+      "Pillar": "Pilier",
+      "Schedule": "Planning",
+      "ScheduleName": "Nom du planning",
+      "Async": "Asynchrone",
+      "Batch": "Groupe",
+      "Timeout": "Temps mort",
+      "TargetType": "Type de cible",
+      "Target": "Cible",
+      "Function": "Fonction",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Mots clés Arguments"
     },
     "Schedules": {
       "Refresh": "Actualiser les tâches"

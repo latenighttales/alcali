@@ -251,7 +251,20 @@
       "Results": "Results",
       "Save": "Save",
       "Test": "Test",
-      "TemplateSaved": "Template {0} saved"
+      "TemplateSaved": "Template {0} saved",
+      "SaveAsTemplate": "Save as Template",
+      "JobTemplateName": "Job Template Name",
+      "Pillar": "Pillar",
+      "Schedule": "Schedule",
+      "ScheduleName": "Schedule Name",
+      "Async": "Async",
+      "Batch": "Batch",
+      "Timeout": "Timeout",
+      "TargetType": "Target Type",
+      "Target": "Target",
+      "Function": "Function",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Keyword Arguments"
     },
     "Schedules": {
       "Refresh": "Refresh schedules"
