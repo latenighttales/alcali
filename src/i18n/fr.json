@@ -165,7 +165,7 @@
       "Action": "Action",
       "Limit": "Limite",
       "SelectDate": "Sélection de date(s)",
-      "Success":" Succès",
+      "Success": " Succès",
       "Failed": "Échec",
       "Rerun": "relancer",
       "Detail": "détail"
@@ -231,11 +231,11 @@
     },
     "MinionDetailCard": {
       "Grains": "Grains",
-      "Pillar": "Pilier",
+      "Pillar": "Pillar",
       "History": "Historique",
       "Graph": "Graph",
-      "Fold": "Cacher",
-      "Unfold": "Montrer"
+      "Fold": "Replier",
+      "Unfold": "Déplier"
     },
     "MinionsTable": {
       "Minion": "Minion",
