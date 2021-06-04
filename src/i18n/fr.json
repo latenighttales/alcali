@@ -17,7 +17,12 @@
         "Delete": "Supprimer",
         "ActionMsg": "cette action est irréversible.",
         "Close": "Fermer",
-        "Token": "Token"
+        "Token": "Token",
+        "Username": "Nom d'utilisateur",
+        "Email": "Email",
+        "FirstName": "Prénom",
+        "LastName": "Nom",
+        "Password": "Mot de passe"
       }
     },
     "core": {

@@ -17,7 +17,12 @@
         "Delete": "Delete",
         "ActionMsg": "this action is irreversible.",
         "Close": "Close",
-        "Token": "Token"
+        "Token": "Token",
+        "Username": "Username",
+        "Email": "Email",
+        "FirstName": "First Name",
+        "LastName": "Last Name",
+        "Password": "Password"
       }
     },
     "core": {

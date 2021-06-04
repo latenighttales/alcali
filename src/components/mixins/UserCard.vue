@@ -23,20 +23,20 @@
                       <v-container fluid>
                         <v-row>
                           <v-col lg="6">
-                            <v-text-field v-model="user.username" label="Username" :rules="userRules"
+                            <v-text-field v-model="user.username" :label="$t('components.UserCard.Username')" :rules="userRules"
                                           required></v-text-field>
                           </v-col>
                           <v-col lg="6">
-                            <v-text-field v-model="user.email" label="Email" :rules="emailRules"
+                            <v-text-field v-model="user.email" :label="$t('components.UserCard.Email')" :rules="emailRules"
                                           required></v-text-field>
                           </v-col>
                         </v-row>
                         <v-row>
                           <v-col lg="6">
-                            <v-text-field v-model="user.first_name" label="First Name"></v-text-field>
+                            <v-text-field v-model="user.first_name" :label="$t('components.UserCard.FirstName')"></v-text-field>
                           </v-col>
                           <v-col lg="6">
-                            <v-text-field v-model="user.last_name" label="Last Name"></v-text-field>
+                            <v-text-field v-model="user.last_name" :label="$t('components.UserCard.LastName')"></v-text-field>
                           </v-col>
                         </v-row>
                         <v-row>
@@ -46,7 +46,7 @@
                                 :append-icon="show ? 'visibility' : 'visibility_off'"
                                 :type="show ? 'text' : 'password'"
                                 name="input-10-1"
-                                label="Password"
+                                :label="$t('components.UserCard.Password')"
                                 counter
                                 @click:append="show = !show"
                             ></v-text-field>
@@ -54,7 +54,7 @@
                           <v-col lg="6">
                             <v-checkbox
                                 v-model="user.is_staff"
-                                label="Staff User"
+                                :label="$t('components.UserCard.StaffUser')"
                                 :disabled="!isStaff"
                             ></v-checkbox>
                           </v-col>
