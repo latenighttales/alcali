@@ -24,9 +24,9 @@
         "LastName": "Nom",
         "Password": "Mot de passe",
         "StaffUser": "Administrateur",
-        "UserCreated": "User created",
-        "UserUpdated": "User updated",
-        "UserDeleted": "User deleted"
+        "UserCreated": "Utilisateur créé",
+        "UserUpdated": "Utilisateur mis à jour",
+        "UserDeleted": "Utilisateur supprimé"
       }
     },
     "core": {
@@ -38,11 +38,11 @@
         "Person": "Personnes",
         "Group": "Groupe",
         "Users": "Utilisateurs",
-        "Settings": "Option",
+        "Settings": "Options",
         "Collapse": "REPLIER",
         "Notifications": "Notifications",
         "NoNotifications": "pas de nouvelles notifications",
-        "Clear": "Nettoyer",
+        "Clear": "Vider",
         "ToggleTheme": "Activer Theme",
         "Logout": "Déconnexion",
         "Overview": "Aperçu",
@@ -317,17 +317,17 @@
     "ConformityDetail": {
       "Succeeded": "Réussi",
       "Unchanged": "Inchangé",
-      "Failed": "Echoué"
+      "Failed": "Échoué"
     },
     "JobDetail": {
       "Success": "Réussi",
-      "Failed": "Echoué",
+      "Failed": "Échoué",
       "MinionID": "ID MINION:",
       "Arguments": "ARGUMENTS:",
       "KeywordArguments": "MOT CLES ARGUMENTS:",
       "JobID": "ID TACHE:",
       "Function": "FONCTION:",
-      "Status": "ETAT:",
+      "Status": "ÉTAT:",
       "StartTime": "START TIME:",
       "Results": "Résultats"
     },
@@ -342,7 +342,7 @@
     "Search": {
       "NoResult": "Désolé... Aucun résultat.",
       "Success": "Réussi",
-      "Failed": "Echoué"
+      "Failed": "Échoué"
     }
   }
 }

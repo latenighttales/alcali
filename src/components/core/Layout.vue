@@ -50,7 +50,9 @@
             <v-icon>group</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>users</v-list-item-title>
+            <v-list-item-title>{{
+              $t("components.core.Layout.Users")
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/settings">
@@ -66,7 +68,9 @@
             <v-icon>settings</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>settings</v-list-item-title>
+            <v-list-item-title>{{
+              $t("components.core.Layout.Settings")
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -77,7 +81,9 @@
             <v-icon v-else>arrow_back</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>COLLAPSE</v-list-item-title>
+            <v-list-item-title>{{
+              $t("components.core.Layout.Collapse")
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -134,7 +140,9 @@
           </v-list>
           <v-card-actions v-show="messages.length > 0">
             <v-spacer></v-spacer>
-            <v-btn text @click="messages = []">clear</v-btn>
+            <v-btn text @click="messages = []"
+              >$t("components.core.Layout.Clear")</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-menu>
