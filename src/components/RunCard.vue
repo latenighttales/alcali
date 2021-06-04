@@ -111,7 +111,7 @@
                             <v-radio-group v-model="scheduleType" class="mt-0">
                               <v-radio value="once" color="primary">
                                 <template v-slot:label>
-                                  <span><strong>Once:  </strong></span>
+                                  <span><strong>{{$t(components.RunCard.RunOnce)}}</strong></span>
                                   <v-row>
                                     <v-col sm="4" class="ml-2">
                                       <v-menu

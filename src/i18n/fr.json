@@ -274,7 +274,8 @@
       "Target": "Cible",
       "Function": "Fonction",
       "Arguments": "Arguments",
-      "KeywordArguments": "Mots clés Arguments"
+      "KeywordArguments": "Mots clés Arguments",
+      "RunOnce": "Once:  "
     },
     "Schedules": {
       "Refresh": "Actualiser les tâches",

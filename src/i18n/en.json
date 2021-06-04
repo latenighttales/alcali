@@ -274,7 +274,8 @@
       "Target": "Target",
       "Function": "Function",
       "Arguments": "Arguments",
-      "KeywordArguments": "Keyword Arguments"
+      "KeywordArguments": "Keyword Arguments",
+      "RunOnce":"Tâche unique:  "
     },
     "Schedules": {
       "Refresh": "Refresh schedules",
