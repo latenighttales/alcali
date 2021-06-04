@@ -1,4 +1,7 @@
 {
+  "common": {
+    "Search": "Chercher"
+  },
   "components": {
     "mixins": {
       "UserCard": {
@@ -41,7 +44,8 @@
         "Conformity": "Conformité",
         "Schedules": "Plannings",
         "Events": "Événements",
-        "Keys": "Clés"
+        "Keys": "Clés",
+        "Search": "Chercher jids, minions, states..."
       }
     },
     "CommonSettings": {
@@ -78,7 +82,6 @@
     },
     "ConformityTable": {
       "Conformity": "Conformité",
-      "Search": "Chercher",
       "detail": "détail",
       "highstate": "highstate",
       "Unknown": "Inconnu",
@@ -98,7 +101,6 @@
     },
     "EventsTable": {
       "Events": "Événements",
-      "Search": "Chercher",
       "Tag": "Tag",
       "Jid": "Jid",
       "Target": "Cible",
@@ -142,7 +144,6 @@
     "JobsTable": {
       "SearchJobs": "Chercher Tâches",
       "Cancel": "Annuler",
-      "Search": "Chercher",
       "Job": "Tâche",
       "JID": "Jid",
       "Target": "Cible",

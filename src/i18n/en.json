@@ -1,4 +1,7 @@
 {
+  "common": {
+    "Search": "Search"
+  },
   "components": {
     "mixins": {
       "UserCard": {
@@ -41,7 +44,8 @@
         "Conformity": "Conformity",
         "Schedules": "Schedules",
         "Events": "Events",
-        "Keys": "Keys"
+        "Keys": "Keys",
+        "Search": "Search jids, minions, states..."
       }
     },
     "CommonSettings": {
@@ -78,7 +82,6 @@
     },
     "ConformityTable": {
       "Conformity": "Conformity",
-      "Search": "Search",
       "detail": "detail",
       "highstate": "highstate",
       "Unknown": "Unknow",
@@ -98,7 +101,6 @@
     },
     "EventsTable": {
       "Events": "Events",
-      "Search": "Search",
       "Tag": "Tag",
       "Jid": "Jid",
       "Target": "Target",
@@ -142,7 +144,6 @@
     "JobsTable": {
       "SearchJobs": "Search Jobs",
       "Cancel": "Cancel",
-      "Search": "Search",
       "Job": "Job",
       "JID": "Jid",
       "Target": "Target",

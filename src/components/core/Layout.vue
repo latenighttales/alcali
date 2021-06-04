@@ -1,37 +1,30 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-        v-model="drawer"
-        :mini-variant="mini"
-        app
-        clipped
-    >
-      <v-list
-          dense
-          nav
-          dark
-          color="#212121"
-          class="py-0"
-      >
+    <v-navigation-drawer v-model="drawer" :mini-variant="mini" app clipped>
+      <v-list dense nav dark color="#212121" class="py-0">
         <v-list-item two-line :class="mini && 'px-0'">
           <v-list-item-avatar>
             <v-icon large>person</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{username}}</v-list-item-title>
-            <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
+            <v-list-item-title>{{ username }}</v-list-item-title>
+            <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
       <v-list dense>
-        <v-list-item v-for="route in routes" :key="route.name" :to="`${route.path}`">
+        <v-list-item
+          v-for="route in routes"
+          :key="route.name"
+          :to="`${route.path}`"
+        >
           <v-list-item-action v-if="mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
                 <v-icon v-on="on">{{ route.icon }}</v-icon>
               </template>
-              <span>{{$t(route.name)}}</span>
+              <span>{{ $t(route.name) }}</span>
             </v-tooltip>
           </v-list-item-action>
           <v-list-item-action v-else>
@@ -50,7 +43,7 @@
               <template v-slot:activator="{ on }">
                 <v-icon v-on="on">group</v-icon>
               </template>
-              <span>{{$t('components.core.Layout.Users')}}</span>
+              <span>{{ $t("components.core.Layout.Users") }}</span>
             </v-tooltip>
           </v-list-item-action>
           <v-list-item-action v-else>
@@ -66,7 +59,7 @@
               <template v-slot:activator="{ on }">
                 <v-icon v-on="on">settings</v-icon>
               </template>
-              <span>{{$t('components.core.Layout.Settings')}}</span>
+              <span>{{ $t("components.core.Layout.Settings") }}</span>
             </v-tooltip>
           </v-list-item-action>
           <v-list-item-action v-else>
@@ -89,42 +82,28 @@
         </v-list-item>
       </template>
     </v-navigation-drawer>
-    <v-app-bar
-        color="black"
-        dark
-        app
-        clipped-left
-    >
+    <v-app-bar color="black" dark app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-bold">ALCALI</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-expand-transition>
         <v-text-field
-            v-show="expand_search"
-            class="mx-auto search"
-            flat
-            hide-details
-            label="Search jids, minions, states..."
-            solo-inverted
-            v-model="searchInput"
-            @keyup.native.enter="searchBar"
+          v-show="expand_search"
+          class="mx-auto search"
+          flat
+          hide-details
+          :label="$t('components.core.Layout.Search')"
+          solo-inverted
+          v-model="searchInput"
+          @keyup.native.enter="searchBar"
         ></v-text-field>
       </v-expand-transition>
       <v-btn icon @click="expand_search = !expand_search" class="mr-2">
         <v-icon>search</v-icon>
       </v-btn>
-      <v-menu
-          v-model="notif_menu"
-          bottom
-          left
-          offset-y
-          offset-x
-      >
+      <v-menu v-model="notif_menu" bottom left offset-y offset-x>
         <template v-slot:activator="{ on }">
-          <v-badge
-              :color="notif_nb > 0 ? 'primary': 'transparent'"
-              overlap
-          >
+          <v-badge :color="notif_nb > 0 ? 'primary' : 'transparent'" overlap>
             <template v-slot:badge>
               <span v-if="notif_nb > 0">{{ notif_nb }}</span>
             </template>
@@ -135,21 +114,21 @@
           <v-list max-height="700px">
             <v-list-item v-if="messages.length === 0">
               <v-list-item-content>
-                <v-list-item-subtitle>{{$t('components.core.Layout.NoNotifications')}}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{
+                  $t("components.core.Layout.NoNotifications")
+                }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item
-                v-for="(item, i) in messages"
-                :key="i"
-                :to="item.link"
-            >
+            <v-list-item v-for="(item, i) in messages" :key="i" :to="item.link">
               <v-list-item-avatar>
-                <v-icon dark :color="item.color" size="62">{{item.icon}}</v-icon>
+                <v-icon dark :color="item.color" size="62">{{
+                  item.icon
+                }}</v-icon>
               </v-list-item-avatar>
 
               <v-list-item-content>
                 <v-list-item-title>{{ item.text }}</v-list-item-title>
-                <v-list-item-subtitle>{{ item.tag}}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ item.tag }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -166,16 +145,16 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item
-              @click="toggleTheme"
-          >
-            <v-list-item-title>{{$t('components.core.Layout.ToggleTheme')}}</v-list-item-title>
+          <v-list-item @click="toggleTheme">
+            <v-list-item-title>{{
+              $t("components.core.Layout.ToggleTheme")
+            }}</v-list-item-title>
           </v-list-item>
           <v-divider></v-divider>
-          <v-list-item
-              @click="logout"
-          >
-            <v-list-item-title>{{$t('components.core.Layout.Logout')}}</v-list-item-title>
+          <v-list-item @click="logout">
+            <v-list-item-title>{{
+              $t("components.core.Layout.Logout")
+            }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -189,229 +168,235 @@
 </template>
 
 <script>
-  import { EventSourcePolyfill } from 'event-source-polyfill'
-  import helpersMixin from "../mixins/helpersMixin"
+import { EventSourcePolyfill } from "event-source-polyfill";
+import helpersMixin from "../mixins/helpersMixin";
 
-  export default {
-    name: "Layout",
-    props: {
-      source: String,
+export default {
+  name: "Layout",
+  props: {
+    source: String,
+  },
+  data: () => ({
+    expand_search: false,
+    notif_menu: false,
+    searchInput: "",
+    drawer: true,
+    mini: true,
+    messages: [],
+    settings: null,
+    notif_nb: 0,
+    notifs: { created: false, published: false, returned: false, event: false },
+    routes: [
+      {
+        name: "components.core.Layout.Overview",
+        path: "/",
+        icon: "dashboard",
+      },
+      {
+        name: "components.core.Layout.Minions",
+        path: "/minions",
+        icon: "device_hub",
+      },
+      {
+        name: "components.core.Layout.Jobs",
+        path: "/jobs",
+        icon: "playlist_play",
+      },
+      {
+        name: "components.core.Layout.Run",
+        path: "/run",
+        icon: "play_arrow",
+      },
+      {
+        name: "components.core.Layout.JobTemplates",
+        path: "/job_templates",
+        icon: "playlist_add_check",
+      },
+      {
+        name: "components.core.Layout.Schedules",
+        path: "/schedules",
+        icon: "schedule",
+      },
+      {
+        name: "components.core.Layout.Conformity",
+        path: "/conformity",
+        icon: "done_all",
+      },
+      {
+        name: "components.core.Layout.Keys",
+        path: "/keys",
+        icon: "compare_arrows",
+      },
+      {
+        name: "components.core.Layout.Events",
+        path: "/events",
+        icon: "playlist_add",
+      },
+    ],
+  }),
+  methods: {
+    logout: function () {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
     },
-    data: () => ({
-      expand_search: false,
-      notif_menu: false,
-      searchInput: "",
-      drawer: true,
-      mini: true,
-      messages: [],
-      settings: null,
-      notif_nb: 0,
-      notifs: { created: false, published: false, returned: false, event: false },
-      routes: [
-        {
-          name: 'components.core.Layout.Overview',
-          path: "/",
-          icon: "dashboard",
+    searchBar() {
+      if (this.searchInput !== "") {
+        this.$router.push({ name: "search", query: { q: this.searchInput } });
+      }
+    },
+    getPrefs() {
+      this.$http
+        .get(`api/userssettings/${this.$store.getters.user_id}/`)
+        .then((response) => {
+          this.settings = response.data;
+          Object.keys(this.notifs).forEach((notif) => {
+            this.notifs[notif] = this.settings["notifs_" + notif];
+          });
+        });
+    },
+    toggleTheme() {
+      this.$store.dispatch("toggleTheme").then(() => {
+        this.$vuetify.theme.dark = JSON.parse(this.$store.state.theme);
+      });
+    },
+    saltStatus() {
+      // Various Salt event tag matchers.
+      let isJobEvent = helpersMixin.methods.fnmatch("salt/job/*");
+      let isJobNew = helpersMixin.methods.fnmatch("salt/job/*/new");
+      let isJobReturn = helpersMixin.methods.fnmatch("salt/job/*/ret/*");
+      const accessToken = localStorage.getItem("access");
+      let es = new EventSourcePolyfill("/api/event_stream/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
         },
-        {
-          name: 'components.core.Layout.Minions',
-          path: "/minions",
-          icon: "device_hub",
-        },
-        {
-          name: 'components.core.Layout.Jobs',
-          path: "/jobs",
-          icon: "playlist_play",
-        },
-        {
-          name: 'components.core.Layout.Run',
-          path: "/run",
-          icon: "play_arrow",
-        },
-        {
-          name: 'components.core.Layout.JobTemplates',
-          path: "/job_templates",
-          icon: "playlist_add_check",
-        },
-        {
-          name: 'components.core.Layout.Schedules',
-          path: "/schedules",
-          icon: "schedule",
-        },
-        {
-          name: 'components.core.Layout.Conformity',
-          path: "/conformity",
-          icon: "done_all",
-        },
-        {
-          name: 'components.core.Layout.Keys',
-          path: "/keys",
-          icon: "compare_arrows",
-        },
-        {
-          name: 'components.core.Layout.Events',
-          path: "/events",
-          icon: "playlist_add",
-        },
-      ],
-    }),
-    methods: {
-      logout: function() {
-        this.$store.dispatch("logout").then(() => {
-          this.$router.push("/login")
-        })
-      },
-      searchBar() {
-        if (this.searchInput !== "") {
-          this.$router.push({ name: "search", query: { q: this.searchInput } })
-        }
-      },
-      getPrefs() {
-        this.$http.get(`api/userssettings/${this.$store.getters.user_id}/`).then(response => {
-          this.settings = response.data
-          Object.keys(this.notifs).forEach(notif => {
-            this.notifs[notif] = this.settings["notifs_" + notif]
-          })
-        })
-      },
-      toggleTheme() {
-        this.$store.dispatch("toggleTheme").then(() => {
-          this.$vuetify.theme.dark = JSON.parse(this.$store.state.theme)
-        })
-      },
-      saltStatus() {
-        // Various Salt event tag matchers.
-        let isJobEvent = helpersMixin.methods.fnmatch("salt/job/*")
-        let isJobNew = helpersMixin.methods.fnmatch("salt/job/*/new")
-        let isJobReturn = helpersMixin.methods.fnmatch("salt/job/*/ret/*")
-        const accessToken = localStorage.getItem("access")
-        let es = new EventSourcePolyfill("/api/event_stream/", {
-          headers: {
-            "Authorization": `Bearer ${accessToken}`,
-          },
-        })
-        es.addEventListener("open", () => {
-          this.$store.dispatch("updateWs")
-
-        })
-        es.addEventListener("message", event => {
-          let data = JSON.parse(event.data)
+      });
+      es.addEventListener("open", () => {
+        this.$store.dispatch("updateWs");
+      });
+      es.addEventListener(
+        "message",
+        (event) => {
+          let data = JSON.parse(event.data);
           // Display only activated notifs.
           if (isJobNew(data.tag) && this.notifs.published === true) {
-            if (data.data.fun !== 'saltutil.find_job') {
-              data.type = "new"
-              data.color = "green"
-              data.icon = "keyboard_tab"
-              data.link = ""
-              let target = ""
+            if (data.data.fun !== "saltutil.find_job") {
+              data.type = "new";
+              data.color = "green";
+              data.icon = "keyboard_tab";
+              data.link = "";
+              let target = "";
               if (data.data.hasOwnProperty("tgt")) {
-                target = data.data.tgt
+                target = data.data.tgt;
               } else {
-                target = data.data.minions.length + " minion(s)"
+                target = data.data.minions.length + " minion(s)";
               }
-              data.text = "Job " + data.data.fun + " published for " + target
-              this.messages.unshift(data)
+              data.text = "Job " + data.data.fun + " published for " + target;
+              this.messages.unshift(data);
               if (this.messages.length > this.settings.max_notifs) {
-                this.messages.pop()
+                this.messages.pop();
               }
-              this.notif_nb += 1
+              this.notif_nb += 1;
             } else {
-              let findJobJid = data.data.jid
+              let findJobJid = data.data.jid;
               this.messages.forEach((message, index) => {
                 if (message.tag === findJobJid) {
-                  this.messages.splice(index, 1)
-                  this.notif_nb -= 1
+                  this.messages.splice(index, 1);
+                  this.notif_nb -= 1;
                 }
-              })
+              });
             }
           } else if (isJobReturn(data.tag) && this.notifs.returned === true) {
-            if (data.data.fun !== 'saltutil.find_job') {
-              data.type = "return"
-              data.color = "primary"
-              data.icon = "subdirectory_arrow_left"
-              data.text = "Job " + data.data.fun + " returned for " + data.data.id
-              data.link = "/jobs/" + data.data.jid + "/" + data.data.id
-              this.messages.unshift(data)
+            if (data.data.fun !== "saltutil.find_job") {
+              data.type = "return";
+              data.color = "primary";
+              data.icon = "subdirectory_arrow_left";
+              data.text =
+                "Job " + data.data.fun + " returned for " + data.data.id;
+              data.link = "/jobs/" + data.data.jid + "/" + data.data.id;
+              this.messages.unshift(data);
               if (this.messages.length > this.settings.max_notifs) {
-                this.messages.pop()
+                this.messages.pop();
               }
-              this.notif_nb += 1
+              this.notif_nb += 1;
             }
           } else if (isJobEvent(data.tag) && this.notifs.event === true) {
-            data.type = "event"
-            data.color = "orange"
-            data.icon = "more_horiz"
-            data.text = "Job Event"
-            data.link = ""
-            this.messages.unshift(data)
+            data.type = "event";
+            data.color = "orange";
+            data.icon = "more_horiz";
+            data.text = "Job Event";
+            data.link = "";
+            this.messages.unshift(data);
             if (this.messages.length > this.settings.max_notifs) {
-              this.messages.pop()
+              this.messages.pop();
             }
-            this.notif_nb += 1
-          } else if (/^\w{20}$/.test(data.tag) && this.notifs.created === true) {
-            data.type = "created"
-            data.color = "secondary"
-            data.icon = "add"
-            data.text = "New Job Created"
-            data.link = ""
-            this.messages.unshift(data)
+            this.notif_nb += 1;
+          } else if (
+            /^\w{20}$/.test(data.tag) &&
+            this.notifs.created === true
+          ) {
+            data.type = "created";
+            data.color = "secondary";
+            data.icon = "add";
+            data.text = "New Job Created";
+            data.link = "";
+            this.messages.unshift(data);
             if (this.messages.length > this.settings.max_notifs) {
-              this.messages.pop()
+              this.messages.pop();
             }
-            this.notif_nb += 1
+            this.notif_nb += 1;
           }
-        }, false)
-      },
+        },
+        false
+      );
     },
-    mounted() {
-      this.getPrefs()
-      this.saltStatus()
-      this.$vuetify.theme.dark = JSON.parse(this.$store.getters.theme)
+  },
+  mounted() {
+    this.getPrefs();
+    this.saltStatus();
+    this.$vuetify.theme.dark = JSON.parse(this.$store.getters.theme);
+  },
+  computed: {
+    username() {
+      return this.$store.state.username;
     },
-    computed: {
-      username() {
-        return this.$store.state.username
-      },
-      email() {
-        return this.$store.state.email
-      },
-      theme() {
-        return this.$store.state.theme
-      },
+    email() {
+      return this.$store.state.email;
     },
-
-  }
+    theme() {
+      return this.$store.state.theme;
+    },
+  },
+};
 </script>
 
 <style>
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    background-color: #F5F5F5;
-  }
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
 
-  ::-webkit-scrollbar {
-    width: 10px;
-    background-color: #F5F5F5;
-  }
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
 
-  ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    background-color: #555;
-  }
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
 
-  span .v-chip__content {
-    white-space: nowrap;
-  }
+span .v-chip__content {
+  white-space: nowrap;
+}
 
-  .v-list {
-    border-radius: 0px !important;
-  }
+.v-list {
+  border-radius: 0px !important;
+}
 
-  .search {
-    max-width: 300px !important;
-  }
-
-
+.search {
+  max-width: 300px !important;
+}
 </style>
