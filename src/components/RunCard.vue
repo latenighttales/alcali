@@ -81,7 +81,7 @@
                                 <v-icon
                                     color="black"
                                     v-on="on"
-                                >{{$t('components.RunCard.info')}}
+                                >info
                                 </v-icon>
                               </template>
                               <div class="desc">

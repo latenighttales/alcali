@@ -286,8 +286,8 @@
       "Disable": "disable",
       "Enable": "enable",
       "Delete": "Delete",
-      "MinionJobAction": "${action} on ${minion} for job ${name}",
-      "MinionJobActionDone": "${action} on ${minion} for job ${name}: done"
+      "MinionJobAction": "{0} on {1} for job {2}",
+      "MinionJobActionDone": "{0} on {1} for job {2}: done"
     },
     "UserSettings": {
       "UserSettings": "User Settings",

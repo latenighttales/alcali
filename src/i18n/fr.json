@@ -262,7 +262,7 @@
       "Save": "Sauvegarder",
       "Test": "Tester",
       "TemplateSaved": "Modèle {0} sauvegardé",
-      "SaveAsTemplate": "Sauvegardé en tant que modèle",
+      "SaveAsTemplate": "Sauvegarder en tant que modèle",
       "JobTemplateName": "Nom du modèle de tâche",
       "Pillar": "Pilier",
       "Schedule": "Planning",
@@ -286,8 +286,8 @@
       "Disable": "désactiver",
       "Enable": "activer",
       "Delete": "Supprimer",
-      "MinionJobAction": "${action} sur ${minion} pour la tâche ${name}",
-      "MinionJobActionDone": "${action} sur ${minion} pour la tâche ${name}: terminé"
+      "MinionJobAction": "{0} sur ${1} pour la tâche ${2}",
+      "MinionJobActionDone": "${0} sur ${1} pour la tâche ${2}: terminé"
     },
     "UserSettings": {
       "UserSettings": "Options utilisateur",
