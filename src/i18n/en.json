@@ -253,7 +253,7 @@
     "RunCard": {
       "Run": "Run",
       "Formatted": "Formatted",
-      "Cli": "Cli",
+      "Cli": "CLI",
       "ClientType": "Client Type:",
       "Info": "info",
       "Recurring": "Recurring:",
@@ -275,7 +275,7 @@
       "Function": "Function",
       "Arguments": "Arguments",
       "KeywordArguments": "Keyword Arguments",
-      "RunOnce":"Tâche unique:  "
+      "RunOnce": "Once:  "
     },
     "Schedules": {
       "Refresh": "Refresh schedules",
