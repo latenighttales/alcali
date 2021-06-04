@@ -70,11 +70,11 @@
         this[action]()
       },
       refreshMinion() {
-        this.$toast("refreshing " + this.minion_id)
+        this.$toast(this.$i18n.t("components.MinionDetail.Refreshing", [this.minion_id]))
         let formData = new FormData
         formData.set('minion_id', this.minion_id)
         this.$http.post("/api/minions/refresh_minions/", formData).then(() => {
-          this.$toast("minion refreshed")
+          this.$toast(this.$i18n.t("components.MinionDetail.MinionRefreshed"))
         }).catch((error) => {
           this.$toast.error(error.response.data)
         })

@@ -23,7 +23,10 @@
         "FirstName": "First Name",
         "LastName": "Last Name",
         "Password": "Password",
-        "StaffUser": "Staff User"
+        "StaffUser": "Staff User",
+        "UserCreated": "User created",
+        "UserUpdated": "User updated",
+        "UserDeleted": "User deleted"
       }
     },
     "core": {
@@ -190,7 +193,9 @@
     "Keys": {
       "Refresh": "Refresh keys",
       "AcceptAll": "Accept all keys",
-      "RejectAll": "Reject all keys"
+      "RejectAll": "Reject all keys",
+      "RefreshingKeys": "Refreshing keys",
+      "KeysRefreshed": "Keys refreshed"
     },
     "KeysTable": {
       "Keys": "Keys",
@@ -201,12 +206,16 @@
     },
     "Minions": {
       "RefreshAll": "Refresh all minions",
-      "JobAll": "Run job on all minions"
+      "JobAll": "Run job on all minions",
+      "Refreshing": "Refreshing minions",
+      "NbMinionsRefreshed": "{0} minions refreshed"
     },
     "MinionDetail": {
       "RefreshMinion": "Refresh ",
       "JobMinion": "Run job on ",
-      "HighstateMinion": "Run highstate on "
+      "HighstateMinion": "Run highstate on ",
+      "Refreshing ": "Refreshing {0}",
+      "MinionRefreshed": "Minion refreshed"
     },
     "MinionDetailCard": {
       "Grains": "Grains",
@@ -225,7 +234,8 @@
       "Msg1": "If you delete ",
       "Msg2": " from the database, you will need to refresh all minions.",
       "Refreshing": "Refreshing ",
-      "Deleted": " deleted"
+      "Deleted": " deleted",
+      "Close": "Close"
     },
     "NetworkCard": {
       "Network": "Network",
@@ -267,7 +277,9 @@
       "KeywordArguments": "Keyword Arguments"
     },
     "Schedules": {
-      "Refresh": "Refresh schedules"
+      "Refresh": "Refresh schedules",
+      "Refreshing": "Refreshing schedules",
+      "Refreshed": "Schedules refreshed"
     },
     "ScheduleTable": {
       "Schedules": "Schedules",

@@ -276,7 +276,7 @@
         let formData = new FormData
         Object.keys(this.user).forEach(key => formData.append(key, this.user[key]))
         this.$http.post("api/users/", formData).then(() => {
-          this.$toast("User created")
+          this.$toast(this.$i18n.t("components.mixins.UserCard.UserCreated"))
           this.dialog = false
         }).then(() => {
           this.user = {}
@@ -297,7 +297,7 @@
         formData.set("password", this.user.password||'')
         formData.set("is_staff", this.user.is_staff)
         this.$http.patch(`api/users/${this.user.id}/`, formData).then(() => {
-          this.$toast("User updated")
+          this.$toast(this.$i18n.t("components.mixins.UserCard.UserUpdated"))
           this.dialog = false
           this.user = {}
         }).then(() => {
@@ -330,7 +330,7 @@
       deleteUser(id) {
         this.$http.delete("api/users/" + id).then(() => {
           this.dialogDelete = false
-          this.$toast("User deleted")
+          this.$toast(this.$i18n.t("components.mixins.UserCard.UserDeleted"))
         }).then(() => {
           this.getUsers()
         }).catch((error) => {

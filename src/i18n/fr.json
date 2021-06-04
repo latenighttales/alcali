@@ -23,7 +23,10 @@
         "FirstName": "Prénom",
         "LastName": "Nom",
         "Password": "Mot de passe",
-        "StaffUser": "Administrateur"
+        "StaffUser": "Administrateur",
+        "UserCreated": "User created",
+        "UserUpdated": "User updated",
+        "UserDeleted": "User deleted"
       }
     },
     "core": {
@@ -190,7 +193,9 @@
     "Keys": {
       "Refresh": "Actualiser les clés",
       "AcceptAll": "Accepter toutes les clés",
-      "RejectAll": "Rejeter toutes les clés"
+      "RejectAll": "Rejeter toutes les clés",
+      "RefreshingKeys": "Actualisation des clés",
+      "KeysRefreshed": "Clés actualisées"
     },
     "KeysTable": {
       "Keys": "Clés",
@@ -201,12 +206,16 @@
     },
     "Minions": {
       "RefreshAll": "Actualiser tous les minions",
-      "JobAll": "Lancer une tâche sur tous les minions"
+      "JobAll": "Lancer une tâche sur tous les minions",
+      "Refreshing": "Actualisation des minions",
+      "NbMinionsRefreshed": "{0} minions actualisés"
     },
     "MinionDetail": {
       "RefreshMinion": "Actualiser ",
       "JobMinion": "Lancer une tâche sur ",
-      "HighstateMinion": "Appliquer Highstate sur "
+      "HighstateMinion": "Appliquer Highstate sur ",
+      "Refreshing ": "Actualisation de {0}",
+      "MinionRefreshed": "Minion actualisé"
     },
     "MinionDetailCard": {
       "Grains": "Grains",
@@ -225,7 +234,8 @@
       "Msg1": "Si vous supprimez ",
       "Msg2": " de la base de données, vous devrez actualiser tous les minions.",
       "Refreshing": "Raffraîchissement de ",
-      "Deleted": " supprimé"
+      "Deleted": " supprimé",
+      "Close": "Fermer"
     },
     "NetworkCard": {
       "Network": "Réseau",
@@ -267,7 +277,9 @@
       "KeywordArguments": "Mots clés Arguments"
     },
     "Schedules": {
-      "Refresh": "Actualiser les tâches"
+      "Refresh": "Actualiser les tâches",
+      "Refreshing": "Actualisation des tâches",
+      "Refreshed": "Tâches actualisées"
     },
     "ScheduleTable": {
       "Schedules": "Plannings",

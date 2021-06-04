@@ -40,9 +40,9 @@
         this[action]()
       },
       refreshMinions() {
-        this.$toast("refreshing minions")
+        this.$toast(this.$i18n.t("components.Minions.Refreshing"))
         this.$http.post("/api/minions/refresh_minions/").then((response) => {
-          this.$toast(`${response.data.refreshed.length} minions refreshed`)
+          this.$toast(this.$i18n.t("components.Minions.NbMinionsRefreshed", [response.data.refreshed.length]))
         }).then(() => {
           this.refreshKey += 1
         }).catch((error) => {

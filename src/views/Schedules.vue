@@ -34,10 +34,10 @@
         this[action]()
       },
       refreshSchedules() {
-        this.$toast("refreshing schedules")
+        this.$toast(this.$i18n.t("components.Schedules.Refreshing"))
         this.$http.post("/api/schedules/refresh/").then(() => {
           this.refreshKey += 1
-          this.$toast("schedules refreshed")
+          this.$toast(this.$i18n.t("components.Schedules.Refreshed"))
         }).catch((error) => {
           this.$toast.error(error.response.data)
         })
