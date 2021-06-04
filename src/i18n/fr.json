@@ -204,9 +204,16 @@
     "KeysTable": {
       "Keys": "Clés",
       "MinionId": "ID Minion",
-      "Status": "Status",
+      "Status": "État",
       "PublicKey": "Clés publiques",
-      "Actions": "Actions"
+      "Actions": "Actions",
+      "reject": "rejeter",
+      "delete": "supprimer",
+      "accept": "accepter",
+      "accepted": "Acceptée",
+      "unaccepted": "En attente",
+      "rejected": "Rejetée",
+      "denied": "Refusée"
     },
     "Minions": {
       "RefreshAll": "Actualiser tous les minions",
