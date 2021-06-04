@@ -206,7 +206,14 @@
       "MinionId": "Minion ID",
       "Status": "Status",
       "PublicKey": "Public keys",
-      "Actions": "Actions"
+      "Actions": "Actions",
+      "reject": "reject",
+      "delete": "delete",
+      "accept": "accept",
+      "accepted": "Accepted",
+      "unaccepted": "Unaccepted",
+      "rejected": "Rejected",
+      "denied": "Denied"
     },
     "Minions": {
       "RefreshAll": "Refresh all minions",

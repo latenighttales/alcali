@@ -37,7 +37,7 @@
         </template>
         <template v-slot:item.status="{ item }">
           <v-chip :color="keysRepr(item.status)" dark>{{
-            item.status.toString()
+            $t(`components.KeysTable.${item.status.toString()}`)
           }}</v-chip>
         </template>
         <template v-slot:item.action="{ item }">
@@ -50,7 +50,7 @@
               @click="manageKey(action, item.minion_id)"
               :key="action"
             >
-              {{ action }}
+              {{ $t(`components.KeysTable.${action}`) }}
             </v-btn>
           </template>
         </template>
