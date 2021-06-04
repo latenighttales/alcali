@@ -164,7 +164,11 @@
       "Date": "Date",
       "Action": "Action",
       "Limit": "Limit",
-      "SelectDate": "Select date(s)"
+      "SelectDate": "Select date(s)",
+      "Success": "Success",
+      "Failed": "Failed",
+      "Rerun": "rerun",
+      "Detail": "detail"
     },
     "JobTemplatesTable": {
       "JobTemplate": "Job Templates",
@@ -275,7 +279,9 @@
       "Function": "Function",
       "Arguments": "Arguments",
       "KeywordArguments": "Keyword Arguments",
-      "RunOnce": "Once:  "
+      "RunOnce": "Once:  ",
+      "Running": "Running",
+      "Scheduling": "Scheduling"
     },
     "Schedules": {
       "Refresh": "Refresh schedules",

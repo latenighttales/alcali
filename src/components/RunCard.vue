@@ -467,13 +467,13 @@ export default {
       });
     },
     runJob(test = false) {
-      let action = "Running";
+      let action = this.$i18n.t("components.RunCard.Running");
       let formData = new FormData();
       let command = this.createCommand(test);
       formData.set("raw", true);
       formData.set("command", command);
       if (this.scheduleSwitch && this.scheduleType) {
-        action = "Scheduling";
+        action = this.$i18n.t("components.RunCard.Scheduling");
         formData.set("schedule_type", this.scheduleType);
         if (this.scheduleName) formData.set("schedule_name", this.scheduleName);
         if (this.scheduleType === "once") {

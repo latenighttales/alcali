@@ -177,7 +177,7 @@
                   dark
                   :to="'/jobs/' + item.jid + '/' + item.id"
                 >
-                  detail
+                  {{$t("components.JobsTable.Detail")}}
                 </v-btn>
                 <v-btn
                   small
@@ -196,7 +196,7 @@
                     item.keyword_arguments
                   "
                 >
-                  rerun
+                  {{$t("components.JobsTable.Rerun")}}
                 </v-btn>
               </div>
             </template>
@@ -313,8 +313,8 @@ export default {
       else return "red";
     },
     boolText(bool) {
-      if (bool === true) return "success";
-      else return "failed";
+      if (bool === true) return this.$i18n.t("components.JobsTable.Success");
+      else return this.$i18n.t("components.JobsTable.Failed");
     },
   },
 };

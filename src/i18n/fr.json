@@ -164,7 +164,11 @@
       "Date": "Date",
       "Action": "Action",
       "Limit": "Limite",
-      "SelectDate": "Sélection de date(s)"
+      "SelectDate": "Sélection de date(s)",
+      "Success":" Succès",
+      "Failed": "Échec",
+      "Rerun": "relancer",
+      "Detail": "détail"
     },
     "JobTemplatesTable": {
       "JobTemplate": "Modèles de tâches",
@@ -275,7 +279,9 @@
       "Function": "Fonction",
       "Arguments": "Arguments",
       "KeywordArguments": "Mots clés Arguments",
-      "RunOnce": "Tâche unique:  "
+      "RunOnce": "Tâche unique:  ",
+      "Running": "Lancement de",
+      "Scheduling": "Planification de"
     },
     "Schedules": {
       "Refresh": "Actualiser les tâches",
