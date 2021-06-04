@@ -65,7 +65,7 @@
         </template>
         <template v-slot:item.conformity="{ item }">
           <v-chip :color="boolRepr(item.conformity)" dark
-            >{{ item.conformity }}
+            >{{ $t(`components.ConformityTable.${item.conformity}`) }}
           </v-chip>
         </template>
         <template v-slot:item.last_job="{ item }">

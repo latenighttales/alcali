@@ -226,7 +226,8 @@
       "JobMinion": "Lancer une tâche sur ",
       "HighstateMinion": "Appliquer Highstate sur ",
       "Refreshing ": "Actualisation de {0}",
-      "MinionRefreshed": "Minion actualisé"
+      "MinionRefreshed": "Minion actualisé",
+      "MissingMinion": "{0} est absent de la base. Essayez d'actualiser les minions"
     },
     "MinionDetailCard": {
       "Grains": "Grains",

@@ -226,7 +226,8 @@
       "JobMinion": "Run job on ",
       "HighstateMinion": "Run highstate on ",
       "Refreshing ": "Refreshing {0}",
-      "MinionRefreshed": "Minion refreshed"
+      "MinionRefreshed": "Minion refreshed",
+      "MissingMinion": "{0} is not present in database. Try refreshing minions"
     },
     "MinionDetailCard": {
       "Grains": "Grains",
