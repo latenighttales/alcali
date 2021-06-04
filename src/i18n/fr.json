@@ -160,16 +160,16 @@
       "Arguments": "Arguments",
       "KeywordArguments": "Mots clés Arguments",
       "User": "Utilisateur",
-      "Status": "Etat",
+      "Status": "État",
       "Date": "Date",
       "Action": "Action",
-      "Limit": "Limit",
+      "Limit": "Limite",
       "SelectDate": "Sélection de date(s)"
     },
     "JobTemplatesTable": {
       "JobTemplate": "Modèles de tâches",
       "Run": "Exécuter",
-      "Edit": "Editer",
+      "Edit": "Éditer",
       "Delete": "Supprimer",
       "Name": "Nom",
       "Client": "Client",
@@ -201,7 +201,7 @@
       "Keys": "Clés",
       "MinionId": "ID Minion",
       "Status": "Status",
-      "PublicKey": "clés publiques",
+      "PublicKey": "Clés publiques",
       "Actions": "Actions"
     },
     "Minions": {
@@ -324,11 +324,11 @@
       "Failed": "Échoué",
       "MinionID": "ID MINION:",
       "Arguments": "ARGUMENTS:",
-      "KeywordArguments": "MOT CLES ARGUMENTS:",
+      "KeywordArguments": "MOT CLÉS ARGUMENTS:",
       "JobID": "ID TACHE:",
       "Function": "FONCTION:",
       "Status": "ÉTAT:",
-      "StartTime": "START TIME:",
+      "StartTime": "DÉBUT:",
       "Results": "Résultats"
     },
     "Login": {
