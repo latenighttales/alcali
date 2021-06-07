@@ -23,7 +23,8 @@ const i18n = new VueI18n({
 Vue.prototype.$http = axios;
 Vue.prototype.$http.defaults.xsrfCookieName = "csrftoken";
 Vue.prototype.$http.defaults.xsrfHeaderName = "X-CSRFToken";
-Vue.prototype.$http.defaults.headers.common["Content-Type"] = "application/json";
+Vue.prototype.$http.defaults.headers.common["Content-Type"] =
+  "application/json";
 
 const accessToken = localStorage.getItem("access");
 if (accessToken) {
@@ -52,7 +53,10 @@ Vue.prototype.$http.interceptors.request.use(
     const originalRequest = config;
     // before request is sent check if refresh token is about to expire.
     const refresh = window.localStorage.getItem("refresh");
-    if (refresh && jwtDecode(refresh).exp - Math.floor(Date.now() / 1000) < 60) {
+    if (
+      refresh &&
+      jwtDecode(refresh).exp - Math.floor(Date.now() / 1000) < 60
+    ) {
       // cleanup local storage and reroute to login.
       return store.dispatch("logout").then(() => {
         return router.push({ path: "/login", name: "Login" });
@@ -74,7 +78,11 @@ Vue.prototype.$http.interceptors.request.use(
     if (access && jwtDecode(access).exp > Math.floor(Date.now() / 1000)) {
       return originalRequest;
       // Do not intercept on token refresh.
-    } else if (config.url.includes("login") || config.url.includes("token") || config.url.includes("social")) {
+    } else if (
+      config.url.includes("login") ||
+      config.url.includes("token") ||
+      config.url.includes("social")
+    ) {
       return originalRequest;
     } else {
       // While we are refreshing, store other requests.
@@ -101,7 +109,8 @@ Vue.prototype.$http.interceptors.request.use(
           .post("/api/token/refresh/", { refresh: refreshToken })
           .then(({ data }) => {
             window.localStorage.setItem("access", data.access);
-            Vue.prototype.$http.defaults.headers.common["Authorization"] = "Bearer " + data.access;
+            Vue.prototype.$http.defaults.headers.common["Authorization"] =
+              "Bearer " + data.access;
             originalRequest.headers["Authorization"] = "Bearer " + data.access;
             processQueue(null, data.access);
             resolve(originalRequest);
