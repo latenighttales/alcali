@@ -15,6 +15,20 @@
               <span>{{$t('components.UserSettings.MaxNotifications')}}</span>
               <v-text-field v-model="max_notifs" type="number"></v-text-field>
             </v-col>
+            <v-col lg="2">
+              <div class="locale-changer" style="margin-left: 20px">
+                <span>{{$t('components.UserSettings.Language')}}</span>
+                <div>
+                    <v-select
+                          :items="langs"
+                          v-model="$i18n.locale"
+                        ></v-select>
+                  <select v-model="$i18n.locale">
+                    <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang[0]">{{ lang[1] }}</option>
+                  </select>
+                </div>
+              </div>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -36,6 +50,10 @@
         notifs: { created: false, published: true, returned: false, event: false },
         settings: null,
         max_notifs: null,
+        langs: [
+          {text: 'english', value: 'en'},
+          {text: 'français', value: 'fr'}
+        ]
       }
     },
     methods: {

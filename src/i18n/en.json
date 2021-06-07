@@ -323,7 +323,8 @@
       "published": "published",
       "returned": "returned",
       "event": "event",
-      "UserSettingsUpdated": "user settings updated"
+      "UserSettingsUpdated": "user settings updated",
+      "Language": "Language"
     },
     "AlcaliStatusCard": {
       "Status": "Status",
