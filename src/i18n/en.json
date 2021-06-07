@@ -249,7 +249,15 @@
       "Msg2": " from the database, you will need to refresh all minions.",
       "Refreshing": "Refreshing ",
       "Deleted": " deleted",
-      "Close": "Close"
+      "Close": "Close",
+      "Minion_id": "minion_id",
+      "Conformity": "conformity",
+      "FQDN": "fqdn",
+      "OS": "os",
+      "Oscodename":"oscodename",
+      "KernelRelease": "kernelrelease",
+      "LastJob": "last_job",
+      "LastHighstate": "last_highstate"
     },
     "NetworkCard": {
       "Network": "Network",

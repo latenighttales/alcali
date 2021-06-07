@@ -249,7 +249,15 @@
       "Msg2": " de la base de données, vous devrez actualiser tous les minions.",
       "Refreshing": "Raffraîchissement de ",
       "Deleted": " supprimé",
-      "Close": "Fermer"
+      "Close": "Fermer",
+      "Minion_id": "id_minion",
+      "Conformity": "conformité",
+      "FQDN": "fqdn",
+      "OS": "os",
+      "Oscodename":"nom_de_code_os",
+      "KernelRelease": "publication_noyau",
+      "LastJob": "dernière_tâche",
+      "LastHighstate": "dernier_highstate"
     },
     "NetworkCard": {
       "Network": "Réseau",
