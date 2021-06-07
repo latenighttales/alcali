@@ -18,6 +18,7 @@
         "ActionMsg": "cette action est irréversible.",
         "Close": "Fermer",
         "Token": "Token",
+        "DateJoined": "Date d'inscription",
         "Username": "Nom d'utilisateur",
         "Email": "Email",
         "FirstName": "Prénom",
@@ -26,7 +27,8 @@
         "StaffUser": "Administrateur",
         "UserCreated": "Utilisateur créé",
         "UserUpdated": "Utilisateur mis à jour",
-        "UserDeleted": "Utilisateur supprimé"
+        "UserDeleted": "Utilisateur supprimé",
+        "Action": "Action"
       }
     },
     "core": {

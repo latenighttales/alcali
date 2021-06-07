@@ -227,14 +227,14 @@
       return {
         search: "",
         headers: [
-          { text: "Username", value: "username" },
-          { text: "First Name", value: "first_name" },
-          { text: "Last Name", value: "last_name" },
-          { text: "Email", value: "email" },
-          { text: "Staff", value: "is_staff" },
-          { text: "Token", value: "token", sortable: false },
-          { text: "Date Joined", value: "date_joined" },
-          { text: "Actions", value: "action", sortable: false },
+          { text: this.$t("components.mixins.UserCard.Username"), value: "username" },
+          { text: this.$t("components.mixins.UserCard.FirstName"), value: "first_name" },
+          { text: this.$t("components.mixins.UserCard.LastName"), value: "last_name" },
+          { text: this.$t("components.mixins.UserCard.Email"), value: "email" },
+          { text: this.$t("components.mixins.UserCard.StaffUser"), value: "is_staff" },
+          { text: this.$t("components.mixins.UserCard.Token"), value: "token", sortable: false },
+          { text: this.$t("components.mixins.UserCard.DateJoined"), value: "date_joined" },
+          { text: this.$t("components.mixins.UserCard.Action"), value: "action", sortable: false },
         ],
         userRules: [
           v => !!v || "Username is required",

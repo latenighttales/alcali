@@ -18,6 +18,7 @@
         "ActionMsg": "this action is irreversible.",
         "Close": "Close",
         "Token": "Token",
+        "DateJoined": "Date Joined",
         "Username": "Username",
         "Email": "Email",
         "FirstName": "First Name",
@@ -26,7 +27,8 @@
         "StaffUser": "Staff User",
         "UserCreated": "User created",
         "UserUpdated": "User updated",
-        "UserDeleted": "User deleted"
+        "UserDeleted": "User deleted",
+        "Action": "Action"
       }
     },
     "core": {
