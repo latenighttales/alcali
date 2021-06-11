@@ -237,11 +237,11 @@
           { text: this.$t("components.mixins.UserCard.Action"), value: "action", sortable: false },
         ],
         userRules: [
-          v => !!v || "Username is required",
+          v => !!v || this.$t("components.mixins.UserCard.UsernameRequired"),
         ],
         emailRules: [
-          v => !!v || "E-mail is required",
-          v => /.+@.+/.test(v) || "E-mail must be valid",
+          v => !!v || this.$t("components.mixins.UserCard.EmailRequired"),
+          v => /.+@.+/.test(v) || this.$t("components.mixins.UserCard.EmailValid"),
         ],
         users: [],
         user: {},

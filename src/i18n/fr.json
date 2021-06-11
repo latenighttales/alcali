@@ -10,8 +10,8 @@
         "CreateUser": "Créer l'utilisateur",
         "UpdateUser": "Mettre à jour l'utilisateur",
         "Update": "Mettre à jour",
-        "Discard": "Jeter",
-        "View": "Vue",
+        "Discard": "Annuler",
+        "View": "Voir",
         "Renew": "Renouveller",
         "Revoke": "Révoquer",
         "Delete": "Supprimer",
@@ -28,7 +28,10 @@
         "UserCreated": "Utilisateur créé",
         "UserUpdated": "Utilisateur mis à jour",
         "UserDeleted": "Utilisateur supprimé",
-        "Action": "Action"
+        "Action": "Action",
+        "UsernameRequired": "Le nom d'utilisateur est requis",
+        "EmailRequired": "L'adresse mail est requise",
+        "EmailValid": "L'adresse mail doit être valide"
       }
     },
     "core": {

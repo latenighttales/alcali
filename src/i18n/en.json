@@ -28,7 +28,10 @@
         "UserCreated": "User created",
         "UserUpdated": "User updated",
         "UserDeleted": "User deleted",
-        "Action": "Action"
+        "Action": "Action",
+        "UsernameRequired": "Username is required",
+        "EmailRequired": "E-mail is required",
+        "EmailValid": "E-mail must be valid"
       }
     },
     "core": {
