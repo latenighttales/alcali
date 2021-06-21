@@ -4,13 +4,7 @@
       <v-card-title>
         {{ $t("components.MinionsTable.Minion") }}
         <v-spacer></v-spacer>
-        <v-menu
-          v-model="menu"
-          :close-on-content-click="false"
-          offset-y
-          offset-x
-          left
-        >
+        <v-menu v-model="menu" :close-on-content-click="false" offset-y offset-x left>
           <template v-slot:activator="{ on }">
             <v-btn color="primary" dark v-on="on" class="mr-5">
               {{ $t("components.MinionsTable.Column") }}
@@ -23,12 +17,7 @@
                 <v-row no-gutters>
                   <template v-for="(item, index) in available_headers">
                     <v-col :key="index" cols="4">
-                      <v-checkbox
-                        :label="item"
-                        :value="item"
-                        v-model="default_headers"
-                        hide-details
-                      ></v-checkbox>
+                      <v-checkbox :label="item" :value="item" v-model="default_headers" hide-details></v-checkbox>
                     </v-col>
                   </template>
                 </v-row>
@@ -55,13 +44,7 @@
         loading-text="Loading... Please wait"
       >
         <template v-slot:item.minion_id="{ item }">
-          <v-btn
-            text
-            small
-            class="text-none"
-            :to="'/minions/' + item.minion_id"
-            >{{ item.minion_id }}</v-btn
-          >
+          <v-btn text small class="text-none" :to="'/minions/' + item.minion_id">{{ item.minion_id }}</v-btn>
         </template>
         <template v-slot:item.conformity="{ item }">
           <v-chip :color="boolRepr(item.conformity)" dark
@@ -69,49 +52,20 @@
           </v-chip>
         </template>
         <template v-slot:item.last_job="{ item }">
-          {{
-            item.last_job === null
-              ? ""
-              : new Date(item.last_job).toLocaleString("en-GB")
-          }}
+          {{ item.last_job === null ? "" : new Date(item.last_job).toLocaleString("en-GB") }}
         </template>
         <template v-slot:item.last_highstate="{ item }">
-          {{
-            item.last_highstate === null
-              ? ""
-              : new Date(item.last_highstate).toLocaleString("en-GB")
-          }}
+          {{ item.last_highstate === null ? "" : new Date(item.last_highstate).toLocaleString("en-GB") }}
         </template>
         <template v-slot:item.action="{ item }">
           <div class="text-center">
-            <v-btn
-              small
-              class="ma-2"
-              color="blue"
-              tile
-              dark
-              @click="refreshMinion(item.minion_id)"
-            >
+            <v-btn small class="ma-2" color="blue" tile dark @click="refreshMinion(item.minion_id)">
               {{ $t("components.MinionsTable.Refresh") }}
             </v-btn>
-            <v-btn
-              small
-              class="ma-2"
-              color="blue-grey"
-              tile
-              dark
-              :to="'/run?tgt=' + item.minion_id"
-            >
+            <v-btn small class="ma-2" color="blue-grey" tile dark :to="'/run?tgt=' + item.minion_id">
               {{ $t("components.MinionsTable.Run") }}
             </v-btn>
-            <v-btn
-              small
-              class="ma-2"
-              color="red"
-              tile
-              dark
-              @click.stop="showDialog(item.minion_id)"
-            >
+            <v-btn small class="ma-2" color="red" tile dark @click.stop="showDialog(item.minion_id)">
               {{ $t("components.MinionsTable.Delete") }}
             </v-btn>
           </div>
@@ -127,8 +81,7 @@
 
           <v-card-text>
             <br />
-            {{ $t("components.MinionsTable.Msg1") }}{{ target
-            }}{{ $t("components.MinionsTable.Msg2") }}
+            {{ $t("components.MinionsTable.Msg1") }}{{ target }}{{ $t("components.MinionsTable.Msg2") }}
           </v-card-text>
 
           <v-divider></v-divider>
@@ -156,14 +109,14 @@ export default {
       search: "",
       dialog: false,
       default_headers: [
-        this.$t("components.MinionsTable.Minion_id"),
-        this.$t("components.MinionsTable.Conformity"),
-        this.$t("components.MinionsTable.FQDN"),
-        this.$t("components.MinionsTable.OS"),
-        this.$t("components.MinionsTable.Oscodename"),
-        this.$t("components.MinionsTable.KernelRelease"),
-        this.$t("components.MinionsTable.LastJob"),
-        this.$t("components.MinionsTable.LastHighstate"),
+        "minion_id",
+        "conformity",
+        "fqdn",
+        "os",
+        "oscodename",
+        "kernelrelease",
+        "last_job",
+        "last_highstate",
       ],
       unwanted_headers: ["pillar", "grain", "id"],
       available_headers: [],
@@ -206,9 +159,7 @@ export default {
         this.minions = addedGrains(response.data);
         this.loading = false;
         // Compute available headers
-        this.available_headers = this.available_headers.concat(
-          this.default_headers
-        );
+        this.available_headers = this.available_headers.concat(this.default_headers);
         if (this.minions.length > 0) {
           Object.keys(this.minions[0]).forEach((key) => {
             if (
@@ -231,9 +182,7 @@ export default {
       } else return "primary";
     },
     refreshMinion(minion_id) {
-      this.$toast(
-        this.$i18n.t("components.MinionsTable.Refreshing") + minion_id
-      );
+      this.$toast(this.$i18n.t("components.MinionsTable.Refreshing") + minion_id);
       let formData = new FormData();
       formData.set("minion_id", minion_id);
       this.$http
@@ -251,9 +200,7 @@ export default {
         .delete(`/api/minions/${minion_id}/`)
         .then(() => {
           this.minions.splice(this.minions.indexOf(minion_id), 1);
-          this.$toast(
-            minion_id + this.$i18n.t("components.MinionsTable.Deleted")
-          );
+          this.$toast(minion_id + this.$i18n.t("components.MinionsTable.Deleted"));
         })
         .catch((error) => {
           this.$toast.error(error.response.data);
@@ -267,5 +214,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
