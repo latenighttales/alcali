@@ -125,23 +125,7 @@
     "InfosCard": {
       "Common": "Général",
       "Salt": "Salt",
-      "Hardware": "Appareil",
-      "FQDN": "F.Q.D.N",
-      "OS": "O.S",
-      "OSVersion": "Version O.S",
-      "Kernel": "Noyau",
-      "LastJob": "Dernière tâche",
-      "LastHighstate": "Dernier Highstate",
-      "HighstateConformity": "Conformité Highstate",
-      "Master": "Master",
-      "SaltVersion": "Version de Salt",
-      "SaltPath": "Chemin Salt",
-      "PythonVersion": "Version de Python",
-      "CPUModel": "Modèle processeur",
-      "CPUNumber": "Nombre de processeurs",
-      "TotalMemory": "Mémoire totale",
-      "TotalSwap": "Echanges totaux",
-      "Virtual": "Virtuel"
+      "Hardware": "Appareil"
     },
     "JobsChartCard": {
       "Stats": "Statistiques des tâches",

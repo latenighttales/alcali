@@ -125,23 +125,7 @@
     "InfosCard": {
       "Common": "Common",
       "Salt": "Salt",
-      "Hardware": "Hardware",
-      "FQDN": "F.Q.D.N",
-      "OS": "O.S",
-      "OSVersion": "O.S Version",
-      "Kernel": "Kernel",
-      "LastJob": "Last Job",
-      "LastHighstate": "Last Highstate",
-      "HighstateConformity": "Highstate Conformity",
-      "Master": "Master",
-      "SaltVersion": "Salt Version",
-      "SaltPath": "Salt Path",
-      "PythonVersion": "Python Version",
-      "CPUModel": "C.P.U Model",
-      "CPUNumber": "Number of C.P.U",
-      "TotalMemory": "Total Memory",
-      "TotalSwap": "Total Swap",
-      "Virtual": "Virtual"
+      "Hardware": "Hardware"
     },
     "JobsChartCard": {
       "Stats": "Jobs Stats",
