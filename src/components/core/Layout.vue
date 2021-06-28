@@ -14,11 +14,7 @@
       </v-list>
       <v-divider></v-divider>
       <v-list dense>
-        <v-list-item
-          v-for="route in routes"
-          :key="route.name"
-          :to="`${route.path}`"
-        >
+        <v-list-item v-for="route in routes" :key="route.name" :to="`${route.path}`">
           <v-list-item-action v-if="mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
@@ -50,9 +46,7 @@
             <v-icon>group</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{
-              $t("components.core.Layout.Users")
-            }}</v-list-item-title>
+            <v-list-item-title>{{ $t("components.core.Layout.Users") }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/settings">
@@ -68,9 +62,7 @@
             <v-icon>settings</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{
-              $t("components.core.Layout.Settings")
-            }}</v-list-item-title>
+            <v-list-item-title>{{ $t("components.core.Layout.Settings") }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -81,9 +73,7 @@
             <v-icon v-else>arrow_back</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{
-              $t("components.core.Layout.Collapse")
-            }}</v-list-item-title>
+            <v-list-item-title>{{ $t("components.core.Layout.Collapse") }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -120,16 +110,12 @@
           <v-list max-height="700px">
             <v-list-item v-if="messages.length === 0">
               <v-list-item-content>
-                <v-list-item-subtitle>{{
-                  $t("components.core.Layout.NoNotifications")
-                }}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ $t("components.core.Layout.NoNotifications") }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-list-item v-for="(item, i) in messages" :key="i" :to="item.link">
               <v-list-item-avatar>
-                <v-icon dark :color="item.color" size="62">{{
-                  item.icon
-                }}</v-icon>
+                <v-icon dark :color="item.color" size="62">{{ item.icon }}</v-icon>
               </v-list-item-avatar>
 
               <v-list-item-content>
@@ -140,9 +126,7 @@
           </v-list>
           <v-card-actions v-show="messages.length > 0">
             <v-spacer></v-spacer>
-            <v-btn text @click="messages = []"
-              >$t("components.core.Layout.Clear")</v-btn
-            >
+            <v-btn text @click="messages = []">{{ $t("components.core.Layout.Clear") }}</v-btn>
           </v-card-actions>
         </v-card>
       </v-menu>
@@ -154,15 +138,11 @@
         </template>
         <v-list>
           <v-list-item @click="toggleTheme">
-            <v-list-item-title>{{
-              $t("components.core.Layout.ToggleTheme")
-            }}</v-list-item-title>
+            <v-list-item-title>{{ $t("components.core.Layout.ToggleTheme") }}</v-list-item-title>
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="logout">
-            <v-list-item-title>{{
-              $t("components.core.Layout.Logout")
-            }}</v-list-item-title>
+            <v-list-item-title>{{ $t("components.core.Layout.Logout") }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -243,7 +223,7 @@ export default {
     ],
   }),
   methods: {
-    logout: function () {
+    logout: function() {
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/login");
       });
@@ -254,14 +234,12 @@ export default {
       }
     },
     getPrefs() {
-      this.$http
-        .get(`api/userssettings/${this.$store.getters.user_id}/`)
-        .then((response) => {
-          this.settings = response.data;
-          Object.keys(this.notifs).forEach((notif) => {
-            this.notifs[notif] = this.settings["notifs_" + notif];
-          });
+      this.$http.get(`api/userssettings/${this.$store.getters.user_id}/`).then((response) => {
+        this.settings = response.data;
+        Object.keys(this.notifs).forEach((notif) => {
+          this.notifs[notif] = this.settings["notifs_" + notif];
         });
+      });
     },
     toggleTheme() {
       this.$store.dispatch("toggleTheme").then(() => {
@@ -319,8 +297,7 @@ export default {
               data.type = "return";
               data.color = "primary";
               data.icon = "subdirectory_arrow_left";
-              data.text =
-                "Job " + data.data.fun + " returned for " + data.data.id;
+              data.text = "Job " + data.data.fun + " returned for " + data.data.id;
               data.link = "/jobs/" + data.data.jid + "/" + data.data.id;
               this.messages.unshift(data);
               if (this.messages.length > this.settings.max_notifs) {
@@ -339,10 +316,7 @@ export default {
               this.messages.pop();
             }
             this.notif_nb += 1;
-          } else if (
-            /^\w{20}$/.test(data.tag) &&
-            this.notifs.created === true
-          ) {
+          } else if (/^\w{20}$/.test(data.tag) && this.notifs.created === true) {
             data.type = "created";
             data.color = "secondary";
             data.icon = "add";
