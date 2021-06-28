@@ -59,7 +59,12 @@
         "Schedules": "Plannings",
         "Events": "Événements",
         "Keys": "Clés",
-        "Search": "Chercher jids, minions, states..."
+        "Search": "Chercher jids, minions, states...",
+        "Job_": "Tâche ",
+        "_published for_": " publiée pour ",
+        "_returned for_": " retournée pour ",
+        "JobEvent": "Événement de tâche",
+        "NewJobCreated": "Nouvelle Tâche créée"
       }
     },
     "CommonSettings": {

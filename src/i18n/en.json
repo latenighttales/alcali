@@ -59,7 +59,12 @@
         "Schedules": "Schedules",
         "Events": "Events",
         "Keys": "Keys",
-        "Search": "Search jids, minions, states..."
+        "Search": "Search jids, minions, states...",
+        "Job_": "Job ",
+        "_published for_": " published for ",
+        "_returned for_": " returned for ",
+        "JobEvent": "Job Event",
+        "NewJobCreated": "New Job Created"
       }
     },
     "CommonSettings": {

@@ -277,7 +277,11 @@ export default {
               } else {
                 target = data.data.minions.length + " minion(s)";
               }
-              data.text = "Job " + data.data.fun + " published for " + target;
+              data.text =
+                this.$i18n.t("components.core.Layout.Job_") +
+                data.data.fun +
+                this.$i18n.t("components.core.Layout._published for_") +
+                target;
               this.messages.unshift(data);
               if (this.messages.length > this.settings.max_notifs) {
                 this.messages.pop();
@@ -297,7 +301,11 @@ export default {
               data.type = "return";
               data.color = "primary";
               data.icon = "subdirectory_arrow_left";
-              data.text = "Job " + data.data.fun + " returned for " + data.data.id;
+              data.text =
+                this.$i18n.t("components.core.Layout.Job_") +
+                data.data.fun +
+                this.$i18n.t("components.core.Layout._returned for_") +
+                data.data.id;
               data.link = "/jobs/" + data.data.jid + "/" + data.data.id;
               this.messages.unshift(data);
               if (this.messages.length > this.settings.max_notifs) {
@@ -309,7 +317,7 @@ export default {
             data.type = "event";
             data.color = "orange";
             data.icon = "more_horiz";
-            data.text = "Job Event";
+            data.text = this.$i18n.t("components.core.Layout.JobEvent");
             data.link = "";
             this.messages.unshift(data);
             if (this.messages.length > this.settings.max_notifs) {
@@ -320,7 +328,7 @@ export default {
             data.type = "created";
             data.color = "secondary";
             data.icon = "add";
-            data.text = "New Job Created";
+            data.text = this.$i18n.t("components.core.Layout.NewJobCreated");
             data.link = "";
             this.messages.unshift(data);
             if (this.messages.length > this.settings.max_notifs) {
