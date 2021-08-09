@@ -42,7 +42,7 @@ else:
     DJANGO_DEBUG = False
 DEBUG = DJANGO_DEBUG
 
-ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS", "127.0.0.1")]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(" ")
 
 # Application definition
 
