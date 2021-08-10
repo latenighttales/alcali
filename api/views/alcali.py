@@ -510,11 +510,13 @@ def run(request):
             parsed_command[0]["fun"] in ["state.apply", "state.highstate"]
             and parsed_command[0]["client"] != "local_async"
         ):
+            ret = dict(sorted(ret.items(), reverse=True))
             for state, out in ret.items():
                 minion_ret = highstate_output.output({state: out})
                 formatted += minion_ret + "\n\n"
         # Everything else.
         else:
+            ret = dict(sorted(ret.items(), reverse=True))
             for state, out in ret.items():
                 minion_ret = nested_output.output({state: out})
                 formatted += minion_ret + "\n\n"
