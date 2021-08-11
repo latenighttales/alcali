@@ -199,6 +199,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
+                  <v-btn color="secondary" large dark @click="clearResults" v-show='results'>Clear</v-btn>
                   <v-btn color="orange" large dark @click="runJob(test=true)" v-show="!saveJobSwitch">Test</v-btn>
                   <v-btn color="info" large dark @click="runJob" v-show="!saveJobSwitch">Run</v-btn>
                   <v-btn color="green" large dark @click="saveJob" v-show="saveJobSwitch">Save</v-btn>
@@ -348,6 +349,9 @@
         this.$http.post("api/job_templates/", formData).then(response => {
           this.$toast("Template "+this.jobTemplateName+" saved")
         })
+      },
+      clearResults() {
+        this.results = ''
       },
       runJob(test = false) {
         let action = "Running"
