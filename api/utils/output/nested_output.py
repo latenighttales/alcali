@@ -72,9 +72,12 @@ class NestDisplay(object):
             )
         elif isinstance(ret, str):
             first_line = True
+            color = self.GREEN
+            if self.retcode != 0:
+                color = self.RED
             for line in ret.splitlines():
                 line_prefix = " " * len(prefix) if not first_line else prefix
-                out.append(self.ustring(indent, self.GREEN, line, prefix=line_prefix))
+                out.append(self.ustring(indent, color, line, prefix=line_prefix))
                 first_line = False
         elif isinstance(ret, (list, tuple)):
             color = self.GREEN

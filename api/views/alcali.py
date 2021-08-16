@@ -178,7 +178,7 @@ class MinionsViewSet(viewsets.ModelViewSet):
             last_highstate = last_highstate.loaded_ret()["return"]
             # Sls error
             if isinstance(last_highstate, list):
-                failed = {"error": last_highstate[0]}
+                failed = {'error': conv.convert(nested_output.output('\n'.join(last_highstate), _retcode = 1))}
             else:
                 for state in last_highstate:
                     state_name = state.split("_|-")[1]
