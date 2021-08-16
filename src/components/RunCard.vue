@@ -215,6 +215,7 @@
     </v-row>
     <v-row>
       <v-col sm="12">
+        <div class="lds-dual-ring" v-if="loading"></div>
         <v-card v-if="results">
           <v-card-title>Results</v-card-title>
           <v-card-text v-html="results" class="ansiStyle"></v-card-text>
@@ -307,6 +308,7 @@
         scheduleDate: new Date().toISOString().substr(0, 10),
         scheduleTime: new Date().toISOString().substr(11, 11).split(":").slice(0, -1).join(":"),
         scheduleName: null,
+        loading: false,
       }
     },
     methods: {
@@ -366,6 +368,7 @@
           }
         }
         this.$toast(action + " " + command)
+        this.loading = true
         this.$http.post("api/run/", formData).then(response => {
           let result = response.data
           // If we're expecting an async result, display a link to the minion's result.
@@ -387,8 +390,10 @@
             }
             result = new XMLSerializer().serializeToString(htmlRes)
           }
+          this.loading = false
           this.results = result + this.results
         }).catch((error) => {
+          this.loading = false
           this.$toast.error(error.response.data)
         })
       },
@@ -465,4 +470,31 @@
     padding: 10px;
   }
 
+  .lds-dual-ring {
+    width: 80px;
+    height: 80px;
+    float: none;
+    margin: 0 auto;
+  }
+
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid rgba(138, 138, 138);
+    border-color: rgba(138, 138, 138) transparent rgba(138, 138, 138) transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 </style>
