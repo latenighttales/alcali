@@ -23,7 +23,7 @@ jobs:
         if: ${{ success() }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: docker-compose exec -u alcali -e "$env:CODECOV_TOKEN" web codecov -X s3
+        run: docker-compose exec -T -u alcali -e "$env:CODECOV_TOKEN" web codecov -X s3
       - name: Show logs
         if: ${{ failure() }}
         run: docker-compose logs
