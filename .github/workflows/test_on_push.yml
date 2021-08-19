@@ -10,7 +10,7 @@ jobs:
       - name: Install Black
         run: pip install black
       - name: Build the stack
-        run: docker-compose -f docker-compose-ci.yml up --build -d
+        run: docker-compose -f docker-compose-ci.yml up -d
       - name: Test
         run: bash docker/utils/ci_script.sh
       - name: Check safety
