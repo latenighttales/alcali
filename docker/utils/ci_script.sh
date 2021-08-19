@@ -15,5 +15,5 @@ while ! [[ $(docker-compose logs | grep "The Salt Master has cached the public k
 done
 # python coverage is having trouble writing .coverage file
 docker-compose exec -T -u root web chown -R alcali:alcali /opt/alcali
-docker-compose exec -T -u alcali web coverage run -m pytest
-docker-compose exec -T -u alcali web coverage report
+docker-compose exec -T -u alcali web pytest
+
