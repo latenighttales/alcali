@@ -16,3 +16,4 @@ done
 # python coverage is having trouble writing .coverage file
 docker-compose exec -T -u root web chown -R alcali:alcali /opt/alcali
 docker-compose exec -T -u alcali web coverage run -m pytest
+docker-compose exec -T -u alcali web coverage report
