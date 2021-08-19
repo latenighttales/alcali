@@ -9,7 +9,8 @@ RUN apt-get update && \
 RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M -x python3 stable latest
 
 # Set master and id
-RUN echo "master: master\nid: master">/etc/salt/minion
+COPY saltconfig/etc/minion /etc/salt/minion
+RUN echo "id: master">>/etc/salt/minion
 
 # Install python dependencies
 RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api python3-openssl

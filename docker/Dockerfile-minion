@@ -9,7 +9,7 @@ RUN apt-get update && \
 RUN curl -L https://bootstrap.saltstack.com | sh -s -- -x python3 stable latest
 
 # Set master
-RUN echo "master: master">/etc/salt/minion
+COPY saltconfig/etc/minion /etc/salt/minion
 
 COPY utils/entrypoint-minion.sh .
 
