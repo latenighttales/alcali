@@ -15,7 +15,10 @@ jobs:
         run: bash docker/utils/ci_script.sh
       - name: Check safety
         if: ${{ success() }}
-        run: docker-compose exec -u alcali web safety check
+        run: docker-compose exec -T -u alcali web safety check
+      - name: Check format
+        if: ${{ success() }}
+        run: black . --check
       - name: Upload Codecov
         if: ${{ success() }}
         env:
