@@ -13,4 +13,4 @@ while ! [[ $(docker-compose logs | grep "The Salt Master has cached the public k
   echo "Waiting Salt Master..."
   sleep 10
 done
-docker-compose exec -T -u alcali web pytest
+docker-compose exec -T -u alcali -e COV_CORE_CONFIG=.coveragerc web pytest

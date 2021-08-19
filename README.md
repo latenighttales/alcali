@@ -1,6 +1,6 @@
 # Alcali
 
-[![Build Status](https://travis-ci.org/latenighttales/alcali.svg?branch=2019.2)](https://travis-ci.org/latenighttales/alcali)
+[![Build](https://github.com/latenighttales/alcali/actions/workflows/test_on_push.yml/badge.svg?branch=develop)](https://github.com/latenighttales/alcali/actions/workflows/test_on_push.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=latenighttales/alcali)](https://dependabot.com)
 [![codecov](https://codecov.io/gh/latenighttales/alcali/branch/2019.2.0/graph/badge.svg)](https://codecov.io/gh/latenighttales/alcali)
