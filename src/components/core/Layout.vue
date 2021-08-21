@@ -1,8 +1,9 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" :mini-variant="mini" app clipped>
-      <v-list dense nav dark color="#212121" class="py-0">
-        <v-list-item two-line :class="mini && 'px-0'">
+    <v-navigation-drawer v-model="settings.Layout.drawer"
+                         :mini-variant="settings.Layout.mini" app clipped>
+    <v-list dense nav dark color="#212121" class="py-0">
+        <v-list-item two-line :class="settings.Layout.mini && 'px-0'">
           <v-list-item-avatar>
             <v-icon large>person</v-icon>
           </v-list-item-avatar>
@@ -15,7 +16,7 @@
       <v-divider></v-divider>
       <v-list dense>
         <v-list-item v-for="route in routes" :key="route.name" :to="`${route.path}`">
-          <v-list-item-action v-if="mini">
+          <v-list-item-action v-if="settings.Layout.mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
                 <v-icon v-on="on">{{ route.icon }}</v-icon>
@@ -34,7 +35,7 @@
       <v-divider></v-divider>
       <v-list dense>
         <v-list-item to="/users">
-          <v-list-item-action v-if="mini">
+          <v-list-item-action v-if="settings.Layout.mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
                 <v-icon v-on="on">group</v-icon>
@@ -50,7 +51,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-list-item to="/settings">
-          <v-list-item-action v-if="mini">
+          <v-list-item-action v-if="settings.Layout.mini">
             <v-tooltip right>
               <template v-slot:activator="{ on }">
                 <v-icon v-on="on">settings</v-icon>
@@ -67,9 +68,9 @@
         </v-list-item>
       </v-list>
       <template v-slot:append>
-        <v-list-item @click.stop="mini = !mini" class="elevation-24">
+        <v-list-item @click.stop="updateDomAndSettings('mini')" class="elevation-24">
           <v-list-item-action>
-            <v-icon v-if="mini">arrow_forward</v-icon>
+            <v-icon v-if="settings.Layout.mini">arrow_forward</v-icon>
             <v-icon v-else>arrow_back</v-icon>
           </v-list-item-action>
           <v-list-item-content>
@@ -79,7 +80,7 @@
       </template>
     </v-navigation-drawer>
     <v-app-bar color="black" dark app clipped-left>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="updateDomAndSettings('drawer')"></v-app-bar-nav-icon>
       <v-toolbar-title class="font-weight-bold">ALCALI</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-expand-transition>
@@ -137,7 +138,7 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item @click="toggleTheme">
+          <v-list-item @click="updateDomAndSettings('dark')">
             <v-list-item-title>{{ $t("components.core.Layout.ToggleTheme") }}</v-list-item-title>
           </v-list-item>
           <v-divider></v-divider>
@@ -156,8 +157,9 @@
 </template>
 
 <script>
-import { EventSourcePolyfill } from "event-source-polyfill";
-import helpersMixin from "../mixins/helpersMixin";
+import { mapState } from "vuex"
+import { EventSourcePolyfill } from "event-source-polyfill"
+import helpersMixin from "../mixins/helpersMixin"
 
 export default {
   name: "Layout",
@@ -168,12 +170,8 @@ export default {
     expand_search: false,
     notif_menu: false,
     searchInput: "",
-    drawer: true,
-    mini: true,
     messages: [],
-    settings: null,
     notif_nb: 0,
-    notifs: { created: false, published: false, returned: false, event: false },
     routes: [
       {
         name: "components.core.Layout.Overview",
@@ -223,6 +221,13 @@ export default {
     ],
   }),
   methods: {
+    updateDomAndSettings(val) {
+      this.settings.Layout[val] = !this.settings.Layout[val]
+      if (val === 'dark') {
+        this.$vuetify.theme.dark = this.settings.Layout[val]
+      }
+      this.$store.commit("updateSettings")
+    },
     logout: function() {
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/login");
@@ -234,12 +239,7 @@ export default {
       }
     },
     getPrefs() {
-      this.$http.get(`api/userssettings/${this.$store.getters.user_id}/`).then((response) => {
-        this.settings = response.data;
-        Object.keys(this.notifs).forEach((notif) => {
-          this.notifs[notif] = this.settings["notifs_" + notif];
-        });
-      });
+      this.$store.dispatch("fetchSettings")
     },
     toggleTheme() {
       this.$store.dispatch("toggleTheme").then(() => {
@@ -265,7 +265,7 @@ export default {
         (event) => {
           let data = JSON.parse(event.data);
           // Display only activated notifs.
-          if (isJobNew(data.tag) && this.notifs.published === true) {
+          if (isJobNew(data.tag) && this.settings.UserSettings.notifs.published === true) {
             if (data.data.fun !== "saltutil.find_job") {
               data.type = "new";
               data.color = "green";
@@ -283,7 +283,7 @@ export default {
                 this.$i18n.t("components.core.Layout._published for_") +
                 target;
               this.messages.unshift(data);
-              if (this.messages.length > this.settings.max_notifs) {
+              if (this.messages.length > this.settings.UserSettings.max_notifs) {
                 this.messages.pop();
               }
               this.notif_nb += 1;
@@ -296,7 +296,7 @@ export default {
                 }
               });
             }
-          } else if (isJobReturn(data.tag) && this.notifs.returned === true) {
+          } else if (isJobReturn(data.tag) && this.settings.UserSettings.notifs.returned === true) {
             if (data.data.fun !== "saltutil.find_job") {
               data.type = "return";
               data.color = "primary";
@@ -308,30 +308,30 @@ export default {
                 data.data.id;
               data.link = "/jobs/" + data.data.jid + "/" + data.data.id;
               this.messages.unshift(data);
-              if (this.messages.length > this.settings.max_notifs) {
+              if (this.messages.length > this.settings.UserSettings.max_notifs) {
                 this.messages.pop();
               }
               this.notif_nb += 1;
             }
-          } else if (isJobEvent(data.tag) && this.notifs.event === true) {
+          } else if (isJobEvent(data.tag) && this.settings.UserSettings.notifs.event === true) {
             data.type = "event";
             data.color = "orange";
             data.icon = "more_horiz";
             data.text = this.$i18n.t("components.core.Layout.JobEvent");
             data.link = "";
             this.messages.unshift(data);
-            if (this.messages.length > this.settings.max_notifs) {
+            if (this.messages.length > this.settings.UserSettings.max_notifs) {
               this.messages.pop();
             }
             this.notif_nb += 1;
-          } else if (/^\w{20}$/.test(data.tag) && this.notifs.created === true) {
+          } else if (/^\w{20}$/.test(data.tag) && this.settings.UserSettings.notifs.created === true) {
             data.type = "created";
             data.color = "secondary";
             data.icon = "add";
             data.text = this.$i18n.t("components.core.Layout.NewJobCreated");
             data.link = "";
             this.messages.unshift(data);
-            if (this.messages.length > this.settings.max_notifs) {
+            if (this.messages.length > this.settings.UserSettings.max_notifs) {
               this.messages.pop();
             }
             this.notif_nb += 1;
@@ -341,23 +341,19 @@ export default {
       );
     },
   },
-  mounted() {
-    this.getPrefs();
-    this.saltStatus();
-    this.$vuetify.theme.dark = JSON.parse(this.$store.getters.theme);
+  created() {
+    this.getPrefs()
+    this.saltStatus()
+    this.$vuetify.theme.dark = this.settings.Layout.dark
   },
   computed: {
-    username() {
-      return this.$store.state.username;
-    },
-    email() {
-      return this.$store.state.email;
-    },
-    theme() {
-      return this.$store.state.theme;
-    },
+    ...mapState({
+      username: state => state.username,
+      email: state => state.email,
+      settings: state => state.settings,
+    }),
   },
-};
+}
 </script>
 
 <style>
