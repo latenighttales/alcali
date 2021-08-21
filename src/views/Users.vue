@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import UserCard from "../components/mixins/UserCard"
+  import UserCard from "../components/UserCard"
 
   export default {
     name: "Users",

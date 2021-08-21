@@ -1,12 +1,12 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>Common Settings</v-card-title>
+      <v-card-title>{{$t('components.CommonSettings.Title')}}</v-card-title>
       <v-card-text>
         <v-container fluid>
           <v-row>
             <v-col sm="4" lg="2" align-self="center">
-              Parse modules from:
+              {{$t('components.CommonSettings.Parse')}}
             </v-col>
             <v-col sm="4" lg="2">
               <v-select
@@ -14,11 +14,11 @@
                   item-text="minion_id"
                   item-value="minion_id"
                   v-model="target"
-                  label="Target"
+                  :label="$t('components.CommonSettings.Target')"
               ></v-select>
             </v-col>
             <v-col align-self="center">
-              <v-btn :disabled="target == null" @click="parseModules" color="primary">Submit</v-btn>
+              <v-btn :disabled="target == null" @click="parseModules" color="primary">{{$t('components.CommonSettings.Submit')}}</v-btn>
             </v-col>
             <v-col sm="4" lg="1" align-self="center">
               Alcali Version:
@@ -29,18 +29,18 @@
           </v-row>
           <v-row>
             <v-col sm="12" lg="6">
-              <v-row>Minions Fields</v-row>
+              <v-row>{{$t('components.CommonSettings.Fields')}}</v-row>
               <v-row v-for="item in uniqueMinionField" :key="item.name">
                 <v-col lg="4"><b>{{item.name}}</b></v-col>
                 <v-col lg="4">{{item["function"]}}</v-col>
                 <v-col align-self="center">
-                  <v-btn color="red" dark @click="deleteMinionsFields(item.name)">Delete</v-btn>
+                  <v-btn color="red" dark @click="deleteMinionsFields(item.name)">{{$t('components.CommonSettings.Delete')}}</v-btn>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col lg="4">
                   <v-text-field
-                      label="Name"
+                      :label="$t('components.CommonSettings.Name')"
                       single-line
                       v-model="minionsfields_name"
                   ></v-text-field>
@@ -51,45 +51,45 @@
                       :items="functions"
                       item-value="name"
                       item-text="name"
-                      label="Functions"
+                      :label="$t('components.CommonSettings.Functions')"
                       v-model="minionsfields_value"
                   ></v-combobox>
                 </v-col>
                 <v-col align-self="center">
                   <v-btn :disabled="minionsfields_name == null || minionsfields_value == null" color="primary"
-                         @click="createMinionsFields">Create
+                         @click="createMinionsFields">{{$t('components.CommonSettings.Create')}}
                   </v-btn>
                 </v-col>
               </v-row>
 
             </v-col>
             <v-col sm="12" lg="6">
-              <v-row>Custom Conformity</v-row>
+              <v-row>{{$t('components.CommonSettings.Conformity')}}</v-row>
               <v-row v-for="item in conformity" v-bind:key="item.id">
                 <v-col lg="4"><b>{{item.name}}</b></v-col>
                 <v-col lg="4">{{item.function}}</v-col>
                 <v-col align-self="center">
-                  <v-btn color="red" @click="deleteConformity(item.id)" dark>Delete</v-btn>
+                  <v-btn color="red" @click="deleteConformity(item.id)" dark>{{$t('components.CommonSettings.Delete')}}</v-btn>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col lg="4">
                   <v-text-field
-                      label="Name"
+                      :label="$t('components.CommonSettings.Name')"
                       single-line
                       v-model="conformity_name"
                   ></v-text-field>
                 </v-col>
                 <v-col lg="4">
                   <v-text-field
-                      label="Function"
+                      :label="$t('components.CommonSettings.Function')"
                       single-line
                       v-model="conformity_value"
                   ></v-text-field>
                 </v-col>
                 <v-col align-self="center">
                   <v-btn :disabled="conformity_name == null || conformity_value === null" color="primary"
-                         @click="createConformity">Create
+                         @click="createConformity">{{$t('components.CommonSettings.Create')}}
                   </v-btn>
                 </v-col>
               </v-row>
@@ -109,11 +109,11 @@
         version: "unknown",
         minions: [],
         target: null,
-        functions: null,
+        functions: [],
         minionsfields: [],
         minionsfields_name: null,
         minionsfields_value: null,
-        conformity: null,
+        conformity: [],
         conformity_name: null,
         conformity_value: null,
       }
@@ -150,7 +150,7 @@
         })
       },
       parseModules() {
-        this.$toast("Parse module started")
+        this.$toast(this.$i18n.t("components.CommonSettings.ParseModulesStart"))
         let formData = new FormData()
         formData.set("target", this.target)
         this.$http.post("api/settings/initdb", formData).then(response => {
@@ -165,7 +165,7 @@
         let formData = new FormData
         formData.set("id", id)
         this.$http.delete("/api/conformity/" + id).then(() => {
-          this.$toast("conformity deleted")
+          this.$toast(this.$i18n.t("components.CommonSettings.ConformityDeleted"))
           this.conformity.splice(this.conformity.indexOf(id), 1)
         })
       },
@@ -179,7 +179,7 @@
             "function": this.conformity_value,
             "id": this.conformity.length + 2,
           })
-          this.$toast("conformity created")
+          this.$toast(this.$i18n.t("components.CommonSettings.ConformityCreated"))
           this.conformity_name = null
           this.conformity_value = null
         })
@@ -191,7 +191,7 @@
         formData.set("value", "{}")
         this.$http.post("/api/minionsfields/", formData).then(() => {
           this.minionsfields.push({ "name": this.minionsfields_name, "function": this.minionsfields_value.name })
-          this.$toast("minions fields created")
+          this.$toast(this.$i18n.t("components.CommonSettings.MinionsFieldsCreated"))
           this.minionsfields_name = null
           this.minionsfields_value = null
         })
