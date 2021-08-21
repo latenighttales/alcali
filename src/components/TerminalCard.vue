@@ -75,7 +75,7 @@
               this.$toast(this.$i18n.t("components.TerminalCard.Running") + input)
               this.$http.post("api/run/", formData).then(response => {
                 localEcho.println(response.data.results)
-              }).then(() => readLine()).catch((error) => {
+              }).catch((error) => {
                 this.$toast.error(error.response.data)
               }).then(() => readLine())
             } else {

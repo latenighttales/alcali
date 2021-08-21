@@ -14,8 +14,12 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-        sort-by="alter_time"
-        sort-desc
+        :sort-by.sync="settings.EventsTable.table.sortBy"
+        @update:sort-by="updateSettings"
+        :sort-desc.sync="settings.EventsTable.table.sortDesc"
+        @update:sort-desc="updateSettings"
+        :items-per-page.sync="settings.EventsTable.table.itemsPerPage"
+        @update:items-per-page="updateSettings"
         :headers="headers"
         :items="events"
         :search="search"
@@ -37,6 +41,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 function addedData(data) {
   data.forEach((event) => {
     let grain = JSON.parse(event.data);
@@ -81,6 +87,9 @@ export default {
     this.loadData();
   },
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
     loadData() {
       this.$http.get("api/events/").then((response) => {
         this.events = addedData(response.data);
@@ -96,6 +105,11 @@ export default {
       }
       return parsed;
     },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
 };
 </script>

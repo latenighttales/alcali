@@ -13,13 +13,17 @@ def test_user_settings_attr(django_user_model):
     attr_list = [
         "token",
         "created",
-        "notifs_created",
-        "notifs_published",
-        "notifs_returned",
-        "notifs_event",
+    ]
+    notif_list = [
+        "created",
+        "published",
+        "returned",
+        "event",
     ]
     for attr in attr_list:
         assert hasattr(user1.user_settings, attr)
+    for attr in notif_list:
+        assert attr in user1.user_settings.settings["UserSettings"]["notifs"]
 
 
 @pytest.mark.django_db

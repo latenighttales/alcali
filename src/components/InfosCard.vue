@@ -2,7 +2,10 @@
   <v-container fluid>
     <v-card>
       <v-card-title>{{ minion.id }}</v-card-title>
-      <v-tabs v-model="tab">
+      <v-tabs
+          v-model="settings.MinionDetail.InfosCard.tab"
+          @change="updateSettings"
+      >
         <v-tabs-slider></v-tabs-slider>
 
         <v-tab href="#common">
@@ -17,7 +20,7 @@
           {{ $t("components.InfosCard.Hardware") }}
         </v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="settings.MinionDetail.InfosCard.tab">
         <v-tab-item id="common">
           <v-simple-table>
             <tbody>
@@ -65,11 +68,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "InfosCard",
   data() {
     return {
-      tab: null,
       common: [
         { name: "F.Q.D.N", grain: "fqdn" },
         { name: "O.S", grain: "os" },
@@ -104,6 +108,14 @@ export default {
         return "red";
       } else return "primary";
     },
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
 };
 </script>

@@ -1,8 +1,11 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-tabs v-model="tab">
-        <v-tabs-slider></v-tabs-slider>
+      <v-tabs
+          v-model="settings.MinionDetail.MinionDetailCard.tab"
+          @change="updateSettings"
+      >
+      <v-tabs-slider></v-tabs-slider>
 
         <v-tab href="#grain">
           {{ $t("components.MinionDetailCard.Grains") }}
@@ -21,7 +24,7 @@
           {{ field.name }}
         </v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="settings.MinionDetail.MinionDetailCard.tab">
         <v-tab-item id="grain">
           <div class="text-right">
             <v-btn @click="fold('grainCm')" class="overlayedBtn">{{
@@ -56,6 +59,7 @@
 // require component
 import CodeMirror from "codemirror";
 import { codemirror } from "vue-codemirror";
+import { mapState } from "vuex"
 
 import "codemirror/addon/display/autorefresh.js";
 import "codemirror/addon/fold/foldcode.js";
@@ -84,7 +88,6 @@ export default {
   },
   data() {
     return {
-      tab: null,
       code: yaml.safeDump(JSON.parse(this.minion.grain)),
       codepillar: yaml.safeDump(JSON.parse(this.minion.pillar)),
       grainCmFolded: false,
@@ -105,6 +108,9 @@ export default {
     };
   },
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
     yamlRepr(data) {
       return yaml.safeDump(JSON.parse(data));
     },
@@ -117,6 +123,11 @@ export default {
         this[ref + "Folded"] = true;
       }
     },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
   props: ["minion"],
 };

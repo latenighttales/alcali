@@ -9,9 +9,9 @@
           <v-row>
             <v-col lg="2">
               <span>{{ $t("components.UserSettings.JobsNotifications") }}</span>
-              <div v-for="(val, name) in notifs" :key="name">
+              <div v-for="(val, name) in settings.UserSettings.notifs" :key="name">
                 <v-switch
-                  v-model="notifs[name]"
+                  v-model="settings.UserSettings.notifs[name]"
                   :label="$t(`components.UserSettings.${name}`)"
                   color="primary"
                   hide-details
@@ -20,7 +20,7 @@
             </v-col>
             <v-col lg="2">
               <span>{{ $t("components.UserSettings.MaxNotifications") }}</span>
-              <v-text-field v-model="max_notifs" type="number"></v-text-field>
+              <v-text-field v-model="settings.UserSettings.max_notifs" type="number"></v-text-field>
             </v-col>
             <v-col lg="2">
               <div class="locale-changer" style="margin-left: 20px">
@@ -50,7 +50,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click="updateUserSettings">{{
+        <v-btn color="primary" @click="updateSettings">{{
           $t("components.UserSettings.Submit")
         }}</v-btn>
       </v-card-actions>
@@ -59,20 +59,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "UserSettings",
   data() {
     return {
-      switch1: true,
-      switch2: false,
-      notifs: {
-        created: false,
-        published: true,
-        returned: false,
-        event: false,
-      },
-      settings: null,
-      max_notifs: null,
       langs: [
         {
           text: "english",
@@ -85,36 +77,17 @@ export default {
           image: require("../assets/img/i18n/fr.png"),
         },
       ],
-    };
+    }
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
   methods: {
-    loadData() {
-      this.$http
-        .get(`api/userssettings/${this.$store.getters.user_id}/`)
-        .then((response) => {
-          this.settings = response.data;
-          this.max_notifs = response.data.max_notifs;
-          Object.keys(this.notifs).forEach((notif) => {
-            this.notifs[notif] = this.settings["notifs_" + notif];
-          });
-        });
+    updateSettings() {
+      this.$store.commit("updateSettings")
     },
-    updateUserSettings() {
-      let params = { max_notifs: this.max_notifs };
-      Object.keys(this.notifs).forEach((notif) => {
-        params["notifs_" + notif] = this.notifs[notif];
-      });
-      this.$http
-        .patch(`api/userssettings/${this.$store.getters.user_id}/`, params)
-        .then((response) => {
-          this.$toast(
-            this.$i18n.t("components.UserSettings.UserSettingsUpdated")
-          );
-        });
-    },
-  },
-  mounted() {
-    this.loadData();
   },
 };
 </script>
