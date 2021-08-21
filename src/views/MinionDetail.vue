@@ -39,19 +39,19 @@
             color: "blue",
             action: "refreshMinion",
             icon: "refresh",
-            tooltip: "Refresh " + this.minion_id,
+            tooltip: this.$i18n.t("components.MinionDetails.RefreshMinion") + this.minion_id,
           },
           {
             color: "purple",
             action: "runMinion",
             icon: "play_arrow",
-            tooltip: "Run job on " + this.minion_id,
+            tooltip: this.$i18n.t("components.MinionDetails.JobMinion") + this.minion_id,
           },
           {
             color: "orange",
             action: "highstateMinion",
             icon: "all_inclusive",
-            tooltip: "Run highstate on " + this.minion_id,
+            tooltip: this.$i18n.t("components.MinionDetails.HighstateMinion") + this.minion_id,
           },
         ],
       }
@@ -62,7 +62,7 @@
     methods: {
       loadData() {
         this.$http.get(`api/minions/${this.minion_id}/`).then(response => this.minion = addedGrains(response.data)).catch((error) => {
-          this.$toast.error(`${this.minion_id} is not present in database. Try refreshing minions`)
+          this.$toast.error(this.$i18n.t("components.MinionDetail.MissingMinion", [this.minion_id]))
           this.$router.push("/minions")
         })
       },
@@ -70,11 +70,11 @@
         this[action]()
       },
       refreshMinion() {
-        this.$toast("refreshing " + this.minion_id)
+        this.$toast(this.$i18n.t("components.MinionDetail.Refreshing", [this.minion_id]))
         let formData = new FormData
         formData.set('minion_id', this.minion_id)
         this.$http.post("/api/minions/refresh_minions/", formData).then(() => {
-          this.$toast("minion refreshed")
+          this.$toast(this.$i18n.t("components.MinionDetail.MinionRefreshed"))
         }).catch((error) => {
           this.$toast.error(error.response.data)
         })

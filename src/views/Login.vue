@@ -28,13 +28,13 @@
                   dark
                   flat
               >
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-toolbar-title>{{ $t('views.Login.LoginTitle') }}</v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-form @keyup.native.enter="authenticate">
                 <v-card-text>
                   <v-text-field
-                      label="Login"
+                      :label="$t('views.Login.Login')"
                       name="login"
                       v-model="username"
                       prepend-icon="person"
@@ -42,7 +42,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                      label="Password"
+                      :label="$t('views.Login.Password')"
                       v-model="password"
                       name="password"
                       prepend-icon="lock"
@@ -51,13 +51,13 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="primary" dark @click.prevent="authenticate">Login</v-btn>
+                  <v-btn color="primary" dark @click.prevent="authenticate">{{ $t('views.Login.SignIn') }}</v-btn>
                 </v-card-actions>
               </v-form>
             </v-card>
           </v-col>
           <v-col sm="12" align="center">
-            <v-btn @click="handleClickGetAuth" :disabled="!isInit">sign in
+            <v-btn @click="handleClickGetAuth" :disabled="!isInit">{{ $t('views.Login.SignIn') }}
               <span class="ml-2"><GoogleLogo></GoogleLogo></span>
             </v-btn>
 
@@ -92,7 +92,7 @@
         this.$store.dispatch("login", { username, password })
           .then(() => this.$router.push("/"))
           .catch(() => {
-            this.$toast.error("Invalid Login / Password")
+            this.$toast.error(this.$t("views.Login.InvalidCredentials"))
           })
       },
       handleClickGetAuth() {
@@ -106,11 +106,11 @@
             this.$store.dispatch("oauthlogin", formData)
               .then(() => this.$router.push("/"))
               .catch(() => {
-                this.$toast.error("Unauthorized")
+                this.$toast.error(this.$t("views.Login.Unauthorized"))
               })
           })
           .catch(() => {
-            this.$toast.error("Unauthorized")
+            this.$toast.error(this.$t("views.Login.Unauthorized"))
           })
       },
     },

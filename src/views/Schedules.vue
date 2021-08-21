@@ -16,26 +16,28 @@
   export default {
     name: "Schedules",
     components: { Fab, ScheduleTable },
-    data: () => ({
-      fabs: [
-        {
-          color: "pink",
-          action: "refreshSchedules",
-          icon: "refresh",
-          tooltip: "Refresh schedules",
-        },
-      ],
-      refreshKey: 0,
-    }),
+    data() {
+      return {
+        fabs: [
+          {
+            color: "pink",
+            action: "refreshSchedules",
+            icon: "refresh",
+            tooltip: this.$i18n.t("components.Schedules.Refresh"),
+          },
+        ],
+        refreshKey: 0,
+      }
+    },
     methods: {
       fabAction(action) {
         this[action]()
       },
       refreshSchedules() {
-        this.$toast("refreshing schedules")
+        this.$toast(this.$i18n.t("components.Schedules.Refreshing"))
         this.$http.post("/api/schedules/refresh/").then(() => {
           this.refreshKey += 1
-          this.$toast("schedules refreshed")
+          this.$toast(this.$i18n.t("components.Schedules.Refreshed"))
         }).catch((error) => {
           this.$toast.error(error.response.data)
         })

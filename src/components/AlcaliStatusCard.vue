@@ -1,22 +1,22 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>Status</v-card-title>
+      <v-card-title>{{ $t('components.AlcaliStatusCard.Status') }}</v-card-title>
       <v-simple-table>
         <tbody>
         <tr>
-          <td>Salt WebSocket</td>
+          <td>{{ $t('components.KeysStatusCard.saltWebsocket') }}</td>
           <td class="text-right">
             <v-chip
                 :color="wsStatus ? 'green': 'red'"
                 text-color="white"
             >
-              {{ wsStatus ? "OK": "NOT OK" }}
+              {{ wsStatus ? $t("components.AlcaliStatusCard.OK") : $t("components.AlcaliStatusCard.NOT_OK") }}
             </v-chip>
           </td>
         </tr>
         <tr v-for="(count, status) in stats" :key="status">
-          <td>{{ status }}</td>
+          <td>{{ $t(`components.AlcaliStatusCard.${status}`) }}</td>
           <td class="text-right">{{ count }}</td>
         </tr>
         </tbody>
