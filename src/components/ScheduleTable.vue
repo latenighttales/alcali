@@ -14,7 +14,12 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-        sort-by="minion"
+        :sort-by.sync="settings.ScheduleTable.table.sortBy"
+        @update:sort-by="updateSettings"
+        :sort-desc.sync="settings.ScheduleTable.table.sortDesc"
+        @update:sort-desc="updateSettings"
+        :items-per-page.sync="settings.ScheduleTable.table.itemsPerPage"
+        @update:items-per-page="updateSettings"
         :headers="headers"
         :items="schedules"
         :search="search"
@@ -66,6 +71,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "ScheduleTable",
   data() {
@@ -77,6 +84,9 @@ export default {
     };
   },
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
     loadData() {
       this.loading = false;
       this.$http.get("api/schedules/").then((response) => {
@@ -137,6 +147,11 @@ export default {
         return "red";
       } else return "primary";
     },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
   mounted() {
     this.loadData();

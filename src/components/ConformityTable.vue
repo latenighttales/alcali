@@ -14,7 +14,12 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-        sort-by="minion_id"
+        :sort-by.sync="settings.ConformityTable.table.sortBy"
+        @update:sort-by="updateSettings"
+        :sort-desc.sync="settings.ConformityTable.table.sortDesc"
+        @update:sort-desc="updateSettings"
+        :items-per-page.sync="settings.ConformityTable.table.itemsPerPage"
+        @update:items-per-page="updateSettings"
         item-key="minion_id"
         :headers="headers"
         :items="conformity"
@@ -109,6 +114,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "ConformityTable",
   data() {
@@ -123,6 +130,9 @@ export default {
     this.loadData();
   },
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
     loadData() {
       this.$http.get("api/conformity/render/").then((response) => {
         this.headers = response.data.name.map((dataItem) => {
@@ -147,6 +157,11 @@ export default {
         return "red";
       } else return "primary";
     },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
 };
 </script>

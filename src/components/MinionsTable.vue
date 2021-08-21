@@ -17,7 +17,8 @@
                 <v-row no-gutters>
                   <template v-for="(item, index) in available_headers">
                     <v-col :key="index" cols="4">
-                      <v-checkbox :label="item" :value="item" v-model="default_headers" hide-details></v-checkbox>
+                      <v-checkbox :label="item" :value="item" v-model="settings.MinionsTable.table.columns"
+                                  @change="updateSettings" hide-details></v-checkbox>
                     </v-col>
                   </template>
                 </v-row>
@@ -35,9 +36,14 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-        sort-by="minion_id"
+        :sort-by.sync="settings.MinionsTable.table.sortBy"
+        @update:sort-by="updateSettings"
         :headers="customHeaders"
+        :sort-desc.sync="settings.MinionsTable.table.sortDesc"
+        @update:sort-desc="updateSettings"
         :items="minions"
+        :items-per-page.sync="settings.MinionsTable.table.itemsPerPage"
+        @update:items-per-page="updateSettings"
         :search="search"
         class="elevation-1"
         :loading="loading"
@@ -102,6 +108,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "MinionsTable",
   data() {
@@ -129,7 +137,7 @@ export default {
   computed: {
     customHeaders() {
       let custom = [];
-      this.default_headers.forEach((header) => {
+      this.settings.MinionsTable.table.columns.forEach((header) => {
         let titled = header
           .split("_")
           .map((title) => title.replace(/^\w/, (c) => c.toUpperCase()))
@@ -139,11 +147,17 @@ export default {
       custom.push({ text: "Actions", value: "action", sortable: false });
       return custom;
     },
+    ...mapState({
+      settings: state => state.settings
+    })
   },
   mounted() {
     this.loadData();
   },
   methods: {
+    updateSettings() {
+      this.$store.commit('updateSettings')
+    },
     loadData() {
       this.$http.get("api/minions/").then((response) => {
         function addedGrains(data) {

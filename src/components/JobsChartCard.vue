@@ -12,18 +12,16 @@
           <v-select
             :items="filters"
             :label="$t('components.JobsChartCard.Filter')"
-            v-model="selectedFilter"
-            @change="loadData"
-            return-object
+            v-model="settings.Home.JobsChartCard.filter"
+            @change="updateSettings"
           ></v-select>
         </v-list-item-content>
         <v-list-item-content>
           <v-select
             :items="periods"
             :label="$t('components.JobsChartCard.Period')"
-            v-model="selectedPeriod"
-            @change="loadData"
-            return-object
+            v-model="settings.Home.JobsChartCard.period"
+            @change="updateSettings"
           ></v-select>
         </v-list-item-content>
       </v-list-item>
@@ -35,6 +33,7 @@
 <script>
 import Chart from "chart.js";
 import gradientLinePlugin from "../assets/js/utils/chart-line-gradient";
+import { mapState } from "vuex"
 
 export default {
   name: "JobsChartCard",
@@ -68,15 +67,21 @@ export default {
       chart_data: [],
     };
   },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
+  },
   mounted() {
     this.createChart();
   },
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+      this.loadData()
+    },
     loadData() {
-      let filter =
-        this.selectedFilter == null ? "all" : this.selectedFilter.value;
-      let period = this.selectedPeriod == null ? 7 : this.selectedPeriod.value;
-      let params = { params: { fun: filter, period: period } };
+      let params = { params: { fun: this.settings.Home.JobsChartCard.filter, period: this.settings.Home.JobsChartCard.period } }
       if (this.minion) {
         params.params.id = this.minion;
       }
@@ -88,10 +93,7 @@ export default {
       });
     },
     createChart() {
-      let filter =
-        this.selectedFilter == null ? "all" : this.selectedFilter.value;
-      let period = this.selectedPeriod == null ? 7 : this.selectedPeriod.value;
-      let params = { params: { fun: filter, period: period } };
+      let params = { params: { fun: this.settings.Home.JobsChartCard.filter, period: this.settings.Home.JobsChartCard.period } }
       if (this.minion) {
         params.params.id = this.minion;
       }
