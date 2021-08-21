@@ -4,7 +4,12 @@
       <v-col sm="12">
         <v-card>
           <v-data-table
-              sort-by="username"
+              :sort-by.sync="settings.UserCard.table.sortBy"
+              @update:sort-by="updateSettings"
+              :sort-desc.sync="settings.UserCard.table.sortDesc"
+              @update:sort-desc="updateSettings"
+              :items-per-page.sync="settings.UserCard.table.itemsPerPage"
+              @update:items-per-page="updateSettings"
               :headers="headers"
               :items="users"
               class="elevation-1"
@@ -221,6 +226,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
   export default {
     name: "UserCard",
     data() {
@@ -261,10 +268,15 @@
       },
       isStaff() {
         return JSON.parse(this.$store.getters.isStaff) || false
-      }
-
+      },
+      ...mapState({
+        settings: state => state.settings,
+      }),
     },
     methods: {
+      updateSettings() {
+        this.$store.commit("updateSettings")
+      },
       getUsers() {
         this.$http.get("api/users/").then(response => {
           this.users = response.data

@@ -117,8 +117,12 @@
             ></v-text-field>
           </v-card-title>
           <v-data-table
-            sort-by="jid"
-            sort-desc
+            :sort-by.sync="settings.JobsTable.table.sortBy"
+            @update:sort-by="updateSettings"
+            :sort-desc.sync="settings.JobsTable.table.sortDesc"
+            @update:sort-desc="updateSettings"
+            :items-per-page.sync="settings.JobsTable.table.itemsPerPage"
+            @update:items-per-page="updateSettings"
             item-key="uniqueid"
             :headers="filteredHeaders"
             :items="indexedItems"
@@ -208,6 +212,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "JobsTable",
   props: ["filter", "jid"],
@@ -262,11 +268,17 @@ export default {
       }
       return this.headers;
     },
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
   mounted() {
     this.loadData();
   },
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
     loadData() {
       this.$http.get("api/jobs/filters/").then((response) => {
         this.minions = response.data.minions;

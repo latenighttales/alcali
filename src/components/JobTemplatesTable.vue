@@ -16,8 +16,12 @@
             ></v-text-field>
           </v-card-title>
           <v-data-table
-            sort-by="jid"
-            sort-desc
+            :sort-by.sync="settings.JobTemplatesTable.table.sortBy"
+            @update:sort-by="updateSettings"
+            :sort-desc.sync="settings.JobTemplatesTable.table.sortDesc"
+            @update:sort-desc="updateSettings"
+            :items-per-page.sync="settings.JobTemplatesTable.table.itemsPerPage"
+            @update:items-per-page="updateSettings"
             :headers="headers"
             :items="job_templates"
             :search="search"
@@ -69,6 +73,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "JobTemplatesTable",
   data() {
@@ -112,6 +118,9 @@ export default {
     this.loadData();
   },
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
     loadData() {
       this.$http.get("api/job_templates/").then((response) => {
         let templates = response.data;
@@ -160,6 +169,11 @@ export default {
       }
       return "/run?" + searchParams.toString();
     },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
 };
 </script>

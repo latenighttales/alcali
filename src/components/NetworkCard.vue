@@ -2,8 +2,11 @@
   <v-container fluid>
     <v-card>
       <v-card-title>{{ $t("components.NetworkCard.Network") }}</v-card-title>
-      <v-tabs v-model="tab">
-        <v-tabs-slider></v-tabs-slider>
+      <v-tabs
+          v-model="settings.MinionDetail.NetworkCard.tab"
+          @change="updateSettings"
+      >
+      <v-tabs-slider></v-tabs-slider>
 
         <v-tab href="#interface">
           {{ $t("components.NetworkCard.Interface") }}
@@ -17,7 +20,7 @@
           {{ $t("components.NetworkCard.DNS") }}
         </v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tab">
+      <v-tabs-items v-model="settings.MinionDetail.NetworkCard.tab">
         <v-tab-item id="interface">
           <v-simple-table>
             <tbody>
@@ -62,6 +65,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "NetworkCard",
   data() {
@@ -71,6 +76,16 @@ export default {
     };
   },
   props: ["minion"],
+  methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
+  },
 };
 </script>
 

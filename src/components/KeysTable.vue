@@ -14,7 +14,12 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-        sort-by="minion_id"
+        :sort-by.sync="settings.KeysTable.table.sortBy"
+        @update:sort-by="updateSettings"
+        :sort-desc.sync="settings.KeysTable.table.sortDesc"
+        @update:sort-desc="updateSettings"
+        :items-per-page.sync="settings.KeysTable.table.itemsPerPage"
+        @update:items-per-page="updateSettings"
         :headers="headers"
         :items="keys"
         :search="search"
@@ -60,6 +65,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
   name: "KeysTable",
   data() {
@@ -83,6 +90,9 @@ export default {
     this.loadData();
   },
   methods: {
+    updateSettings() {
+      this.$store.commit("updateSettings")
+    },
     loadData() {
       this.$http.get("api/keys/").then((response) => {
         this.keys = response.data;
@@ -130,6 +140,11 @@ export default {
         this.loadData();
       });
     },
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings,
+    }),
   },
 };
 </script>
