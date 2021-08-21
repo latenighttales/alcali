@@ -4,6 +4,8 @@ on:
   push:
     branches-ignore:
       - develop
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:

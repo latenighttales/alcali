@@ -11,32 +11,32 @@
           >
             <template v-slot:top>
               <v-toolbar flat>
-                <v-toolbar-title class="headline">Users</v-toolbar-title>
+                <v-toolbar-title class="headline">{{$t('components.mixins.UserCard.Users')}}</v-toolbar-title>
                 <div class="flex-grow-1"></div>
                 <v-dialog v-model="dialog" max-width="500px">
                   <template v-slot:activator="{ on }">
-                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}" :disabled="!isStaff">Create</v-btn>
+                    <v-btn color="primary" dark class="mb-2" v-on="on" @click="user = {}" :disabled="!isStaff">{{$t('components.mixins.UserCard.Create')}}</v-btn>
                   </template>
                   <v-card>
-                    <v-card-title>{{ editing === true ? "Update User" : "Create User"}}</v-card-title>
+                    <v-card-title>{{ editing === true ? `${$t('components.mixins.UserCard.UpdateUser')}` : `${$t('components.mixins.UserCard.CreateUser')}` }}</v-card-title>
                     <v-card-text>
                       <v-container fluid>
                         <v-row>
                           <v-col lg="6">
-                            <v-text-field v-model="user.username" label="Username" :rules="userRules"
+                            <v-text-field v-model="user.username" :label="$t('components.mixins.UserCard.Username')" :rules="userRules"
                                           required></v-text-field>
                           </v-col>
                           <v-col lg="6">
-                            <v-text-field v-model="user.email" label="Email" :rules="emailRules"
+                            <v-text-field v-model="user.email" :label="$t('components.mixins.UserCard.Email')" :rules="emailRules"
                                           required></v-text-field>
                           </v-col>
                         </v-row>
                         <v-row>
                           <v-col lg="6">
-                            <v-text-field v-model="user.first_name" label="First Name"></v-text-field>
+                            <v-text-field v-model="user.first_name" :label="$t('components.mixins.UserCard.FirstName')"></v-text-field>
                           </v-col>
                           <v-col lg="6">
-                            <v-text-field v-model="user.last_name" label="Last Name"></v-text-field>
+                            <v-text-field v-model="user.last_name" :label="$t('components.mixins.UserCard.LastName')"></v-text-field>
                           </v-col>
                         </v-row>
                         <v-row>
@@ -46,7 +46,7 @@
                                 :append-icon="show ? 'visibility' : 'visibility_off'"
                                 :type="show ? 'text' : 'password'"
                                 name="input-10-1"
-                                label="Password"
+                                :label="$t('components.mixins.UserCard.Password')"
                                 counter
                                 @click:append="show = !show"
                             ></v-text-field>
@@ -54,7 +54,7 @@
                           <v-col lg="6">
                             <v-checkbox
                                 v-model="user.is_staff"
-                                label="Staff User"
+                                :label="$t('components.mixins.UserCard.StaffUser')"
                                 :disabled="!isStaff"
                             ></v-checkbox>
                           </v-col>
@@ -64,10 +64,10 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="primary" v-if="editing" @click="resetUser">Discard</v-btn>
-                      <v-btn color="warning" v-if="editing" @click="updateUser">Update</v-btn>
+                      <v-btn color="primary" v-if="editing" @click="resetUser">{{$t('components.mixins.UserCard.Discard')}}</v-btn>
+                      <v-btn color="warning" v-if="editing" @click="updateUser">{{$t('components.mixins.UserCard.Update')}}</v-btn>
                       <v-btn color="warning" v-if="!editing" :disabled="user.username == null || user.email == ''"
-                             @click="createUser">Create
+                             @click="createUser">{{$t('components.mixins.UserCard.Create')}}
                       </v-btn>
                     </v-card-actions>
                   </v-card>
@@ -89,7 +89,7 @@
                     dark
                     @click="showToken(item)"
                 >
-                  view
+                  {{$t('components.mixins.UserCard.View')}}
                 </v-btn>
                 <v-btn
                     small
@@ -99,7 +99,7 @@
                     dark
                     @click="manageToken('renew', item)"
                 >
-                  renew
+                  {{$t('components.mixins.UserCard.Renew')}}
                 </v-btn>
                 <v-btn
                     small
@@ -109,7 +109,7 @@
                     :disabled="String(item.id) === currentUserId"
                     @click="manageToken('revoke', item)"
                 >
-                  revoke
+                  {{$t('components.mixins.UserCard.Revoke')}}
                 </v-btn>
               </div>
             </template>
@@ -126,7 +126,7 @@
                     dark
                     @click="editUser(item)"
                 >
-                  update
+                  {{$t('components.mixins.UserCard.Update')}}
                 </v-btn>
                 <v-btn
                     small
@@ -136,7 +136,7 @@
                     :disabled="String(item.id) === currentUserId"
                     @click="confirmDelete(item)"
                 >
-                  delete
+                  {{$t('components.mixins.UserCard.Delete')}}
                 </v-btn>
               </div>
             </template>
@@ -154,12 +154,12 @@
               class="headline red"
               primary-title
           >
-            Delete {{ user.username }} ?
+            {{$t('components.mixins.UserCard.Delete')}} {{ user.username }} ?
           </v-card-title>
 
           <v-card-text>
             <br>
-            this action is irreversible.
+            {{$t('components.mixins.UserCard.ActionMsg')}}
           </v-card-text>
 
           <v-divider></v-divider>
@@ -171,14 +171,14 @@
                 text
                 @click="dialogDelete = false"
             >
-              close
+              {{$t('components.mixins.UserCard.Close')}}
             </v-btn>
             <v-btn
                 color="red"
                 text
                 @click="deleteUser(user.id)"
             >
-              delete
+              {{$t('components.mixins.UserCard.Delete')}}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -194,7 +194,7 @@
               class="headline primary"
               primary-title
           >
-            {{ user.username }} Token
+            {{ user.username }} {{$t('components.mixins.UserCard.Token')}}
           </v-card-title>
 
           <v-card-text v-if="user.user_settings">
@@ -211,7 +211,7 @@
                 text
                 @click="dialogToken = false"
             >
-              close
+              {{$t('components.mixins.UserCard.Close')}}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -227,21 +227,21 @@
       return {
         search: "",
         headers: [
-          { text: "Username", value: "username" },
-          { text: "First Name", value: "first_name" },
-          { text: "Last Name", value: "last_name" },
-          { text: "Email", value: "email" },
-          { text: "Staff", value: "is_staff" },
-          { text: "Token", value: "token", sortable: false },
-          { text: "Date Joined", value: "date_joined" },
-          { text: "Actions", value: "action", sortable: false },
+          { text: this.$t("components.mixins.UserCard.Username"), value: "username" },
+          { text: this.$t("components.mixins.UserCard.FirstName"), value: "first_name" },
+          { text: this.$t("components.mixins.UserCard.LastName"), value: "last_name" },
+          { text: this.$t("components.mixins.UserCard.Email"), value: "email" },
+          { text: this.$t("components.mixins.UserCard.StaffUser"), value: "is_staff" },
+          { text: this.$t("components.mixins.UserCard.Token"), value: "token", sortable: false },
+          { text: this.$t("components.mixins.UserCard.DateJoined"), value: "date_joined" },
+          { text: this.$t("components.mixins.UserCard.Action"), value: "action", sortable: false },
         ],
         userRules: [
-          v => !!v || "Username is required",
+          v => !!v || this.$t("components.mixins.UserCard.UsernameRequired"),
         ],
         emailRules: [
-          v => !!v || "E-mail is required",
-          v => /.+@.+/.test(v) || "E-mail must be valid",
+          v => !!v || this.$t("components.mixins.UserCard.EmailRequired"),
+          v => /.+@.+/.test(v) || this.$t("components.mixins.UserCard.EmailValid"),
         ],
         users: [],
         user: {},
@@ -276,7 +276,7 @@
         let formData = new FormData
         Object.keys(this.user).forEach(key => formData.append(key, this.user[key]))
         this.$http.post("api/users/", formData).then(() => {
-          this.$toast("User created")
+          this.$toast(this.$i18n.t("components.mixins.UserCard.UserCreated"))
           this.dialog = false
         }).then(() => {
           this.user = {}
@@ -297,7 +297,7 @@
         formData.set("password", this.user.password||'')
         formData.set("is_staff", this.user.is_staff)
         this.$http.patch(`api/users/${this.user.id}/`, formData).then(() => {
-          this.$toast("User updated")
+          this.$toast(this.$i18n.t("components.mixins.UserCard.UserUpdated"))
           this.dialog = false
           this.user = {}
         }).then(() => {
@@ -330,7 +330,7 @@
       deleteUser(id) {
         this.$http.delete("api/users/" + id).then(() => {
           this.dialogDelete = false
-          this.$toast("User deleted")
+          this.$toast(this.$i18n.t("components.mixins.UserCard.UserDeleted"))
         }).then(() => {
           this.getUsers()
         }).catch((error) => {

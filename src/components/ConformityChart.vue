@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>Conformity</v-card-title>
+      <v-card-title>{{ $t('components.ConformityChart.conformity') }}</v-card-title>
       <v-card-text>
         <v-container fluid>
           <template v-for="name in conformitynames">
@@ -77,7 +77,7 @@
                 color = colors[keys[keys.length * Math.random() << 0]].darken2
               }
               chart_data.datasets.push({
-                label: value,
+                label: this.$i18n.t(`components.ConformityChart.${value}`),
                 data: [conformity[value]],
                 backgroundColor: color,
               })

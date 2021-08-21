@@ -72,7 +72,7 @@
               formData.set("raw", true)
               formData.set("cli", true)
               formData.set("command", input)
-              this.$toast("Running " + input)
+              this.$toast(this.$i18n.t("components.TerminalCard.Running") + input)
               this.$http.post("api/run/", formData).then(response => {
                 localEcho.println(response.data.results)
               }).then(() => readLine()).catch((error) => {
