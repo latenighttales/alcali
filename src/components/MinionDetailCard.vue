@@ -127,5 +127,7 @@
     right: 0;
     z-index: 1;
   }
-
+  .vue-codemirror {
+    height: 800px !important;
+  }
 </style>

@@ -53,5 +53,7 @@
 </script>
 
 <style scoped>
-
+  .v-speed-dial {
+    z-index: 10;
+  }
 </style>
