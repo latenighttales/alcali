@@ -1,9 +1,13 @@
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import 'typeface-roboto/index.css'
-import Vue from "vue"
-import Vuetify, { VSnackbar, VBtn, VIcon } from "vuetify/lib"
+import "material-design-icons-iconfont/dist/material-design-icons.css";
+import "typeface-roboto/index.css";
+import Vue from "vue";
+import Vuetify, { VSnackbar, VBtn, VIcon } from "vuetify/lib";
 
-import VuetifyToast from "vuetify-toast-snackbar-ng"
+import VuetifyToast from "vuetify-toast-snackbar-ng";
+
+import en from "vuetify/src/locale/en.ts";
+import fr from "vuetify/src/locale/fr.ts";
+import { defaultLocale } from "../i18n/index.js";
 
 Vue.use(Vuetify, {
   components: {
@@ -11,7 +15,7 @@ Vue.use(Vuetify, {
     VBtn,
     VIcon,
   },
-})
+});
 
 Vue.use(VuetifyToast, {
   x: "center", // default
@@ -19,9 +23,7 @@ Vue.use(VuetifyToast, {
   color: "black", // default
   icon: "info",
   iconColor: "", // default
-  classes: [
-    "body-2",
-  ],
+  classes: ["body-2"],
   timeout: 3000, // default
   dismissable: true, // default
   multiLine: false, // default
@@ -36,9 +38,13 @@ Vue.use(VuetifyToast, {
     },
   },
   property: "$toast", // default
-})
+});
 
 export default new Vuetify({
+  lang: {
+    locales: { en, fr },
+    current: defaultLocale,
+  },
   icons: {
     iconfont: "md",
   },
@@ -54,4 +60,4 @@ export default new Vuetify({
       },
     },
   },
-})
+});

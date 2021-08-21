@@ -16,31 +16,33 @@
   export default {
     name: "Minions",
     components: { Fab, MinionsTable },
-    data: () => ({
-      refreshKey: 0,
-      fabs: [
-        {
-          color: "pink",
-          action: "refreshMinions",
-          icon: "refresh",
-          tooltip: "Refresh all minions",
-        },
-        {
-          color: "orange",
-          action: "runAll",
-          icon: "playlist_play",
-          tooltip: "Run job on all minions",
-        },
-      ],
-    }),
+    data() {
+      return {
+        refreshKey: 0,
+        fabs: [
+          {
+            color: "pink",
+            action: "refreshMinions",
+            icon: "refresh",
+            tooltip: this.$i18n.t("components.Minions.RefreshAll")
+          },
+          {
+            color: "orange",
+            action: "runAll",
+            icon: "playlist_play",
+            tooltip: this.$i18n.t("components.Minions.JobAll"),
+          },
+        ],
+      }
+    }  ,
     methods: {
       fabAction(action) {
         this[action]()
       },
       refreshMinions() {
-        this.$toast("refreshing minions")
+        this.$toast(this.$i18n.t("components.Minions.Refreshing"))
         this.$http.post("/api/minions/refresh_minions/").then((response) => {
-          this.$toast(`${response.data.refreshed.length} minions refreshed`)
+          this.$toast(this.$i18n.t("components.Minions.NbMinionsRefreshed", [response.data.refreshed.length]))
         }).then(() => {
           this.refreshKey += 1
         }).catch((error) => {
