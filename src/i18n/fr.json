@@ -241,7 +241,8 @@
       "Msg2": " de la base de données, vous devrez actualiser tous les minions.",
       "Refreshing": "Raffraîchissement de ",
       "Deleted": " supprimé",
-      "Close": "Fermer"
+      "Close": "Fermer",
+      "Detail": "Détails"
     },
     "NetworkCard": {
       "Network": "Réseau",

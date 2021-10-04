@@ -241,7 +241,8 @@
       "Msg2": " from the database, you will need to refresh all minions.",
       "Refreshing": "Refreshing ",
       "Deleted": " deleted",
-      "Close": "Close"
+      "Close": "Close",
+      "Detail": "Details"
     },
     "NetworkCard": {
       "Network": "Network",
