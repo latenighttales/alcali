@@ -3,7 +3,7 @@
     <v-navigation-drawer v-model="settings.Layout.drawer"
                          :mini-variant="settings.Layout.mini" app clipped>
     <v-list dense nav dark color="#212121" class="py-0">
-        <v-list-item two-line :class="settings.Layout.mini && 'px-0'">
+        <v-list-item to="/usersettings" two-line :class="settings.Layout.mini && 'px-0'">
           <v-list-item-avatar>
             <v-icon large>person</v-icon>
           </v-list-item-avatar>
