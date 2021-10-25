@@ -68,6 +68,9 @@
             <v-btn small class="ma-2" color="blue" tile dark @click="refreshMinion(item.minion_id)">
               {{ $t("components.MinionsTable.Refresh") }}
             </v-btn>
+            <v-btn small class="ma-2" color="purple" tile dark :to="'/minions/' + item.minion_id">
+                  {{$t("components.MinionsTable.Detail")}}
+            </v-btn>
             <v-btn small class="ma-2" color="blue-grey" tile dark :to="'/run?tgt=' + item.minion_id">
               {{ $t("components.MinionsTable.Run") }}
             </v-btn>
