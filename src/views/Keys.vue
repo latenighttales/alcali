@@ -21,9 +21,9 @@
       return {
         fabs: [
           {
-            color: "blue",
+            color: "pink",
             action: "refreshKeys",
-            icon: "compare_arrows",
+            icon: "refresh",
             tooltip: this.$i18n.t("components.Keys.Refresh"),
           },
           {

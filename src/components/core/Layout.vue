@@ -211,7 +211,7 @@ export default {
       {
         name: "components.core.Layout.Keys",
         path: "/keys",
-        icon: "compare_arrows",
+        icon: "vpn_key",
       },
       {
         name: "components.core.Layout.Events",
