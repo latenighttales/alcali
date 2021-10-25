@@ -165,4 +165,7 @@ export default {
 </script>
 
 <style scoped>
+.v-list-item--dense .v-list-item__title{
+  line-height: 1;
+}
 </style>
