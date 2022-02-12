@@ -859,55 +859,55 @@
 <p>
 
 
-<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span> <span class="k">DATABASE</span>  <span class="o">`</span><span class="n">salt</span><span class="o">`</span>
-  <span class="k">DEFAULT</span> <span class="nb">CHARACTER</span> <span class="k">SET</span> <span class="n">utf8</span>
-  <span class="k">DEFAULT</span> <span class="k">COLLATE</span> <span class="n">utf8_general_ci</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w">  </span><span class="o">`</span><span class="n">salt</span><span class="o">`</span><span class="w"></span>
+<span class="w">  </span><span class="k">DEFAULT</span><span class="w"> </span><span class="nb">CHARACTER</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">utf8</span><span class="w"></span>
+<span class="w">  </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">COLLATE</span><span class="w"> </span><span class="n">utf8_general_ci</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">USE</span> <span class="o">`</span><span class="n">salt</span><span class="o">`</span><span class="p">;</span>
+<span class="n">USE</span><span class="w"> </span><span class="o">`</span><span class="n">salt</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">--</span>
 <span class="c1">-- Table structure for table `jids`</span>
 <span class="c1">--</span>
 
-<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="n">jids</span><span class="o">`</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">jids</span><span class="o">`</span> <span class="p">(</span>
-  <span class="o">`</span><span class="n">jid</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="o">`</span><span class="k">load</span><span class="o">`</span> <span class="n">mediumtext</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="o">`</span><span class="n">jid</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">jid</span><span class="o">`</span><span class="p">)</span>
-<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="o">`</span><span class="n">jids</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">jids</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">jid</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="k">load</span><span class="o">`</span><span class="w"> </span><span class="n">mediumtext</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="o">`</span><span class="n">jid</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">jid</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">--</span>
 <span class="c1">-- Table structure for table `salt_returns`</span>
 <span class="c1">--</span>
 
-<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="n">salt_returns</span><span class="o">`</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">salt_returns</span><span class="o">`</span> <span class="p">(</span>
-  <span class="o">`</span><span class="n">fun</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="o">`</span><span class="n">jid</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="o">`</span><span class="k">return</span><span class="o">`</span> <span class="n">mediumtext</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="o">`</span><span class="n">success</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="o">`</span><span class="n">full_ret</span><span class="o">`</span> <span class="n">mediumtext</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="o">`</span><span class="n">alter_time</span><span class="o">`</span> <span class="k">TIMESTAMP</span> <span class="k">DEFAULT</span> <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
-  <span class="k">KEY</span> <span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">),</span>
-  <span class="k">KEY</span> <span class="o">`</span><span class="n">jid</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">jid</span><span class="o">`</span><span class="p">),</span>
-  <span class="k">KEY</span> <span class="o">`</span><span class="n">fun</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">fun</span><span class="o">`</span><span class="p">)</span>
-<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="o">`</span><span class="n">salt_returns</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">salt_returns</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">fun</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">jid</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="k">return</span><span class="o">`</span><span class="w"> </span><span class="n">mediumtext</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">success</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">full_ret</span><span class="o">`</span><span class="w"> </span><span class="n">mediumtext</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">`</span><span class="n">alter_time</span><span class="o">`</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">KEY</span><span class="w"> </span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<span class="w">  </span><span class="k">KEY</span><span class="w"> </span><span class="o">`</span><span class="n">jid</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">jid</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<span class="w">  </span><span class="k">KEY</span><span class="w"> </span><span class="o">`</span><span class="n">fun</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">fun</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">--</span>
 <span class="c1">-- Table structure for table `salt_events`</span>
 <span class="c1">--</span>
 
-<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="o">`</span><span class="n">salt_events</span><span class="o">`</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="o">`</span><span class="n">salt_events</span><span class="o">`</span> <span class="p">(</span>
-<span class="o">`</span><span class="n">id</span><span class="o">`</span> <span class="nb">BIGINT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
-<span class="o">`</span><span class="n">tag</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-<span class="o">`</span><span class="k">data</span><span class="o">`</span> <span class="n">mediumtext</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-<span class="o">`</span><span class="n">alter_time</span><span class="o">`</span> <span class="k">TIMESTAMP</span> <span class="k">DEFAULT</span> <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
-<span class="o">`</span><span class="n">master_id</span><span class="o">`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-<span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">),</span>
-<span class="k">KEY</span> <span class="o">`</span><span class="n">tag</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">tag</span><span class="o">`</span><span class="p">)</span>
-<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="o">`</span><span class="n">salt_events</span><span class="o">`</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="o">`</span><span class="n">salt_events</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="w"> </span><span class="nb">BIGINT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span><span class="w"></span>
+<span class="o">`</span><span class="n">tag</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="o">`</span><span class="k">data</span><span class="o">`</span><span class="w"> </span><span class="n">mediumtext</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="o">`</span><span class="n">alter_time</span><span class="o">`</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span><span class="w"></span>
+<span class="o">`</span><span class="n">master_id</span><span class="o">`</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">),</span><span class="w"></span>
+<span class="k">KEY</span><span class="w"> </span><span class="o">`</span><span class="n">tag</span><span class="o">`</span><span class="w"> </span><span class="p">(</span><span class="o">`</span><span class="n">tag</span><span class="o">`</span><span class="p">)</span><span class="w"></span>
+<span class="p">)</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -915,13 +915,13 @@
 Salt master configuration example:
 
 
-<div class="codehilite"><pre><span></span><code><span class="nt">event_return</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">mysql</span><span class="p p-Indicator">]</span>
-<span class="nt">master_job_cache</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span>
-<span class="nt">mysql.host</span><span class="p">:</span> <span class="s">&#39;db&#39;</span>
-<span class="nt">mysql.user</span><span class="p">:</span> <span class="s">&#39;alcali&#39;</span>
-<span class="nt">mysql.pass</span><span class="p">:</span> <span class="s">&#39;alcali&#39;</span>
-<span class="nt">mysql.db</span><span class="p">:</span> <span class="s">&#39;salt&#39;</span>
-<span class="nt">mysql.port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3306</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">event_return</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">mysql</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="nt">master_job_cache</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span><span class="w"></span>
+<span class="nt">mysql.host</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;db&#39;</span><span class="w"></span>
+<span class="nt">mysql.user</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alcali&#39;</span><span class="w"></span>
+<span class="nt">mysql.pass</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alcali&#39;</span><span class="w"></span>
+<span class="nt">mysql.db</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;salt&#39;</span><span class="w"></span>
+<span class="nt">mysql.port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3306</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -933,60 +933,60 @@ Salt master configuration example:
 <p>
 
 
-<div class="codehilite"><pre><span></span><code><span class="n">psql</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
-<span class="k">CREATE</span> <span class="k">ROLE</span> <span class="n">salt</span> <span class="k">WITH</span> <span class="n">PASSWORD</span> <span class="s1">&#39;salt&#39;</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">salt</span> <span class="k">WITH</span> <span class="k">OWNER</span> <span class="n">salt</span><span class="p">;</span>
-<span class="n">EOF</span>
+<div class="codehilite"><pre><span></span><code><span class="n">psql</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">salt</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="s1">&#39;salt&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">salt</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">OWNER</span><span class="w"> </span><span class="n">salt</span><span class="p">;</span><span class="w"></span>
+<span class="n">EOF</span><span class="w"></span>
 
-<span class="n">psql</span> <span class="o">-</span><span class="n">h</span> <span class="n">localhost</span> <span class="o">-</span><span class="n">U</span> <span class="n">salt</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
+<span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">h</span><span class="w"> </span><span class="n">localhost</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">salt</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span><span class="w"></span>
 <span class="c1">--</span>
 <span class="c1">-- Table structure for table &#39;jids&#39;</span>
 <span class="c1">--</span>
 
-<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">jids</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">jids</span> <span class="p">(</span>
-  <span class="n">jid</span>   <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-  <span class="k">load</span>  <span class="nb">text</span> <span class="k">NOT</span> <span class="k">NULL</span>
-<span class="p">);</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">jids</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">jids</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">jid</span><span class="w">   </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">load</span><span class="w">  </span><span class="nb">text</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
 
 <span class="c1">--</span>
 <span class="c1">-- Table structure for table &#39;salt_returns&#39;</span>
 <span class="c1">--</span>
 
-<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">salt_returns</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">salt_returns</span> <span class="p">(</span>
-  <span class="n">fun</span>       <span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="n">jid</span>       <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="k">return</span>    <span class="nb">text</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="n">full_ret</span>  <span class="nb">text</span><span class="p">,</span>
-  <span class="n">id</span>        <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="n">success</span>   <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-  <span class="n">alter_time</span>   <span class="k">TIMESTAMP</span> <span class="k">WITH</span> <span class="k">TIME</span> <span class="k">ZONE</span> <span class="k">DEFAULT</span> <span class="n">now</span><span class="p">()</span>
-<span class="p">);</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">salt_returns</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">salt_returns</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="n">fun</span><span class="w">       </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">jid</span><span class="w">       </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w">    </span><span class="nb">text</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">full_ret</span><span class="w">  </span><span class="nb">text</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">id</span><span class="w">        </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">success</span><span class="w">   </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="n">alter_time</span><span class="w">   </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">now</span><span class="p">()</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
 
-<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_salt_returns_id</span> <span class="k">ON</span> <span class="n">salt_returns</span> <span class="p">(</span><span class="n">id</span><span class="p">);</span>
-<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_salt_returns_jid</span> <span class="k">ON</span> <span class="n">salt_returns</span> <span class="p">(</span><span class="n">jid</span><span class="p">);</span>
-<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_salt_returns_fun</span> <span class="k">ON</span> <span class="n">salt_returns</span> <span class="p">(</span><span class="n">fun</span><span class="p">);</span>
-<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_salt_returns_updated</span> <span class="k">ON</span> <span class="n">salt_returns</span> <span class="p">(</span><span class="n">alter_time</span><span class="p">);</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_salt_returns_id</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">salt_returns</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_salt_returns_jid</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">salt_returns</span><span class="w"> </span><span class="p">(</span><span class="n">jid</span><span class="p">);</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_salt_returns_fun</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">salt_returns</span><span class="w"> </span><span class="p">(</span><span class="n">fun</span><span class="p">);</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_salt_returns_updated</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">salt_returns</span><span class="w"> </span><span class="p">(</span><span class="n">alter_time</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">--</span>
 <span class="c1">-- Table structure for table &#39;salt_events&#39;</span>
 <span class="c1">--</span>
 
-<span class="k">DROP</span> <span class="k">TABLE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">salt_events</span><span class="p">;</span>
-<span class="k">DROP</span> <span class="n">SEQUENCE</span> <span class="k">IF</span> <span class="k">EXISTS</span> <span class="n">seq_salt_events_id</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="n">SEQUENCE</span> <span class="n">seq_salt_events_id</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">salt_events</span> <span class="p">(</span>
-    <span class="n">id</span> <span class="nb">BIGINT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">UNIQUE</span> <span class="k">DEFAULT</span> <span class="n">nextval</span><span class="p">(</span><span class="s1">&#39;seq_salt_events_id&#39;</span><span class="p">),</span>
-    <span class="n">tag</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-    <span class="k">data</span> <span class="nb">text</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
-    <span class="n">alter_time</span> <span class="k">TIMESTAMP</span> <span class="k">WITH</span> <span class="k">TIME</span> <span class="k">ZONE</span> <span class="k">DEFAULT</span> <span class="n">NOW</span><span class="p">(),</span>
-    <span class="n">master_id</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span>
-<span class="p">);</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">salt_events</span><span class="p">;</span><span class="w"></span>
+<span class="k">DROP</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">seq_salt_events_id</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="n">seq_salt_events_id</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">salt_events</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">BIGINT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">nextval</span><span class="p">(</span><span class="s1">&#39;seq_salt_events_id&#39;</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="k">data</span><span class="w"> </span><span class="nb">text</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">alter_time</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">NOW</span><span class="p">(),</span><span class="w"></span>
+<span class="w">    </span><span class="n">master_id</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
 
-<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_salt_events_tag</span> <span class="k">on</span> <span class="n">salt_events</span> <span class="p">(</span><span class="n">tag</span><span class="p">);</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_salt_events_tag</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">salt_events</span><span class="w"> </span><span class="p">(</span><span class="n">tag</span><span class="p">);</span><span class="w"></span>
 
-<span class="n">EOF</span>
+<span class="n">EOF</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -994,13 +994,13 @@ Salt master configuration example:
 Salt master configuration example:
 
 
-<div class="codehilite"><pre><span></span><code><span class="nt">event_return</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">postgres</span><span class="p p-Indicator">]</span>
-<span class="nt">master_job_cache</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span> 
-<span class="nt">returner.postgres.host</span><span class="p">:</span> <span class="s">&#39;db&#39;</span>
-<span class="nt">returner.postgres.user</span><span class="p">:</span> <span class="s">&#39;alcali&#39;</span>
-<span class="nt">returner.postgres.passwd</span><span class="p">:</span> <span class="s">&#39;alcali&#39;</span>
-<span class="nt">returner.postgres.db</span><span class="p">:</span> <span class="s">&#39;salt&#39;</span>
-<span class="nt">returner.postgres.port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5432</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">event_return</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">postgres</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="nt">master_job_cache</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span><span class="w"> </span>
+<span class="nt">returner.postgres.host</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;db&#39;</span><span class="w"></span>
+<span class="nt">returner.postgres.user</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alcali&#39;</span><span class="w"></span>
+<span class="nt">returner.postgres.passwd</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alcali&#39;</span><span class="w"></span>
+<span class="nt">returner.postgres.db</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;salt&#39;</span><span class="w"></span>
+<span class="nt">returner.postgres.port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5432</span><span class="w"></span>
 </code></pre></div>
 
 
@@ -1012,12 +1012,12 @@ Salt master configuration example:
 <p>Returners provide a way to archive old jobs. Refer to Salt <a href="https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.mysql.html#module-salt.returners.mysql">MySQL</a> or <a href="https://docs.saltstack.com/en/latest/ref/returners/all/salt.returners.postgres.html">Postgres</a> returner documentation for more information.</p>
 <h3 id="salt-api">Salt Api<a class="headerlink" href="#salt-api" title="Permanent link">&para;</a></h3>
 <p>Salt master configuration example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">rest_cherrypy</span><span class="p">:</span>
-  <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span>
-  <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span>
-  <span class="nt">debug</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
-  <span class="nt">ssl_crt</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/pki/tls/certs/localhost.crt</span>
-  <span class="nt">ssl_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/pki/tls/certs/localhost.key</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">rest_cherrypy</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span><span class="w"></span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0</span><span class="w"></span>
+<span class="w">  </span><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ssl_crt</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/pki/tls/certs/localhost.crt</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ssl_key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/pki/tls/certs/localhost.key</span><span class="w"></span>
 </code></pre></div>
 
 <p>Install instruction example (On Debian 9 using Salt python3 version):</p>
@@ -1036,29 +1036,29 @@ salt-call --local tls.create_self_signed_cert <span class="nv">cacert_path</span
 <p>To use the rest endpoint authentication, the salt master must be able to connect to alcali.</p>
 <p>Set <code>SALT_AUTH=rest</code> in the <a href="../configuration/">env file</a> and use the <a href="https://docs.saltstack.com/en/latest/ref/auth/all/salt.auth.rest.html">rest external auth</a> in the salt master configuration.</p>
 <p>the <code>^url</code> key is how the salt master connect to alcali.</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">external_auth</span><span class="p">:</span>
-  <span class="nt">rest</span><span class="p">:</span>
-    <span class="nt">^url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:8000/api/token/verify/</span>
-    <span class="nt">admin</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">.*</span>
-      <span class="p p-Indicator">-</span> <span class="s">&#39;@runner&#39;</span>
-      <span class="p p-Indicator">-</span> <span class="s">&#39;@wheel&#39;</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">external_auth</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">rest</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">^url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:8000/api/token/verify/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">admin</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.*</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;@runner&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;@wheel&#39;</span><span class="w"></span>
 </code></pre></div>
 
 <h4 id="custom-token-auth-module">Custom token auth module<a class="headerlink" href="#custom-token-auth-module" title="Permanent link">&para;</a></h4>
 <p>Set <code>SALT_AUTH=alcali</code> in the <a href="../configuration/">env file</a></p>
 <p>You can get the Alcali auth module <a href="https://raw.githubusercontent.com/latenighttales/alcali/2019.2/docker/saltconfig/salt/auth/alcali.py">here</a></p>
 <p>Place it on the salt filesystem (for example: <code>/srv/salt/auth</code>) and add it to your Salt master configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">auth_dirs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">/srv/salt/auth</span><span class="p p-Indicator">]</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">auth_dirs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/srv/salt/auth</span><span class="p p-Indicator">]</span><span class="w"></span>
 </code></pre></div>
 
 <p>External auth example:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">external_auth</span><span class="p">:</span>
-  <span class="nt">alcali</span><span class="p">:</span>
-    <span class="nt">admin</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">.*</span>
-      <span class="p p-Indicator">-</span> <span class="s">&#39;@runner&#39;</span>
-      <span class="p p-Indicator">-</span> <span class="s">&#39;@wheel&#39;</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">external_auth</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">alcali</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">admin</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.*</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;@runner&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;@wheel&#39;</span><span class="w"></span>
 </code></pre></div>
 
 <p>Don't forget to run <code>salt-run saltutil.sync_all</code> on the salt master.</p>
