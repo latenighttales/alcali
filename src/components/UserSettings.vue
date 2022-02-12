@@ -76,6 +76,11 @@ export default {
           value: "fr",
           image: require("../assets/img/i18n/fr.png"),
         },
+        {
+          text: "chinese",
+          value: "zh",
+          image: require("../assets/img/i18n/zh.png"),
+        },
       ],
     }
   },

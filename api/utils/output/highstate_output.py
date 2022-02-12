@@ -101,24 +101,22 @@ def _format_host(host, data, summary):
         # Data in this format is from saltmod.function,
         # so it is always a 'change'
         nchanges = 1
-        hstrs.append((u"{0}    {1}{2[ENDC]}".format(hcolor, data, colors)))
+        hstrs.append(("{0}    {1}{2[ENDC]}".format(hcolor, data, colors)))
         hcolor = colors["CYAN"]  # Print the minion name in cyan
     if isinstance(data, list):
         # Errors have been detected, list them in RED!
         hcolor = colors["LIGHT_RED"]
-        hstrs.append(
-            (u"    {0}Data failed to compile:{1[ENDC]}".format(hcolor, colors))
-        )
+        hstrs.append(("    {0}Data failed to compile:{1[ENDC]}".format(hcolor, colors)))
         for err in data:
             hstrs.append(
-                (u"{0}----------\n    {1}{2[ENDC]}".format(hcolor, err, colors))
+                ("{0}----------\n    {1}{2[ENDC]}".format(hcolor, err, colors))
             )
     if isinstance(data, dict):
         # Verify that the needed data is present
         for tname, info in data.items():
             if isinstance(info, dict) and "__run_num__" not in info:
                 err = (
-                    u"The State execution failed to record the order "
+                    "The State execution failed to record the order "
                     "in which all states were executed. The state "
                     "return missing data is:"
                 )
@@ -155,31 +153,31 @@ def _format_host(host, data, summary):
                 tcolor = colors["YELLOW"]
             comps = tname.split("_|-")
             state_lines = [
-                u"{tcolor}----------{colors[ENDC]}",
-                u"    {tcolor}      ID: {comps[1]}{colors[ENDC]}",
-                u"    {tcolor}Function: {comps[0]}.{comps[3]}{colors[ENDC]}",
-                u"    {tcolor}  Result: {ret[result]!s}{colors[ENDC]}",
-                u"    {tcolor} Comment: {comment}{colors[ENDC]}",
-                u"    {tcolor} Started: {ret[start_time]!s}{colors[ENDC]}",
-                u"    {tcolor}Duration: {ret[duration]!s}{colors[ENDC]}",
+                "{tcolor}----------{colors[ENDC]}",
+                "    {tcolor}      ID: {comps[1]}{colors[ENDC]}",
+                "    {tcolor}Function: {comps[0]}.{comps[3]}{colors[ENDC]}",
+                "    {tcolor}  Result: {ret[result]!s}{colors[ENDC]}",
+                "    {tcolor} Comment: {comment}{colors[ENDC]}",
+                "    {tcolor} Started: {ret[start_time]!s}{colors[ENDC]}",
+                "    {tcolor}Duration: {ret[duration]!s}{colors[ENDC]}",
             ]
             # This isn't the prettiest way of doing this, but it's readable.
             if comps[1] != comps[2]:
-                state_lines.insert(3, u"    {tcolor}    Name: {comps[2]}{colors[ENDC]}")
+                state_lines.insert(3, "    {tcolor}    Name: {comps[2]}{colors[ENDC]}")
             try:
                 comment = ret["comment"]
-                comment = comment.strip().replace(u"\n", u"\n" + u" " * 14)
+                comment = comment.strip().replace("\n", "\n" + " " * 14)
             except AttributeError:  # Assume comment is a list
                 try:
-                    comment = ret["comment"].join(" ").replace(u"\n", u"\n" + u" " * 13)
+                    comment = ret["comment"].join(" ").replace("\n", "\n" + " " * 13)
                 except AttributeError:
                     # Comment isn't a list either, just convert to string
                     comment = str(ret["comment"])
-                    comment = comment.strip().replace(u"\n", u"\n" + u" " * 14)
+                    comment = comment.strip().replace("\n", "\n" + " " * 14)
             for detail in ["start_time", "duration"]:
-                ret.setdefault(detail, u"")
+                ret.setdefault(detail, "")
             if ret["duration"] != "":
-                ret["duration"] = u"{0} ms".format(ret["duration"])
+                ret["duration"] = "{0} ms".format(ret["duration"])
             svars = {
                 "tcolor": tcolor,
                 "comps": comps,
@@ -189,28 +187,28 @@ def _format_host(host, data, summary):
                 "colors": colors,
             }
             hstrs.extend([sline.format(**svars) for sline in state_lines])
-            changes = u"     Changes:   " + ctext
-            hstrs.append((u"{0}{1}{2[ENDC]}".format(tcolor, changes, colors)))
+            changes = "     Changes:   " + ctext
+            hstrs.append(("{0}{1}{2[ENDC]}".format(tcolor, changes, colors)))
 
             if "warnings" in ret:
                 rcounts.setdefault("warnings", 0)
                 rcounts["warnings"] += 1
                 wrapper = textwrap.TextWrapper(
-                    width=80, initial_indent=u" " * 14, subsequent_indent=u" " * 14
+                    width=80, initial_indent=" " * 14, subsequent_indent=" " * 14
                 )
                 hstrs.append(
-                    u"   {colors[LIGHT_RED]} Warnings: {0}{colors[ENDC]}".format(
+                    "   {colors[LIGHT_RED]} Warnings: {0}{colors[ENDC]}".format(
                         wrapper.fill("\n".join(ret["warnings"])).lstrip(), colors=colors
                     )
                 )
 
         # Append result counts to end of output
-        colorfmt = u"{0}{1}{2[ENDC]}"
+        colorfmt = "{0}{1}{2[ENDC]}"
         rlabel = {
-            True: u"Succeeded",
-            False: u"Failed",
-            None: u"Not Run",
-            "warnings": u"Warnings",
+            True: "Succeeded",
+            False: "Failed",
+            None: "Not Run",
+            "warnings": "Warnings",
         }
         count_max_len = max([len(str(x)) for x in rcounts.items()] or [0])
         label_max_len = max([len(x) for x in rlabel.items()] or [0])
@@ -218,12 +216,12 @@ def _format_host(host, data, summary):
         if summary:
             hstrs.append(
                 colorfmt.format(
-                    colors["CYAN"], u"\nSummary\n{0}".format("-" * line_max_len), colors
+                    colors["CYAN"], "\nSummary\n{0}".format("-" * line_max_len), colors
                 )
             )
 
             def _counts(label, count):
-                return u"{0}: {1:>{2}}".format(
+                return "{0}: {1:>{2}}".format(
                     label, count, line_max_len - (len(label) + 2)
                 )
 
@@ -234,20 +232,20 @@ def _format_host(host, data, summary):
                 changestats.append(
                     colorfmt.format(
                         colors["YELLOW"],
-                        u"unchanged={0}".format(rcounts.get(None, 0)),
+                        "unchanged={0}".format(rcounts.get(None, 0)),
                         colors,
                     )
                 )
             if nchanges > 0:
                 changestats.append(
                     colorfmt.format(
-                        colors["GREEN"], u"changed={0}".format(nchanges), colors
+                        colors["GREEN"], "changed={0}".format(nchanges), colors
                     )
                 )
             if changestats:
-                changestats = u" ({0})".format(", ".join(changestats))
+                changestats = " ({0})".format(", ".join(changestats))
             else:
-                changestats = u""
+                changestats = ""
             hstrs.append(
                 colorfmt.format(
                     colors["GREEN"],
@@ -277,7 +275,7 @@ def _format_host(host, data, summary):
                     )
                 )
 
-            totals = u"{0}\nTotal states run: {1:>{2}}".format(
+            totals = "{0}\nTotal states run: {1:>{2}}".format(
                 "-" * line_max_len,
                 sum(rcounts.values()) - rcounts.get("warnings", 0),
                 line_max_len - 7,
@@ -294,8 +292,8 @@ def _format_host(host, data, summary):
             )
             hstrs.append(colorfmt.format(colors["CYAN"], total_duration, colors))
 
-    hstrs.insert(0, (u"{0}{1}:{2[ENDC]}".format(hcolor, host, colors)))
-    return u"\n".join(hstrs), nchanges > 0
+    hstrs.insert(0, ("{0}{1}:{2[ENDC]}".format(hcolor, host, colors)))
+    return "\n".join(hstrs), nchanges > 0
 
 
 def _format_changes(changes):
@@ -304,18 +302,18 @@ def _format_changes(changes):
     """
 
     if not changes:
-        return False, u""
+        return False, ""
 
     if not isinstance(changes, dict):
-        return True, u"Invalid Changes data: {0}".format(changes)
+        return True, "Invalid Changes data: {0}".format(changes)
 
     ret = changes.get("ret")
     if ret is not None and changes.get("out") == "highstate":
-        ctext = u""
+        ctext = ""
         changed = False
         for host, hostdata in ret.items():
             s, c = _format_host(host, hostdata)
-            ctext += u"\n" + u"\n".join((u" " * 14 + l) for l in s.splitlines())
+            ctext += "\n" + "\n".join((" " * 14 + l) for l in s.splitlines())
             changed = changed or c
     else:
         changed = True

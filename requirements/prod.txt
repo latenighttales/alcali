@@ -1,5 +1,5 @@
 ansi2html==1.6.0
-Django==3.1.13
+Django==3.2.12
 django-cors-headers==3.7.0
 django-currentuser==0.5.3
 djangorestframework==3.12.2
@@ -8,6 +8,6 @@ gunicorn==20.1.0
 PyJWT==1.7.1
 python-dotenv==0.18.0
 pytz
-requests==2.24.0
+requests==2.27.1
 salt-pepper==0.7.5
 whitenoise==5.2.0
