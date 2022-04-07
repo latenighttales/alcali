@@ -29,8 +29,7 @@ AUTH_LDAP_USER_ATTR_MAP = {
     "email": os.environ.get("AUTH_LDAP_USER_ATTR_MAP_EMAIL", "mail"),
 }
 
-if os.environ.get("AUTH_LDAP_START_TLS"):
-    AUTH_LDAP_START_TLS = True
+AUTH_LDAP_START_TLS = os.environ.get("AUTH_LDAP_START_TLS", "True").lower() in ("y", "yes", "t", "true", "on", "1")
 
 # This is the default.
 AUTH_LDAP_ALWAYS_UPDATE_USER = True
