@@ -148,13 +148,14 @@ REST_FRAMEWORK = {
 #     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
 #     'REFRESH_TOKEN_LIFETIME': timedelta(days=1)}
 
-# # TODO!
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "handlers": {"console": {"class": "logging.StreamHandler"}},
-#     "loggers": {"django_auth_ldap": {"level": "DEBUG", "handlers": ["console"]}},
-# }
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {
+        "django": {"handlers": ["console"], "propagate": True, "level": "INFO"},
+    },
+}
 #
 # Get version from file.
 try:
