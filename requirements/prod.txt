@@ -5,7 +5,7 @@ django-currentuser==0.5.3
 djangorestframework==3.12.2
 djangorestframework-simplejwt>=4.4,<=4.6
 gunicorn==20.1.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 python-dotenv==0.18.0
 pytz
 requests==2.27.1
