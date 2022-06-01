@@ -1,6 +1,6 @@
 ansi2html==1.6.0
 Django==3.2.12
-django-cors-headers==3.7.0
+django-cors-headers==3.12.0
 django-currentuser==0.5.3
 djangorestframework==3.12.2
 djangorestframework-simplejwt>=4.4,<=4.6
