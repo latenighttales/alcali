@@ -64,7 +64,7 @@ class SaltReturnsListJid(generics.ListAPIView):
 @api_view(["GET"])
 def jobs_filters(request):
     # Filter options.
-    user_list = list({i.user() for i in Jids.objects.all()})
+    user_list =  list() # list({i.user() for i in Jids.objects.all()}) # THIS is eating through ram and cpu...
     minion_list = SaltReturns.objects.values_list("id", flat=True).distinct()
     return Response({"users": user_list, "minions": minion_list})
 
