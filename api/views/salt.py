@@ -35,7 +35,7 @@ class SaltReturnsList(generics.ListAPIView):
         qry = {}
         start = self.request.query_params.get("start", None)
         end = self.request.query_params.get("end", None)
-        limit = int(self.request.query_params.get("limit", 200))
+        limit = int(self.request.query_params.get("limit", 50))
         target = self.request.query_params.getlist("target[]")
         users = self.request.query_params.getlist("users[]", None)
         if target:
