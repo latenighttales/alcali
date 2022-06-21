@@ -146,7 +146,7 @@ class Minions(models.Model):
         states = SaltReturns.objects.filter(
             Q(fun="state.apply") | Q(fun="state.highstate"), id=self.minion_id
         ).order_by('jid')[0:2]
-        states = sorted(states, key=lambda x: x.jid, reverse=True)
+        states = sorted(states, key=lambda x: x.jid)
 
         # Remove jobs with arguments.
         for state in states:
