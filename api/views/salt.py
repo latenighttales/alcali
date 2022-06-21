@@ -67,7 +67,7 @@ def jobs_filters(request):
 
     # THIS is eating through ram and cpu...
     # user_list = list({i.user() for i in Jids.objects.all()}) # THIS is eating through ram and cpu...
-    user_list = Jids.objects.values_list('user', flat=True).distinct()
+    user_list = list()
     minion_list = SaltReturns.objects.values_list("id", flat=True).distinct()
     return Response({"users": user_list, "minions": minion_list})
 
