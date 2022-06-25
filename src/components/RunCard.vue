@@ -105,20 +105,24 @@
                       </v-col>
                       <v-col lg="2">
                         <v-combobox
-                          v-model="selectedFunction"
+                          ref="comboFunc"
+                          v-model="dummySelectedFunc"
+                          @change="onAutoCompleteSelection"
+                          @keyup="customOnChangeHandler"
+                          @paste="customOnChangeHandler"
                           item-value="name"
                           item-text="name"
                           :items="filteredFunction"
                           :label="$t('components.RunCard.Function')"
                           return-object
                         >
-                          <template v-slot:append-outer v-if="selectedFunction">
+                          <template v-slot:append-outer v-if="dummySelectedFunc">
                             <v-menu offset-y>
                               <template v-slot:activator="{ on }">
                                 <v-icon color="black" v-on="on">info </v-icon>
                               </template>
                               <div class="desc">
-                                <pre>{{ selectedFunction.description }}</pre>
+                                <pre>{{ dummySelectedFunc.description }}</pre>
                               </div>
                             </v-menu>
                           </template>
@@ -374,7 +378,8 @@ export default {
       client_batch: false,
       minions: [],
       functions: null,
-      selectedFunction: null,
+      dummySelectedFunc: null,
+      selectedFunc: null,
       description: null,
       batch: null,
       timeout: null,
@@ -411,6 +416,17 @@ export default {
     };
   },
   methods: {
+    onAutoCompleteSelection() {
+      this.selectedFunc = this.dummySelectedFunc.name || this.dummySelectedFunc
+    },
+    customOnChangeHandler() {
+      let vm = this
+      setTimeout(function() {
+        if (vm.$refs.comboFunc) {
+          vm.selectedFunc = vm.$refs.comboFunc.internalSearch
+        }
+      })
+    },
     loadData() {
       this.$http.get("api/functions/").then((response) => {
         this.functions = response.data;
@@ -432,12 +448,12 @@ export default {
       }
       // Functions.
       if (
-        this.selectedFunction &&
-        this.selectedFunction.hasOwnProperty("name")
+        this.selectedFunc &&
+        this.selectedFunc.hasOwnProperty("name")
       ) {
-        command += ` ${this.selectedFunction.name}`;
+        command += ` ${this.selectedFunc.name}`;
       } else {
-        command += ` ${this.selectedFunction}`;
+        command += ` ${this.selectedFunc}`;
       }
       // Args and Kwargs.
       command += `${this.arg ? ` ${this.arg}` : ""}${
@@ -558,10 +574,10 @@ export default {
     }
     this.batch = this.$route.query.batch ? this.$route.query.batch : null;
     this.target = this.$route.query.tgt;
-    this.selectedFunction =
-      this.$route.query.hasOwnProperty("fun") === true
-        ? { name: this.$route.query.fun }
-        : this.selectedFunction;
+    if (this.$route.query.hasOwnProperty("fun") === true) {
+      this.selectedFunc = { name: this.$route.query.fun }
+      this.dummySelectedFunc = this.$route.query.fun
+    }
     this.arg = this.$route.query.arg;
     if (this.$route.query.kwarg) {
       let pillar = this.$route.query.kwarg
