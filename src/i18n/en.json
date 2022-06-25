@@ -1,0 +1,359 @@
+{
+  "common": {
+    "Search": "Search"
+  },
+  "components": {
+    "mixins": {
+      "UserCard": {
+        "Users": "Users",
+        "Create": "Create",
+        "CreateUser": "Create user",
+        "UpdateUser": "Update user",
+        "Update": "Update",
+        "Discard": "Discard",
+        "View": "View",
+        "Renew": "Renew",
+        "Revoke": "Revoke",
+        "Delete": "Delete",
+        "ActionMsg": "this action is irreversible.",
+        "Close": "Close",
+        "Token": "Token",
+        "DateJoined": "Date Joined",
+        "Username": "Username",
+        "Email": "Email",
+        "FirstName": "First Name",
+        "LastName": "Last Name",
+        "Password": "Password",
+        "StaffUser": "Staff User",
+        "UserCreated": "User created",
+        "UserUpdated": "User updated",
+        "UserDeleted": "User deleted",
+        "Action": "Action",
+        "UsernameRequired": "Username is required",
+        "EmailRequired": "E-mail is required",
+        "EmailValid": "E-mail must be valid"
+      }
+    },
+    "core": {
+      "Fab": {
+        "Close": "close",
+        "Menu": "menu"
+      },
+      "Layout": {
+        "Person": "person",
+        "Group": "Group",
+        "Users": "Users",
+        "Settings": "Settings",
+        "Collapse": "COLLAPSE",
+        "Notifications": "Notifications",
+        "NoNotifications": "no new notifications",
+        "Clear": "Clear",
+        "ToggleTheme": "Toggle Theme",
+        "Logout": "Logout",
+        "Overview": "Overview",
+        "Minions": "Minions",
+        "Jobs": "Jobs",
+        "Run": "Run",
+        "JobTemplates": "Job Templates",
+        "Conformity": "Conformity",
+        "Schedules": "Schedules",
+        "Events": "Events",
+        "Keys": "Keys",
+        "Search": "Search jids, minions, states...",
+        "Job_": "Job ",
+        "_published for_": " published for ",
+        "_returned for_": " returned for ",
+        "JobEvent": "Job Event",
+        "NewJobCreated": "New Job Created"
+      }
+    },
+    "CommonSettings": {
+      "Title": "Common Settings",
+      "Parse": "Parse modules from:",
+      "Submit": "Submit",
+      "Fields": "Minions fields",
+      "Delete": "Delete",
+      "Create": "Create",
+      "Conformity": "Custom conformity",
+      "Target": "Target",
+      "Name": "Name",
+      "Function": "Function",
+      "Functions": "Functions",
+      "ParseModulesStart": "Parse module started",
+      "ConformityDeleted": "Conformity deleted",
+      "ConformityCreated": "conformity created",
+      "MinionsFieldsCreated": "minions fields created"
+    },
+    "ConformityCard": {
+      "Highstate": "Highstate",
+      "true": "true",
+      "false": "false",
+      "unknown": "unknown"
+    },
+    "ConformityChart": {
+      "conformity": "Conformity",
+      "conform": "conform",
+      "conflict": "conflict",
+      "unknown": "unknown"
+    },
+    "ConformityDetailCard": {
+      "HighstateConformity": "Highstate Conformity"
+    },
+    "ConformityTable": {
+      "Conformity": "Conformity",
+      "detail": "detail",
+      "highstate": "highstate",
+      "Unknown": "Unknow",
+      "True": "True",
+      "False": "False",
+      "Minion id": "Minion id",
+      "Last Highstate": "Last Highstate",
+      "Highstate Conformity": "Highstate Conformity",
+      "Succeeded": "Succeeded",
+      "Unchanged": "Unchanged",
+      "Failed": "Failed",
+      "Actions": "Actions"
+    },
+    "CronPicker": {
+      "Cancel": "Cancel",
+      "Save": "Save"
+    },
+    "EventsTable": {
+      "Events": "Events",
+      "Tag": "Tag",
+      "Jid": "Jid",
+      "Target": "Target",
+      "Function": "Function",
+      "Arguments": "Arguments",
+      "Date": "Date"
+    },
+    "InfosCard": {
+      "Common": "Common",
+      "Salt": "Salt",
+      "Hardware": "Hardware"
+    },
+    "JobsChartCard": {
+      "Stats": "Jobs Stats",
+      "Filter": "Filter",
+      "Period": "Period",
+      "All": "All",
+      "Highstate": "Highstate",
+      "Other": "Other",
+      "Week": "Week",
+      "TwoWeeks": "Two Weeks",
+      "Month": "Month",
+      "Year": "Year"
+    },
+    "JobsTable": {
+      "SearchJobs": "Search Jobs",
+      "Cancel": "Cancel",
+      "Job": "Job",
+      "JID": "Jid",
+      "Target": "Target",
+      "Function": "Function",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Keyword Arguments",
+      "User": "User",
+      "Status": "Status",
+      "Date": "Date",
+      "Action": "Action",
+      "Limit": "Limit",
+      "SelectDate": "Select date(s)",
+      "Success": "Success",
+      "Failed": "Failed",
+      "Rerun": "rerun",
+      "Detail": "detail"
+    },
+    "JobTemplatesTable": {
+      "JobTemplate": "Job Templates",
+      "Run": "run",
+      "Edit": "edit",
+      "Delete": "delete",
+      "Name": "Name",
+      "Client": "Client",
+      "TargetType": "Target Type",
+      "Target": "Target",
+      "Function": "Function",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Keyword Arguments",
+      "Batch": "Batch",
+      "Actions": "Actions",
+      "TemplateDeleted": "Template deleted"
+    },
+    "KeysStatusCard": {
+      "keys": "keys",
+      "saltWebsocket": "Salt Websocket",
+      "accepted": "accepted",
+      "rejected": "rejected",
+      "denied": "denied",
+      "unaccepted": "unaccepted"
+    },
+    "Keys": {
+      "Refresh": "Refresh keys",
+      "AcceptAll": "Accept all keys",
+      "RejectAll": "Reject all keys",
+      "RefreshingKeys": "Refreshing keys",
+      "KeysRefreshed": "Keys refreshed"
+    },
+    "KeysTable": {
+      "Keys": "Keys",
+      "MinionId": "Minion ID",
+      "Status": "Status",
+      "PublicKey": "Public keys",
+      "Actions": "Actions",
+      "reject": "reject",
+      "delete": "delete",
+      "accept": "accept",
+      "accepted": "Accepted",
+      "unaccepted": "Unaccepted",
+      "rejected": "Rejected",
+      "denied": "Denied"
+    },
+    "Minions": {
+      "RefreshAll": "Refresh all minions",
+      "JobAll": "Run job on all minions",
+      "Refreshing": "Refreshing minions",
+      "NbMinionsRefreshed": "{0} minions refreshed"
+    },
+    "MinionDetail": {
+      "RefreshMinion": "Refresh ",
+      "JobMinion": "Run job on ",
+      "HighstateMinion": "Run highstate on ",
+      "Refreshing ": "Refreshing {0}",
+      "MinionRefreshed": "Minion refreshed",
+      "MissingMinion": "{0} is not present in database. Try refreshing minions"
+    },
+    "MinionDetailCard": {
+      "Grains": "Grains",
+      "Pillar": "Pillar",
+      "History": "History",
+      "Graph": "Graph",
+      "Fold": "fold",
+      "Unfold": "unfold"
+    },
+    "MinionsTable": {
+      "Minion": "Minion",
+      "Column": "Column",
+      "Refresh": "Refresh",
+      "Run": "run job",
+      "Delete": "Delete",
+      "Msg1": "If you delete ",
+      "Msg2": " from the database, you will need to refresh all minions.",
+      "Refreshing": "Refreshing ",
+      "Deleted": " deleted",
+      "Close": "Close",
+      "Detail": "Details"
+    },
+    "NetworkCard": {
+      "Network": "Network",
+      "Interface": "Interface",
+      "MAC": "Mac",
+      "DNS": "Dns",
+      "IPV4Gateway": "IP V4 Gateway",
+      "IPV6Gateway": "IP V6 Gateway"
+    },
+    "NotFound": {
+      "Title": "Oops",
+      "404": "404. there is nos page here",
+      "Back": "Back"
+    },
+    "RunCard": {
+      "Run": "Run",
+      "Formatted": "Formatted",
+      "Cli": "CLI",
+      "ClientType": "Client Type:",
+      "Info": "info",
+      "Recurring": "Recurring:",
+      "Every": "Every",
+      "Results": "Results",
+      "Save": "Save",
+      "Test": "Test",
+      "TemplateSaved": "Template {0} saved",
+      "SaveAsTemplate": "Save as Template",
+      "JobTemplateName": "Job Template Name",
+      "Pillar": "Pillar",
+      "Schedule": "Schedule",
+      "ScheduleName": "Schedule Name",
+      "Async": "Async",
+      "Batch": "Batch",
+      "Timeout": "Timeout",
+      "TargetType": "Target Type",
+      "Target": "Target",
+      "Function": "Function",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Keyword Arguments",
+      "RunOnce": "Once:  ",
+      "Running": "Running",
+      "Scheduling": "Scheduling"
+    },
+    "Schedules": {
+      "Refresh": "Refresh schedules",
+      "Refreshing": "Refreshing schedules",
+      "Refreshed": "Schedules refreshed"
+    },
+    "ScheduleTable": {
+      "Schedules": "Schedules",
+      "Disable": "disable",
+      "Enable": "enable",
+      "Delete": "Delete",
+      "MinionJobAction": "{0} on {1} for job {2}",
+      "MinionJobActionDone": "{0} on {1} for job {2}: done"
+    },
+    "UserSettings": {
+      "UserSettings": "User Settings",
+      "JobsNotifications": "Jobs Notifications",
+      "MaxNotifications": "Max Notifications",
+      "Submit": "Submit",
+      "created": "created",
+      "published": "published",
+      "returned": "returned",
+      "event": "event",
+      "UserSettingsUpdated": "user settings updated",
+      "Language": "Language"
+    },
+    "AlcaliStatusCard": {
+      "Status": "Status",
+      "saltWebsocket": "Salt Websocket",
+      "jobs": "jobs",
+      "events": "events",
+      "schedules": "schedules",
+      "OK": "OK",
+      "NOT_OK": "NOT OK"
+    },
+    "TerminalCard": {
+      "Running": "Running "
+    }
+  },
+  "views": {
+    "ConformityDetail": {
+      "Succeeded": "Succeeded",
+      "Unchanged": "Unchanged",
+      "Failed": "Failed"
+    },
+    "JobDetail": {
+      "Success": "Success",
+      "Failed": "Failed",
+      "MinionID": "MINION ID:",
+      "Arguments": "ARGUMENTS:",
+      "KeywordArguments": "KEYWORD ARGUMENTS:",
+      "JobID": "JOB ID:",
+      "Function": "FUNCTION:",
+      "Status": "STATUS:",
+      "StartTime": "START TIME:",
+      "Results": "Results"
+    },
+    "Login": {
+      "LoginTitle": "Login",
+      "Login": "Login",
+      "Password": "Password",
+      "InvalidCredentials": "Invalid Login / Password",
+      "Unauthorized": "Unauthorized",
+      "SignIn": "sign in"
+    },
+    "Search": {
+      "NoResult": "Sorry... No results.",
+      "Success": "Success",
+      "Failed": "Failed"
+    }
+  }
+}

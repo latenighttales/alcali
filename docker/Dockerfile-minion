@@ -1,4 +1,4 @@
-FROM python:3.7-slim-stretch
+FROM python:3.7-slim-buster
 
 # Upgrade System and Install dependencies
 RUN apt-get update && \
@@ -9,7 +9,7 @@ RUN apt-get update && \
 RUN curl -L https://bootstrap.saltstack.com | sh -s -- -x python3 stable latest
 
 # Set master
-RUN echo "master: master">/etc/salt/minion
+COPY saltconfig/etc/minion /etc/salt/minion
 
 COPY utils/entrypoint-minion.sh .
 

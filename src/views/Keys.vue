@@ -17,37 +17,39 @@
   export default {
     name: "Keys",
     components: { Fab, KeysTable },
-    data: () => ({
-      fabs: [
-        {
-          color: "blue",
-          action: "refreshKeys",
-          icon: "compare_arrows",
-          tooltip: "Refresh keys",
-        },
-        {
-          color: "orange",
-          action: "rejectAll",
-          icon: "close",
-          tooltip: "Reject all keys",
-        },
-        {
-          color: "green",
-          action: "acceptAll",
-          icon: "done",
-          tooltip: "Accept all keys",
-        },
-      ],
-      refreshKey: 0,
-    }),
+    data() {
+      return {
+        fabs: [
+          {
+            color: "pink",
+            action: "refreshKeys",
+            icon: "refresh",
+            tooltip: this.$i18n.t("components.Keys.Refresh"),
+          },
+          {
+            color: "orange",
+            action: "rejectAll",
+            icon: "close",
+            tooltip: this.$i18n.t("components.Keys.RejectAll"),
+          },
+          {
+            color: "green",
+            action: "acceptAll",
+            icon: "done",
+            tooltip: this.$i18n.t("components.Keys.AcceptAll"),
+          }
+        ],
+        refreshKey: 0,
+      }
+    },
     methods: {
       fabAction(action) {
         this[action]()
       },
       refreshKeys() {
-        this.$toast("refreshing keys")
+        this.$toast(this.$i18n.t("components.Keys.RefreshingKeys"))
         this.$http.post("/api/keys/refresh/").then((response) => {
-          this.$toast("keys refreshed")
+          this.$toast(this.$i18n.t("components.Keys.KeysRefreshed"))
         }).then(() => {
           this.refreshKey += 1
         }).catch((error) => {

@@ -1,0 +1,359 @@
+{
+    "common": {
+        "Search": "搜索"
+    },
+    "components": {
+        "mixins": {
+            "UserCard": {
+                "Users": "用户",
+                "Create": "创建",
+                "CreateUser": "创建用户",
+                "UpdateUser": "更新用户",
+                "Update": "更新",
+                "Discard": "取消",
+                "View": "查看",
+                "Renew": "更新",
+                "Revoke": "重置",
+                "Delete": "删除",
+                "ActionMsg": "这个操作是是不可恢复的",
+                "Close": "关闭",
+                "Token": "Token",
+                "DateJoined": "出生日期",
+                "Username": "用户名",
+                "Email": "邮箱",
+                "FirstName": "名",
+                "LastName": "姓氏",
+                "Password": "密码",
+                "StaffUser": "员工用户",
+                "UserCreated": "用户已创建",
+                "UserUpdated": "用户已更新",
+                "UserDeleted": "用户已删除",
+                "Action": "执行",
+                "UsernameRequired": "用户名必填",
+                "EmailRequired": "邮箱必填",
+                "EmailValid": "邮箱格式不正确"
+            }
+        },
+        "core": {
+            "Fab": {
+                "Close": "关闭",
+                "Menu": "菜单"
+            },
+            "Layout": {
+                "Person": "用户",
+                "Group": "分组",
+                "Users": "用户",
+                "Settings": "设置",
+                "Collapse": "折叠",
+                "Notifications": "通知",
+                "NoNotifications": "没有新消息",
+                "Clear": "清除",
+                "ToggleTheme": "主题开关",
+                "Logout": "退出",
+                "Overview": "总览",
+                "Minions": "客户端",
+                "Jobs": "Jobs",
+                "Run": "运行",
+                "JobTemplates": "Job模板",
+                "Conformity": "Conformity",
+                "Schedules": "计划任务",
+                "Events": "事件",
+                "Keys": "秘钥",
+                "Search": "搜索",
+                "Job_": "Job ",
+                "_published for_": "发布给",
+                "_returned for_": "返回给",
+                "JobEvent": "Job Event",
+                "NewJobCreated": "新Job创建"
+            }
+        },
+        "CommonSettings": {
+            "Title": "设置",
+            "Parse": "从解析模块:",
+            "Submit": "提交",
+            "Fields": "客户端字段",
+            "Delete": "删除",
+            "Create": "创建",
+            "Conformity": "自定义Conformity",
+            "Target": "目标",
+            "Name": "名",
+            "Function": "方法",
+            "Functions": "方法",
+            "ParseModulesStart": "开始解析模块",
+            "ConformityDeleted": "Conformity删除",
+            "ConformityCreated": "创建Conformity",
+            "MinionsFieldsCreated": "客户端字段创建"
+        },
+        "ConformityCard": {
+            "Highstate": "高速率",
+            "true": "true",
+            "false": "false",
+            "unknown": "未知错误"
+        },
+        "ConformityChart": {
+            "conformity": "Conformity",
+            "conform": "符合",
+            "conflict": "冲突",
+            "unknown": "未知错误"
+        },
+        "ConformityDetailCard": {
+            "HighstateConformity": "高效Conformity"
+        },
+        "ConformityTable": {
+            "Conformity": "Conformity",
+            "detail": "详情",
+            "highstate": "高效",
+            "Unknown": "未知",
+            "True": "True",
+            "False": "False",
+            "Minion id": "客户端id",
+            "Last Highstate": "最近高速率",
+            "Highstate Conformity": "高速率Conformity",
+            "Succeeded": "成功",
+            "Unchanged": "为改变",
+            "Failed": "失败",
+            "Actions": "行动"
+        },
+        "CronPicker": {
+            "Cancel": "取消",
+            "Save": "保存"
+        },
+        "EventsTable": {
+            "Events": "事件",
+            "Tag": "标签",
+            "Jid": "Jid",
+            "Target": "目标",
+            "Function": "方法",
+            "Arguments": "参数",
+            "Date": "日期"
+        },
+        "InfosCard": {
+            "Common": "通用",
+            "Salt": "Salt",
+            "Hardware": "硬件"
+        },
+        "JobsChartCard": {
+            "Stats": "Jobs状态",
+            "Filter": "筛选",
+            "Period": "周期",
+            "All": "全部",
+            "Highstate": "高速状态",
+            "Other": "其他",
+            "Week": "周",
+            "TwoWeeks": "两周",
+            "Month": "月",
+            "Year": "年"
+        },
+        "JobsTable": {
+            "SearchJobs": "搜索Jobs",
+            "Cancel": "取消",
+            "Job": "Job",
+            "JID": "Jid",
+            "Target": "目标",
+            "Function": "方法",
+            "Arguments": "参数",
+            "KeywordArguments": "关键词",
+            "User": "用户",
+            "Status": "状态",
+            "Date": "日期",
+            "Action": "动作",
+            "Limit": "限制",
+            "SelectDate": "选择日期",
+            "Success": "成功",
+            "Failed": "失败",
+            "Rerun": "返回",
+            "Detail": "详情"
+        },
+        "JobTemplatesTable": {
+            "JobTemplate": "Job模板",
+            "Run": "执行",
+            "Edit": "编辑",
+            "Delete": "删除",
+            "Name": "名称",
+            "Client": "客户端",
+            "TargetType": "目标类型",
+            "Target": "目标",
+            "Function": "方法",
+            "Arguments": "参数",
+            "KeywordArguments": "关键词",
+            "Batch": "批处理",
+            "Actions": "执行",
+            "TemplateDeleted": "模板已删除"
+        },
+        "KeysStatusCard": {
+            "keys": "秘钥",
+            "saltWebsocket": "Salt Websocket",
+            "accepted": "接受",
+            "rejected": "驳回",
+            "denied": "已拒绝",
+            "unaccepted": "未接受"
+        },
+        "Keys": {
+            "Refresh": "刷新秘钥",
+            "AcceptAll": "接受所有key",
+            "RejectAll": "驳回所有key",
+            "RefreshingKeys": "刷新秘钥",
+            "KeysRefreshed": "秘钥已刷新"
+        },
+        "KeysTable": {
+            "Keys": "秘钥",
+            "MinionId": "客户端ID",
+            "Status": "状态",
+            "PublicKey": "公钥",
+            "Actions": "动作",
+            "reject": "驳回",
+            "delete": "删除",
+            "accept": "接受",
+            "accepted": "已接受",
+            "unaccepted": "未接受",
+            "rejected": "已驳回",
+            "denied": "已拒绝"
+        },
+        "Minions": {
+            "RefreshAll": "刷新所有客户端",
+            "JobAll": "在客户端上执行所有Job",
+            "Refreshing": "刷新客户端",
+            "NbMinionsRefreshed": "{0} 个客户端已刷新"
+        },
+        "MinionDetail": {
+            "RefreshMinion": "刷新",
+            "JobMinion": "执客户端Job",
+            "HighstateMinion": "执行highstate",
+            "Refreshing ": "正在刷新{0}",
+            "MinionRefreshed": "客户端已刷新",
+            "MissingMinion": "{0}不在当前数据库. 尝试刷新客户端"
+        },
+        "MinionDetailCard": {
+            "Grains": "Grains",
+            "Pillar": "Pillar",
+            "History": "历史",
+            "Graph": "图表",
+            "Fold": "交叉",
+            "Unfold": "未交叉"
+        },
+        "MinionsTable": {
+            "Minion": "客户端",
+            "Column": "列",
+            "Refresh": "刷新",
+            "Run": "执行Job",
+            "Delete": "删除",
+            "Msg1": "是否确认删除 ",
+            "Msg2": "你需要刷新所有客户端",
+            "Refreshing": "正在刷新 ",
+            "Deleted": " 已删除",
+            "Close": "关闭",
+            "Detail": "详情"
+        },
+        "NetworkCard": {
+            "Network": "网络",
+            "Interface": "接口",
+            "MAC": "Mac",
+            "DNS": "Dns",
+            "IPV4Gateway": "IP V4 网关",
+            "IPV6Gateway": "IP V6 网关"
+        },
+        "NotFound": {
+            "Title": "出错了",
+            "404": "404.未找到页面",
+            "Back": "返回"
+        },
+        "RunCard": {
+            "Run": "运行",
+            "Formatted": "格式化",
+            "Cli": "命令行",
+            "ClientType": "客户端类型:",
+            "Info": "消息",
+            "Recurring": "重现:",
+            "Every": "每次",
+            "Results": "结果",
+            "Save": "保存",
+            "Test": "测试",
+            "TemplateSaved": "模板 {0} 已保存",
+            "SaveAsTemplate": "保存模板",
+            "JobTemplateName": "job模板名",
+            "Pillar": "Pillar",
+            "Schedule": "计划任务",
+            "ScheduleName": "计划名称",
+            "Async": "同步",
+            "Batch": "批处理",
+            "Timeout": "超时",
+            "TargetType": "目标类型",
+            "Target": "目标",
+            "Function": "方法",
+            "Arguments": "参数",
+            "KeywordArguments": "关键词参数",
+            "RunOnce": "一次运行： ",
+            "Running": "运行中",
+            "Scheduling": "计划中"
+        },
+        "Schedules": {
+            "Refresh": "刷新计划",
+            "Refreshing": "再次刷新计划",
+            "Refreshed": "计划已刷新"
+        },
+        "ScheduleTable": {
+            "Schedules": "计划",
+            "Disable": "禁用",
+            "Enable": "开启",
+            "Delete": "删除",
+            "MinionJobAction": "{0} on {1} for job {2}",
+            "MinionJobActionDone": "{0} on {1} for job {2}: done"
+        },
+        "UserSettings": {
+            "UserSettings": "用户设置",
+            "JobsNotifications": "Jobs通知",
+            "MaxNotifications": "最大通知数",
+            "Submit": "提交",
+            "created": "创建",
+            "published": "已发布",
+            "returned": "已返回",
+            "event": "事件",
+            "UserSettingsUpdated": "用户已更新",
+            "Language": "语言"
+        },
+        "AlcaliStatusCard": {
+            "Status": "状态",
+            "saltWebsocket": "Salt Websocket",
+            "jobs": "jobs",
+            "events": "事件",
+            "schedules": "计划任务",
+            "OK": "正常",
+            "NOT_OK": "不正常"
+        },
+        "TerminalCard": {
+            "Running": "运行中 "
+        }
+    },
+    "views": {
+        "ConformityDetail": {
+            "Succeeded": "已成功",
+            "Unchanged": "未改动",
+            "Failed": "失败"
+        },
+        "JobDetail": {
+            "Success": "成功",
+            "Failed": "失败",
+            "MinionID": "客户端ID:",
+            "Arguments": "参数:",
+            "KeywordArguments": "关键参数:",
+            "JobID": "JOB ID:",
+            "Function": "方法:",
+            "Status": "状态:",
+            "StartTime": "开始事件:",
+            "Results": "结果数"
+        },
+        "Login": {
+            "LoginTitle": "登录",
+            "Login": "登录",
+            "Password": "密码",
+            "InvalidCredentials": "账户或密码不正确",
+            "Unauthorized": "未授权",
+            "SignIn": "登录"
+        },
+        "Search": {
+            "NoResult": "对不起，没有结果",
+            "Success": "成功",
+            "Failed": "失败"
+        }
+    }
+}

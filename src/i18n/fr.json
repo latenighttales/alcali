@@ -1,0 +1,359 @@
+{
+  "common": {
+    "Search": "Chercher"
+  },
+  "components": {
+    "mixins": {
+      "UserCard": {
+        "Users": "Utilisateurs",
+        "Create": "Créer",
+        "CreateUser": "Créer l'utilisateur",
+        "UpdateUser": "Mettre à jour l'utilisateur",
+        "Update": "Mettre à jour",
+        "Discard": "Annuler",
+        "View": "Voir",
+        "Renew": "Renouveller",
+        "Revoke": "Révoquer",
+        "Delete": "Supprimer",
+        "ActionMsg": "cette action est irréversible.",
+        "Close": "Fermer",
+        "Token": "Token",
+        "DateJoined": "Date d'inscription",
+        "Username": "Nom d'utilisateur",
+        "Email": "Email",
+        "FirstName": "Prénom",
+        "LastName": "Nom",
+        "Password": "Mot de passe",
+        "StaffUser": "Administrateur",
+        "UserCreated": "Utilisateur créé",
+        "UserUpdated": "Utilisateur mis à jour",
+        "UserDeleted": "Utilisateur supprimé",
+        "Action": "Action",
+        "UsernameRequired": "Le nom d'utilisateur est requis",
+        "EmailRequired": "L'adresse mail est requise",
+        "EmailValid": "L'adresse mail doit être valide"
+      }
+    },
+    "core": {
+      "Fab": {
+        "Close": "fermer",
+        "Menu": "menu"
+      },
+      "Layout": {
+        "Person": "Personnes",
+        "Group": "Groupe",
+        "Users": "Utilisateurs",
+        "Settings": "Options",
+        "Collapse": "REPLIER",
+        "Notifications": "Notifications",
+        "NoNotifications": "pas de nouvelles notifications",
+        "Clear": "Vider",
+        "ToggleTheme": "Activer Theme",
+        "Logout": "Déconnexion",
+        "Overview": "Aperçu",
+        "Minions": "Minions",
+        "Jobs": "Tâches",
+        "Run": "Exécuter",
+        "JobTemplates": "Modèles de tâches",
+        "Conformity": "Conformité",
+        "Schedules": "Plannings",
+        "Events": "Événements",
+        "Keys": "Clés",
+        "Search": "Chercher jids, minions, states...",
+        "Job_": "Tâche ",
+        "_published for_": " publiée pour ",
+        "_returned for_": " retournée pour ",
+        "JobEvent": "Événement de tâche",
+        "NewJobCreated": "Nouvelle Tâche créée"
+      }
+    },
+    "CommonSettings": {
+      "Title": "Paramètres Généraux",
+      "Parse": "Parser les modules depuis:",
+      "Submit": "Envoyer",
+      "Fields": "Champs des Minions",
+      "Delete": "Supprimer",
+      "Create": "Créer",
+      "Conformity": "Conformité personnalisée",
+      "Target": "Cible",
+      "Name": "Nom",
+      "Function": "Fonction",
+      "Functions": "Fonctions",
+      "ParseModulesStart": "Début de l'inventaire des modules",
+      "ConformityDeleted": "Conformité supprimée",
+      "ConformityCreated": "conformity created",
+      "MinionsFieldsCreated": "minions fields created"
+    },
+    "ConformityCard": {
+      "Highstate": "HighState",
+      "true": "oui",
+      "false": "non",
+      "unknown": "inconnu"
+    },
+    "ConformityChart": {
+      "conformity": "Conformité",
+      "conform": "conforme",
+      "conflict": "conflit",
+      "unknown": "inconnu"
+    },
+    "ConformityDetailCard": {
+      "HighstateConformity": "Conformité Highstate"
+    },
+    "ConformityTable": {
+      "Conformity": "Conformité",
+      "detail": "détail",
+      "highstate": "highstate",
+      "Unknown": "Inconnu",
+      "True": "Oui",
+      "False": "Non",
+      "Minion id": "Id du minion",
+      "Last Highstate": "Dernier Highstate",
+      "Highstate Conformity": "Conformité Highstate",
+      "Succeeded": "Réussi",
+      "Unchanged": "Inchangé",
+      "Failed": "En échec",
+      "Actions": "Actions"
+    },
+    "CronPicker": {
+      "Cancel": "Annuler",
+      "Save": "Sauvegarder"
+    },
+    "EventsTable": {
+      "Events": "Événements",
+      "Tag": "Tag",
+      "Jid": "Jid",
+      "Target": "Cible",
+      "Function": "Fonction",
+      "Arguments": "Arguments",
+      "Date": "Date"
+    },
+    "InfosCard": {
+      "Common": "Général",
+      "Salt": "Salt",
+      "Hardware": "Appareil"
+    },
+    "JobsChartCard": {
+      "Stats": "Statistiques des tâches",
+      "Filter": "Filtre",
+      "Period": "Periode",
+      "All": "Tout",
+      "Highstate": "Highstate",
+      "Other": "Autre",
+      "Week": "Semaine",
+      "TwoWeeks": "2 Semaines",
+      "Month": "Mois",
+      "Year": "Année"
+    },
+    "JobsTable": {
+      "SearchJobs": "Chercher Tâches",
+      "Cancel": "Annuler",
+      "Job": "Tâche",
+      "JID": "Jid",
+      "Target": "Cible",
+      "Function": "Fonction",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Mots clés Arguments",
+      "User": "Utilisateur",
+      "Status": "État",
+      "Date": "Date",
+      "Action": "Action",
+      "Limit": "Limite",
+      "SelectDate": "Sélection de date(s)",
+      "Success": " Succès",
+      "Failed": "Échec",
+      "Rerun": "relancer",
+      "Detail": "détail"
+    },
+    "JobTemplatesTable": {
+      "JobTemplate": "Modèles de tâches",
+      "Run": "Exécuter",
+      "Edit": "Éditer",
+      "Delete": "Supprimer",
+      "Name": "Nom",
+      "Client": "Client",
+      "TargetType": "Type de cible",
+      "Target": "Cible",
+      "Function": "Fonction",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Mots clés Arguments",
+      "Batch": "Groupe",
+      "Actions": "Actions",
+      "TemplateDeleted": "Modèle supprimé"
+    },
+    "KeysStatusCard": {
+      "keys": "Clés",
+      "saltWebsocket": "Websocket Salt",
+      "accepted": "acceptées",
+      "rejected": "rejetées",
+      "denied": "interdites",
+      "unaccepted": "non acceptées"
+    },
+    "Keys": {
+      "Refresh": "Actualiser les clés",
+      "AcceptAll": "Accepter toutes les clés",
+      "RejectAll": "Rejeter toutes les clés",
+      "RefreshingKeys": "Actualisation des clés",
+      "KeysRefreshed": "Clés actualisées"
+    },
+    "KeysTable": {
+      "Keys": "Clés",
+      "MinionId": "ID Minion",
+      "Status": "État",
+      "PublicKey": "Clés publiques",
+      "Actions": "Actions",
+      "reject": "rejeter",
+      "delete": "supprimer",
+      "accept": "accepter",
+      "accepted": "Acceptée",
+      "unaccepted": "En attente",
+      "rejected": "Rejetée",
+      "denied": "Refusée"
+    },
+    "Minions": {
+      "RefreshAll": "Actualiser tous les minions",
+      "JobAll": "Lancer une tâche sur tous les minions",
+      "Refreshing": "Actualisation des minions",
+      "NbMinionsRefreshed": "{0} minions actualisés"
+    },
+    "MinionDetail": {
+      "RefreshMinion": "Actualiser ",
+      "JobMinion": "Lancer une tâche sur ",
+      "HighstateMinion": "Appliquer Highstate sur ",
+      "Refreshing ": "Actualisation de {0}",
+      "MinionRefreshed": "Minion actualisé",
+      "MissingMinion": "{0} est absent de la base. Essayez d'actualiser les minions"
+    },
+    "MinionDetailCard": {
+      "Grains": "Grains",
+      "Pillar": "Pillar",
+      "History": "Historique",
+      "Graph": "Graph",
+      "Fold": "Replier",
+      "Unfold": "Déplier"
+    },
+    "MinionsTable": {
+      "Minion": "Minion",
+      "Column": "Colonne",
+      "Refresh": "Actualiser",
+      "Run": "Exécuter tâche",
+      "Delete": "Supprimer",
+      "Msg1": "Si vous supprimez ",
+      "Msg2": " de la base de données, vous devrez actualiser tous les minions.",
+      "Refreshing": "Raffraîchissement de ",
+      "Deleted": " supprimé",
+      "Close": "Fermer",
+      "Detail": "Détails"
+    },
+    "NetworkCard": {
+      "Network": "Réseau",
+      "Interface": "Interface",
+      "MAC": "Mac",
+      "DNS": "Dns",
+      "IPV4Gateway": "Passerelle IP V4",
+      "IPV6Gateway": "Passerelle IP V6"
+    },
+    "NotFound": {
+      "Title": "Oops",
+      "404": "404. Cette page n'existe pas.",
+      "Back": "Retour"
+    },
+    "RunCard": {
+      "Run": "Exécuter",
+      "Formatted": "Formulaire",
+      "Cli": "Terminal",
+      "ClientType": "Type du client:",
+      "Info": "info",
+      "Recurring": "Répéter:",
+      "Every": "Tou(te)s les",
+      "Results": "Résultats",
+      "Save": "Sauvegarder",
+      "Test": "Tester",
+      "TemplateSaved": "Modèle {0} sauvegardé",
+      "SaveAsTemplate": "Sauvegarder en tant que modèle",
+      "JobTemplateName": "Nom du modèle de tâche",
+      "Pillar": "Pillar",
+      "Schedule": "Planifier",
+      "ScheduleName": "Nom du planning",
+      "Async": "Asynchrone",
+      "Batch": "Groupe",
+      "Timeout": "Délai",
+      "TargetType": "Type de cible",
+      "Target": "Cible",
+      "Function": "Fonction",
+      "Arguments": "Arguments",
+      "KeywordArguments": "Mots clés Arguments",
+      "RunOnce": "Tâche unique:  ",
+      "Running": "Lancement de",
+      "Scheduling": "Planification de"
+    },
+    "Schedules": {
+      "Refresh": "Actualiser les tâches",
+      "Refreshing": "Actualisation des tâches",
+      "Refreshed": "Tâches actualisées"
+    },
+    "ScheduleTable": {
+      "Schedules": "Plannings",
+      "Disable": "désactiver",
+      "Enable": "activer",
+      "Delete": "Supprimer",
+      "MinionJobAction": "{0} sur ${1} pour la tâche ${2}",
+      "MinionJobActionDone": "${0} sur ${1} pour la tâche ${2}: terminé"
+    },
+    "UserSettings": {
+      "UserSettings": "Options utilisateur",
+      "JobsNotifications": "Notifications de tâches",
+      "MaxNotifications": "Notifications maximum",
+      "Submit": "Envoyer",
+      "created": "créées",
+      "published": "publiées",
+      "returned": "résultat reçu",
+      "event": "évènement",
+      "UserSettingsUpdated": "Préférences utilisateur mises à jour",
+      "Language": "Langage"
+    },
+    "AlcaliStatusCard": {
+      "Status": "Statut",
+      "saltWebsocket": "Salt Websocket",
+      "jobs": "tâches",
+      "events": "évènements",
+      "schedules": "planifiés",
+      "OK": "OK",
+      "NOT_OK": "ERREUR"
+    },
+    "TerminalCard": {
+      "Running": "Lancement de "
+    }
+  },
+  "views": {
+    "ConformityDetail": {
+      "Succeeded": "Réussi",
+      "Unchanged": "Inchangé",
+      "Failed": "Échoué"
+    },
+    "JobDetail": {
+      "Success": "Réussi",
+      "Failed": "Échoué",
+      "MinionID": "ID MINION:",
+      "Arguments": "ARGUMENTS:",
+      "KeywordArguments": "MOT CLÉS ARGUMENTS:",
+      "JobID": "ID TACHE:",
+      "Function": "FONCTION:",
+      "Status": "ÉTAT:",
+      "StartTime": "DÉBUT:",
+      "Results": "Résultats"
+    },
+    "Login": {
+      "LoginTitle": "Connexion",
+      "Login": "Identifiant",
+      "Password": "Mot de passe",
+      "InvalidCredentials": "Identifiant ou mot de passe invalides",
+      "Unauthorized": "Non autorisé",
+      "SignIn": "Se connecter"
+    },
+    "Search": {
+      "NoResult": "Désolé... Aucun résultat.",
+      "Success": "Réussi",
+      "Failed": "Échoué"
+    }
+  }
+}
