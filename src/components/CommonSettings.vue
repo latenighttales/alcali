@@ -48,11 +48,15 @@
                 </v-col>
                 <v-col lg="4">
                   <v-combobox
+                      ref="comboMinionFunc"
+                      @change="onAutoCompleteSelection"
+                      @keyup="customOnChangeHandler"
+                      @paste="customOnChangeHandler"
                       :items="functions"
                       item-value="name"
                       item-text="name"
                       :label="$t('components.CommonSettings.Functions')"
-                      v-model="minionsfields_value"
+                      v-model="dummy_minionsfields_value"
                   ></v-combobox>
                 </v-col>
                 <v-col align-self="center">
@@ -113,6 +117,7 @@
         minionsfields: [],
         minionsfields_name: null,
         minionsfields_value: null,
+        dummy_minionsfields_value: null,
         conformity: [],
         conformity_name: null,
         conformity_value: null,
@@ -132,6 +137,17 @@
       },
     },
     methods: {
+      onAutoCompleteSelection() {
+        this.minionsfields_value = this.dummy_minionsfields_value.name || this.dummy_minionsfields_value
+      },
+      customOnChangeHandler() {
+        let vm = this
+        setTimeout(function() {
+          if (vm.$refs.comboMinionFunc) {
+            vm.minionsfields_value = vm.$refs.comboMinionFunc.internalSearch
+          }
+        })
+      },
       loadData() {
         this.$http.get("api/keys/").then(response => {
           this.minions = response.data.filter(key => key.status === "accepted")
@@ -187,10 +203,10 @@
       createMinionsFields() {
         let formData = new FormData
         formData.set("name", this.minionsfields_name)
-        formData.set("function", this.minionsfields_value.name)
+        formData.set("function", this.minionsfields_value.name|| this.minionsfields_value)
         formData.set("value", "{}")
         this.$http.post("/api/minionsfields/", formData).then(() => {
-          this.minionsfields.push({ "name": this.minionsfields_name, "function": this.minionsfields_value.name })
+          this.minionsfields.push({ "name": this.minionsfields_name, "function": this.minionsfields_value.name||this.minionsfields_value })
           this.$toast(this.$i18n.t("components.CommonSettings.MinionsFieldsCreated"))
           this.minionsfields_name = null
           this.minionsfields_value = null
