@@ -2,28 +2,28 @@
   <v-container fluid>
     <v-card>
       <v-card-title>
-        Highstate Conformity
+        {{ $t('components.ConformityDetailCard.HighstateConformity') }}
         <v-spacer></v-spacer>
         <v-checkbox
             class="mb-0 mt-0"
             v-show="Object.keys(succeeded).length>0"
             color="green"
             v-model="succeeded_checkbox"
-            :label="`Succeeded: ${Object.keys(succeeded).length}`"
+            :label="`${$t('components.ConformityTable.Succeeded')}: ${Object.keys(succeeded).length}`"
         ></v-checkbox>
         <v-checkbox
             v-show="Object.keys(unchanged).length>0"
             class="ml-3 mb-0 mt-0"
             color="orange"
             v-model="unchanged_checkbox"
-            :label="`Unchanged: ${Object.keys(unchanged).length}`"
+            :label="`${$t('components.ConformityTable.Unchanged')}: ${Object.keys(unchanged).length}`"
         ></v-checkbox>
         <v-checkbox
             v-show="Object.keys(failed).length>0"
             class="ml-3 mb-0 mt-0"
             color="red"
             v-model="failed_checkbox"
-            :label="`Failed: ${Object.keys(failed).length}`"
+            :label="`${$t('components.ConformityTable.Failed')}: ${Object.keys(failed).length}`"
         ></v-checkbox>
       </v-card-title>
       <v-expansion-panels>

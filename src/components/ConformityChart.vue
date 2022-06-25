@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title>Conformity</v-card-title>
+      <v-card-title>{{ $t('components.ConformityChart.conformity') }}</v-card-title>
       <v-card-text>
         <v-container fluid>
           <template v-for="name in conformitynames">

@@ -14,38 +14,38 @@
             <v-simple-table>
               <tbody>
               <tr>
-                <td>MINION ID:</td>
+                <td>{{$t("views.JobDetail.MinionID")}}</td>
                 <td class="text-right">
                   <v-btn text small class="pr-0 text-none" :to="'/minions/'+job.id">{{ job.id }}</v-btn>
                 </td>
               </tr>
               <tr>
-                <td>JOB ID:</td>
+                <td>{{$t("views.JobDetail.JobID")}}</td>
                 <td class="text-right">
                   <v-btn text small class="pr-0" :to="'/jobs/'+job.jid">{{ job.jid }}</v-btn>
                 </td>
               </tr>
               <tr>
-                <td>FUNCTION:</td>
+                <td>{{$t("views.JobDetail.Function")}}</td>
                 <td class="text-right">{{ job.fun }}</td>
               </tr>
               <tr v-if="job.arguments">
-                <td>ARGUMENTS:</td>
+                <td>{{$t("views.JobDetail.Arguments")}}</td>
                 <td class="text-right">{{ job.arguments }}</td>
               </tr>
               <tr v-if="job.keyword_arguments">
-                <td>KEYWORD ARGUMENTS:</td>
+                <td>{{$t("views.JobDetail.KeywordArguments")}}</td>
                 <td class="text-right">{{ job.keyword_arguments }}</td>
               </tr>
               <tr>
-                <td>STATUS:</td>
+                <td>{{$t("views.JobDetail.Status")}}</td>
                 <td class="text-right">
                   <v-chip :color="boolRepr(job.success)" dark>{{ boolText(job.success) }}</v-chip>
 
                 </td>
               </tr>
               <tr>
-                <td>START TIME:</td>
+                <td>{{$t("views.JobDetail.StartTime")}}</td>
                 <td class="text-right">{{ new Date(job.alter_time).toLocaleString("en-GB") }}</td>
               </tr>
               </tbody>
@@ -56,7 +56,7 @@
       <v-col sm="12" lg="8">
         <v-container fluid>
           <v-card>
-            <v-card-title>Results</v-card-title>
+            <v-card-title>{{$t("views.JobDetail.Results")}}</v-card-title>
             <v-divider></v-divider>
             <div v-html="ansiResult" class="ansiStyle"></div>
           </v-card>
@@ -92,8 +92,8 @@
         else return "red"
       },
       boolText(bool) {
-        if (bool === true) return "success"
-        else return "failed"
+        if (bool === true) return this.$t("views.JobDetail.Success")
+        else return this.$t("views.JobDetail.failed")
       },
       formatDate(date) {
         return new Date(date).toLocaleString("en-GB")
