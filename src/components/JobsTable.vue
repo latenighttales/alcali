@@ -262,11 +262,13 @@ export default {
     },
     filteredHeaders() {
       if (this.filter && this.filter.hasOwnProperty("target[]")) {
-        let newHeaders = this.headers;
-        newHeaders.splice(1, 1);
-        return newHeaders;
+        let newHeaders = this.headers
+        if (newHeaders[1].value === "id") {
+          newHeaders.splice(1, 1);
+        }
+        return newHeaders
       }
-      return this.headers;
+      return this.headers
     },
     ...mapState({
       settings: state => state.settings,
