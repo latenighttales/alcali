@@ -502,8 +502,9 @@ export default {
             "schedule",
             this.scheduleDate + " " + this.scheduleTime + ":00"
           );
-        } else {
-          formData.set("cron", this.cron.currentValue);
+          } else {
+            formData.set("cron", this.cron.currentValue);
+          }
         }
         this.$toast(action + " " + command)
         this.loading = true
