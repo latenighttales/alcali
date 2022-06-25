@@ -138,7 +138,7 @@ export default {
         this.headers = response.data.name.map((dataItem) => {
           return {
             ...dataItem,
-            text: this.$i18n.t(`components.ConformityTable.${dataItem.text}`),
+            text: dataItem.text,
           };
         });
         this.headers.push({
