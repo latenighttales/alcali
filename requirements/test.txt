@@ -2,5 +2,5 @@ pytest==6.2.4
 pytest-cov==2.12.1
 pytest-django==4.4.0
 pytest-pythonpath==0.7.4
-codecov==2.1.9
+codecov==2.1.12
 safety
