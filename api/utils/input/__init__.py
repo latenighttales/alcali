@@ -1,14 +1,27 @@
 from shlex import split
 import json
-
+import re
 
 class RawCommand:
     def __init__(self, command, client="local", posix=True, inline=False):
         # TODO: check shlex.quote, raw string, etc..
+        def quoted_split(s):
+            def strip_quotes(s):
+                if s and (s[0] == '"' or s[0] == "'") and s[0] == s[-1]:
+                    return s[1:-1]
+                return s
+            return [strip_quotes(p).replace('\\"', '"').replace("\\'", "'") \
+                    for p in re.findall(r'(?:[^"\s]*"(?:\\.|[^"])*"[^"\s]*)+|(?:[^\'\s]*\'(?:\\.|[^\'])*\'[^\'\s]*)+|[^\s]+', s)]
+
         if inline:
             self.command = split(command, posix=posix)
         else:
-            self.command = split(command, posix=posix)[1:]
+            #self.command = split(command, posix=posix)[1:]
+            if posix:
+               self.command = quoted_split(command)[1:]
+            else:
+                self.command = split(command, posix=posix)[1:]
+                
         self.options = {"expr_form": "glob"}
         self.client = client
 
