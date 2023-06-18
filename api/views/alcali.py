@@ -259,11 +259,15 @@ class ConformityViewSet(viewsets.ModelViewSet):
                     succeeded, unchanged, failed = None, None, 1
                 else:
                     for state in last_highstate:
-                        if last_highstate[state]["result"] is True:
-                            succeeded += 1
-                        elif last_highstate[state]["result"] is None:
-                            unchanged += 1
+                        if isinstance(last_highstate, dict):
+                            if last_highstate[state]["result"] is True:
+                                succeeded += 1
+                            elif last_highstate[state]["result"] is None:
+                                unchanged += 1
+                            else:
+                                failed += 1
                         else:
+                            # most likely a string response containing "Unhandled exception running state.highstate"
                             failed += 1
             else:
                 last_highstate_date, succeeded, unchanged, failed = (
