@@ -78,6 +78,17 @@ class SaltReturns(models.Model):
                 return ret["return"]["result"]
         return self.jid
 
+    def valid_for_highstate(self):
+        valid_for_highstate = True
+        if not self.loaded_ret()["fun_args"]:
+            valid_for_highstate = True
+        if isinstance(self.loaded_ret()["fun_args"], list) and self.loaded_ret()["fun_args"]:
+            if self.loaded_ret()["fun_args"][0] == {"test": True}:
+                valid_for_highstate = False
+            if self.loaded_ret()["fun_args"][0] == "test=True":
+                valid_for_highstate = False
+        return valid_for_highstate
+
     class Meta:
         managed = False
         db_table = "salt_returns"
@@ -150,11 +161,7 @@ class Minions(models.Model):
 
         # Remove jobs with arguments.
         for state in states:
-            if (
-                not state.loaded_ret()["fun_args"]
-                or state.loaded_ret()["fun_args"][0] == {"test": True}
-                or state.loaded_ret()["fun_args"][0] == "test=True"
-            ):
+            if state.valid_for_highstate():
                 return state
         return None
 
