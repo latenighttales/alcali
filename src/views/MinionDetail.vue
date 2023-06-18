@@ -39,19 +39,19 @@
             color: "blue",
             action: "refreshMinion",
             icon: "refresh",
-            tooltip: this.$i18n.t("components.MinionDetails.RefreshMinion") + this.minion_id,
+            tooltip: this.$i18n.t("components.MinionDetail.RefreshMinion") + this.minion_id,
           },
           {
             color: "purple",
             action: "runMinion",
             icon: "play_arrow",
-            tooltip: this.$i18n.t("components.MinionDetails.JobMinion") + this.minion_id,
+            tooltip: this.$i18n.t("components.MinionDetail.JobMinion") + this.minion_id,
           },
           {
             color: "orange",
             action: "highstateMinion",
             icon: "all_inclusive",
-            tooltip: this.$i18n.t("components.MinionDetails.HighstateMinion") + this.minion_id,
+            tooltip: this.$i18n.t("components.MinionDetail.HighstateMinion") + this.minion_id,
           },
         ],
       }
