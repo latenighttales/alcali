@@ -171,8 +171,9 @@ class Minions(models.Model):
 
         for state in return_item:
             # One of the state is not ok
-            if not return_item.get(state, {}).get("result"):
-                return False
+            if type(return_item) == dict:
+                if not return_item.get(state, {}).get("result"):
+                    return False
         return True
 
     def custom_conformity(self, fun, *args):
