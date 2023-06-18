@@ -100,5 +100,5 @@ class EventsViewSet(viewsets.ReadOnlyModelViewSet):
     A simple ViewSet for viewing accounts.
     """
 
-    queryset = SaltEvents.objects.all().order_by("-alter_time")[:200]
+    queryset = SaltEvents.objects.all().order_by("-id")[:200]
     serializer_class = EventsSerializer

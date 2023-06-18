@@ -93,6 +93,7 @@ class SaltReturns(models.Model):
         managed = False
         db_table = "salt_returns"
         app_label = "api"
+        ordering = ['-id']
 
 
 class SaltEvents(models.Model):
@@ -106,6 +107,7 @@ class SaltEvents(models.Model):
         managed = False
         db_table = "salt_events"
         app_label = "api"
+        ordering = ['-id']
 
 
 # Alcali custom.
