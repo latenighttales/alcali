@@ -124,6 +124,7 @@ class MinionsViewSet(viewsets.ModelViewSet):
             return Response({"result": "refreshed {}".format(minion_id)})
 
         # Run test.ping to list currently connected minions
+        print("sending test.ping to salt for minions list")
         connected = run_raw(
             [
                 {
@@ -137,8 +138,10 @@ class MinionsViewSet(viewsets.ModelViewSet):
             ]
         )
         accepted_minions = [i for i in connected if connected.get(i) is True]
+        print(f"{len(accepted_minions)} responded to test.ping, processing...")
         refresh_failures = {}
         known_minions = []
+        refreshed_minions = [] 
         for minion in accepted_minions:
             if not Minions.objects.filter(minion_id=minion).exists():
                 print(f"attempting to add minion: {minion}")
@@ -146,6 +149,8 @@ class MinionsViewSet(viewsets.ModelViewSet):
                 if "error" in ret:
                     print(f"minion refresh failed: {ret['error']}")
                     refresh_failures[minion] = ret['error']
+                else:
+                    refreshed_minions.append(minion)
             else:
                 known_minions.append(minion)
         print("starting refresh of known minions")
@@ -154,7 +159,9 @@ class MinionsViewSet(viewsets.ModelViewSet):
             ret = refresh_minion(minion)
             if "error" in ret:
                 refresh_failures[minion] = ret['error']
-        return Response({"refreshed": accepted_minions, "errors": refresh_failures})
+            else:
+                refreshed_minions.append(minion)
+        return Response({"refreshed": refreshed_minions, "errors": refresh_failures})
 
     @action(detail=False)
     def conformity(self, request):
