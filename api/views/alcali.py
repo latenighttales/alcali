@@ -132,15 +132,29 @@ class MinionsViewSet(viewsets.ModelViewSet):
                     "tgt_type": "glob",
                     "tgt": "*",
                     "fun": "test.ping",
+                    "timeout": 20
                 }
             ]
         )
         accepted_minions = [i for i in connected if connected.get(i) is True]
+        refresh_failures = {}
+        known_minions = []
         for minion in accepted_minions:
+            if not Minions.objects.filter(minion_id=minion).exists():
+                print(f"attempting to add minion: {minion}")
+                ret = refresh_minion(minion)
+                if "error" in ret:
+                    print(f"minion refresh failed: {ret['error']}")
+                    refresh_failures[minion] = ret['error']
+            else:
+                known_minions.append(minion)
+        print("starting refresh of known minions")
+        for minion in known_minions:
+            print(minion)
             ret = refresh_minion(minion)
             if "error" in ret:
-                return Response(ret["error"], status=401)
-        return Response({"refreshed": accepted_minions})
+                refresh_failures[minion] = ret['error']
+        return Response({"refreshed": accepted_minions, "errors": refresh_failures})
 
     @action(detail=False)
     def conformity(self, request):
