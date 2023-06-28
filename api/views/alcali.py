@@ -229,6 +229,13 @@ class MinionsViewSet(viewsets.ModelViewSet):
             }
         )
 
+    @action(detail=False, methods=["get"])
+    def add_minion(self, request):
+        if request.GET.get("minion_id"):
+            minion_id = request.GET.get("minion_id")
+            ret = refresh_minion(minion_id)
+        return Response(None, status=201)
+
 
 class MinionsCustomFieldsViewSet(viewsets.ModelViewSet):
     queryset = MinionsCustomFields.objects.all()
