@@ -181,7 +181,7 @@ mysql.port: 3306
 
 # Enable auto_accept, this setting will automatically accept all incoming
 # public keys from the minions. Note that this is insecure.
-#auto_accept: True
+auto_accept: True
 
 # Time in minutes that a incoming public key with a matching name found in
 # pki_dir/minion_autosign/keyid is automatically accepted. Expired autosign keys
