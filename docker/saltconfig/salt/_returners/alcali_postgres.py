@@ -140,7 +140,7 @@ import salt.returners
 import salt.exceptions
 
 # Import third party libs
-from salt.ext import six
+import six
 
 try:
     import psycopg2

@@ -25,7 +25,7 @@ from contextlib import contextmanager
 
 # Import 3rd-party libs
 import salt.exceptions
-import salt.ext.six as six
+import six as six
 
 log = logging.getLogger(__name__)
 

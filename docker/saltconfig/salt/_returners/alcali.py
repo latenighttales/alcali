@@ -154,7 +154,7 @@ import salt.utils.jid
 import salt.utils.json
 
 # Import 3rd-party libs
-from salt.ext import six
+import six
 
 # Let's not allow PyLint complain about string substitution
 # pylint: disable=W1321,E1321
