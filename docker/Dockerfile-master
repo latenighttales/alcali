@@ -8,7 +8,9 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=am
 # Upgrade System and Install dependencies
 RUN apt-get update && \
   apt-get upgrade -y -o DPkg::Options::=--force-confold && \
-  apt-get install -y -o DPkg::Options::=--force-confold curl python3-mysqldb netcat libmariadbclient-dev-compat pkg-config 
+  apt-get install -y -o DPkg::Options::=--force-confold curl python3-mysqldb netcat libmariadbclient-dev-compat pkg-config python-dev 
+RUN pip install --upgrade pip  
+
 
 # Install Latest Salt from the stable Branch
 # RUN curl -L https://bootstrap.saltstack.com | sh -s -- -X -M -x python3 stable latest
@@ -20,8 +22,8 @@ RUN echo "id: master">>/etc/salt/minion
 
 # Install python dependencies
 RUN apt-get install -y -o DPkg::Options::=--force-confold python3-openssl
-RUN pip install honcho mysqlclient
-
+RUN pip install honcho 
+RUN salt-pip install mysqlclient
 # Copy needed files
 COPY saltconfig/etc/master /etc/salt/master
 COPY saltconfig/salt /srv/salt

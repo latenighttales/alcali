@@ -691,3 +691,14 @@ rest_cherrypy:
   debug: True
   ssl_crt: /etc/pki/tls/certs/localhost.crt
   ssl_key: /etc/pki/tls/certs/localhost.key
+
+netapi_enable_clients:
+  - local
+  - local_async
+  - local_batch
+  - local_subset
+  - runner
+  - runner_async
+  - ssh
+  - wheel
+  - wheel_async
