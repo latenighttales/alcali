@@ -538,7 +538,8 @@ def verify(request):
         except User.DoesNotExist:
             return HttpResponse("Unauthorized", status=401)
         if request.POST.get("password") == user.user_settings.token:
-            return Response({request.POST.get("username"): None})
+            result = []#{request.POST.get("username"): { '.*': ['.*']}} # TODO: get user's ACLs from django storage
+            return Response(result)
         return HttpResponse("Unauthorized", status=401)
 
 

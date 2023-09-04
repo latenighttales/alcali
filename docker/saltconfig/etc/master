@@ -239,7 +239,7 @@ auto_accept: True
 #   admin:
 #     - .*
 
-# permissive_acl: True
+permissive_acl: True
 keep_acl_in_token: True
 
 
@@ -283,6 +283,7 @@ external_auth:
         - kmod.*
     admin:
       - .*
+      - '@local'
       - '@runner'
       - '@wheel'
       - '@jobs'

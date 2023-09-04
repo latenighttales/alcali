@@ -25,7 +25,7 @@ from contextlib import contextmanager
 
 # Import 3rd-party libs
 import salt.exceptions
-import six as six
+
 
 log = logging.getLogger(__name__)
 
@@ -70,7 +70,7 @@ def _get_options():
     }
 
     if HAS_MYSQL:
-        for k, v in six.iteritems(defaults):
+        for k, v in defaults.items():
             try:
                 _options[k] = __opts__["{}.{}".format("mysql", k)]
             except KeyError:
@@ -80,15 +80,15 @@ def _get_options():
         defaults.pop("pass")
         defaults["passwd"] = "salt"
         defaults["port"] = 5432
-        for k, v in six.iteritems(defaults):
+        for k, v in defaults.items():
             try:
                 _options[k] = __opts__["{}.{}".format("returner.postgres", k)]
             except KeyError:
                 _options[k] = v
 
     # post processing
-    for k, v in six.iteritems(_options):
-        if isinstance(v, six.string_types) and v.lower() == "none":
+    for k, v in _options.items():
+        if isinstance(v, str) and v.lower() == "none":
             # Ensure 'None' is rendered as None
             _options[k] = None
         if k == "port":
@@ -183,3 +183,28 @@ def auth(username, password):
                     log.debug("Alcali authentication successful")
                     return True
     return False
+
+def acl(username, **kwargs):
+    """
+    REST authorization
+    """
+    salt_eauth_acl = __opts__["external_auth"]["alcali"].get(username, [])
+    log.debug("acl from salt for user %s: %s", username, salt_eauth_acl)
+
+    # Get ACL from ALCALI DB NOT_IMPLEMENTED:
+    eauth_rest_acl = []
+    # result = fetch(username, kwargs["password"])
+    # if result:
+    #     eauth_rest_acl = result
+    #     log.debug("acl from rest for user %s: %s", username, eauth_rest_acl)
+
+    merged_acl = salt_eauth_acl + eauth_rest_acl
+
+    log.debug("acl from salt and rest merged for user %s: %s", username, merged_acl)
+    # We have to make the .get's above return [] since we can't merge a
+    # possible list and None. So if merged_acl is falsey we return None so
+    # other eauth's can return an acl.
+    if not merged_acl:
+        return None
+    else:
+        return merged_acl
