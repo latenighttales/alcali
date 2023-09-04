@@ -56,6 +56,10 @@ password: password
 
 and follow the [walkthrough](https://alcali.dev/walkthrough/).
 
+## Testing master API
+
+curl -ksSKi https://localhost:8080/run     -H 'Accept: application/x-yaml'     -d client='local'     -d tgt='*'     -d fun='grains.items'     -d username='admin'     -d password='saltdev'     -d eauth='rest'
+
 ## Installation
 
 The easiest way to install it is to use the salt [formula](https://github.com/latenighttales/alcali-formula).

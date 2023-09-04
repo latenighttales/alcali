@@ -235,6 +235,15 @@ auto_accept: True
 #  pam:
 #    fred:
 #      - test.*
+# client_acl:
+#   admin:
+#     - .*
+
+# permissive_acl: True
+keep_acl_in_token: True
+
+
+
 external_auth:
   rest:
     ^url: http://web:8000/api/token/verify/
@@ -249,10 +258,17 @@ external_auth:
           - state.*
       - 'G@os:RedHat':
           - kmod.*
-    admin:
       - .*
       - '@runner'
       - '@wheel'
+      - '@jobs'
+    'admin':
+      - .*
+      - '@local'
+      - '@runner'
+      - '@wheel'
+      - '@jobs'
+
   alcali:
     apiuser:
       - test.ping
@@ -269,6 +285,7 @@ external_auth:
       - .*
       - '@runner'
       - '@wheel'
+      - '@jobs'
 
 # Time (in seconds) for a newly generated token to live. Default: 12 hours
 #token_expire: 43200

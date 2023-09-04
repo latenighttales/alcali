@@ -3,8 +3,8 @@ FROM python:3.10-bullseye
 
 RUN mkdir /etc/apt/keyrings
 RUN apt-get install -y -o DPkg::Options::=--force-confold curl 
-RUN curl -fsSL -o /etc/apt/keyrings/salt-archive-keyring-2023.gpg https://repo.saltproject.io/salt/py3/debian/11/amd64/SALT-PROJECT-GPG-PUBKEY-2023.gpg
-RUN echo "deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=amd64] https://repo.saltproject.io/salt/py3/debian/11/amd64/latest bullseye main" | tee /etc/apt/sources.list.d/salt.list
+RUN curl -fsSL -o /etc/apt/keyrings/salt-archive-keyring-2023.gpg https://repo.saltproject.io/salt/py3/debian/11/arm64/SALT-PROJECT-GPG-PUBKEY-2023.gpg
+RUN echo "deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=arm64] https://repo.saltproject.io/salt/py3/debian/11/arm64/latest bullseye main" | tee /etc/apt/sources.list.d/salt.list
 # Upgrade System and Install dependencies
 RUN apt-get update && \
   apt-get upgrade -y -o DPkg::Options::=--force-confold && \
