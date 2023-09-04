@@ -2,6 +2,7 @@ import binascii
 import json
 import os
 from pathlib import Path
+from typing import Iterable, Optional
 
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -91,6 +92,8 @@ class SaltEvents(models.Model):
     alter_time = models.DateTimeField()
     master_id = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return self.tag
     class Meta:
         managed = False
         db_table = "salt_events"
@@ -197,7 +200,7 @@ class Minions(models.Model):
             return job.loaded_ret()["return"]
 
     def __str__(self):
-        return "{}".format(self.minion_id)
+        return "{}".format(self.minion_id) + " - devices: " + str(self.devices.count())
 
     class Meta:
         db_table = "salt_minions"
@@ -216,7 +219,7 @@ class Keys(models.Model):
     status = models.CharField(max_length=64, choices=KEY_STATUS)
 
     def __str__(self):
-        return "{}".format(self.minion_id)
+        return "{}".format(self.minion_id) 
 
     class Meta:
         # TODO add constraints (only one accepted per minion_id)
@@ -251,7 +254,7 @@ class Schedule(models.Model):
     class Meta:
         app_label = "api"
 
-
+ 
 def generate_key():
     return binascii.hexlify(os.urandom(20)).decode()
 
@@ -298,3 +301,35 @@ class Conformity(models.Model):
     class Meta:
         db_table = "conformity"
         app_label = "api"
+
+
+class Device(models.Model):
+    name = models.CharField(max_length=100)
+    ip = models.CharField(max_length=100, null=True, blank=True) # example of a filling from the minion grains
+    minion = models.ForeignKey(to=Minions, related_name="devices", on_delete=models.SET_NULL, null=True)
+
+    @property
+    def properties(self):
+        if self.minion:
+            return self.minion.loaded_grain()
+        else:
+            return {}
+
+    def __str__(self):
+        if self.minion:
+            return self.name + " - " + self.minion.minion_id
+        else:
+            return self.name + " - NO Minion assigned"
+
+    def save(self):
+        if self.minion:
+            self.ip =  next((key for key in self.properties.get("ipv4", []) if key != "127.0.0.1"), None)
+        return super().save()
+
+
+class DeviceGroup(models.Model):
+    name = models.CharField(max_length=100)
+    devices = models.ManyToManyField(Device)
+
+    def __str__(self):
+        return self.name

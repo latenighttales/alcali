@@ -3,6 +3,8 @@ import os
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 
+from django.contrib import admin
+
 from api.views.salt import (
     SaltReturnsList,
     SaltReturnsRetrieve,
@@ -89,3 +91,7 @@ if os.environ.get("AUTH_BACKEND") and os.environ["AUTH_BACKEND"].lower() == "soc
             name="social_login",
         ),
     ]
+
+urlpatterns += [
+    path('admin/', admin.site.urls),
+]
