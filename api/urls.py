@@ -35,8 +35,29 @@ from api.views.alcali import (
     version,
     JobTemplateViewSet,
     social,
+    DeviceViewSet,
+    DeviceGroupViewSet
 )
 from rest_framework import routers
+
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+from rest_framework import permissions
+
+# Create a schema view for Swagger documentation
+schema_view = get_schema_view(
+    openapi.Info(
+        title="RDW Api",
+        default_version="v1",
+        description="RDW API documentation",
+        terms_of_service="",
+        contact=openapi.Contact(email="anton@griev.ru"),
+        license=openapi.License(name="Not Opensource"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 router = routers.DefaultRouter()
 router.register(r"keys", KeysViewSet)
@@ -49,6 +70,8 @@ router.register(r"minionsfields", MinionsCustomFieldsViewSet)
 router.register(r"functions", FunctionsViewSet)
 router.register(r"schedules", ScheduleViewSet)
 router.register(r"job_templates", JobTemplateViewSet)
+router.register(r'devices', DeviceViewSet)
+router.register(r'device-groups', DeviceGroupViewSet)
 
 urlpatterns = [
     path("", index_view, name="index"),
@@ -94,4 +117,6 @@ if os.environ.get("AUTH_BACKEND") and os.environ["AUTH_BACKEND"].lower() == "soc
 
 urlpatterns += [
     path('admin/', admin.site.urls),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

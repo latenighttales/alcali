@@ -160,3 +160,17 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data["email"] = self.user.email
         data["is_staff"] = self.user.is_staff
         return data
+
+from .models import Device, DeviceGroup
+
+class DeviceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Device
+        fields = '__all__'
+
+class DeviceGroupSerializer(serializers.ModelSerializer):
+    devices = DeviceSerializer(many=True)
+
+    class Meta:
+        model = DeviceGroup
+        fields = '__all__'

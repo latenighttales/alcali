@@ -11,3 +11,4 @@ pytz
 requests==2.31.0
 salt-pepper==0.7.6
 whitenoise==6.5.0
+drf-yasg
