@@ -186,7 +186,6 @@ class Minions(models.Model):
         return True
 
     def custom_conformity(self, fun, *args):
-
         # First, filter with fun.
         jobs = SaltReturns.objects.filter(fun=fun, id=self.minion_id).order_by(
             "-alter_time"

@@ -1,2 +1,2 @@
-django-auth-ldap==2.3.0
-python-ldap==3.4.0
+django-auth-ldap==4.5.0
+python-ldap==3.4.3
