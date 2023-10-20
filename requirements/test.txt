@@ -1,6 +1,5 @@
-pytest==6.2.4
-pytest-cov==2.12.1
-pytest-django==4.4.0
-pytest-pythonpath==0.7.4
-codecov==2.1.9
+pytest==7.4.1
+pytest-cov==4.1.0
+pytest-django==4.5.2
+codecov==2.1.13
 safety

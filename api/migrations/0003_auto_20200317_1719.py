@@ -12,7 +12,6 @@ with open(
 
 
 class Migration(migrations.Migration):
-
     dependencies = [("api", "0002_jobtemplate")]
     operations = [
         migrations.RemoveField(model_name="usersettings", name="max_notifs"),

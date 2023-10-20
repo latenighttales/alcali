@@ -1,4 +1,4 @@
-FROM python:3.7-slim-buster
+FROM python:3.10-bullseye
 
 # Upgrade System and Install dependencies
 RUN apt-get update && \
@@ -13,8 +13,9 @@ COPY saltconfig/etc/minion /etc/salt/minion
 RUN echo "id: master">>/etc/salt/minion
 
 # Install python dependencies
-RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api python3-openssl
+RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api python3-openssl default-libmysqlclient-dev pkg-config
 RUN pip install honcho
+RUN salt-pip install mysqlclient
 
 # Copy needed files
 COPY saltconfig/etc/master /etc/salt/master

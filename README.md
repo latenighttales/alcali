@@ -34,7 +34,7 @@ If you just want to have a look, just clone the [repository](https://github.com/
 ```commandline
 git clone https://github.com/latenighttales/alcali.git
 cd alcali
-docker-compose up --scale minion=2
+docker compose up --scale minion=2
 ```
 
 
@@ -93,6 +93,12 @@ via GitHub Sponsors, or
 
 
 ## Changelog
+
+## [3006.3.0] dev
+
+- int: bugfix and deps update
+
+- feat: i18n (#353)
 
 ## [3003.1.0] - 2021-04-23
 

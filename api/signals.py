@@ -8,7 +8,6 @@ from api.models import UserSettings
 
 @receiver(post_save, sender=User)
 def create_user_settings(sender, instance, created, **kwargs):
-
     # Create related UserSettings when a new User is created.
     if created:
         UserSettings.objects.create(user=instance)
@@ -16,6 +15,5 @@ def create_user_settings(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_settings(sender, instance, **kwargs):
-
     # Save UserSettings when user is saved.
     instance.user_settings.save()
