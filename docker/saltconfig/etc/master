@@ -235,9 +235,22 @@ mysql.port: 3306
 #  pam:
 #    fred:
 #      - test.*
+# client_acl:
+#   admin:
+#     - .*
+
+
+eauth_acl_module: alcali
+keep_acl_in_token: true
+
 external_auth:
   rest:
     ^url: http://web:8000/api/token/verify/
+    admin:
+      - '.*'
+      - '@runner'
+      - '@wheel'
+      - '@jobs'
     apiuser:
       - test.ping
       - minion\*:
@@ -249,11 +262,13 @@ external_auth:
           - state.*
       - 'G@os:RedHat':
           - kmod.*
+  alcali:
     admin:
-      - .*
+      - '.*'
+      - '@local'
       - '@runner'
       - '@wheel'
-  alcali:
+      - '@jobs'
     apiuser:
       - test.ping
       - minion\*:
@@ -265,10 +280,6 @@ external_auth:
         - state.*
       - 'G@os:RedHat':
         - kmod.*
-    admin:
-      - .*
-      - '@runner'
-      - '@wheel'
 
 # Time (in seconds) for a newly generated token to live. Default: 12 hours
 #token_expire: 43200
@@ -691,3 +702,14 @@ rest_cherrypy:
   debug: True
   ssl_crt: /etc/pki/tls/certs/localhost.crt
   ssl_key: /etc/pki/tls/certs/localhost.key
+
+netapi_enable_clients:
+  - local
+  - local_async
+  - local_batch
+  - local_subset
+  - runner
+  - runner_async
+  - ssh
+  - wheel
+  - wheel_async

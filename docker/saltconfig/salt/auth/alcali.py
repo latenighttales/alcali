@@ -25,7 +25,6 @@ from contextlib import contextmanager
 
 # Import 3rd-party libs
 import salt.exceptions
-import salt.ext.six as six
 
 log = logging.getLogger(__name__)
 
@@ -70,7 +69,7 @@ def _get_options():
     }
 
     if HAS_MYSQL:
-        for k, v in six.iteritems(defaults):
+        for k, v in defaults.items():
             try:
                 _options[k] = __opts__["{}.{}".format("mysql", k)]
             except KeyError:
@@ -80,14 +79,14 @@ def _get_options():
         defaults.pop("pass")
         defaults["passwd"] = "salt"
         defaults["port"] = 5432
-        for k, v in six.iteritems(defaults):
+        for k, v in defaults.items():
             try:
                 _options[k] = __opts__["{}.{}".format("returner.postgres", k)]
             except KeyError:
                 _options[k] = v
 
     # post processing
-    for k, v in six.iteritems(_options):
+    for k, v in defaults.items():
         if isinstance(v, six.string_types) and v.lower() == "none":
             # Ensure 'None' is rendered as None
             _options[k] = None
@@ -183,3 +182,16 @@ def auth(username, password):
                     log.debug("Alcali authentication successful")
                     return True
     return False
+
+
+def acl(username, **kwargs):
+    """
+    REST authorization
+    """
+    salt_eauth_acl = __opts__["external_auth"]["alcali"].get(username, [])
+    log.debug("acl from salt for user %s: %s", username, salt_eauth_acl)
+
+    if not salt_eauth_acl:
+        return None
+    else:
+        return salt_eauth_acl

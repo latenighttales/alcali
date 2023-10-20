@@ -34,6 +34,7 @@ services:
     command: honcho start
     depends_on:
       - web
+      - db
     environment:
       - PYTHONUNBUFFERED=true
     ports:

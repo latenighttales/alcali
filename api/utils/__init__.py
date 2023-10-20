@@ -95,7 +95,6 @@ def graph_data(period=7, **kwargs):
 
 
 def render_conformity(target=None):
-
     # First, a list of targets.
     if target:
         minions_all = [Minions.objects.get(minion_id=target)]

@@ -8,7 +8,6 @@ class Command(BaseCommand):
     help = "Check access to database and that env var are set"
 
     def handle(self, *args, **options):
-
         unset = []
         for env in [
             "MASTER_MINION_ID",
