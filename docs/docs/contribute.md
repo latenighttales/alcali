@@ -45,7 +45,7 @@ You will also need a [backend](#backend-dev) running in another terminal.
 ### Backend dev
 
 ```commandline
-docker-compose up --build --force-recreate --renew-anon-volumes --scale minion=2
+docker compose up --build --force-recreate --renew-anon-volumes --scale minion=2
 ```
 
 ### Documentation
@@ -67,7 +67,7 @@ mkdocs serve -a 127.0.0.1:8003
 ### Run tests locally
 
 ```commandline
-dc -f docker-compose-ci.yml up --build --force-recreate --renew-anon-volumes
+docker compose -f docker-compose-ci.yml up --build 
 ```
 
 and in another shell:

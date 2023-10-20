@@ -10,12 +10,12 @@ jobs:
       - name: Install black
         run: pip install black
       - name: Build the stack
-        run: docker-compose -f docker-compose-ci.yml up -d
+        run: docker compose -f docker-compose-ci.yml up -d
       - name: Test
         run: bash docker/utils/ci_script.sh
       - name: Check safety
         if: ${{ success() }}
-        run: docker-compose exec -T -u alcali web safety check
+        run: docker compose exec -T -u alcali web safety check
       - name: Check format
         if: ${{ success() }}
         run: black --check .
@@ -23,7 +23,7 @@ jobs:
         if: ${{ success() }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: docker-compose exec -T -u alcali -e "$env:CODECOV_TOKEN" web codecov -X s3
+        run: docker compose exec -T -u alcali -e "$env:CODECOV_TOKEN" web codecov -X s3
       - name: Show logs
         if: ${{ failure() }}
-        run: docker-compose logs
+        run: docker compose logs

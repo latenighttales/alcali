@@ -35,6 +35,7 @@ def django_db_setup(django_db_blocker):
         "ENGINE": "django.db.backends.mysql",
         "HOST": os.environ["DB_HOST"],
         "NAME": os.environ["DB_NAME"],
+        "ATOMIC_REQUESTS": True,
         "PORT": int(os.environ["DB_PORT"]),
     }
     settings.USE_TZ = False

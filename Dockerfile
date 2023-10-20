@@ -1,4 +1,4 @@
-FROM python:3.7-slim-stretch
+FROM python:3.10-bullseye
 
 MAINTAINER Matt Melquiond
 
@@ -8,7 +8,7 @@ ARG USER_ID=1000
 # Upgrade System and Install dependencies
 RUN apt-get update \
   && seq 1 8 | xargs -I{} mkdir -p /usr/share/man/man{} \
-  && apt-get install -y --no-install-recommends -o DPkg::Options::=--force-confold netcat libmariadbclient-dev libpq-dev build-essential libldap2-dev libsasl2-dev ldap-utils git
+  && apt-get install -y --no-install-recommends -o DPkg::Options::=--force-confold netcat default-libmysqlclient-dev libpq-dev build-essential libldap2-dev libsasl2-dev ldap-utils git pkg-config
 
 # Upgrade pip
 RUN pip install --upgrade pip

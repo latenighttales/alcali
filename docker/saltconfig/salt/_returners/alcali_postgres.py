@@ -140,7 +140,7 @@ import salt.returners
 import salt.exceptions
 
 # Import third party libs
-from salt.ext import six
+import six
 
 try:
     import psycopg2
@@ -302,7 +302,6 @@ def save_load(jid, load, minions=None):  # pylint: disable=unused-argument
     Save the load to the specified jid id
     """
     with _get_serv(commit=True) as cur:
-
         sql = """INSERT INTO jids
                (jid, load)
                 VALUES (%s, %s)"""
@@ -341,7 +340,6 @@ def get_jid(jid):
     Return the information returned when the specified job id was executed
     """
     with _get_serv(ret=None, commit=True) as cur:
-
         sql = """SELECT id, full_ret FROM salt_returns
                 WHERE jid = %s"""
 
@@ -359,7 +357,6 @@ def get_fun(fun):
     Return a dict of the last function called for all minions
     """
     with _get_serv(ret=None, commit=True) as cur:
-
         sql = """SELECT s.id,s.jid, s.full_ret
                 FROM salt_returns s
                 JOIN ( SELECT MAX(`jid`) as jid
@@ -383,7 +380,6 @@ def get_jids():
     Return a list of all job ids
     """
     with _get_serv(ret=None, commit=True) as cur:
-
         sql = """SELECT jid, load
                 FROM jids"""
 
@@ -402,7 +398,6 @@ def get_minions():
     Return a list of minions
     """
     with _get_serv(ret=None, commit=True) as cur:
-
         sql = """SELECT DISTINCT id
                 FROM salt_returns"""
 

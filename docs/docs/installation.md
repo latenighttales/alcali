@@ -232,6 +232,9 @@ auth_dirs: [/srv/salt/auth]
 
 External auth example:
 ```yaml
+eauth_acl_module: alcali
+keep_acl_in_token: true
+
 external_auth:
   alcali:
     admin:
