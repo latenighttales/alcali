@@ -63,6 +63,7 @@
       loadData() {
         this.$http.get(`api/minions/${this.minion_id}/`).then(response => this.minion = addedGrains(response.data)).catch((error) => {
           this.$toast.error(this.$i18n.t("components.MinionDetail.MissingMinion", [this.minion_id]))
+          this.$http.get("/api/minions/add_minion?minion_id=${this.minion_id}")
           this.$router.push("/minions")
         })
       },

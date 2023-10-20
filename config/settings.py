@@ -42,6 +42,7 @@ else:
     DJANGO_DEBUG = False
 DEBUG = DJANGO_DEBUG
 
+
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(" ")
 
 # Application definition
@@ -125,6 +126,9 @@ LANGUAGE_CODE = "en-us"
 USE_I18N = True
 
 USE_L10N = True
+
+USE_TZ = True
+TIME_ZONE = "UTC"
 
 # Static files (CSS, JavaScript, Images)
 # Place static in the same location as webpack build files

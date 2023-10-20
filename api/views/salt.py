@@ -57,14 +57,17 @@ class SaltReturnsListJid(generics.ListAPIView):
 
     def get_queryset(self):
         jid = self.kwargs["jid"]
-        queryset = SaltReturns.objects.all()
-        return queryset.filter(jid=jid).order_by("-alter_time")
+        queryset = SaltReturns.objects.filter(jid=jid).order_by("-alter_time")
+        return queryset
 
 
 @api_view(["GET"])
 def jobs_filters(request):
     # Filter options.
-    user_list = list({i.user() for i in Jids.objects.all()})
+
+    # THIS is eating through ram and cpu...
+    # user_list = list({i.user() for i in Jids.objects.all()}) # THIS is eating through ram and cpu...
+    user_list = list()
     minion_list = SaltReturns.objects.values_list("id", flat=True).distinct()
     return Response({"users": user_list, "minions": minion_list})
 
@@ -97,5 +100,5 @@ class EventsViewSet(viewsets.ReadOnlyModelViewSet):
     A simple ViewSet for viewing accounts.
     """
 
-    queryset = SaltEvents.objects.all().order_by("-alter_time")[:200]
+    queryset = SaltEvents.objects.all().order_by("-id")[:200]
     serializer_class = EventsSerializer

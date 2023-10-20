@@ -124,6 +124,7 @@ class MinionsViewSet(viewsets.ModelViewSet):
             return Response({"result": "refreshed {}".format(minion_id)})
 
         # Run test.ping to list currently connected minions
+        print("sending test.ping to salt for minions list")
         connected = run_raw(
             [
                 {
@@ -132,15 +133,35 @@ class MinionsViewSet(viewsets.ModelViewSet):
                     "tgt_type": "glob",
                     "tgt": "*",
                     "fun": "test.ping",
+                    "timeout": 20
                 }
             ]
         )
         accepted_minions = [i for i in connected if connected.get(i) is True]
+        print(f"{len(accepted_minions)} responded to test.ping, processing...")
+        refresh_failures = {}
+        known_minions = []
+        refreshed_minions = [] 
         for minion in accepted_minions:
+            if not Minions.objects.filter(minion_id=minion).exists():
+                print(f"attempting to add minion: {minion}")
+                ret = refresh_minion(minion)
+                if "error" in ret:
+                    print(f"minion refresh failed: {ret['error']}")
+                    refresh_failures[minion] = ret['error']
+                else:
+                    refreshed_minions.append(minion)
+            else:
+                known_minions.append(minion)
+        print("starting refresh of known minions")
+        for minion in known_minions:
+            print(minion)
             ret = refresh_minion(minion)
             if "error" in ret:
-                return Response(ret["error"], status=401)
-        return Response({"refreshed": accepted_minions})
+                refresh_failures[minion] = ret['error']
+            else:
+                refreshed_minions.append(minion)
+        return Response({"refreshed": refreshed_minions, "errors": refresh_failures})
 
     @action(detail=False)
     def conformity(self, request):
@@ -208,6 +229,13 @@ class MinionsViewSet(viewsets.ModelViewSet):
             }
         )
 
+    @action(detail=False, methods=["get"])
+    def add_minion(self, request):
+        if request.GET.get("minion_id"):
+            minion_id = request.GET.get("minion_id")
+            ret = refresh_minion(minion_id)
+        return Response(None, status=201)
+
 
 class MinionsCustomFieldsViewSet(viewsets.ModelViewSet):
     queryset = MinionsCustomFields.objects.all()
@@ -259,11 +287,15 @@ class ConformityViewSet(viewsets.ModelViewSet):
                     succeeded, unchanged, failed = None, None, 1
                 else:
                     for state in last_highstate:
-                        if last_highstate[state]["result"] is True:
-                            succeeded += 1
-                        elif last_highstate[state]["result"] is None:
-                            unchanged += 1
+                        if isinstance(last_highstate, dict):
+                            if last_highstate[state]["result"] is True:
+                                succeeded += 1
+                            elif last_highstate[state]["result"] is None:
+                                unchanged += 1
+                            else:
+                                failed += 1
                         else:
+                            # most likely a string response containing "Unhandled exception running state.highstate"
                             failed += 1
             else:
                 last_highstate_date, succeeded, unchanged, failed = (

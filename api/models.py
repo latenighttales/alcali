@@ -78,10 +78,22 @@ class SaltReturns(models.Model):
                 return ret["return"]["result"]
         return self.jid
 
+    def valid_for_highstate(self):
+        valid_for_highstate = True
+        if not self.loaded_ret()["fun_args"]:
+            valid_for_highstate = True
+        if isinstance(self.loaded_ret()["fun_args"], list) and self.loaded_ret()["fun_args"]:
+            if self.loaded_ret()["fun_args"][0] == {"test": True}:
+                valid_for_highstate = False
+            if self.loaded_ret()["fun_args"][0] == "test=True":
+                valid_for_highstate = False
+        return valid_for_highstate
+
     class Meta:
         managed = False
         db_table = "salt_returns"
         app_label = "api"
+        ordering = ['-id']
 
 
 class SaltEvents(models.Model):
@@ -95,6 +107,7 @@ class SaltEvents(models.Model):
         managed = False
         db_table = "salt_events"
         app_label = "api"
+        ordering = ['-id']
 
 
 # Alcali custom.
@@ -145,16 +158,12 @@ class Minions(models.Model):
         # Get all potential jobs.
         states = SaltReturns.objects.filter(
             Q(fun="state.apply") | Q(fun="state.highstate"), id=self.minion_id
-        )
-        states = sorted(states, key=lambda x: x.jid, reverse=True)
+        ).order_by('-jid')[0:2]
+        states = sorted(states, key=lambda x: x.jid)
 
         # Remove jobs with arguments.
         for state in states:
-            if (
-                not state.loaded_ret()["fun_args"]
-                or state.loaded_ret()["fun_args"][0] == {"test": True}
-                or state.loaded_ret()["fun_args"][0] == "test=True"
-            ):
+            if state.valid_for_highstate():
                 return state
         return None
 
@@ -171,8 +180,9 @@ class Minions(models.Model):
 
         for state in return_item:
             # One of the state is not ok
-            if not return_item.get(state, {}).get("result"):
-                return False
+            if type(return_item) == dict:
+                if not return_item.get(state, {}).get("result"):
+                    return False
         return True
 
     def custom_conformity(self, fun, *args):
