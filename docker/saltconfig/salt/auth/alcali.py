@@ -87,7 +87,7 @@ def _get_options():
 
     # post processing
     for k, v in defaults.items():
-        if isinstance(v, six.string_types) and v.lower() == "none":
+        if isinstance(v, str) and v.lower() == "none":
             # Ensure 'None' is rendered as None
             _options[k] = None
         if k == "port":
