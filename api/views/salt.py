@@ -35,7 +35,7 @@ class SaltReturnsList(generics.ListAPIView):
         qry = {}
         start = self.request.query_params.get("start", None)
         end = self.request.query_params.get("end", None)
-        limit = int(self.request.query_params.get("limit", 200))
+        limit = int(self.request.query_params.get("limit", 50))
         target = self.request.query_params.getlist("target[]")
         users = self.request.query_params.getlist("users[]", None)
         if target:
@@ -57,8 +57,8 @@ class SaltReturnsListJid(generics.ListAPIView):
 
     def get_queryset(self):
         jid = self.kwargs["jid"]
-        queryset = SaltReturns.objects.all()
-        return queryset.filter(jid=jid).order_by("-alter_time")
+        queryset = SaltReturns.objects.filter(jid=jid).order_by("-alter_time")
+        return queryset
 
 
 @api_view(["GET"])
@@ -97,5 +97,5 @@ class EventsViewSet(viewsets.ReadOnlyModelViewSet):
     A simple ViewSet for viewing accounts.
     """
 
-    queryset = SaltEvents.objects.all().order_by("-alter_time")[:200]
+    queryset = SaltEvents.objects.all().order_by("-alter_time")[:50]
     serializer_class = EventsSerializer

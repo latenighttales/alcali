@@ -145,8 +145,8 @@ class Minions(models.Model):
         # Get all potential jobs.
         states = SaltReturns.objects.filter(
             Q(fun="state.apply") | Q(fun="state.highstate"), id=self.minion_id
-        )
-        states = sorted(states, key=lambda x: x.jid, reverse=True)
+        ).order_by('-jid')[0:2]
+        states = sorted(states, key=lambda x: x.jid)
 
         # Remove jobs with arguments.
         for state in states:
