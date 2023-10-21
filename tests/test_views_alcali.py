@@ -323,12 +323,13 @@ def test_search_job(admin_client, dummy_state, dummy_jid, minion_master, jwt):
 
 @pytest.mark.django_db()
 def test_verify_token(admin_client, admin_user, jwt):
+    """Salt expects a list of ACL permissions"""
     response = admin_client.post(
         "/api/token/verify/",
         {"username": admin_user.username, "password": admin_user.user_settings.token},
         **jwt
     )
-    assert response.json()[admin_user.username] is None
+    assert isinstance(response.json(), list)
 
     response = admin_client.post(
         "/api/token/verify/",
