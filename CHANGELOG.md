@@ -1,5 +1,13 @@
 # Changelog
 
+## [3006.3.0] - 2023-10-22
+
+- int: bugfix and deps update
+
+- feat: i18n (#353)
+
+[3006.3.0]: https://github.com/latenighttales/alcali/compare/v3006.3.0...HEAD
+
 ## [3003.1.0] - 2021-04-23
 
 - int: updated deps (#317)
@@ -10,7 +18,7 @@
 
 - int: offline version (#225)
 
-[3003.1.0]: https://github.com/latenighttales/alcali/compare/v3003.1.0...HEAD
+[3003.1.0]: https://github.com/latenighttales/alcali/compare/v3003.1.0...v3006.3.0
 
 ## [3000.1.0] - 2020-04-26
 
@@ -24,7 +32,7 @@
 
 - fix: responsive layout (#178)
 
-[3000.1.0]: https://github.com/latenighttales/alcali/compare/v2019.2.5...HEAD
+[3000.1.0]: https://github.com/latenighttales/alcali/compare/v2019.2.5...v3003.1.0
 
 ## [2019.2.4] - 2020-02-14
 
