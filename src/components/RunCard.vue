@@ -316,6 +316,7 @@
     </v-row>
     <v-row>
       <v-col sm="12">
+        <div class="lds-dual-ring" v-if="loading"></div>
         <v-card v-if="results">
           <v-card-title>{{ $t("components.RunCard.Results") }}
             <v-spacer></v-spacer>
@@ -369,6 +370,7 @@ export default {
         lineNumbers: false,
         foldGutter: true,
         gutters: ["CodeMirror-foldgutter"],
+
       },
       tab: null,
       client: [
@@ -500,15 +502,14 @@ export default {
             "schedule",
             this.scheduleDate + " " + this.scheduleTime + ":00"
           );
-        } else {
-          formData.set("cron", this.cron.currentValue);
+          } else {
+            formData.set("cron", this.cron.currentValue);
+          }
         }
-      }
-      this.$toast(action + " " + command);
-      this.$http
-        .post("api/run/", formData)
-        .then((response) => {
-          let result = response.data;
+        this.$toast(action + " " + command)
+        this.loading = true
+        this.$http.post("api/run/", formData).then(response => {
+          let result = response.data
           // If we're expecting an async result, display a link to the minion's result.
           if (this.client_async && this.selected_client === "local") {
             let parser = new DOMParser();
@@ -535,11 +536,12 @@ export default {
             }
             result = new XMLSerializer().serializeToString(htmlRes);
           }
-          this.results = result + this.results;
+          this.loading = false
+          this.results = result + this.results
+        }).catch((error) => {
+          this.loading = false
+          this.$toast.error(error.response.data)
         })
-        .catch((error) => {
-          this.$toast.error(error.response.data);
-        });
     },
   },
   computed: {
@@ -611,14 +613,42 @@ export default {
 </script>
 
 <style scoped>
-.desc {
-  background-color: rgba(138, 138, 138);
-  border: 10px;
-  border-right: 20px;
-}
+  .desc {
+    background-color: rgba(138, 138, 138);
+    border: 10px;
+    border-right: 20px;
+  }
 
-.ansiStyle {
-  background-color: black;
-  padding: 10px;
-}
+  .ansiStyle {
+    background-color: black;
+    padding: 10px;
+  }
+
+  .lds-dual-ring {
+    width: 80px;
+    height: 80px;
+    float: none;
+    margin: 0 auto;
+  }
+
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid rgba(138, 138, 138);
+    border-color: rgba(138, 138, 138) transparent rgba(138, 138, 138) transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 </style>
