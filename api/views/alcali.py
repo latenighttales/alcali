@@ -259,7 +259,9 @@ class ConformityViewSet(viewsets.ModelViewSet):
                     succeeded, unchanged, failed = None, None, 1
                 else:
                     for state in last_highstate:
-                        if last_highstate[state]["result"] is True:
+                        if isinstance(last_highstate, str):
+                            failed += 1
+                        elif last_highstate[state]["result"] is True:
                             succeeded += 1
                         elif last_highstate[state]["result"] is None:
                             unchanged += 1
