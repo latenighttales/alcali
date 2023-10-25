@@ -171,6 +171,8 @@ class Minions(models.Model):
 
         for state in return_item:
             # One of the state is not ok
+            if isinstance(return_item, str):
+                return False
             if not return_item.get(state, {}).get("result"):
                 return False
         return True

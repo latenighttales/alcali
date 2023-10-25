@@ -179,6 +179,8 @@ class MinionsViewSet(viewsets.ModelViewSet):
             # Sls error
             if isinstance(last_highstate, list):
                 failed = {"error": last_highstate[0]}
+            elif isinstance(last_highstate, str):
+                failed = {"error": last_highstate}
             else:
                 for state in last_highstate:
                     state_name = state.split("_|-")[1]
@@ -259,7 +261,9 @@ class ConformityViewSet(viewsets.ModelViewSet):
                     succeeded, unchanged, failed = None, None, 1
                 else:
                     for state in last_highstate:
-                        if last_highstate[state]["result"] is True:
+                        if isinstance(last_highstate, str):
+                            failed += 1
+                        elif last_highstate[state]["result"] is True:
                             succeeded += 1
                         elif last_highstate[state]["result"] is None:
                             unchanged += 1
