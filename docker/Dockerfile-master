@@ -15,7 +15,7 @@ RUN echo "id: master">>/etc/salt/minion
 # Install python dependencies
 RUN apt-get install -y -o DPkg::Options::=--force-confold salt-api python3-openssl default-libmysqlclient-dev pkg-config
 RUN pip install honcho
-RUN salt-pip install mysqlclient
+RUN /opt/saltstack/salt/bin/python3.10 -m pip install mysqlclient
 
 # Copy needed files
 COPY saltconfig/etc/master /etc/salt/master
