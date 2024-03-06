@@ -2,18 +2,18 @@
   <v-container fluid>
     <v-row>
       <v-col sm="12">
-        <CommonSettings></CommonSettings>
+        <UserSettings></UserSettings>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-  import CommonSettings from "../components/CommonSettings"
+  import UserSettings from "../components/UserSettings"
 
   export default {
     name: "Settings",
-    components: { CommonSettings },
+    components: { UserSettings },
   }
 </script>
 

@@ -45,6 +45,21 @@
                 </div>
               </div>
             </v-col>
+             <v-col lg="2">
+               <div style="margin-left: 20px">
+                <span>{{ $t("components.UserSettings.Theme") }}</span>
+                  <div v-if="this.settings.Layout['dark']" style="margin-top: 10px">
+                    <v-btn @click="updateDomAndSettings('dark')" color="red" text-color="base">
+                      {{ $t("components.UserSettings.DeactivateDarkMode") }}
+                    </v-btn>
+                  </div>
+                  <div v-else style="margin-top: 10px">
+                    <v-btn @click="updateDomAndSettings('dark')" color="green" text-color="base">
+                      {{ $t("components.UserSettings.ActivateDarkMode") }}
+                    </v-btn>
+                  </div>
+                </div>
+             </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -91,6 +106,13 @@ export default {
   },
   methods: {
     updateSettings() {
+      this.$store.commit("updateSettings")
+    },
+    updateDomAndSettings(val) {
+      this.settings.Layout[val] = !this.settings.Layout[val]
+      if (val === 'dark') {
+        this.$vuetify.theme.dark = this.settings.Layout[val]
+      }
       this.$store.commit("updateSettings")
     },
   },

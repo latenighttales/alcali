@@ -310,7 +310,10 @@
       "returned": "résultat reçu",
       "event": "évènement",
       "UserSettingsUpdated": "Préférences utilisateur mises à jour",
-      "Language": "Langage"
+      "Language": "Langage",
+      "Theme": "Thème sombre",
+      "DeactivateDarkMode": "Désactiver",
+      "ActivateDarkMode": "Activer"
     },
     "AlcaliStatusCard": {
       "Status": "Statut",

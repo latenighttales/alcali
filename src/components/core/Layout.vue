@@ -3,7 +3,9 @@
     <v-navigation-drawer v-model="settings.Layout.drawer"
                          :mini-variant="settings.Layout.mini" app clipped>
     <v-list dense nav dark color="#212121" class="py-0">
-        <v-list-item two-line :class="settings.Layout.mini && 'px-0'">
+      <v-menu bottom left offset-y offset-x close-on-click>
+        <template v-slot:activator="{ on }">
+        <v-list-item v-on="on" two-line :class="settings.Layout.mini && 'px-0'">
           <v-list-item-avatar>
             <v-icon large>person</v-icon>
           </v-list-item-avatar>
@@ -12,6 +14,18 @@
             <v-list-item-subtitle>{{ email }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
+         </template>
+        <v-list>
+          <v-list-item to="/usersettings">
+            <v-list-item-title>{{ $t("components.core.Layout.Settings") }}</v-list-item-title>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item @click="logout">
+            <v-list-item-title>{{ $t("components.core.Layout.Logout") }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
       </v-list>
       <v-divider></v-divider>
       <v-list dense>
@@ -130,22 +144,6 @@
             <v-btn text @click="messages = []">{{ $t("components.core.Layout.Clear") }}</v-btn>
           </v-card-actions>
         </v-card>
-      </v-menu>
-      <v-menu bottom left offset-y offset-x close-on-click>
-        <template v-slot:activator="{ on }">
-          <v-btn v-on="on" icon>
-            <v-icon>more_vert</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item @click="updateDomAndSettings('dark')">
-            <v-list-item-title>{{ $t("components.core.Layout.ToggleTheme") }}</v-list-item-title>
-          </v-list-item>
-          <v-divider></v-divider>
-          <v-list-item @click="logout">
-            <v-list-item-title>{{ $t("components.core.Layout.Logout") }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
       </v-menu>
     </v-app-bar>
     <v-main>
