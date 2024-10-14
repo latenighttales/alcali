@@ -58,7 +58,7 @@ and follow the [walkthrough](https://alcali.dev/walkthrough/).
 
 ## Installation
 
-The easiest way to install it is to use the salt [formula](https://github.com/latenighttales/alcali-formula).
+The easiest way to install it is to use the salt [formula](https://github.com/saltstack-formulas/alcali-formula).
 
 Make sure to check the [installation](https://alcali.dev/installation/) docs first!
 
