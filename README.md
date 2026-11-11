@@ -1,3 +1,4 @@
+# This repository is no longer maintained, consider alternatives
 # Alcali
 
 [![Build](https://github.com/latenighttales/alcali/actions/workflows/test_on_push.yml/badge.svg?branch=develop)](https://github.com/latenighttales/alcali/actions/workflows/test_on_push.yml)
