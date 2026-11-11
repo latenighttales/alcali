@@ -965,7 +965,7 @@
 </code></pre></div>
 
 <p>In a docker container:</p>
-<div class="codehilite"><pre><span></span><code>docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.2 bash -c &quot;gunicorn config.wsgi:application -w 4 --chdir $(alcali location)&quot;
+<div class="codehilite"><pre><span></span><code>docker run --rm -it -p 8000:8000 --env-file=FILE latenighttales/alcali:2019.2.2 bash -c "gunicorn config.wsgi:application -w 4 --chdir $(alcali location)"
 </code></pre></div>
 
 <p>Where FILE is the location of the <a href="../configuration/">.env file</a></p>

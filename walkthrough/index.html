@@ -1004,13 +1004,13 @@ password: password
 <h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
 <p>Go to <a href="http://localhost:8000/#/run">http://localhost:8000/#/run</a></p>
 <p>You can explore the formatted tab or just use the cli and run:</p>
-<div class="codehilite"><pre><span></span><code>salt master cmd.run &quot;touch /foo.txt&quot;
+<div class="codehilite"><pre><span></span><code>salt master cmd.run "touch /foo.txt"
 </code></pre></div>
 
 <p>We just created the file <code>/foo.txt</code> on the master, so the master will comply to the "foo" conformity we added earlier.</p>
 <p>Conformity is parsed from the states present in the database, so let's run:</p>
-<div class="codehilite"><pre><span></span><code>salt * cmd.run &quot;python --version&quot;
-salt * file.file_exists &quot;/foo.txt&quot;
+<div class="codehilite"><pre><span></span><code>salt * cmd.run "python --version"
+salt * file.file_exists "/foo.txt"
 </code></pre></div>
 
 <p>By the way, there should be tab completion in the CLI and documentation in the tooltip on the formatted tab thanks to the parse module action we did earlier. </p>

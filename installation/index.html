@@ -1171,10 +1171,10 @@ Salt master configuration example:
 
 <div class="codehilite"><pre><span></span><code><span class="nt">event_return</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">mysql</span><span class="p p-Indicator">]</span>
 <span class="nt">master_job_cache</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span>
-<span class="nt">mysql.host</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;db&#39;</span>
-<span class="nt">mysql.user</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alcali&#39;</span>
-<span class="nt">mysql.pass</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alcali&#39;</span>
-<span class="nt">mysql.db</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;salt&#39;</span>
+<span class="nt">mysql.host</span><span class="p">:</span><span class="w"> </span><span class="s">'db'</span>
+<span class="nt">mysql.user</span><span class="p">:</span><span class="w"> </span><span class="s">'alcali'</span>
+<span class="nt">mysql.pass</span><span class="p">:</span><span class="w"> </span><span class="s">'alcali'</span>
+<span class="nt">mysql.db</span><span class="p">:</span><span class="w"> </span><span class="s">'salt'</span>
 <span class="nt">mysql.port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3306</span>
 </code></pre></div>
 
@@ -1188,13 +1188,13 @@ Salt master configuration example:
 
 
 <div class="codehilite"><pre><span></span><code><span class="n">psql</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
-<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">salt</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="s1">&#39;salt&#39;</span><span class="p">;</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">ROLE</span><span class="w"> </span><span class="n">salt</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">PASSWORD</span><span class="w"> </span><span class="s1">'salt'</span><span class="p">;</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">DATABASE</span><span class="w"> </span><span class="n">salt</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">OWNER</span><span class="w"> </span><span class="n">salt</span><span class="p">;</span>
 <span class="n">EOF</span>
 
 <span class="n">psql</span><span class="w"> </span><span class="o">-</span><span class="n">h</span><span class="w"> </span><span class="n">localhost</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="n">salt</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">EOF</span>
 <span class="c1">--</span>
-<span class="c1">-- Table structure for table &#39;jids&#39;</span>
+<span class="c1">-- Table structure for table 'jids'</span>
 <span class="c1">--</span>
 
 <span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">jids</span><span class="p">;</span>
@@ -1204,7 +1204,7 @@ Salt master configuration example:
 <span class="p">);</span>
 
 <span class="c1">--</span>
-<span class="c1">-- Table structure for table &#39;salt_returns&#39;</span>
+<span class="c1">-- Table structure for table 'salt_returns'</span>
 <span class="c1">--</span>
 
 <span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">salt_returns</span><span class="p">;</span>
@@ -1224,14 +1224,14 @@ Salt master configuration example:
 <span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_salt_returns_updated</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">salt_returns</span><span class="w"> </span><span class="p">(</span><span class="n">alter_time</span><span class="p">);</span>
 
 <span class="c1">--</span>
-<span class="c1">-- Table structure for table &#39;salt_events&#39;</span>
+<span class="c1">-- Table structure for table 'salt_events'</span>
 <span class="c1">--</span>
 
 <span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">salt_events</span><span class="p">;</span>
 <span class="k">DROP</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">seq_salt_events_id</span><span class="p">;</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="n">seq_salt_events_id</span><span class="p">;</span>
 <span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">salt_events</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">BIGINT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">nextval</span><span class="p">(</span><span class="s1">&#39;seq_salt_events_id&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">BIGINT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">nextval</span><span class="p">(</span><span class="s1">'seq_salt_events_id'</span><span class="p">),</span>
 <span class="w">    </span><span class="n">tag</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
 <span class="w">    </span><span class="k">data</span><span class="w"> </span><span class="nb">text</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
 <span class="w">    </span><span class="n">alter_time</span><span class="w"> </span><span class="k">TIMESTAMP</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="k">TIME</span><span class="w"> </span><span class="k">ZONE</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">NOW</span><span class="p">(),</span>
@@ -1250,10 +1250,10 @@ Salt master configuration example:
 
 <div class="codehilite"><pre><span></span><code><span class="nt">event_return</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">postgres</span><span class="p p-Indicator">]</span>
 <span class="nt">master_job_cache</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres</span><span class="w"> </span>
-<span class="nt">returner.postgres.host</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;db&#39;</span>
-<span class="nt">returner.postgres.user</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alcali&#39;</span>
-<span class="nt">returner.postgres.passwd</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;alcali&#39;</span>
-<span class="nt">returner.postgres.db</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;salt&#39;</span>
+<span class="nt">returner.postgres.host</span><span class="p">:</span><span class="w"> </span><span class="s">'db'</span>
+<span class="nt">returner.postgres.user</span><span class="p">:</span><span class="w"> </span><span class="s">'alcali'</span>
+<span class="nt">returner.postgres.passwd</span><span class="p">:</span><span class="w"> </span><span class="s">'alcali'</span>
+<span class="nt">returner.postgres.db</span><span class="p">:</span><span class="w"> </span><span class="s">'salt'</span>
 <span class="nt">returner.postgres.port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5432</span>
 </code></pre></div>
 
@@ -1276,7 +1276,7 @@ Salt master configuration example:
 
 <p>Install instruction example (On Debian 9 using Salt python3 version):</p>
 <div class="codehilite"><pre><span></span><code>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>salt-api<span class="w"> </span>python3-openssl
-salt-call<span class="w"> </span>--local<span class="w"> </span>tls.create_self_signed_cert<span class="w"> </span><span class="nv">cacert_path</span><span class="o">=</span><span class="s1">&#39;/etc/pki&#39;</span>
+salt-call<span class="w"> </span>--local<span class="w"> </span>tls.create_self_signed_cert<span class="w"> </span><span class="nv">cacert_path</span><span class="o">=</span><span class="s1">'/etc/pki'</span>
 </code></pre></div>
 
 <p>Please refer to Salt <a href="https://docs.saltstack.com/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html#a-rest-api-for-salt">rest_cherrypy</a> documentation for more infos on how to setup the salt-api.</p>
@@ -1295,8 +1295,8 @@ salt-call<span class="w"> </span>--local<span class="w"> </span>tls.create_self_
 <span class="w">    </span><span class="nt">^url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:8000/api/token/verify/</span>
 <span class="w">    </span><span class="nt">admin</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.*</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;@runner&#39;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;@wheel&#39;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'@runner'</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'@wheel'</span>
 </code></pre></div>
 
 <h4 id="custom-token-auth-module">Custom token auth module<a class="headerlink" href="#custom-token-auth-module" title="Permanent link">&para;</a></h4>
@@ -1314,8 +1314,8 @@ salt-call<span class="w"> </span>--local<span class="w"> </span>tls.create_self_
 <span class="w">  </span><span class="nt">alcali</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">admin</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.*</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;@runner&#39;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;@wheel&#39;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'@runner'</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'@wheel'</span>
 </code></pre></div>
 
 <p>Don't forget to run <code>salt-run saltutil.sync_all</code> on the salt master.</p>
